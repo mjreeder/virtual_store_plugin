@@ -9,7 +9,15 @@ defined( 'ABSPATH' ) or die( 'invalid access' );
 
 add_action("woocommerce_review_order_before_payment", "dc_before_cart_contents");
 add_action("woocommerce_review_order_after_payment", "dc_after_cart_contents");
+add_action("init", "dc_plugin_init");
 
+function dc_plugin_init(){
+    //if the user is not logged in redirect them to do so
+    if ( !is_user_logged_in() && $GLOBALS['pagenow'] !== 'wp-login.php'  ) {
+        auth_redirect();
+        exit;
+    }
+}
 
 
 function dc_before_cart_contents(){
