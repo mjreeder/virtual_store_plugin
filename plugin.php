@@ -7,6 +7,9 @@
  */
 defined( 'ABSPATH' ) or die( 'invalid access' );
 
+require_once __DIR__."/teacher_admin_panel.php";
+require_once __DIR__."/landing_page.php";
+
 add_action("woocommerce_review_order_before_payment", "dcvs_before_cart_contents");
 add_action("woocommerce_review_order_after_payment", "dcvs_after_cart_contents");
 add_action("init", "dcvs_plugin_init");
@@ -24,6 +27,15 @@ function dcvs_plugin_init(){
         exit;
     }
     include "database_setup.php";
+    //create the landing page if it doesn't exist already
+    $landingPage = get_page_by_path("virtual-store-landing");
+    if($landingPage == null ){
+        wp_insert_post(array("post_type"=>"page", "post_status"=>"publish", "post_title"=>"Virtual Store Landing Page", "post_name"=>"virtual-store-landing"));
+    }
+    else if($landingPage->post_status == "trash"){
+        wp_update_post(array("ID"=>$landingPage->ID, "status"=>"publish"));
+    }
+
 }
 
 
@@ -68,4 +80,6 @@ function dcvs_set_option($key, $value){
     }
 }
 
-?>
+function dcvs_echo_option($key, $default_value=false){
+    echo dcvs_get_option($key, $default_value);
+}
