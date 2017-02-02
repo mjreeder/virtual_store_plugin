@@ -1,3 +1,152 @@
-div {
-  color: red;
+.storeHeader {
+    background-color: $darkGray;
+    height: 100px;
+    flex: 1 0 75 px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+    h1 {
+        font-family: 'Open sans', sans-serif;
+        color: white;
+        font-size: 40px;
+        margin-left: 75px;
+        display: inline;
+        max-width: 25%;
+        align-self: center;
+    }
+    p {
+        color: white;
+        font-family: 'Open sans', sans-serif;
+        font-size: 15pt;
+        align-self: center;
+        margin-right: 100px;
+        vertical-align: super;
+        b {
+            font-size: 50px;
+            margin-left: 50px;
+        }
+    }
+}
+.helpVideoList {
+    width: 500px;
+    height: 100%;
+    flex: 0 0 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F2F2F2;
+    img {
+        height: 281px;
+        margin-bottom: 20px;
+    }
+    p {
+        font-family: "Lato", sans-serif;
+        color: $darkGray;
+        width: 80%;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+    ol {
+        margin-right: 10%;
+        margin-left: 250px;
+        width: 100%;
+        li {
+            font-family: "Lato", sans-serif;
+            color: $darkGray;
+            p {
+                font-family: "Lato", sans-serif;
+                color: $darkGray;
+                font-size: 21px;
+                display: inline;
+                line-height: 40px;
+            }
+            span {
+                font-size: 13px;
+                margin-left: 25px;
+            }
+        }
+    }
+}
+.finished {
+    text-decoration: line-through;
+}
+.currentlyPlaying {
+    font-weight: bold;
+}
+.time {
+    font-size: 15px;
+    margin-left: 75px;
+    text-decoration: none;
+}
+.dashboard {
+    height: 100%;
+    width: 100%;
+    flex: 1 1 auto;
+    padding-top: 20px;
+    padding-left: 75px;
+    h1 {
+        font-family: 'Open sans', sans-serif;
+        color: $darkGray;
+        font-size: 35px;
+        display: inline;
+    }
+    hr {
+        margin-bottom: 10px;
+        margin-left: 25px;
+        border: $yellow 1px solid;
+        width: 60%;
+        display: inline-block;
+    }
+}
+.mainContent {
+    height: calc(100% - 100px);
+    display: flex;
+    flex-direction: row;
+}
+.myStore {
+    height: 32%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    .myStoreLeft {
+        width: 50%;
+        flex: 0 0 auto;
+        p {
+            margin-top: 20px;
+            width: 320px;
+            font-family: 'Lato', sans-serif;
+            font-size: 15px;
+            color: $darkGray;
+        }
+    }
+    .myStoreRight {
+        width: 50%;
+        flex: 0 0 auto;
+    }
+    section {
+        flex-direction: row;
+    }
+}
+.goShopping {
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    p {
+        margin-top: 20px;
+        width: 75%;
+        font-family: 'Lato', sans-serif;
+        font-size: 15px;
+        color: $darkGray;
+    }
+}
+
+@media screen and (max-width:1300px) {
+      .myStore {
+        .myStoreRight {
+            width: 40%;
+        }
+      }
 }
