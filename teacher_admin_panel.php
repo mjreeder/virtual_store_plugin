@@ -18,7 +18,7 @@ function dcvs_admin_menu_init(){
 function dcvs_admin_menu_draw(){
     if($_SERVER['REQUEST_METHOD']=="POST" && $_POST['dcvs_admin_changes']==1){
         $defaultPersonaMoney = $_POST['default_persona_money'];
-        if(!filter_var($defaultPersonaMoney, FILTER_VALIDATE_FLOAT)){
+        if(!money_is_number($defaultPersonaMoney)){
             echo('default persona money must be a number');
             return;
         }
@@ -40,7 +40,6 @@ function dcvs_admin_personas_settings(){
     $description = $_POST['persona_description'];
     $money = $_POST['persona_money'];
     $id = dcvs_get_persona($name);
-    global $wpdb;
     if ($id != NULL) {
       dcvs_update_persona($id, $name, $description, $money);
     } else {
@@ -67,17 +66,33 @@ function dcvs_get_persona($name, $default_value=false){
 
 function dcvs_insert_new_persona($name, $description, $money) {
   global $wpdb;
-  // check if name is available
-  // check if money is a floatval
-  $wpdb->insert("dcvs_persona", ["name"=>$name, "description"=>$description, "money"=>$money] );
+  $id = dcvs_get_persona($name);
+  if ($id != NULL) {
+    echo "That name is already taken";
+  } else if (!money_is_number($money)) {
+    echo "Money must be a number";
+  } else {
+    $wpdb->insert("dcvs_persona", ["name"=>$name, "description"=>$description, "money"=>$money] );
+  }
 }
 
 function dcvs_update_persona($id, $name, $description, $money) {
   global $wpdb;
   // check if name is taken BY A DIFFERENT ID
   // check if money is a floatval
-  $wpdb->update("dcvs_persona", array("name"=>$name, "description"=>$description,"money"
+  $checkid = dcvs_get_persona($name);
+  if ($checkid != NULL && $checkid != $id) {
+    echo "You've entered a name that's already taken";
+  } else if (!money_is_number($money)) {
+    echo "Money must be a number";
+  } else {
+    $wpdb->update("dcvs_persona", array("name"=>$name, "description"=>$description,"money"
 =>$money), array("id"=>$id));
+  }
+}
+
+function money_is_number($money) {
+  return filter_var($money, FILTER_VALIDATE_FLOAT);
 }
 
 function dcvs_admin_businesses_settings(){
