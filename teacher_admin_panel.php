@@ -42,18 +42,17 @@ function dcvs_admin_personas_settings(){
     $id = dcvs_get_persona($name);
     global $wpdb;
     if ($id != NULL) {
-        $wpdb->update("dcvs_persona", array("name"=>$name, "description"=>$description,"money"
-      =>$money), array("id"=>$id));
+      dcvs_update_persona($id, $name, $description, $money);
     } else {
-        $wpdb->insert("dcvs_persona", ["name"=>$name, "description"=>$description] );
+      dcvs_insert_new_persona($name, $description, $money);
     }
   }
     ?>
     <form action="" method="post">
         <input type="hidden" name="dcvs_admin_changes" value="1">
-        <label>Persona</label><input name="persona_name" type="text" value="<?php dcvs_echo_option("persona_name","Name"); ?>">
-        <label></label><input name="persona_description" type="text" value="<?php dcvs_echo_option("persona_description","Description"); ?>">
-        <label></label><input name="persona_money" type="text" value="<?php dcvs_echo_option("persona_decription", "Money"); ?>">
+        <label>Persona</label><input name="persona_name" type="text" value="Name">
+        <label></label><input name="persona_description" type="text" value="Description">
+        <label></label><input name="persona_money" type="text" value="<?php dcvs_echo_option("default_persona_money", 0); ?>">
         <input type="submit">
     </form>
     <?php
@@ -64,6 +63,21 @@ function dcvs_get_persona($name, $default_value=false){
 
     $result = $wpdb->get_var("SELECT id FROM dcvs_persona WHERE name='".esc_sql($name)."'");
     return $result == NULL ? $default_value : $result;
+}
+
+function dcvs_insert_new_persona($name, $description, $money) {
+  global $wpdb;
+  // check if name is available
+  // check if money is a floatval
+  $wpdb->insert("dcvs_persona", ["name"=>$name, "description"=>$description, "money"=>$money] );
+}
+
+function dcvs_update_persona($id, $name, $description, $money) {
+  global $wpdb;
+  // check if name is taken BY A DIFFERENT ID
+  // check if money is a floatval
+  $wpdb->update("dcvs_persona", array("name"=>$name, "description"=>$description,"money"
+=>$money), array("id"=>$id));
 }
 
 function dcvs_admin_businesses_settings(){
