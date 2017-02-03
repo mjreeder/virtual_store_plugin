@@ -35,26 +35,49 @@ function dcvs_admin_menu_draw(){
 }
 
 function dcvs_admin_personas_settings(){
-  if($_SERVER['REQUEST_METHOD']=="POST" && $_POST['dcvs_admin_changes']==1){
+  if($_SERVER['REQUEST_METHOD']=="POST"){
     $name = $_POST['persona_name'];
     $description = $_POST['persona_description'];
     $money = $_POST['persona_money'];
-    $id = dcvs_get_persona($name);
-    if ($id != NULL) {
-      dcvs_update_persona($id, $name, $description, $money);
-    } else {
+    if ($_POST['dcvs_add_new_persona'] == 1) {
       dcvs_insert_new_persona($name, $description, $money);
+    } else if ($_POST['dcvs_change_persona'] == 1) {
+      $id = $_POST['persona_id'];
+      dcvs_update_persona($id, $name, $description, $money);
     }
   }
     ?>
+    <h3>Add New Persona</h3>
     <form action="" method="post">
-        <input type="hidden" name="dcvs_admin_changes" value="1">
+        <input type="hidden" name="dcvs_add_new_persona" value="1">
         <label>Persona</label><input name="persona_name" type="text" value="Name">
         <label></label><input name="persona_description" type="text" value="Description">
-        <label></label><input name="persona_money" type="text" value="<?php dcvs_echo_option("default_persona_money", 0); ?>">
+        <label>$</label><input name="persona_money" type="text" value="<?php dcvs_echo_option("default_persona_money", 0); ?>">
         <input type="submit">
     </form>
+    <h3>Update Exsisting Personas</h3>
     <?php
+
+    dcvs_get_all_personas();
+}
+
+function dcvs_get_all_personas() {
+  global $wpdb;
+  $personas = $wpdb->get_results("SELECT * FROM dcvs_persona");
+
+  for ($i = 0; $i < sizeof($personas); $i++) {
+    $personaarray = get_object_vars($personas[$i])
+    ?>
+    <form action="" method="post">
+        <input type="hidden" name="dcvs_change_persona" value="1">
+        <input type="hidden" name="persona_id" value="<?php echo $personaarray["id"]; ?>">
+        <label>Persona</label><input name="persona_name" type="text" value="<?php echo $personaarray["name"]; ?>">
+        <label></label><input name="persona_description" type="text" value="<?php echo $personaarray["description"]; ?>">
+        <label></label><input name="persona_money" type="text" value="<?php echo $personaarray["money"]; ?>">
+        <input type="submit" value="Update">
+    </form>
+    <?php
+  }
 }
 
 function dcvs_get_persona($name, $default_value=false){
