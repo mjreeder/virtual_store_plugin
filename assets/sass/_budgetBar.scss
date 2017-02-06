@@ -1,0 +1,85 @@
+.budgetBar {
+    height: 185px;
+    position: fixed;
+    display: flex;
+    bottom: -120px;
+    width: 100%;
+    background-color: $darkBlue;
+    transition: bottom 0.5s;
+    h2 {
+        top: 65px;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        font-family: "Open Sans", sans-serif;
+        font-size: 25px;
+        margin-left: 40px;
+        margin-top: 10px;
+        color: white;
+    }
+    p {
+        top: 110px;
+        left: 0;
+        width: 80%;
+        position: absolute;
+        font-family: "Lato", sans-serif;
+        font-size: 15px;
+        margin-left: 40px;
+        margin-top: 10px;
+        color: white;
+    }
+    .bar {
+        width: 100%;
+        height: 65px;
+        background-color: $blue;
+        display: flex;
+        position: absolute;
+        justify-content: space-between;
+        h3 {
+            color: white;
+            text-align: center;
+            font-family: "Open Sans", sans-serif;
+            font-size: 25px;
+            font-weight: 600;
+            align-self: center;
+            span {
+                font-weight: 400;
+            }
+        }
+        h3:first-of-type {
+            margin-left: 250px;
+        }
+        a {
+            color: white;
+            text-align: center;
+            font-family: "Open Sans", sans-serif;
+            font-size: 25px;
+            font-weight: 600;
+            align-self: center;
+            text-decoration: none;
+            span {
+                font-weight: 400;
+            }
+            margin-right: 25px;
+        }
+        .barLeft {
+            height: 100%;
+            width: 15%;
+            position: absolute;
+            background-color: $darkBlue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            h1 {
+                color: white;
+                text-align: center;
+                font-family: "Open Sans", sans-serif;
+                font-size: 25px;
+            }
+        }
+    }
+}
+.budgetBar:hover {
+    bottom: 0;
+}

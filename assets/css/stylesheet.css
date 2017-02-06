@@ -8,7 +8,6 @@ html, body {
 .storeHeader {
   background-color: #5D5D5D;
   height: 100px;
-  flex: 1 0 75 px;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -35,43 +34,76 @@ html, body {
 
 .helpVideoList {
   width: 500px;
-  height: 100%;
   flex: 0 0 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #F2F2F2; }
-  .helpVideoList img {
-    height: 281px;
+  .helpVideoList figure {
     margin-bottom: 20px; }
-  .helpVideoList p {
-    font-family: "Lato", sans-serif;
-    color: #5D5D5D;
-    width: 80%;
-    font-size: 15px;
-    margin-bottom: 20px; }
+    .helpVideoList figure img {
+      height: 281px;
+      margin-bottom: 20px; }
+    .helpVideoList figure figcaption {
+      font-family: "Lato", sans-serif;
+      color: #5D5D5D;
+      width: 80%;
+      font-size: 15px;
+      margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      font-style: italic; }
   .helpVideoList ol {
-    margin-right: 10%;
-    margin-left: 250px;
-    width: 100%; }
+    padding-right: 10%; }
     .helpVideoList ol li {
       font-family: "Lato", sans-serif;
-      color: #5D5D5D; }
+      color: #5D5D5D;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+      line-height: 1;
+      width: 80%;
+      margin-left: 18%;
+      margin-bottom: 20px; }
       .helpVideoList ol li p {
         font-family: "Lato", sans-serif;
         color: #5D5D5D;
-        font-size: 21px;
-        display: inline;
-        line-height: 40px; }
+        font-size: 17px;
+        max-width: 380px; }
       .helpVideoList ol li span {
         font-size: 13px;
-        margin-left: 25px; }
+        padding-left: 50px;
+        color: #aaaaaa; }
+
+.currentlyPlaying,
+.finished {
+  position: relative; }
+  .currentlyPlaying::before,
+  .finished::before {
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -35px;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center center; }
 
 .finished {
   text-decoration: line-through; }
+  .finished::before {
+    background-image: url("../images/checkmark.svg"); }
+  .finished span {
+    display: none; }
 
 .currentlyPlaying {
   font-weight: bold; }
+  .currentlyPlaying::before {
+    background-image: url("../images/play.svg");
+    background-size: auto 100%; }
 
 .time {
   font-size: 15px;
@@ -79,7 +111,6 @@ html, body {
   text-decoration: none; }
 
 .dashboard {
-  height: 100%;
   width: 100%;
   flex: 1 1 auto;
   padding-top: 20px;
@@ -97,17 +128,17 @@ html, body {
     display: inline-block; }
 
 .mainContent {
-  height: calc(100% - 100px);
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  height: calc(100% - 100px); }
 
 .myStore {
-  height: 32%;
   display: flex;
   flex-direction: row;
   margin-top: 30px; }
   .myStore .myStoreLeft {
-    width: 50%;
+    width: 35%;
+    margin-right: 15%;
     flex: 0 0 auto; }
     .myStore .myStoreLeft p {
       margin-top: 20px;
@@ -116,13 +147,12 @@ html, body {
       font-size: 15px;
       color: #5D5D5D; }
   .myStore .myStoreRight {
-    width: 50%;
+    width: 35%;
     flex: 0 0 auto; }
   .myStore section {
     flex-direction: row; }
 
 .goShopping {
-  height: 50%;
   display: flex;
   flex-direction: row;
   margin-top: 30px; }
@@ -135,7 +165,17 @@ html, body {
 
 @media screen and (max-width: 1300px) {
   .myStore .myStoreRight {
-    width: 40%; } }
+    align-self: center;
+    width: 40%; }
+  .myStore .myStoreLeft p {
+    width: 100%; } }
+
+@media screen and (max-width: 1220px) {
+  .myStore .myStoreRight {
+    align-self: center;
+    width: 40%; }
+  .myStore .myStoreLeft p {
+    width: 100%; } }
 
 .button {
   background-color: #EDB867;
@@ -143,11 +183,12 @@ html, body {
   font-family: 'Open Sans', sans-serif;
   height: 50px;
   width: 300px;
-  border-radius: 0.1in;
+  border-radius: 0.07in;
   border: none;
   font-size: 25px;
   text-align: left;
-  padding-left: 25px; }
+  padding-left: 25px;
+  cursor: pointer; }
 
 .button:hover {
   background-color: #C19457; }
@@ -194,6 +235,11 @@ html, body {
   background-color: #87B8C2; }
 
 @media screen and (max-width: 1300px) {
+  .button {
+    text-align: center;
+    width: 200px;
+    font-size: 20px;
+    padding: 0; }
   .btnStore {
     text-align: center;
     width: 200px;
@@ -215,3 +261,78 @@ html, body {
       text-align: center;
       font-size: 22px;
       padding: 0; } }
+
+.budgetBar {
+  height: 185px;
+  position: fixed;
+  display: flex;
+  bottom: -120px;
+  width: 100%;
+  background-color: #547072;
+  transition: bottom 0.5s; }
+  .budgetBar h2 {
+    top: 65px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    font-family: "Open Sans", sans-serif;
+    font-size: 25px;
+    margin-left: 40px;
+    margin-top: 10px;
+    color: white; }
+  .budgetBar p {
+    top: 110px;
+    left: 0;
+    width: 80%;
+    position: absolute;
+    font-family: "Lato", sans-serif;
+    font-size: 15px;
+    margin-left: 40px;
+    margin-top: 10px;
+    color: white; }
+  .budgetBar .bar {
+    width: 100%;
+    height: 65px;
+    background-color: #87B8C2;
+    display: flex;
+    position: absolute;
+    justify-content: space-between; }
+    .budgetBar .bar h3 {
+      color: white;
+      text-align: center;
+      font-family: "Open Sans", sans-serif;
+      font-size: 25px;
+      font-weight: 600;
+      align-self: center; }
+      .budgetBar .bar h3 span {
+        font-weight: 400; }
+    .budgetBar .bar h3:first-of-type {
+      margin-left: 250px; }
+    .budgetBar .bar a {
+      color: white;
+      text-align: center;
+      font-family: "Open Sans", sans-serif;
+      font-size: 25px;
+      font-weight: 600;
+      align-self: center;
+      text-decoration: none;
+      margin-right: 25px; }
+      .budgetBar .bar a span {
+        font-weight: 400; }
+    .budgetBar .bar .barLeft {
+      height: 100%;
+      width: 15%;
+      position: absolute;
+      background-color: #547072;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer; }
+      .budgetBar .bar .barLeft h1 {
+        color: white;
+        text-align: center;
+        font-family: "Open Sans", sans-serif;
+        font-size: 25px; }
+
+.budgetBar:hover {
+  bottom: 0; }

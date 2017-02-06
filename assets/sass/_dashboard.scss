@@ -1,7 +1,6 @@
 .storeHeader {
     background-color: $darkGray;
     height: 100px;
-    flex: 1 0 75 px;
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -31,49 +30,86 @@
 }
 .helpVideoList {
     width: 500px;
-    height: 100%;
     flex: 0 0 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #F2F2F2;
-    img {
-        height: 281px;
+    figure {
         margin-bottom: 20px;
-    }
-    p {
-        font-family: "Lato", sans-serif;
-        color: $darkGray;
-        width: 80%;
-        font-size: 15px;
-        margin-bottom: 20px;
+        img {
+            height: 281px;
+            margin-bottom: 20px;
+        }
+        figcaption {
+            font-family: "Lato", sans-serif;
+            color: $darkGray;
+            width: 80%;
+            font-size: 15px;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+        }
     }
     ol {
-        margin-right: 10%;
-        margin-left: 250px;
-        width: 100%;
+        padding-right: 10%;
         li {
             font-family: "Lato", sans-serif;
             color: $darkGray;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-between;
+            line-height: 1;
+            width: 80%;
+            margin-left: 18%;
+            margin-bottom: 20px;
             p {
                 font-family: "Lato", sans-serif;
                 color: $darkGray;
-                font-size: 21px;
-                display: inline;
-                line-height: 40px;
+                font-size: 17px;
+                max-width: 380px;
             }
             span {
                 font-size: 13px;
-                margin-left: 25px;
+                padding-left: 50px;
+                color: lighten($darkGray, 30%);
             }
         }
     }
 }
+.currentlyPlaying,
+.finished {
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -35px;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
 .finished {
     text-decoration: line-through;
+    &::before {
+        background-image: url("../images/checkmark.svg");
+    }
+    span {
+        display: none;
+    }
 }
 .currentlyPlaying {
     font-weight: bold;
+    &::before {
+        background-image: url("../images/play.svg");
+        background-size: auto 100%;
+    }
 }
 .time {
     font-size: 15px;
@@ -81,7 +117,6 @@
     text-decoration: none;
 }
 .dashboard {
-    height: 100%;
     width: 100%;
     flex: 1 1 auto;
     padding-top: 20px;
@@ -101,17 +136,17 @@
     }
 }
 .mainContent {
-    height: calc(100% - 100px);
     display: flex;
     flex-direction: row;
+    height: calc(100% - 100px);
 }
 .myStore {
-    height: 32%;
     display: flex;
     flex-direction: row;
     margin-top: 30px;
     .myStoreLeft {
-        width: 50%;
+        width: 35%;
+        margin-right: 15%;
         flex: 0 0 auto;
         p {
             margin-top: 20px;
@@ -122,7 +157,7 @@
         }
     }
     .myStoreRight {
-        width: 50%;
+        width: 35%;
         flex: 0 0 auto;
     }
     section {
@@ -130,7 +165,6 @@
     }
 }
 .goShopping {
-    height: 50%;
     display: flex;
     flex-direction: row;
     margin-top: 30px;
@@ -142,11 +176,29 @@
         color: $darkGray;
     }
 }
-
 @media screen and (max-width:1300px) {
-      .myStore {
+    .myStore {
         .myStoreRight {
+            align-self: center;
             width: 40%;
         }
-      }
+        .myStoreLeft {
+            p {
+                width: 100%;
+            }
+        }
+    }
+}
+@media screen and (max-width:1220px) {
+    .myStore {
+        .myStoreRight {
+            align-self: center;
+            width: 40%;
+        }
+        .myStoreLeft {
+            p {
+                width: 100%;
+            }
+        }
+    }
 }
