@@ -17,7 +17,36 @@ for ($i = 0; $i < sizeof($results); ++$i) {
     ?></div>
   <div><?php echo $personas[1]->name;
     ?></div>
+    <?php var_dump(get_persona_cart($results[$i]->user_id));
+      ?></div>
   </div>
+
     <?php
 
+}
+?>
+change end shopping time<input type='text'/>
+<button>update</button>
+<?php
+
+
+function get_store_info($business_id){
+  global $wpdb;
+  $business = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business WHERE id = %d', $business_id));
+  $current_money = $business->money;
+  $description = $business->description;
+  $display_name = $business->display_name;
+
+}
+
+function get_persona_cart($user_id){
+  global $wpdb;
+  $user_cart_meta_data = $business = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM wp_usermeta WHERE user_id = %d AND meta_key = '_woocommerce_persistent_cart'", $user_id));
+  return $user_cart_meta_data;
+}
+
+function get_time_shopping_time_remaining(){
+  global $wpdb;
+  $result = $wpdb->get_var("SELECT option_value FROM dcvs_options WHERE option_key='shopping_end_date'");
+  var_dump($result);
 }
