@@ -55,7 +55,7 @@ function dcvs_admin_personas_settings(){
         <label>$</label><input name="persona_money" type="text" value="<?php dcvs_echo_option("default_persona_money", 0); ?>">
         <input type="submit">
     </form>
-    <h3>Update Exsisting Personas</h3>
+    <h3>Update Existing Personas</h3>
     <?php
 
     dcvs_get_all_personas();
@@ -73,7 +73,7 @@ function dcvs_get_all_personas() {
         <input type="hidden" name="persona_id" value="<?php echo $personaarray["id"]; ?>">
         <label>Persona</label><input name="persona_name" type="text" value="<?php echo $personaarray["name"]; ?>">
         <label></label><input name="persona_description" type="text" value="<?php echo $personaarray["description"]; ?>">
-        <label></label><input name="persona_money" type="text" value="<?php echo $personaarray["money"]; ?>">
+        <label>$</label><input name="persona_money" type="text" value="<?php echo $personaarray["money"]; ?>">
         <input type="submit" value="Update">
     </form>
     <?php
@@ -119,7 +119,83 @@ function money_is_number($money) {
 }
 
 function dcvs_admin_businesses_settings(){
+    if($_SERVER['REQUEST_METHOD']=="POST"){
+        $title = $_POST['business_title'];
+        $description = $_POST['business_description'];
+        $money = $_POST['business_money'];
+        $url = $_POST['business_url'];
+        if ($_POST['dcvs_add_new_business'] == 1) {
+            dcvs_insert_new_business($title, $description, $money, $url);
+        } else if ($_POST['dcvs_change_business'] == 1) {
+            $id = $_POST['business_id'];
+            dcvs_update_business($id, $title, $description, $money, $url);
+        }
+    }
     ?>
-    INSERT WITTY SAYING
+    <h3>Add New Business</h3>
+    <form action="" method="post">
+        <input type="hidden" name="dcvs_add_new_business" value="1">
+        <label>Business</label><input name="business_title" type="text" value="Business Title">
+        <label></label><input name="business_description" type="text" value="Description">
+        <label>$</label><input name="business_money" type="text" value="<?php dcvs_echo_option("default_business_money", 0.00); ?>">
+        <label></label><input name="business_url" type="text" value="url">
+        <input type="submit">
+    </form>
+    <h3>Update Existing Business</h3>
     <?php
+
+    dcvs_get_all_businesses();
 }
+
+function dcvs_get_all_businesses() {
+    global $wpdb;
+    $businesses = $wpdb->get_results("SELECT * FROM dcvs_business");
+
+    for ($i = 0; $i < sizeof($businesses); $i++) {
+        $businessarray = get_object_vars($businesses[$i])
+        ?>
+        <form action="" method="post">
+            <input type="hidden" name="dcvs_change_business" value="1">
+            <input type="hidden" name="business_id" value="<?php echo $businessarray["id"]; ?>">
+            <label>Business</label><input name="business_title" type="text" value="<?php echo $businessarray["title"]; ?>">
+            <label></label><input name="business_description" type="text" value="<?php echo $businessarray["description"]; ?>">
+            <label>$</label><input name="business_money" type="text" value="<?php echo $businessarray["money"]; ?>">
+            <label></label><input name="business_url" type="text" value="<?php echo $businessarray["url"]; ?>">
+            <input type="submit" value="Update">
+        </form>
+        <?php
+    }
+}
+
+function dcvs_insert_new_business($title, $description, $money, $url) {
+    global $wpdb;
+    $id = dcvs_get_business($title);
+    if ($id != NULL) {
+        echo "That title is already taken";
+    } else if (!money_is_number($money)) {
+        echo "Money must be a number";
+    } else {
+        $wpdb->insert("dcvs_business", ["title"=>$title, "description"=>$description, "money"=>$money, "url"=>$url] );
+    }
+}
+
+function dcvs_get_business($title, $default_value=false){
+    global $wpdb;
+
+    $result = $wpdb->get_var("SELECT id FROM dcvs_business WHERE title='".esc_sql($title)."'");
+    return $result == NULL ? $default_value : $result;
+}
+
+function dcvs_update_business($id, $title, $description, $money, $url) {
+    global $wpdb;
+    $checkid = dcvs_get_business($title);
+    if ($checkid != NULL && $checkid != $id) {
+        echo "You've entered a title that's already taken";
+     } else if (!money_is_number($money)) {
+         echo "Money must be a number";
+     } else {
+         $wpdb->update("dcvs_business", array("title"=>$title, "description"=>$description,"money"
+         =>$money, "url"=>$url), array("id"=>$id));
+     }
+}
+
