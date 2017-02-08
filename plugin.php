@@ -47,16 +47,16 @@ function dcvs_before_cart_contents() {
 	?>
 	<div class="cart-export">
 		<?php
-		echo "<pre>";
-		echo( var_dump( WC()->cart->get_cart() ) );
-		echo "</pre>";
+//		echo "<pre>";
+//		echo( var_dump( WC()->cart->get_cart() ) );
+//		echo "</pre>";
 		?>
 	</div>
 	<!--
 	This combined with dc_after_cart_contents create a hidden
 	div that removes the payment processing section of checkout
 	-->
-	<div class="hide-payment" style="display:none;">
+<!--	<div class="hide-payment" style="display:none;">-->
 	<?php
 
 }
@@ -64,7 +64,7 @@ function dcvs_before_cart_contents() {
 //This function is used to close the hidden div that hides the payment processing section of checkout
 function dcvs_after_cart_contents() {
 	?>
-	</div>
+<!--	</div>-->
 	<?php
 }
 
