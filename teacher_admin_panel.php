@@ -82,6 +82,7 @@ function dcvs_admin_personas_settings(){
         </tbody>
       </table>
       <input class="button-primary" type="submit">
+      <input type="reset">
     </form>
     <h3>Update Existing Personas</h3>
     <?php
@@ -131,6 +132,7 @@ function dcvs_get_all_personas() {
             </tbody>
           </table>
           <input class="button-primary" type="submit" value="Update">
+          <input type="reset">
         </form>
       </div>
   </div>
