@@ -39,21 +39,49 @@ function dcvs_admin_personas_settings(){
     $name = $_POST['persona_name'];
     $description = $_POST['persona_description'];
     $money = $_POST['persona_money'];
-    if ($_POST['dcvs_add_new_persona'] == 1) {
-      dcvs_insert_new_persona($name, $description, $money);
-    } else if ($_POST['dcvs_change_persona'] == 1) {
-      $id = $_POST['persona_id'];
-      dcvs_update_persona($id, $name, $description, $money);
+    if(!fields_are_blank(array($name, $description, $money))){
+      if ($_POST['dcvs_add_new_persona'] == 1) {
+        dcvs_insert_new_persona($name, $description, $money);
+      } else if ($_POST['dcvs_change_persona'] == 1) {
+        $id = $_POST['persona_id'];
+        dcvs_update_persona($id, $name, $description, $money);
+      }
+    } else {
+      echo "Empty field";
     }
   }
     ?>
     <h3>Add New Persona</h3>
     <form action="" method="post">
-        <input type="hidden" name="dcvs_add_new_persona" value="1">
-        <label>Persona</label><input name="persona_name" type="text" value="Name">
-        <label></label><input name="persona_description" type="text" value="Description">
-        <label>$</label><input name="persona_money" type="text" value="<?php dcvs_echo_option("default_persona_money", 0); ?>">
-        <input type="submit">
+      <table class="form-table">
+        <tbody>
+          <input type="hidden" name="dcvs_add_new_persona" value="1">
+          <tr>
+            <th scope="row">
+              <label for="persona_name">Name</label>
+            </th>
+            <td>
+              <input id="persona_name" name="persona_name" type="text" value="">
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <label for="persona_description">Description</label>
+            </th>
+            <td>
+              <textarea id="persona_description" name="persona_description" type="textarea" rows="5" cols="50"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <label for="persona_money">Money</label>
+            </th>
+            <td><input id="persona_money" name="persona_money" type="text" value="<?php dcvs_echo_option("default_persona_money", 0); ?>">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <input class="button-primary" type="submit">
     </form>
     <h3>Update Existing Personas</h3>
     <?php
@@ -68,14 +96,44 @@ function dcvs_get_all_personas() {
   for ($i = 0; $i < sizeof($personas); $i++) {
     $personaarray = get_object_vars($personas[$i])
     ?>
-    <form action="" method="post">
-        <input type="hidden" name="dcvs_change_persona" value="1">
-        <input type="hidden" name="persona_id" value="<?php echo $personaarray["id"]; ?>">
-        <label>Persona</label><input name="persona_name" type="text" value="<?php echo $personaarray["name"]; ?>">
-        <label></label><input name="persona_description" type="text" value="<?php echo $personaarray["description"]; ?>">
-        <label>$</label><input name="persona_money" type="text" value="<?php echo $personaarray["money"]; ?>">
-        <input type="submit" value="Update">
-    </form>
+    <div class="postbox" id="boxid">
+      <div class="inside">
+        <h3><span>Persona <?php echo $i+1 ?></span></h3>
+        <form action="" method="post">
+          <table class="form-table">
+            <tbody>
+              <input type="hidden" name="dcvs_change_persona" value="1">
+              <input type="hidden" name="persona_id" value="<?php echo $personaarray["id"]; ?>">
+              <tr>
+                <th scope="row">
+                  <label for="persona_name">Name</label>
+                </th>
+                <td>
+                  <input id="persona_name" name="persona_name" type="text" value="<?php echo $personaarray["name"]; ?>">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label for="persona_description">Description</label>
+                </th>
+                <td>
+                  <textarea id="persona_description" name="persona_description" type="text" rows="4" cols="50"><?php echo $personaarray["description"]; ?></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label for="persona_money">Money</label>
+                </th>
+                <td>
+                  <input id="persona_money" name="persona_money" type="text" value="<?php echo $personaarray["money"]; ?>">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <input class="button-primary" type="submit" value="Update">
+        </form>
+      </div>
+  </div>
     <?php
   }
 }
@@ -118,6 +176,15 @@ function money_is_number($money) {
   return filter_var($money, FILTER_VALIDATE_FLOAT);
 }
 
+function fields_are_blank($array) {
+  foreach ($array as $s) {
+    if($s == "") {
+      return true;
+    }
+  }
+  return false;
+}
+
 function dcvs_admin_businesses_settings(){
     if($_SERVER['REQUEST_METHOD']=="POST"){
         $title = $_POST['business_title'];
@@ -157,10 +224,23 @@ function dcvs_get_all_businesses() {
         <form action="" method="post">
             <input type="hidden" name="dcvs_change_business" value="1">
             <input type="hidden" name="business_id" value="<?php echo $businessarray["id"]; ?>">
-            <label>Business</label><input name="business_title" type="text" value="<?php echo $businessarray["title"]; ?>">
-            <label></label><input name="business_description" type="text" value="<?php echo $businessarray["description"]; ?>">
-            <label>$</label><input name="business_money" type="text" value="<?php echo $businessarray["money"]; ?>">
-            <label></label><input name="business_url" type="text" value="<?php echo $businessarray["url"]; ?>">
+            <table class="form-table">
+              <tbody>
+                <tr>
+                  <th scope="row">
+                    <label for="business_title">Business</label>
+                  </th>
+                  <td>
+                    <input id="business_title" name="business_title" type="text" value="<?php echo $businessarray["title"]; ?>">
+                  </td>
+                  <label></label><input name="business_description" type="text" value="<?php echo $businessarray["description"]; ?>">
+                  <label>$</label><input name="business_money" type="text" value="<?php echo $businessarray["money"]; ?>">
+                </tr>
+                <tr>
+                  <label></label><input name="business_url" type="text" value="<?php echo $businessarray["url"]; ?>">
+                </tr>
+              </tbody>
+            </table>
             <input type="submit" value="Update">
         </form>
         <?php
@@ -198,4 +278,3 @@ function dcvs_update_business($id, $title, $description, $money, $url) {
          =>$money, "url"=>$url), array("id"=>$id));
      }
 }
-
