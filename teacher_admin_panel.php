@@ -203,12 +203,45 @@ function dcvs_admin_businesses_settings(){
     ?>
     <h3>Add New Business</h3>
     <form action="" method="post">
+      <table class="form-table">
+        <tbody>
         <input type="hidden" name="dcvs_add_new_business" value="1">
-        <label>Business</label><input name="business_title" type="text" value="Business Title">
-        <label></label><input name="business_description" type="text" value="Description">
-        <label>$</label><input name="business_money" type="text" value="<?php dcvs_echo_option("default_business_money", 0.00); ?>">
-        <label></label><input name="business_url" type="text" value="url">
-        <input type="submit">
+        <tr>
+          <th scope="row">
+            <label for="business_title">Title</label>
+          </th>
+          <td>
+            <input id="business_title" name="business_title" type="text" value="Business Title">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            <label for="business_description">Description</label>
+          </th>
+          <td>
+            <input id="business_description" name="business_description" type="text" value="Description">
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="business_money">Money</label>
+          </th>
+          <td>
+            <input id="business_money" name="business_money" type="text" value="<?php dcvs_echo_option("default_business_money", 0.00); ?>">
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="business_url">URL</label>
+          </th>
+          <td>
+            <input id="business_url" name="business_url" type="text" value="url">
+          </td>
+        </tr>
+      </tbody>
+      </table>
+        <input class="button-primary" type="submit">
+        <input type="reset">
     </form>
     <h3>Update Existing Business</h3>
     <?php
@@ -223,28 +256,53 @@ function dcvs_get_all_businesses() {
     for ($i = 0; $i < sizeof($businesses); $i++) {
         $businessarray = get_object_vars($businesses[$i])
         ?>
+        <div class="postbox" id="boxid">
+          <div class="inside">
+            <h3><span> Business <?php echo $i+1 ?></span></h3>
         <form action="" method="post">
-            <input type="hidden" name="dcvs_change_business" value="1">
-            <input type="hidden" name="business_id" value="<?php echo $businessarray["id"]; ?>">
-            <table class="form-table">
-              <tbody>
-                <tr>
-                  <th scope="row">
-                    <label for="business_title">Business</label>
-                  </th>
-                  <td>
-                    <input id="business_title" name="business_title" type="text" value="<?php echo $businessarray["title"]; ?>">
-                  </td>
-                  <label></label><input name="business_description" type="text" value="<?php echo $businessarray["description"]; ?>">
-                  <label>$</label><input name="business_money" type="text" value="<?php echo $businessarray["money"]; ?>">
-                </tr>
-                <tr>
-                  <label></label><input name="business_url" type="text" value="<?php echo $businessarray["url"]; ?>">
-                </tr>
-              </tbody>
-            </table>
-            <input type="submit" value="Update">
+          <table class="form-table">
+            <tbody>
+              <input type="hidden" name="dcvs_change_business" value="1">
+              <input type="hidden" name="business_id" value="<?php echo $businessarray["id"]; ?>">
+              <tr>
+                <th scope="row">
+                  <label for="business_title">Title</label>
+                </th>
+                <td>
+                  <input id="business_title" name="business_title" type="text" value="<?php echo $businessarray["title"]; ?>">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label for="business_description">Description</label>
+                </th>
+                <td>
+                  <input id="business_description" name="business_description" type="text" value="<?php echo $businessarray["description"]; ?>">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label for="business_money">Money</label>
+                </th>
+                <td>
+                  <input id="business_money" name="business_money" type="text" value="<?php echo $businessarray["money"]; ?>">
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <label for="business_url">URL</label>
+                </th>
+                <td>
+                  <input id="business_url" name="business_url" type="text" value="<?php echo $businessarray["url"]; ?>">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <input class="button-primary" type="submit" value="Update">
+          <input type="reset">
         </form>
+      </div>
+      </div>
         <?php
     }
 }
