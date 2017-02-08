@@ -1,5 +1,6 @@
 <?php
 
+
 if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 	class WarehouseCheckout {
@@ -14,7 +15,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 		function dcvs_export_cart( $order_id ) {
 			$table_prefix = self::dcvs_get_table_prefix();
-			self::dcvs_export_attributes();
+			self::dcvs_export_attributes( $table_prefix );
 			self::dcvs_export_variations();
 			self::dcvs_export_products();
 		}
@@ -29,8 +30,12 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			return $table_prefix;
 		}
 
-		function dcvs_export_attributes() {
-
+		function dcvs_export_attributes( $table_prefix ) {
+			global $wpdb;
+			$delete_sql = $wpdb->prepare( "DELETE FROM wp_" . $table_prefix . "_woocommerce_attribute_taxonomies WHERE attribute_name NOT IN (SELECT attribute_name FROM wp_woocommerce_attribute_taxonomies)", [ ] );
+			$wpdb->query( $delete_sql );
+			$insert_sql = $wpdb->prepare( "INSERT INTO wp_" . $table_prefix . "_woocommerce_attribute_taxonomies (attribute_name, attribute_label, attribute_type, attribute_orderby, attribute_public) SELECT attribute_name, attribute_label, attribute_type, attribute_orderby, attribute_public FROM wp_woocommerce_attribute_taxonomies WHERE attribute_name NOT IN (SELECT attribute_name FROM wp_" . $table_prefix . "_woocommerce_attribute_taxonomies)", [ ] );
+			$wpdb->query( $insert_sql );
 		}
 
 		function dcvs_export_variations() {
