@@ -16,6 +16,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 		function dcvs_export_cart( $order_id ) {
 			$table_prefix = self::dcvs_get_table_prefix();
 			self::dcvs_export_attributes( $table_prefix );
+			self::dcvs_export_attribute_terms( $table_prefix );
 			self::dcvs_export_variations();
 			self::dcvs_export_products();
 		}
@@ -68,6 +69,51 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			}
 
 			return $array_attribute_objects;
+		}
+
+//		TODO: UPDATE TERM COUNTS
+
+		function dcvs_export_attribute_terms( $table_prefix ) {
+			
+			self::dcvs_create_new_attribute_terms( $table_prefix );
+
+			self::dcvs_delete_old_attribute_terms( $table_prefix );
+
+		}
+
+		function dcvs_create_new_attribute_terms( $table_prefix ) {
+			global $wpdb;
+
+			$sql = $wpdb->prepare("SELECT wp_terms.*,wp_term_taxonomy.taxonomy,wp_termmeta.meta_key, wp_termmeta.meta_value  FROM wp_terms JOIN wp_term_taxonomy ON wp_terms.term_id = wp_term_taxonomy.term_id JOIN wp_termmeta ON wp_terms.term_id = wp_termmeta.term_id
+				WHERE wp_terms.term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy IN (SELECT CONCAT('pa_',attribute_name) FROM wp_woocommerce_attribute_taxonomies)) AND wp_terms.name NOT IN (SELECT name FROM wp_". $table_prefix . "_terms);", []);
+			$terms = $wpdb->get_results($sql, ARRAY_A);
+
+			foreach ($terms as $term) {
+				$wpdb->insert( "wp_". $table_prefix . "_terms", [ "name" => $term['name'], "slug" => $term['slug'] ] );
+				$term_id = $wpdb->insert_id;
+				$wpdb->insert( "wp_". $table_prefix . "_termmeta", [ "term_id" => $term_id, "meta_key" => $term['meta_key'] ] );
+				$wpdb->insert( "wp_". $table_prefix . "_term_taxonomy", [ "term_id" => $term_id, "taxonomy" => $term['taxonomy'] ] );
+			}
+		}
+
+		function dcvs_delete_old_attribute_terms( $table_prefix ) {
+			global $wpdb;
+
+			$sql = $wpdb->prepare("SELECT wp_". $table_prefix . "_terms.term_id FROM wp_". $table_prefix . "_terms 
+				JOIN wp_". $table_prefix . "_term_taxonomy ON wp_". $table_prefix . "_terms.term_id = wp_". $table_prefix . "_term_taxonomy.term_id 
+				WHERE wp_". $table_prefix . "_terms.name NOT IN (SELECT name FROM wp_terms)", []);
+			$old_terms = $wpdb->get_results($sql, ARRAY_A);
+
+			foreach ($old_terms as $old_term) {
+				$delete_term_sql = $wpdb->prepare( "DELETE FROM wp_" . $table_prefix . "_terms WHERE term_id ="  . esc_sql( $old_term['term_id'] ), [ ] );
+				$wpdb->query( $delete_term_sql );
+
+				$delete_termmeta_sql = $wpdb->prepare( "DELETE FROM wp_" . $table_prefix . "_termmeta WHERE term_id ="  . esc_sql( $old_term['term_id'] ), [ ] );
+				$wpdb->query( $delete_termmeta_sql );
+
+				$delete_term_tax_sql = $wpdb->prepare( "DELETE FROM wp_" . $table_prefix . "_term_taxonomy WHERE term_id ="  . esc_sql( $old_term['term_id'] ), [ ] );
+				$wpdb->query( $delete_term_tax_sql );
+			}
 		}
 
 		function dcvs_export_variations() {
