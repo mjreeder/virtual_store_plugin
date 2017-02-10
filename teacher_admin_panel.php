@@ -35,19 +35,24 @@ function dcvs_admin_menu_draw(){
 }
 
 function dcvs_admin_personas_settings(){
-  if($_SERVER['REQUEST_METHOD']=="POST"){
-    $name = $_POST['persona_name'];
-    $description = $_POST['persona_description'];
-    $money = $_POST['persona_money'];
-    if(!fields_are_blank(array($name, $description, $money))){
-      if ($_POST['dcvs_add_new_persona'] == 1) {
-        dcvs_insert_new_persona($name, $description, $money);
-      } else if ($_POST['dcvs_change_persona'] == 1) {
-        $id = $_POST['persona_id'];
-        dcvs_update_persona($id, $name, $description, $money);
+  if($_SERVER['REQUEST_METHOD']=="POST") {
+    if (isset($_POST['submit'])) {
+      $name = $_POST['persona_name'];
+      $description = $_POST['persona_description'];
+      $money = $_POST['persona_money'];
+      if(!fields_are_blank(array($name, $description, $money))){
+        if ($_POST['dcvs_add_new_persona'] == 1) {
+          dcvs_insert_new_persona($name, $description, $money);
+        } else if ($_POST['dcvs_change_persona'] == 1) {
+          $id = $_POST['persona_id'];
+          dcvs_update_persona($id, $name, $description, $money);
+        }
+      } else {
+        echo "Empty field";
       }
-    } else {
-      echo "Empty field";
+    } if (isset($_POST['delete'])) {
+      $id = $_POST['persona_id'];
+      dcvs_delete_persona($id);
     }
   }
     ?>
@@ -81,7 +86,7 @@ function dcvs_admin_personas_settings(){
           </tr>
         </tbody>
       </table>
-      <input class="button-primary" type="submit">
+      <input class="button-primary" type="submit" name="submit">
       <input type="reset">
     </form>
     <h3>Update Existing Personas</h3>
@@ -132,6 +137,7 @@ function dcvs_get_all_personas() {
             </tbody>
           </table>
           <input class="button-primary" type="submit" value="Update">
+          <input class="button-secondary delete" type="submit" name="delete" value="Delete">
           <input type="reset">
         </form>
       </div>
@@ -174,6 +180,19 @@ function dcvs_update_persona($id, $name, $description, $money) {
   }
 }
 
+function dcvs_delete_persona($id) {
+  //check that no user_persona matches the persona_id
+  //if not, delete the persona, otherwise give user warning
+  global $wpdb;
+  $users = $wpdb->get_results("SELECT * FROM dcvs_user_persona WHERE persona_id='".esc_sql($id)."'");
+  if(sizeof($users) != 0) {
+    echo "At least one student is using this persona, so it cannot be deleted";
+  } else {
+    $wpdb->delete("dcvs_persona", array("id"=>$id));
+    echo "Persona deleted";
+  }
+}
+
 function money_is_number($money) {
   return filter_var($money, FILTER_VALIDATE_FLOAT);
 }
@@ -189,6 +208,7 @@ function fields_are_blank($array) {
 
 function dcvs_admin_businesses_settings(){
     if($_SERVER['REQUEST_METHOD']=="POST"){
+      if(isset($_POST['submit'])) {
         $title = $_POST['business_title'];
         $description = $_POST['business_description'];
         $money = $_POST['business_money'];
@@ -199,6 +219,10 @@ function dcvs_admin_businesses_settings(){
             $id = $_POST['business_id'];
             dcvs_update_business($id, $title, $description, $money, $url);
         }
+      } else if(isset($_POST['delete'])) {
+        $id = $_POST['business_id'];
+        dcvs_delete_business($id);
+      }
     }
     ?>
     <h3>Add New Business</h3>
@@ -298,7 +322,8 @@ function dcvs_get_all_businesses() {
               </tr>
             </tbody>
           </table>
-          <input class="button-primary" type="submit" value="Update">
+          <input class="button-primary" type="submit" name="submit" value="Update">
+          <input class="button-secondary delete" type="submit" name="delete" value="Delete">
           <input type="reset">
         </form>
       </div>
@@ -337,4 +362,17 @@ function dcvs_update_business($id, $title, $description, $money, $url) {
          $wpdb->update("dcvs_business", array("title"=>$title, "description"=>$description,"money"
          =>$money, "url"=>$url), array("id"=>$id));
      }
+}
+
+function dcvs_delete_business($id) {
+  //check that no user_business matches the business_id
+  //if not, delete the business, otherwise give user warning
+  global $wpdb;
+  $users = $wpdb->get_results("SELECT * FROM dcvs_user_business WHERE business_id='".esc_sql($id)."'");
+  if(sizeof($users) != 0) {
+    echo "At least one student is using this business, so it cannot be deleted";
+  } else {
+    $wpdb->delete("dcvs_business", array("id"=>$id));
+    echo "Business deleted";
+  }
 }
