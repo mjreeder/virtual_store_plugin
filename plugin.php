@@ -92,6 +92,7 @@ function dcvs_get_user_business_money($user_id) {
   $spent = calculate_spent($costs);
   $moneyLeft = $money - $spent;
   return $moneyLeft;
+  //calculates money left after purchases from warehouse
 }
 
 function dcvs_get_business_profit() {
@@ -116,4 +117,13 @@ function calculate_spent($costs) {
     $spent+=$cost;
   }
   return $spent;
+}
+
+function dcvs_user_persona_can_spend($user_persona_id) {
+    $money = dcvs_get_user_persona_money($user_persona_id);
+    if($money <= 0){
+        return false;
+    }else{
+        return true;
+    }
 }
