@@ -83,3 +83,22 @@ function dcvs_set_option($key, $value){
 function dcvs_echo_option($key, $default_value=false){
     echo dcvs_get_option($key, $default_value);
 }
+
+function dcvs_get_business_money() {
+
+}
+
+function dcvs_get_user_persona_money($user_persona_id) {
+  global $wpdb;
+  $persona_id = $wpdb->get_var("SELECT persona_id FROM dcvs_user_persona WHERE id='".esc_sql($user_persona_id)."'");
+  $persona_money = $wpdb->get_var("SELECT money FROM dcvs_persona WHERE id='".esc_sql($persona_id)."'");
+  $spent = 0;
+  $costs = $wpdb->get_results("SELECT cost FROM dcvs_business_purchase WHERE user_persona_id='".esc_sql($user_persona_id)."'");
+  for($i = 0; $i < sizeof($costs); $i++) {
+    $costObject = get_object_vars($costs[$i]);
+    $cost = $costObject["cost"];
+    $spent+=$cost;
+  }
+  $moneyLeft = $persona_money - $spent;
+  return $moneyLeft;
+}
