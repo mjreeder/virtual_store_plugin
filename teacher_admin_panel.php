@@ -208,6 +208,7 @@ function fields_are_blank($array) {
 
 function dcvs_admin_businesses_settings(){
     if($_SERVER['REQUEST_METHOD']=="POST"){
+      if(isset($_POST['submit'])) {
         $title = $_POST['business_title'];
         $description = $_POST['business_description'];
         $money = $_POST['business_money'];
@@ -218,6 +219,10 @@ function dcvs_admin_businesses_settings(){
             $id = $_POST['business_id'];
             dcvs_update_business($id, $title, $description, $money, $url);
         }
+      } else if(isset($_POST['delete'])) {
+        $id = $_POST['business_id'];
+        dcvs_delete_business($id);
+      }
     }
     ?>
     <h3>Add New Business</h3>
@@ -317,7 +322,8 @@ function dcvs_get_all_businesses() {
               </tr>
             </tbody>
           </table>
-          <input class="button-primary" type="submit" value="Update">
+          <input class="button-primary" type="submit" name="submit" value="Update">
+          <input class="button-secondary delete" type="submit" name="delete" value="Delete">
           <input type="reset">
         </form>
       </div>
@@ -356,4 +362,17 @@ function dcvs_update_business($id, $title, $description, $money, $url) {
          $wpdb->update("dcvs_business", array("title"=>$title, "description"=>$description,"money"
          =>$money, "url"=>$url), array("id"=>$id));
      }
+}
+
+function dcvs_delete_business($id) {
+  //check that no user_business matches the business_id
+  //if not, delete the business, otherwise give user warning
+  global $wpdb;
+  $users = $wpdb->get_results("SELECT * FROM dcvs_user_business WHERE business_id='".esc_sql($id)."'");
+  if(sizeof($users) != 0) {
+    echo "At least one student is using this business, so it cannot be deleted";
+  } else {
+    $wpdb->delete("dcvs_business", array("id"=>$id));
+    echo "Business deleted";
+  }
 }
