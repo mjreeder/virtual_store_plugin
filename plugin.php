@@ -84,7 +84,22 @@ function dcvs_echo_option($key, $default_value=false){
     echo dcvs_get_option($key, $default_value);
 }
 
-function dcvs_get_business_money() {
+function dcvs_get_user_business_money($user_id) {
+  global $wpdb;
+  $business_id = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id='".esc_sql($user_id)."'");
+  $money = $wpdb->get_var("SELECT money FROM dcvs_business WHERE id='".esc_sql($business_id)."'");
+  $spent = 0;
+  $costs = $wpdb->get_results("SELECT cost FROM dcvs_warehouse_purchase WHERE user_id='".esc_sql($user_id)."'");
+  for ($i = 0; $i < sizeof($costs); $i++){
+    $costObject = get_object_vars($costs[$i]);
+    $cost = $costObject["cost"];
+    $spent+=$cost;
+  }
+  $moneyLeft = $money - $spent;
+  echo $moneyLeft;
+}
+
+function dcvs_get_business_profit() {
 
 }
 
