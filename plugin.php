@@ -95,8 +95,15 @@ function dcvs_get_user_business_money($user_id) {
   //calculates money left after purchases from warehouse
 }
 
-function dcvs_get_business_profit() {
-
+function dcvs_get_user_business_profit($user_id) {
+  global $wpdb;
+  $business_id = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id='".esc_sql($user_id)."'");
+  $costs = $wpdb->get_results("SELECT cost FROM dcvs_warehouse_purchase WHERE user_id='".esc_sql($user_id)."'");
+  $spent = calculate_spent($costs);
+  $sales = $wpdb->get_results("SELECT cost FROM dcvs_business_purchase WHERE business_id='".esc_sql($business_id)."'");
+  $gained = calculate_spent($sales);
+  $profit = $gained - $spent;
+  return $profit;
 }
 
 function dcvs_get_user_persona_money($user_persona_id) {
