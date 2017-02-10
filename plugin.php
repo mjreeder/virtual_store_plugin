@@ -88,15 +88,10 @@ function dcvs_get_user_business_money($user_id) {
   global $wpdb;
   $business_id = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id='".esc_sql($user_id)."'");
   $money = $wpdb->get_var("SELECT money FROM dcvs_business WHERE id='".esc_sql($business_id)."'");
-  $spent = 0;
   $costs = $wpdb->get_results("SELECT cost FROM dcvs_warehouse_purchase WHERE user_id='".esc_sql($user_id)."'");
-  for ($i = 0; $i < sizeof($costs); $i++){
-    $costObject = get_object_vars($costs[$i]);
-    $cost = $costObject["cost"];
-    $spent+=$cost;
-  }
+  $spent = calculate_spent($costs);
   $moneyLeft = $money - $spent;
-  echo $moneyLeft;
+  return $moneyLeft;
 }
 
 function dcvs_get_business_profit() {
@@ -107,13 +102,18 @@ function dcvs_get_user_persona_money($user_persona_id) {
   global $wpdb;
   $persona_id = $wpdb->get_var("SELECT persona_id FROM dcvs_user_persona WHERE id='".esc_sql($user_persona_id)."'");
   $persona_money = $wpdb->get_var("SELECT money FROM dcvs_persona WHERE id='".esc_sql($persona_id)."'");
-  $spent = 0;
   $costs = $wpdb->get_results("SELECT cost FROM dcvs_business_purchase WHERE user_persona_id='".esc_sql($user_persona_id)."'");
+  $spent = calculate_spent($costs);
+  $moneyLeft = $persona_money - $spent;
+  return $moneyLeft;
+}
+
+function calculate_spent($costs) {
+  $spent = 0;
   for($i = 0; $i < sizeof($costs); $i++) {
     $costObject = get_object_vars($costs[$i]);
     $cost = $costObject["cost"];
     $spent+=$cost;
   }
-  $moneyLeft = $persona_money - $spent;
-  return $moneyLeft;
+  return $spent;
 }
