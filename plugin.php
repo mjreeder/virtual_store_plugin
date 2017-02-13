@@ -126,11 +126,14 @@ function calculate_spent($costs) {
   return $spent;
 }
 
-function dcvs_user_persona_can_spend($user_persona_id) {
+function dcvs_user_can_purchase($user_persona_id, $purchase_amount){
     $money = dcvs_get_user_persona_money($user_persona_id);
-    if($money <= 0){
-        return false;
-    }else{
+    if($money >= $purchase_amount){
         return true;
     }
+    return false;
+}
+
+function user_has_money($user_persona_id) {
+
 }
