@@ -1,4 +1,21 @@
-.storeHeader {
+$darkGray: #5D5D5D;
+$red: #EA6F6C;
+$darkRed: #AA4444;
+$blue: #87B8C2;
+$darkBlue: #547072;
+$yellow: #EDB867;
+$darkYellow: #C19457;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+
+.header {
     background-color: $darkGray;
     height: 100px;
     display: flex;
@@ -198,6 +215,100 @@
             p {
                 width: 100%;
             }
+        }
+    }
+}
+// BUTTONS
+.button {
+    background-color: $yellow;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    height: 50px;
+    width: 300px;
+    border-radius: 0.07in;
+    border: none;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: left;
+    padding-left: 25px;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: $darkYellow;
+}
+.btnStore {
+    margin-bottom: 20px;
+}
+.persona {
+    background-color: $red;
+    text-align: left;
+    height: 78px;
+    width: 300px;
+    border-radius: 0.1in;
+    padding-left: 25px;
+    display: flex;
+    h3 {
+        font-size: 27px;
+        color: white;
+        font-family: 'Open Sans', sans-serif;
+        padding-top: 20px;
+    }
+    img {
+        height: 68px;
+        margin-top: 10px;
+        margin-left: 40px;
+    }
+}
+.personaSmall {
+    background-color: $red;
+    margin-top: 30px;
+    margin-right: 20px;
+    height: 35px;
+    width: 100px;
+    font-size: 17px;
+}
+.personaSmall.one:hover {
+    background-color: $darkRed;
+}
+.personaSmall.two:hover {
+    background-color: $darkBlue;
+}
+.one {
+    background-color: $red;
+}
+.two {
+    background-color: $blue;
+}
+@media screen and (max-width:1300px) {
+    .button {
+        text-align: center;
+        width: 200px;
+        font-size: 20px;
+        padding: 0;
+    }
+    .btnStore {
+        text-align: center;
+        width: 200px;
+        font-size: 20px;
+        padding: 0;
+        display: block;
+        float: right;
+        margin-right: 40px;
+        align-self: center;
+    }
+    .persona {
+        width: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        img {
+            display: none;
+        }
+        h3 {
+            text-align: center;
+            font-size: 22px;
+            padding: 0;
         }
     }
 }

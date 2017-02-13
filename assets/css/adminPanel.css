@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body,
+html {
+  height: 100%; }
+
+.header {
+  background-color: #5D5D5D;
+  height: 100px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row; }
+  .header h1 {
+    font-family: 'Open sans', sans-serif;
+    color: white;
+    font-size: 40px;
+    margin-left: 75px;
+    display: inline;
+    align-self: center; }
+  .header p {
+    color: white;
+    font-family: 'Open sans', sans-serif;
+    font-size: 15pt;
+    align-self: center;
+    margin-right: 100px;
+    vertical-align: super; }
+    .header p b {
+      font-size: 50px;
+      margin-left: 50px; }
+
+.admin {
+  height: calc(100% - 100px);
+  width: 100%;
+  display: flex;
+  flex-direction: row; }
+
+.sidebar {
+  height: 100%;
+  width: 15%;
+  background-color: #5D5D5D; }
+  .sidebar ul {
+    height: 100%; }
+    .sidebar ul li {
+      padding-top: 25px;
+      height: 80px;
+      color: white;
+      font-size: 20px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer; }
+
+.selectedTab {
+  background-color: #828282; }
+
+.studentList {
+  height: 100%;
+  width: 15%;
+  background-color: white; }
+  .studentList .searchBar {
+    height: 40px;
+    position: relative; }
+    .studentList .searchBar img {
+      position: absolute;
+      top: 7px;
+      left: 7px; }
+    .studentList .searchBar input {
+      display: inline;
+      margin-left: 20px;
+      height: 100%;
+      width: calc(100% - 40px);
+      border: none;
+      padding-left: 20px;
+      font-size: 20px;
+      font-family: "Lato", sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      color: #5D5D5D; }
+    .studentList .searchBar input:placeholder {
+      color: #E0E0E0; }
+    .studentList .searchBar input:focus {
+      outline-width: 0; }
+  .studentList ul {
+    height: calc(100% - 40px);
+    overflow: scroll; }
+    .studentList ul li {
+      width: 100%;
+      padding-left: 20px;
+      background-color: #F2F2F2;
+      color: #5D5D5D;
+      list-style: none;
+      height: 35px;
+      padding-top: 5px;
+      text-transform: uppercase;
+      font-size: 20px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      cursor: pointer; }
+    .studentList ul li:nth-child(2n) {
+      background-color: #E0E0E0; }
+
+.studentInfo {
+  height: 100%;
+  width: 70%; }
+  .studentInfo h1 {
+    font-size: 40px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: #5D5D5D; }

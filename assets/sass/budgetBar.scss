@@ -1,3 +1,20 @@
+$darkGray: #5D5D5D;
+$red: #EA6F6C;
+$darkRed: #AA4444;
+$blue: #87B8C2;
+$darkBlue: #547072;
+$yellow: #EDB867;
+$darkYellow: #C19457;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+
 .budgetBar {
     height: 185px;
     position: fixed;
