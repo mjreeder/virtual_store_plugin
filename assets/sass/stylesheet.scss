@@ -9,7 +9,7 @@ $darkYellow: #C19457;
 * {
   margin: 0;
   padding: 0;
-  // border: 1px solid black;
+  box-sizing: border-box;
 }
 html, body {
   height: 100%;
@@ -18,3 +18,4 @@ html, body {
 @import 'dashboard';
 @import 'buttons';
 @import 'budgetBar';
+@import 'adminPanel';

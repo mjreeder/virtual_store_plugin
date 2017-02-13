@@ -1,6 +1,7 @@
 * {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  box-sizing: border-box; }
 
 html, body {
   height: 100%; }
@@ -19,7 +20,6 @@ html, body {
     font-size: 40px;
     margin-left: 75px;
     display: inline;
-    max-width: 25%;
     align-self: center; }
   .storeHeader p {
     color: white;
@@ -186,6 +186,7 @@ html, body {
   border-radius: 0.07in;
   border: none;
   font-size: 25px;
+  font-weight: 700;
   text-align: left;
   padding-left: 25px;
   cursor: pointer; }
@@ -268,7 +269,7 @@ html, body {
   display: flex;
   bottom: -120px;
   width: 100%;
-  background-color: #547072;
+  background-color: #AA4444;
   transition: bottom 0.5s; }
   .budgetBar h2 {
     top: 65px;
@@ -293,7 +294,7 @@ html, body {
   .budgetBar .bar {
     width: 100%;
     height: 65px;
-    background-color: #87B8C2;
+    background-color: #EA6F6C;
     display: flex;
     position: absolute;
     justify-content: space-between; }
@@ -307,28 +308,28 @@ html, body {
       .budgetBar .bar h3 span {
         font-weight: 400; }
     .budgetBar .bar h3:first-of-type {
-      margin-left: 250px; }
+      margin-left: 17%; }
     .budgetBar .bar a {
-      color: white;
-      text-align: center;
-      font-family: "Open Sans", sans-serif;
-      font-size: 25px;
-      font-weight: 600;
-      align-self: center;
       text-decoration: none;
-      margin-right: 25px; }
+      align-self: center; }
       .budgetBar .bar a span {
-        font-weight: 400; }
+        color: white;
+        text-align: center;
+        font-family: "Open Sans", sans-serif;
+        font-size: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-right: 25px; }
     .budgetBar .bar .barLeft {
       height: 100%;
       width: 15%;
       position: absolute;
-      background-color: #547072;
+      background-color: #AA4444;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer; }
-      .budgetBar .bar .barLeft h1 {
+      .budgetBar .bar .barLeft span h1 {
         color: white;
         text-align: center;
         font-family: "Open Sans", sans-serif;
@@ -336,3 +337,113 @@ html, body {
 
 .budgetBar:hover {
   bottom: 0; }
+
+.barUp {
+  bottom: 0; }
+
+@media screen and (max-width: 1000px) {
+  .budgetBar .bar .barLeft span h1 {
+    font-size: 20px; } }
+
+@media screen and (max-width: 800px) {
+  .budgetBar .bar .barLeft span h1 {
+    font-size: 15px; } }
+
+@media screen and (max-width: 700px) {
+  .budgetBar .bar .barLeft span h1 {
+    font-size: 15px; }
+  .budgetBar .bar a span {
+    visibility: hidden; }
+  .budgetBar .bar a span:after {
+    position: absolute;
+    right: 5%;
+    visibility: visible;
+    content: 'store list';
+    white-space: nowrap; } }
+
+@media screen and (max-width: 600px) {
+  .budgetBar .bar .barLeft span {
+    visibility: hidden; }
+  .budgetBar .bar .abrLeft span:after {
+    visibility: visible;
+    content: '#1'; } }
+
+.admin {
+  height: calc(100% - 100px);
+  width: 100%;
+  display: flex;
+  flex-direction: row; }
+
+.sidebar {
+  height: 100%;
+  width: 15%;
+  background-color: #5D5D5D; }
+  .sidebar ul {
+    height: 100%; }
+    .sidebar ul li {
+      padding-top: 25px;
+      height: 80px;
+      color: white;
+      font-size: 20px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer; }
+
+.selectedTab {
+  background-color: #828282; }
+
+.studentList {
+  height: 100%;
+  width: 15%;
+  background-color: white; }
+  .studentList .searchBar {
+    height: 40px;
+    position: relative; }
+    .studentList .searchBar img {
+      position: absolute;
+      top: 7px;
+      left: 7px; }
+    .studentList .searchBar input {
+      display: inline;
+      margin-left: 20px;
+      height: 100%;
+      width: calc(100% - 40px);
+      border: none;
+      padding-left: 20px;
+      font-size: 20px;
+      font-family: "Lato", sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      color: #5D5D5D; }
+    .studentList .searchBar input:placeholder {
+      color: #E0E0E0; }
+    .studentList .searchBar input:focus {
+      outline-width: 0; }
+  .studentList ul {
+    height: calc(100% - 40px);
+    overflow: scroll; }
+    .studentList ul li {
+      width: 100%;
+      padding-left: 20px;
+      background-color: #F2F2F2;
+      color: #5D5D5D;
+      list-style: none;
+      height: 35px;
+      padding-top: 5px;
+      text-transform: uppercase;
+      font-size: 20px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      cursor: pointer; }
+    .studentList ul li:nth-child(2n) {
+      background-color: #E0E0E0; }
+
+.studentInfo {
+  height: 100%;
+  width: 70%; }
+  .studentInfo h1 {
+    font-size: 40px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: #5D5D5D; }

@@ -1,0 +1,99 @@
+.admin {
+    height: calc(100% - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.sidebar {
+    height: 100%;
+    width: 15%;
+    background-color: $darkGray;
+    ul {
+      height: 100%;
+      li {
+        padding-top: 25px;
+        height: 80px;
+        color: white;
+        font-size: 20px;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+}
+.selectedTab {
+    background-color: #828282;
+}
+.studentList {
+    height: 100%;
+    width: 15%;
+    background-color: white;
+    .searchBar {
+        height: 40px;
+        position: relative;
+        img {
+            position: absolute;
+            top: 7px;
+            left: 7px;
+        }
+        input {
+            display: inline;
+            margin-left: 20px;
+            height: 100%;
+            width: calc(100% - 40px);
+            border: none;
+            padding-left: 20px;
+            font-size: 20px;
+            font-family: "Lato", sans-serif;
+            font-weight: 700;
+            font-style: italic;
+            color: $darkGray;
+        }
+        input:placeholder {
+            color: #E0E0E0;
+        }
+        input:focus {
+            outline-width: 0;
+        }
+    }
+    ul {
+        height: calc(100% - 40px);
+        overflow: scroll;
+        li {
+            width: 100%;
+            padding-left: 20px;
+            background-color: #F2F2F2;
+            color: $darkGray;
+            list-style: none;
+            height: 35px;
+            padding-top: 5px;
+            text-transform: uppercase;
+            font-size: 20px;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        li:nth-child(2n) {
+            background-color: #E0E0E0;
+        }
+    }
+}
+.studentInfo {
+    height: 100%;
+    width: 70%;
+    h1 {
+      font-size: 40px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      color: $darkGray;
+    }
+    .merchandiserInfo {
+    }
+    .shopperInfo {
+        .shopperOne {
+        }
+        .shopperTwo {
+        }
+    }
+}
