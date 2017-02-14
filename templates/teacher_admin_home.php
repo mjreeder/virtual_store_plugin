@@ -5,7 +5,6 @@ get_shopping_end_date();
 get_warehouse_end_date();
 display_some_random_user_data();
 
-
 function get_store_info($business_id)
 {
     global $wpdb;
@@ -17,13 +16,32 @@ function get_store_info($business_id)
 
 function display_some_random_user_data()
 {
+    $user_results;
+    $display_names = array();
     global $wpdb;
-    $results = $wpdb->get_results('SELECT * FROM dcvs_user_business', OBJECT);
-    for ($i = 0; $i < sizeof($results); ++$i) {
-        $display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_users WHERE id = %d', $results[$i]->user_id));
-        $business = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business WHERE id = %d', $results[$i]->business_id));
-        // $user_personas =
-        $personas = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.id WHERE user_id = %d', $results[$i]->user_id));
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['dcvs_admin_changes'] == 1 && isset($_POST['student_name'])) {
+        $student_name = $_POST['student_name'];
+        var_dump($student_name);
+        var_dump($display_names);
+    }
+    ?>
+  <!-- template -->
+  <form action="" method="post">
+      <input type="hidden" name="dcvs_admin_changes" value="1">
+      <input name="student_name" placeholder="name" type="text">
+      <input type="submit">
+  </form>
+
+  <?php
+    $user_results = $wpdb->get_results('SELECT * FROM dcvs_user_business', OBJECT);
+    ?>
+    <?php
+    for ($i = 0; $i < sizeof($user_results); ++$i) {
+        $display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_users WHERE id = %d', $user_results[$i]->user_id));
+        // array_push($display_names, $display_name[0]->display_name);
+        $display_names[] = $display_name[0]->display_name;
+        $business = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business WHERE id = %d', $user_results[$i]->business_id));
+        $personas = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.id WHERE user_id = %d', $user_results[$i]->user_id));
         ?>
     <div>
       <label name="student_name" type="text"><?php echo $display_name[0]->display_name;
@@ -34,9 +52,9 @@ function display_some_random_user_data()
         ?></div>
     <div><?php echo $personas[1]->name;
         ?></div>
-      <?php get_user_persona_order_history($results[$i]->user_id, $personas[0]->id);
+      <?php get_user_persona_order_history($user_results[$i]->user_id, $personas[0]->id);
         ?></div>
-      <?php get_user_persona_order_history($results[$i]->user_id, $personas[1]->id);
+      <?php get_user_persona_order_history($user_results[$i]->user_id, $personas[1]->id);
         ?></div>
     </div>
       <?php
@@ -47,10 +65,9 @@ function display_some_random_user_data()
 function get_user_persona_order_history($user_id, $persona_id)
 {
     global $wpdb;
-
     $user_persona_order_history = $wpdb->get_results($wpdb->prepare('SELECT items, cost FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND user_persona_id = %d', $user_id, $persona_id));
-    for ($i=0; $i <sizeOf($user_persona_order_history) ; $i++) {
-      var_dump($user_persona_order_history[$i]->cost, $user_persona_order_history[$i]->items);
+    for ($i = 0; $i < sizeOf($user_persona_order_history); ++$i) {
+        var_dump($user_persona_order_history[$i]->cost, $user_persona_order_history[$i]->items);
     }
 }
 
@@ -72,10 +89,13 @@ function get_shopping_end_date()
       <label>Shopping end date</label> <input name="shopping_end_date" type="text" value="<?php dcvs_echo_option('shopping_end_date', 0);
     ?>">
       <input type="submit">
-
   </form>
   <?php
 
+}
+
+function filter_user_list()
+{
 }
 
 function get_warehouse_end_date()
