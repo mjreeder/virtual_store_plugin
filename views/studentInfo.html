@@ -21,15 +21,19 @@
 
         <nav class="sidebar">
             <ul>
-                <li class="selectedTab">STUDENT
-                    <br> INFO</li>
-                <li>MERCHANDISER FUNCTIONS</li>
-                <li>ASSIGN
-                    <br> PERSONAS</li>
-                <li>MANAGE
-                    <br> PERSONAS</li>
-                <li>GENERAL
-                    <br> SETTINGS</li>
+                <li id="selectedTab">STUDENT INFO</li>
+                <a href="../views/merchandiser.html">
+                    <li>MERCHANDISER</li>
+                </a>
+                <a href="../views/assign.html">
+                    <li>ASSIGN PERSONAS</li>
+                </a>
+                <a href="../views/manage.html">
+                    <li>MANAGE PERSONAS</li>
+                </a>
+                <a href="../views/settings.html">
+                    <li>GENERAL SETTINGS</li>
+                </a>
             </ul>
         </nav>
         <aside class="studentList">
@@ -40,7 +44,7 @@
             <ul>
                 <li>Corey</li>
                 <li>Madde</li>
-                <li>Ryan</li>
+                <li class="selectedStudent">Ryan</li>
                 <li>Bob</li>
                 <li>Suzy</li>
                 <li>Sue</li>
@@ -97,30 +101,34 @@
             <h1>ryan bitzegaio</h1>
             <section class="merchandiserInfo">
                 <h2>merchandiser</h2>
-                <p>you are: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus.</p>
-                <button>PERSONAL SITE</button>
-                <button>COMPARISON</button>
-                <button>FINAL SURVEY</button>
+                <p><strong>you are:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu
+                    pellentesque interdum. Sed pulvinar orci lacus.</p>
+                <div>
+                    <button class="button">PERSONAL SITE</button>
+                    <button class="button">COMPARISON</button>
+                    <button class="button">FINAL SURVEY</button>
+                </div>
+
             </section>
             <section class="shopperInfo">
                 <h2>shopper</h2>
                 <aside class="shopperOne">
                     <div>
                         <h3>SHOPPER #1</h3>
-                        <img src="" alt="">
+                        <img src="../assets/images/personaRed.png" alt="">
                     </div>
-                    <p>you are: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada nibh eu pellentesque interdum. Sed pulvinar orci lacus.</p>
-                    <button>ORDER HISTORY</button>
-                    <button>SURVEY</button>
+                    <p><strong>you are:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada nibh eu pellentesque interdum. Sed pulvinar orci lacus.</p>
+                    <button class="button buttonSmall">ORDER HISTORY</button>
+                    <button class="button buttonSmall">SURVEY</button>
                 </aside>
                 <aside class="shopperTwo">
                     <div>
                         <h3>SHOPPER #2</h3>
-                        <img src="" alt="">
+                        <img src="../assets/images/personaBlue.png" alt="">
                     </div>
-                    <p>you are: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada nibh eu pellentesque interdum. Sed pulvinar orci lacus.</p>
-                    <button>ORDER HISTORY</button>
-                    <button>SURVEY</button>
+                    <p><strong>you are:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada nibh eu pellentesque interdum. Sed pulvinar orci lacus.</p>
+                    <button class="button buttonSmall">ORDER HISTORY</button>
+                    <button class="button buttonSmall">SURVEY</button>
                 </aside>
             </section>
 

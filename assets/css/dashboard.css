@@ -3,12 +3,13 @@
   padding: 0;
   box-sizing: border-box; }
 
-html, body {
+body,
+html {
   height: 100%; }
 
 .header {
   background-color: #5D5D5D;
-  height: 100px;
+  height: 75px;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -130,12 +131,13 @@ html, body {
 .mainContent {
   display: flex;
   flex-direction: row;
-  height: calc(100% - 100px); }
+  height: calc(100% - 75px); }
 
 .myStore {
   display: flex;
   flex-direction: row;
-  margin-top: 30px; }
+  margin-top: 30px;
+  margin-bottom: 20px; }
   .myStore .myStoreLeft {
     width: 35%;
     margin-right: 15%;
@@ -213,7 +215,7 @@ html, body {
   .persona img {
     height: 68px;
     margin-top: 10px;
-    margin-left: 40px; }
+    margin-left: 25px; }
 
 .personaSmall {
   background-color: #EA6F6C;
