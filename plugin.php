@@ -84,6 +84,21 @@ function dcvs_echo_option($key, $default_value=false){
     echo dcvs_get_option($key, $default_value);
 }
 
+function dcvs_insert_warehouse_purchase($user_id, $cost, $items){
+    global $wpdb;
+    $wpdb->insert("dcvs_warehouse_purchase", ["user_id"=>$user_id, "cost"=>$cost, "items"=>$items]);
+}
+
+function dcvs_insert_business_purchase($user_persona_id, $business_id, $items, $cost){
+    global $wpdb;
+    if(dcvs_user_persona_can_purchase($user_persona_id, $cost)){
+        $wpdb->insert("dcvs_business_purchase", ["user_persona_id"=>$user_persona_id, "business_id"=>$business_id, "items"=>$items,
+            "cost"=>$cost]);
+    }else{
+        echo("Purchase failed, insufficient funds.");
+    }
+}
+
 function dcvs_get_user_business_money($user_id) {
   global $wpdb;
   $business_id = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id='".esc_sql($user_id)."'");
@@ -92,7 +107,6 @@ function dcvs_get_user_business_money($user_id) {
   $spent = calculate_spent($costs);
   $moneyLeft = $money - $spent;
   return $moneyLeft;
-  //calculates money left after purchases from warehouse
 }
 
 function dcvs_get_user_business_profit($user_id) {
@@ -126,14 +140,10 @@ function calculate_spent($costs) {
   return $spent;
 }
 
-function dcvs_user_can_purchase($user_persona_id, $purchase_amount){
+function dcvs_user_persona_can_purchase($user_persona_id, $purchase_amount){
     $money = dcvs_get_user_persona_money($user_persona_id);
     if($money >= $purchase_amount){
         return true;
     }
     return false;
-}
-
-function user_has_money($user_persona_id) {
-
 }
