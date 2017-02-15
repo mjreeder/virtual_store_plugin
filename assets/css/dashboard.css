@@ -3,40 +3,33 @@
   padding: 0;
   box-sizing: border-box; }
 
-html, body {
+body,
+html {
   height: 100%; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; }
-
-html, body {
-  height: 100%; }
-
-.storeHeader {
+.header {
   background-color: #5D5D5D;
-  height: 100px;
+  height: 75px;
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: row; }
-  .storeHeader h1 {
+  .header h1 {
     font-family: 'Open sans', sans-serif;
     color: white;
     font-size: 40px;
     margin-left: 75px;
     display: inline;
     align-self: center; }
-  .storeHeader p {
+  .header p {
     color: white;
     font-family: 'Open sans', sans-serif;
     font-size: 15pt;
     align-self: center;
     margin-right: 100px;
     vertical-align: super; }
-    .storeHeader p b {
+    .header p b {
       font-size: 50px;
       margin-left: 50px; }
 
@@ -138,12 +131,13 @@ html, body {
 .mainContent {
   display: flex;
   flex-direction: row;
-  height: calc(100% - 100px); }
+  height: calc(100% - 75px); }
 
 .myStore {
   display: flex;
   flex-direction: row;
-  margin-top: 30px; }
+  margin-top: 30px;
+  margin-bottom: 20px; }
   .myStore .myStoreLeft {
     width: 35%;
     margin-right: 15%;
@@ -221,93 +215,7 @@ html, body {
   .persona img {
     height: 68px;
     margin-top: 10px;
-    margin-left: 40px; }
-
-.personaSmall {
-  background-color: #EA6F6C;
-  margin-top: 30px;
-  margin-right: 20px;
-  height: 35px;
-  width: 100px;
-  font-size: 17px; }
-
-.personaSmall.one:hover {
-  background-color: #AA4444; }
-
-.personaSmall.two:hover {
-  background-color: #547072; }
-
-.one {
-  background-color: #EA6F6C; }
-
-.two {
-  background-color: #87B8C2; }
-
-@media screen and (max-width: 1300px) {
-  .button {
-    text-align: center;
-    width: 200px;
-    font-size: 20px;
-    padding: 0; }
-  .btnStore {
-    text-align: center;
-    width: 200px;
-    font-size: 20px;
-    padding: 0;
-    display: block;
-    float: right;
-    margin-right: 40px;
-    align-self: center; }
-  .persona {
-    width: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0; }
-    .persona img {
-      display: none; }
-    .persona h3 {
-      text-align: center;
-      font-size: 22px;
-      padding: 0; } }
-
-.button {
-  background-color: #EDB867;
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-  height: 50px;
-  width: 300px;
-  border-radius: 0.07in;
-  border: none;
-  font-size: 25px;
-  font-weight: 700;
-  text-align: left;
-  padding-left: 25px;
-  cursor: pointer; }
-
-.button:hover {
-  background-color: #C19457; }
-
-.btnStore {
-  margin-bottom: 20px; }
-
-.persona {
-  background-color: #EA6F6C;
-  text-align: left;
-  height: 78px;
-  width: 300px;
-  border-radius: 0.1in;
-  padding-left: 25px;
-  display: flex; }
-  .persona h3 {
-    font-size: 27px;
-    color: white;
-    font-family: 'Open Sans', sans-serif;
-    padding-top: 20px; }
-  .persona img {
-    height: 68px;
-    margin-top: 10px;
-    margin-left: 40px; }
+    margin-left: 25px; }
 
 .personaSmall {
   background-color: #EA6F6C;
