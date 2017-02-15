@@ -28,7 +28,7 @@ function dcvs_admin_businesses_settings(){
             <label for="business_title">Title</label>
           </th>
           <td>
-            <input id="business_title" name="business_title" type="text" value="Business Title">
+            <input id="business_title" name="business_title" type="text">
           </td>
         </tr>
         <tr>
@@ -36,7 +36,7 @@ function dcvs_admin_businesses_settings(){
             <label for="business_description">Description</label>
           </th>
           <td>
-            <input id="business_description" name="business_description" type="text" value="Description">
+            <textarea id="business_description" name="business_description" type="textarea" rows="5" cols="50"></textarea>
           </td>
         </tr>
         <tr>
@@ -44,7 +44,7 @@ function dcvs_admin_businesses_settings(){
             <label for="business_money">Money</label>
           </th>
           <td>
-            <input id="business_money" name="business_money" type="text" value="<?php dcvs_echo_option("default_business_money", 0.00); ?>">
+            <input id="business_money" name="business_money" type="text" value="<?php dcvs_echo_option("default_business_money", 0); ?>">
           </td>
         </tr>
         <tr>
@@ -52,7 +52,7 @@ function dcvs_admin_businesses_settings(){
             <label for="business_url">URL</label>
           </th>
           <td>
-            <input id="business_url" name="business_url" type="text" value="url">
+            <input id="business_url" name="business_url" type="text">
           </td>
         </tr>
       </tbody>
@@ -94,7 +94,7 @@ function dcvs_get_all_businesses() {
                   <label for="business_description">Description</label>
                 </th>
                 <td>
-                  <input id="business_description" name="business_description" type="text" value="<?php echo $businessarray["description"]; ?>">
+                  <textarea id="business_description" name="business_description" type="text" rows="4" cols="50"><?php echo $businessarray["description"]; ?></textarea>
                 </td>
               </tr>
               <tr>
