@@ -26,8 +26,8 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 			$user_id = get_current_user_id();
 			$business_url = $wpdb->get_var( "SELECT url FROM dcvs_business WHERE id = (SELECT business_id FROM dcvs_user_business WHERE user_id = " . esc_sql( $user_id ) . ")" );
-			preg_match( "/.*(\\/.*\\/)$/", $business_url, $blog_match );
-			$blog_path = $blog_match[1];
+			$parsed_url = parse_url( $business_url );
+			$blog_path = $parsed_url['path'];
 			$table_prefix = $wpdb->get_var( "SELECT blog_id FROM wp_blogs WHERE path = '" . esc_sql( $blog_path ) . "'" );
 
 			return $table_prefix;
