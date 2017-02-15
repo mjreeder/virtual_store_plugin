@@ -9,6 +9,8 @@ defined( 'ABSPATH' ) or die( 'invalid access' );
 
 require_once __DIR__."/teacher_admin_panel.php";
 require_once __DIR__."/landing_page.php";
+require_once __DIR__."/personas_admin_settings.php";
+require_once __DIR__."/businesses_admin_settings.php";
 
 add_action("woocommerce_review_order_before_payment", "dcvs_before_cart_contents");
 add_action("woocommerce_review_order_after_payment", "dcvs_after_cart_contents");
@@ -99,37 +101,7 @@ function dcvs_insert_business_purchase($user_persona_id, $business_id, $items, $
     }
 }
 
-function dcvs_get_user_business_money($user_id) {
-  global $wpdb;
-  $business_id = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id='".esc_sql($user_id)."'");
-  $money = $wpdb->get_var("SELECT money FROM dcvs_business WHERE id='".esc_sql($business_id)."'");
-  $costs = $wpdb->get_results("SELECT cost FROM dcvs_warehouse_purchase WHERE user_id='".esc_sql($user_id)."'");
-  $spent = calculate_spent($costs);
-  $moneyLeft = $money - $spent;
-  return $moneyLeft;
-}
-
-function dcvs_get_user_business_profit($user_id) {
-  global $wpdb;
-  $business_id = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id='".esc_sql($user_id)."'");
-  $costs = $wpdb->get_results("SELECT cost FROM dcvs_warehouse_purchase WHERE user_id='".esc_sql($user_id)."'");
-  $spent = calculate_spent($costs);
-  $sales = $wpdb->get_results("SELECT cost FROM dcvs_business_purchase WHERE business_id='".esc_sql($business_id)."'");
-  $gained = calculate_spent($sales);
-  $profit = $gained - $spent;
-  return $profit;
-}
-
-function dcvs_get_user_persona_money($user_persona_id) {
-  global $wpdb;
-  $persona_id = $wpdb->get_var("SELECT persona_id FROM dcvs_user_persona WHERE id='".esc_sql($user_persona_id)."'");
-  $persona_money = $wpdb->get_var("SELECT money FROM dcvs_persona WHERE id='".esc_sql($persona_id)."'");
-  $costs = $wpdb->get_results("SELECT cost FROM dcvs_business_purchase WHERE user_persona_id='".esc_sql($user_persona_id)."'");
-  $spent = calculate_spent($costs);
-  $moneyLeft = $persona_money - $spent;
-  return $moneyLeft;
-}
-
+// global functions for Personas and Businesses
 function calculate_spent($costs) {
   $spent = 0;
   for($i = 0; $i < sizeof($costs); $i++) {
@@ -140,10 +112,15 @@ function calculate_spent($costs) {
   return $spent;
 }
 
-function dcvs_user_persona_can_purchase($user_persona_id, $purchase_amount){
-    $money = dcvs_get_user_persona_money($user_persona_id);
-    if($money >= $purchase_amount){
-        return true;
+function money_is_number($money) {
+  return filter_var($money, FILTER_VALIDATE_FLOAT);
+}
+
+function fields_are_blank($array) {
+  foreach ($array as $s) {
+    if($s == "") {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
