@@ -101,7 +101,7 @@ function dcvs_get_all_personas() {
               </tr>
             </tbody>
           </table>
-          <input class="button-primary" type="submit" value="Update">
+          <input class="button-primary" type="submit" name="submit" value="Update">
           <input class="button-secondary delete" type="submit" name="delete" value="Delete">
           <input type="reset">
         </form>
