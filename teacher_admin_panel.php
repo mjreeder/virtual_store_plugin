@@ -38,7 +38,15 @@ function dcvs_admin_menu_draw(){
 function dcvs_admim_user_assignments() {
   $users = get_users();
   if($_SERVER['REQUEST_METHOD']=="POST" && $_POST['dcvs_admin_changes']==1) {
-    dcvs_assign_persona(1);
+    if (all_personas_assigned()) {
+      echo "All Personas Already Assigned";
+    } else {
+      for ($i = 0; $i < sizeof($users); $i++) {
+        $user = get_object_vars($users[$i]);
+        $id = $user["ID"];
+        dcvs_assign_persona($id);
+      }
+    }
   }
   ?>
   <style>
@@ -61,8 +69,9 @@ tr:nth-child(even) {
 <h2>Student Personas</h2>
 <form action="" method="post">
   <input type="hidden" name="dcvs_admin_changes" value="1">
-  <input class="button-primary" type="submit">
+  <input class="button-primary" type="submit" value="Assign Personas">
 </form>
+<br>
   <table>
     <tr>
       <th>Name</th>
@@ -135,12 +144,22 @@ function dcvs_assign_persona($userId) {
     $rand = get_object_vars($allPersonaIds[array_rand($allPersonaIds)]);
     $randId = $rand["id"];
     $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
-    // dcvs_assign_persona($user_id);
     if(($key = array_search((object)array("id"=>$rand), $allPersonaIds)) !== false) {
       unset($allPersonaIds[$key]);
     }
     $rand = get_object_vars($allPersonaIds[array_rand($allPersonaIds)]);
     $randId = $rand["id"];
     $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
+  }
+}
+
+function all_personas_assigned() {
+  global $wpdb;
+  $users = get_users();
+  $userPersonas = $wpdb->get_results("SELECT * FROM dcvs_user_persona");
+  if (sizeof($userPersonas) >= 2*sizeof($users)) {
+    return true;
+  } else {
+    return false;
   }
 }
