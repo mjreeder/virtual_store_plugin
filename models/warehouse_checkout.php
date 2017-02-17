@@ -396,7 +396,6 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			}
 			$items = serialize($order_item_names);
 
-			echo $user_id . ", " . $cost . ", " . $items;
 			$wpdb->insert( "dcvs_warehouse_purchase", [ "user_id" => $user_id, "cost" => $cost, "items" => $items ] );
 		}
 
