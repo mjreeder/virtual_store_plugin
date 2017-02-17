@@ -57,10 +57,10 @@ function dcvs_admin_personas_settings(){
     <h3>Update Existing Personas</h3>
     <?php
 
-    dcvs_get_all_personas();
+    dcvs_list_all_personas();
 }
 
-function dcvs_get_all_personas() {
+function dcvs_list_all_personas() {
   global $wpdb;
   $personas = $wpdb->get_results("SELECT * FROM dcvs_persona");
 

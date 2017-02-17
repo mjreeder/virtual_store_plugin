@@ -1,15 +1,22 @@
 <?php
 function dcvs_admim_persona_assignments() {
   $users = get_users();
-  if($_SERVER['REQUEST_METHOD']=="POST" && $_POST['dcvs_admin_changes']==1) {
-    if (all_personas_assigned()) {
-      echo "All Personas Already Assigned";
-    } else {
-      for ($i = 0; $i < sizeof($users); $i++) {
-        $user = get_object_vars($users[$i]);
-        $id = $user["ID"];
-        dcvs_assign_persona($id);
+  if($_SERVER['REQUEST_METHOD']=="POST") {// && $_POST['dcvs_admin_changes']==1) {
+    if(isset($_POST['assignpersonas'])){
+      if (all_personas_assigned()) {
+        echo "All Personas Already Assigned";
+      } else {
+        for ($i = 0; $i < sizeof($users); $i++) {
+          $user = get_object_vars($users[$i]);
+          $id = $user["ID"];
+          dcvs_assign_persona($id);
+        }
       }
+    } else {
+      $newid = $_POST['personaid'];
+      $userid = $_POST['id'];
+      $oldid = $_POST['oldid'];
+      dcvs_set_user_persona($userid, $newid, $oldid);
     }
   }
   ?>
@@ -33,7 +40,7 @@ tr:nth-child(even) {
 <h2>Student Personas</h2>
 <form action="" method="post">
   <input type="hidden" name="dcvs_admin_changes" value="1">
-  <input class="button-primary" type="submit" value="Assign Personas">
+  <input class="button-primary" type="submit" name="assignpersonas" value="Assign Personas">
 </form>
 <br>
   <table>
@@ -44,6 +51,8 @@ tr:nth-child(even) {
       <th>Persona 2</th>
     </tr>
   <?php
+  global $wpdb;
+  $allPersonas = $wpdb->get_results("SELECT name, id FROM dcvs_persona");
   for($i = 0; $i < sizeof($users); $i++) {
     $user = get_object_vars($users[$i]);
     $id = $user["ID"];
@@ -53,8 +62,42 @@ tr:nth-child(even) {
     <tr>
       <td><?php echo $usermeta["first_name"][0]." ".$usermeta["last_name"][0]; ?></td>
       <!-- <td><?php echo dcvs_get_user_business($id); ?></td> -->
-      <td><?php echo $personas["Persona 1"]; ?></td>
-      <td><?php echo $personas["Persona 2"]; ?></td>
+      <td class = "select">
+        <form action="" method="post">
+          <input type="hidden" name="dcvs_admin_changes" value="1">
+          <input type="hidden" name="id" value="<?php echo $id; ?>">
+          <input type="hidden" name="oldid" value="<?php echo $personas["Persona 1 id"]; ?>">
+          <select onchange="this.form.submit()" name="personaid">
+            <option value="<?php echo $personas["Persona 1 id"]; ?>"><?php echo $personas["Persona 1"]; ?></option>
+            <?php
+            for($j = 0; $j < sizeof($allPersonas); $j++) {
+              $persona = get_object_vars($allPersonas[$j]);
+              ?>
+              <option value="<?php echo $persona["id"]; ?>"><?php echo $persona["name"]; ?></option>
+              <?php
+            }
+            ?>
+          </select>
+        </form>
+      </td>
+      <td class = "select">
+        <form action="" method="post">
+          <input type="hidden" name="dcvs_admin_changes" value="1">
+          <input type="hidden" name="id" value="<?php echo $id; ?>">
+          <input type="hidden" name="oldid" value="<?php echo $personas["Persona 2 id"]; ?>">
+          <select onchange="this.form.submit()" name="personaid">
+            <option value="<?php echo $personas["Persona 2 id"]; ?>"><?php echo $personas["Persona 2"]; ?></option>
+            <?php
+            for($j = 0; $j < sizeof($allPersonas); $j++) {
+              $persona = get_object_vars($allPersonas[$j]);
+              ?>
+              <option value="<?php echo $persona["id"]; ?>"><?php echo $persona["name"]; ?></option>
+              <?php
+            }
+            ?>
+          </select>
+        </form>
+      </td>
     </tr>
     <?php
   }
@@ -82,6 +125,7 @@ function dcvs_get_user_personas($userId) {
   $personas = array();
   for($i = 0; $i < sizeof($personaIds); $i++) {
     $personaId = get_object_vars($personaIds[$i])["persona_id"];
+    $personas["Persona ".($i+1)." id"] = $personaId;
     $personaName = $wpdb->get_var("SELECT name FROM dcvs_persona WHERE id = ".esc_sql($personaId)."");
     $personas["Persona ".($i+1)] = $personaName;
   }
@@ -114,6 +158,7 @@ function dcvs_assign_persona($userId) {
     $rand = get_object_vars($allPersonaIds[array_rand($allPersonaIds)]);
     $randId = $rand["id"];
     $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
+    return;
   }
 }
 
@@ -126,5 +171,10 @@ function all_personas_assigned() {
   } else {
     return false;
   }
+}
+
+function dcvs_set_user_persona($userid, $newid, $oldid){
+  global $wpdb;
+  $wpdb->update('dcvs_user_persona', array('persona_id'=>$newid), array('user_id'=>$userid,'persona_id'=>$oldid));
 }
 ?>
