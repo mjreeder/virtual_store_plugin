@@ -4,7 +4,8 @@ function dcvs_admim_persona_assignments() {
   if($_SERVER['REQUEST_METHOD']=="POST") {// && $_POST['dcvs_admin_changes']==1) {
     if(isset($_POST['assignpersonas'])){
       if (all_personas_assigned()) {
-        echo "All Personas Already Assigned";
+        // echo "All Personas Already Assigned";
+        dcvs_reset_and_assign_user_personas($users);
       } else {
         for ($i = 0; $i < sizeof($users); $i++) {
           $user = get_object_vars($users[$i]);
@@ -12,11 +13,17 @@ function dcvs_admim_persona_assignments() {
           dcvs_assign_persona($id);
         }
       }
+    } else if (isset($_POST['unsetpersonas'])) {
+      dcvs_reset_all_user_personas($users);
     } else {
       $newid = $_POST['personaid'];
       $userid = $_POST['id'];
       $oldid = $_POST['oldid'];
-      dcvs_set_user_persona($userid, $newid, $oldid);
+      if ($newid == "-1") {
+        dcvs_remove_user_persona($userid,$oldid);
+      } else {
+        dcvs_set_user_persona($userid, $newid, $oldid);
+      }
     }
   }
   ?>
@@ -41,6 +48,7 @@ tr:nth-child(even) {
 <form action="" method="post">
   <input type="hidden" name="dcvs_admin_changes" value="1">
   <input class="button-primary" type="submit" name="assignpersonas" value="Assign Personas">
+  <input class="button-secondary" type="submit" name="unsetpersonas" value="Unset All Personas">
 </form>
 <br>
   <table>
@@ -67,7 +75,7 @@ tr:nth-child(even) {
           <input type="hidden" name="dcvs_admin_changes" value="1">
           <input type="hidden" name="id" value="<?php echo $id; ?>">
           <input type="hidden" name="oldid" value="<?php echo $personas["Persona 1 id"]; ?>">
-          <select onchange="this.form.submit()" name="personaid">
+          <select onchange="this.form.submit()" name="personaid" style="width:100%;">
             <option value="<?php echo $personas["Persona 1 id"]; ?>"><?php echo $personas["Persona 1"]; ?></option>
             <?php
             for($j = 0; $j < sizeof($allPersonas); $j++) {
@@ -77,6 +85,7 @@ tr:nth-child(even) {
               <?php
             }
             ?>
+            <option value="-1">Unset Persona 1</option>
           </select>
         </form>
       </td>
@@ -85,7 +94,7 @@ tr:nth-child(even) {
           <input type="hidden" name="dcvs_admin_changes" value="1">
           <input type="hidden" name="id" value="<?php echo $id; ?>">
           <input type="hidden" name="oldid" value="<?php echo $personas["Persona 2 id"]; ?>">
-          <select onchange="this.form.submit()" name="personaid">
+          <select onchange="this.form.submit()" name="personaid" style="width:100%;">
             <option value="<?php echo $personas["Persona 2 id"]; ?>"><?php echo $personas["Persona 2"]; ?></option>
             <?php
             for($j = 0; $j < sizeof($allPersonas); $j++) {
@@ -95,6 +104,7 @@ tr:nth-child(even) {
               <?php
             }
             ?>
+            <option value="-1">Unset Persona 2</option>
           </select>
         </form>
       </td>
@@ -203,5 +213,29 @@ function dcvs_set_user_persona($userid, $newid, $oldid){
   } else if ($number == 0) {
     $wpdb->insert('dcvs_user_persona', array('persona_id'=>$newid,'user_id'=>$userid));
   }
+}
+
+function dcvs_reset_all_user_personas($users) {
+  global $wpdb;
+  for($i = 0; $i < sizeof($users); $i++) {
+    $user = get_object_vars($users[$i]);
+    $id = $user["ID"];
+    $wpdb->delete('dcvs_user_persona', array('user_id'=>$id));
+  }
+}
+
+function dcvs_reset_and_assign_user_personas($users) {
+  global $wpdb;
+  for($i = 0; $i < sizeof($users); $i++) {
+    $user = get_object_vars($users[$i]);
+    $id = $user["ID"];
+    $wpdb->delete('dcvs_user_persona', array('user_id'=>$id));
+    dcvs_assign_persona($id);
+  }
+}
+
+function dcvs_remove_user_persona($userid, $personaid) {
+  global $wpdb;
+  $wpdb->delete('dcvs_user_persona', array('user_id'=>$userid,'persona_id'=>$personaid));
 }
 ?>
