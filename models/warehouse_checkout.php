@@ -392,9 +392,9 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			$cost = floatval( substr(preg_replace( '#[^\d.]#', '', $order->get_formatted_order_total()), 2));
 			$order_item_names = [];
 			foreach ($order_items as $item){
-				$order_item_names[] = $item["name"];
+				$order_item_names[] = $item;
 			}
-			$items = implode(",", $order_item_names);
+			$items = serialize($order_item_names);
 
 			echo $user_id . ", " . $cost . ", " . $items;
 			$wpdb->insert( "dcvs_warehouse_purchase", [ "user_id" => $user_id, "cost" => $cost, "items" => $items ] );
