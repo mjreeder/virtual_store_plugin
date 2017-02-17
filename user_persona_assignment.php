@@ -173,8 +173,35 @@ function all_personas_assigned() {
   }
 }
 
+function num_personas_assigned($userid) {
+  global $wpdb;
+  $personas = $wpdb->get_results("SELECT id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userid)."");
+  return sizeof($personas);
+}
+
 function dcvs_set_user_persona($userid, $newid, $oldid){
   global $wpdb;
-  $wpdb->update('dcvs_user_persona', array('persona_id'=>$newid), array('user_id'=>$userid,'persona_id'=>$oldid));
+  $number = num_personas_assigned($userid);
+  if ($number == 2) {
+    $otherid = $wpdb->get_var("SELECT persona_id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userid)." AND persona_id != ".esc_sql($oldid)."");
+    if ($newid != $otherid) {
+      $wpdb->update('dcvs_user_persona', array('persona_id'=>$newid), array('user_id'=>$userid,'persona_id'=>$oldid));
+    } else {
+      echo "User is already using that persona";
+    }
+  } else if ($number == 1) {
+    if ($oldid != NULL) {
+      $wpdb->update('dcvs_user_persona', array('persona_id'=>$newid), array('user_id'=>$userid,'persona_id'=>$oldid));
+    } else {
+      $otherid = $wpdb->get_var("SELECT persona_id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userid)."");
+      if ($newid != $otherid) {
+        $wpdb->insert('dcvs_user_persona', array('persona_id'=>$newid,'user_id'=>$userid));
+      } else {
+        echo "User is already using that persona";
+      }
+    }
+  } else if ($number == 0) {
+    $wpdb->insert('dcvs_user_persona', array('persona_id'=>$newid,'user_id'=>$userid));
+  }
 }
 ?>
