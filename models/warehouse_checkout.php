@@ -19,6 +19,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			self::dcvs_export_attributes( $table_prefix );
 			self::dcvs_export_attribute_terms( $table_prefix );
 			self::dcvs_export_products( $order_id, $table_prefix );
+			self::dcvs_add_warehouse_purchase($order_id);
 		}
 
 		function dcvs_get_table_prefix() {
@@ -379,6 +380,24 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			}
 
 			return $current_variations;
+		}
+
+		function dcvs_add_warehouse_purchase($order_id){
+			global $wpdb;
+
+			$order = WC()->order_factory->get_order($order_id);
+			$order_items = $order->get_items();
+
+			$user_id = get_current_user_id();
+			$cost = floatval( substr(preg_replace( '#[^\d.]#', '', $order->get_formatted_order_total()), 2));
+			$order_item_names = [];
+			foreach ($order_items as $item){
+				$order_item_names[] = $item["name"];
+			}
+			$items = implode(",", $order_item_names);
+
+			echo $user_id . ", " . $cost . ", " . $items;
+			$wpdb->insert( "dcvs_warehouse_purchase", [ "user_id" => $user_id, "cost" => $cost, "items" => $items ] );
 		}
 
 	}
