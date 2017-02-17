@@ -11,6 +11,7 @@ require_once __DIR__."/teacher_admin_panel.php";
 require_once __DIR__."/landing_page.php";
 require_once __DIR__."/personas_admin_settings.php";
 require_once __DIR__."/businesses_admin_settings.php";
+require_once __DIR__."/user_persona_assignment.php";
 
 add_action("woocommerce_review_order_before_payment", "dcvs_before_cart_contents");
 add_action("woocommerce_review_order_after_payment", "dcvs_after_cart_contents");
