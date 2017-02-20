@@ -22,6 +22,7 @@ function display_admin_panel()
       <link href="<?php echo 'wp-content/plugins/virtual_store_plugin/assets/css/adminPanel.css';
     ?>" rel="stylesheet" type="text/css">
       <!-- FONTS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
       <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
