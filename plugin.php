@@ -9,6 +9,7 @@ defined( 'ABSPATH' ) or die( 'invalid access' );
 
 require_once __DIR__."/teacher_admin_panel.php";
 require_once __DIR__."/landing_page.php";
+require_once __DIR__."/purchase_functions.php";
 require_once __DIR__."/personas_admin_settings.php";
 require_once __DIR__."/businesses_admin_settings.php";
 require_once __DIR__."/user_persona_assignment.php";
@@ -107,5 +108,7 @@ function fields_are_blank($array) {
   }
   return false;
 }
+
+
 
 
