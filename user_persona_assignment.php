@@ -149,23 +149,23 @@ function dcvs_assign_persona($userId) {
   if (sizeof($userPersonaIds) >= 2) {
     return;
   } else if (sizeof($userPersonaIds) == 1 ) {
-    $allPersonaIds = $wpdb->get_results("SELECT id FROM dcvs_persona");
-    $persona1 = get_object_vars($userPersonaIds[0])["persona_id"];
-    if(($key = array_search((object)array("id"=>$persona1), $allPersonaIds)) !== false) {
-      unset($allPersonaIds[$key]);
-    }
-    $randId = get_object_vars($allPersonaIds[array_rand($allPersonaIds)])["id"];
+    $persona1id = get_object_vars($userPersonaIds[0])["persona_id"];
+    $availablePersonaIds = $wpdb->get_results("SELECT id FROM dcvs_persona WHERE id != ".$persona1id."");
+    $randId = get_object_vars($availablePersonaIds[array_rand($availablePersonaIds)])["id"];
     $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
     return;
   } else {
+    // 1st persona
     $allPersonaIds = $wpdb->get_results("SELECT id FROM dcvs_persona");
-    $rand = get_object_vars($allPersonaIds[array_rand($allPersonaIds)]);
+    $randIndex = array_rand($allPersonaIds);
+    $rand = get_object_vars($allPersonaIds[$randIndex]);
     $randId = $rand["id"];
     $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
-    if(($key = array_search((object)array("id"=>$rand), $allPersonaIds)) !== false) {
-      unset($allPersonaIds[$key]);
-    }
-    $rand = get_object_vars($allPersonaIds[array_rand($allPersonaIds)]);
+
+    // 2nd persona
+    unset($allPersonaIds[$randIndex]);
+    $availablePersonaIds = array_values($allPersonaIds);
+    $rand = get_object_vars($availablePersonaIds[array_rand($availablePersonaIds)]);
     $randId = $rand["id"];
     $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
     return;
