@@ -9,6 +9,7 @@ defined( 'ABSPATH' ) or die( 'invalid access' );
 
 require_once __DIR__."/teacher_admin_panel.php";
 require_once __DIR__."/landing_page.php";
+require_once __DIR__."/purchase_functions.php";
 require_once __DIR__."/personas_admin_settings.php";
 require_once __DIR__."/businesses_admin_settings.php";
 require_once __DIR__."/user_persona_assignment.php";
@@ -38,7 +39,6 @@ function dcvs_plugin_init(){
     else if($landingPage->post_status == "trash"){
         wp_update_post(array("ID"=>$landingPage->ID, "status"=>"publish"));
     }
-
 }
 
 
@@ -57,7 +57,6 @@ function dcvs_before_cart_contents(){
     -->
     <div class="hide-payment" style="display:none;">
     <?php
-
 }
 
 //This function is used to close the hidden div that hides the payment processing section of checkout
@@ -87,22 +86,6 @@ function dcvs_echo_option($key, $default_value=false){
     echo dcvs_get_option($key, $default_value);
 }
 
-function dcvs_insert_warehouse_purchase($user_id, $cost, $items){
-    global $wpdb;
-    $wpdb->insert("dcvs_warehouse_purchase", ["user_id"=>$user_id, "cost"=>$cost, "items"=>$items]);
-}
-
-function dcvs_insert_business_purchase($user_persona_id, $business_id, $items, $cost){
-    global $wpdb;
-    if(dcvs_user_persona_can_purchase($user_persona_id, $cost)){
-        $wpdb->insert("dcvs_business_purchase", ["user_persona_id"=>$user_persona_id, "business_id"=>$business_id, "items"=>$items,
-            "cost"=>$cost]);
-    }else{
-        echo("Purchase failed, insufficient funds.");
-    }
-}
-
-// global functions for Personas and Businesses
 function calculate_spent($costs) {
   $spent = 0;
   for($i = 0; $i < sizeof($costs); $i++) {
@@ -125,3 +108,7 @@ function fields_are_blank($array) {
   }
   return false;
 }
+
+
+
+
