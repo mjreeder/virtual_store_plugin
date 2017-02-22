@@ -1,7 +1,8 @@
 <?php
+// set up page/handle form submit
 function dcvs_admim_persona_assignments() {
   $users = get_users();
-  if($_SERVER['REQUEST_METHOD']=="POST") {// && $_POST['dcvs_admin_changes']==1) {
+  if($_SERVER['REQUEST_METHOD']=="POST") {
     if(isset($_POST['assignpersonas'])){
       if (all_personas_assigned()) {
         // echo "All Personas Already Assigned";
@@ -26,6 +27,8 @@ function dcvs_admim_persona_assignments() {
       }
     }
   }
+
+  // Styles
   ?>
   <style>
 table {
@@ -33,17 +36,16 @@ table {
     border-collapse: collapse;
     width: 100%;
 }
-
 td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
-
 tr:nth-child(even) {
     background-color: #dddddd;
 }
 </style>
+
 <h2>Student Personas</h2>
 <form action="" method="post">
   <input type="hidden" name="dcvs_admin_changes" value="1">
@@ -54,7 +56,7 @@ tr:nth-child(even) {
   <table>
     <tr>
       <th>Name</th>
-      <!-- <th>Business</th> -->
+      <th>Business</th>
       <th>Persona 1</th>
       <th>Persona 2</th>
     </tr>
@@ -69,7 +71,7 @@ tr:nth-child(even) {
     ?>
     <tr>
       <td><?php echo $usermeta["first_name"][0]." ".$usermeta["last_name"][0]; ?></td>
-      <!-- <td><?php echo dcvs_get_user_business($id); ?></td> -->
+      <td><?php echo dcvs_get_user_business($id); ?></td>
       <td class = "select">
         <form action="" method="post">
           <input type="hidden" name="dcvs_admin_changes" value="1">
@@ -116,6 +118,8 @@ tr:nth-child(even) {
   <?php
 }
 
+// dcvs_business
+// GET
 function dcvs_get_user_business($userId) {
   global $wpdb;
   $businessId = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id = ".esc_sql($userId)."");
@@ -123,6 +127,10 @@ function dcvs_get_user_business($userId) {
   return $businessName;
 }
 
+// SET
+
+// dcvs_persona
+// GET
 function dcvs_get_user_persona_ids($userId) {
   global $wpdb;
   $personaIds = $wpdb->get_results("SELECT persona_id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userId)."");
@@ -142,6 +150,24 @@ function dcvs_get_user_personas($userId) {
   return $personas;
 }
 
+function num_personas_assigned($userid) {
+  global $wpdb;
+  $personas = $wpdb->get_results("SELECT id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userid)."");
+  return sizeof($personas);
+}
+
+function all_personas_assigned() {
+  global $wpdb;
+  $users = get_users();
+  $userPersonas = $wpdb->get_results("SELECT * FROM dcvs_user_persona");
+  if (sizeof($userPersonas) >= 2*sizeof($users)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// SET
 function dcvs_assign_persona($userId) {
   global $wpdb;
   $userPersonaIds = dcvs_get_user_persona_ids($userId);
@@ -172,23 +198,6 @@ function dcvs_assign_persona($userId) {
   }
 }
 
-function all_personas_assigned() {
-  global $wpdb;
-  $users = get_users();
-  $userPersonas = $wpdb->get_results("SELECT * FROM dcvs_user_persona");
-  if (sizeof($userPersonas) >= 2*sizeof($users)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function num_personas_assigned($userid) {
-  global $wpdb;
-  $personas = $wpdb->get_results("SELECT id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userid)."");
-  return sizeof($personas);
-}
-
 function dcvs_set_user_persona($userid, $newid, $oldid){
   global $wpdb;
   $number = num_personas_assigned($userid);
@@ -215,6 +224,7 @@ function dcvs_set_user_persona($userid, $newid, $oldid){
   }
 }
 
+// DELETE
 function dcvs_reset_all_user_personas($users) {
   global $wpdb;
   for($i = 0; $i < sizeof($users); $i++) {
