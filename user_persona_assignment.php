@@ -16,7 +16,7 @@ function dcvs_admim_persona_assignments() {
       }
     } else if (isset($_POST['unsetpersonas'])) {
       dcvs_reset_all_user_personas($users);
-    } else {
+    } else if (isset($_POST['personaid'])) {
       $newid = $_POST['personaid'];
       $userid = $_POST['id'];
       $oldid = $_POST['oldid'];
@@ -24,6 +24,19 @@ function dcvs_admim_persona_assignments() {
         dcvs_remove_user_persona($userid,$oldid);
       } else {
         dcvs_set_user_persona($userid, $newid, $oldid);
+      }
+    } else if (isset($_POST['businessid'])) {
+      $oldid = $_POST['businessId'];
+      $userid = $_POST['id'];
+      $newid = $_POST['businessid'];
+      if ($newid == -1 && $oldid != NULL) {
+        dcvs_remove_user_business($userid, $oldid);
+      } else if ($oldid == $newid) {
+        echo "it's the same lol";
+      } else if (dcvs_user_id_from_business($newid)) {
+        echo "TAKEN";
+      } else {
+        dcvs_assign_user_business($userid, $newid);
       }
     }
   }
@@ -63,15 +76,39 @@ tr:nth-child(even) {
   <?php
   global $wpdb;
   $allPersonas = $wpdb->get_results("SELECT name, id FROM dcvs_persona");
+  $allBusinesses = $wpdb->get_results("SELECT title, id FROM dcvs_business");
   for($i = 0; $i < sizeof($users); $i++) {
     $user = get_object_vars($users[$i]);
     $id = $user["ID"];
     $usermeta = get_user_meta($id);
     $personas = dcvs_get_user_personas($id);
+    $business = dcvs_get_user_business($id);
     ?>
     <tr>
       <td><?php echo $usermeta["first_name"][0]." ".$usermeta["last_name"][0]; ?></td>
-      <td><?php echo dcvs_get_user_business($id); ?></td>
+
+      <!-- Business -->
+      <td class = "select">
+        <form action="" method="post">
+          <input type="hidden" name="dcvs_admin_changes" value="1">
+          <input type="hidden" name="id" value="<?php echo $id; ?>">
+          <input type="hidden" name="businessId" value="<?php echo $business["id"]; ?>">
+          <select onchange="this.form.submit()" name="businessid" style="width:100%;">
+            <option value="<?php echo dcvs_get_user_business($id); ?>"><?php echo $business["title"]; ?></option>
+            <?php
+            for($j = 0; $j < sizeof($allBusinesses); $j++) {
+              $business = get_object_vars($allBusinesses[$j]);
+              ?>
+              <option value="<?php echo $business["id"]; ?>"><?php echo $business["title"]; ?></option>
+              <?php
+            }
+            ?>
+            <option value="-1">Unset Business</option>
+          </select>
+        </form>
+      </td>
+
+      <!-- Persona 1 -->
       <td class = "select">
         <form action="" method="post">
           <input type="hidden" name="dcvs_admin_changes" value="1">
@@ -91,6 +128,8 @@ tr:nth-child(even) {
           </select>
         </form>
       </td>
+
+      <!-- Persona 2 -->
       <td class = "select">
         <form action="" method="post">
           <input type="hidden" name="dcvs_admin_changes" value="1">
@@ -110,6 +149,7 @@ tr:nth-child(even) {
           </select>
         </form>
       </td>
+
     </tr>
     <?php
   }
@@ -119,18 +159,45 @@ tr:nth-child(even) {
 }
 
 // dcvs_business
-// GET
+// READ
 function dcvs_get_user_business($userId) {
   global $wpdb;
   $businessId = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id = ".esc_sql($userId)."");
   $businessName = $wpdb->get_var("SELECT title FROM dcvs_business WHERE id = ".esc_sql($businessId)."");
-  return $businessName;
+  return array("title"=>$businessName,"id"=>$businessId);
 }
 
-// SET
+function dcvs_user_id_from_business($business_id) {
+  global $wpdb;
+  $userid = $wpdb->get_var("SELECT user_id FROM dcvs_user_business WHERE business_id = ".esc_sql($business_id)."");
+  return $userid;
+}
+
+function dcvs_business_id_from_user($userid) {
+  global $wpdb;
+  $businessid = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id = ".esc_sql($userid)."");
+  return $businessid;
+}
+
+// CREATE
+
+function dcvs_assign_user_business($userid,$businessid) {
+  global $wpdb;
+  if(dcvs_business_id_from_user($userid)) {
+    $wpdb->update("dcvs_user_business", array('business_id'=>$businessid), array('user_id'=>$userid));
+  } else {
+    $wpdb->insert("dcvs_user_business", array('user_id'=>$userid,'business_id'=>$businessid));
+  }
+}
+
+//DELETE
+function dcvs_remove_user_business($userid, $businessid) {
+  global $wpdb;
+  $wpdb->delete('dcvs_user_business', array('user_id'=>$userid,'business_id'=>$businessid));
+}
 
 // dcvs_persona
-// GET
+// READ
 function dcvs_get_user_persona_ids($userId) {
   global $wpdb;
   $personaIds = $wpdb->get_results("SELECT persona_id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userId)."");
@@ -167,7 +234,7 @@ function all_personas_assigned() {
   }
 }
 
-// SET
+// CREATE
 function dcvs_assign_persona($userId) {
   global $wpdb;
   $userPersonaIds = dcvs_get_user_persona_ids($userId);
