@@ -68,7 +68,7 @@ tr:nth-child(even) {
 }
 </style>
 
-<h2>Student Personas</h2>
+<h2>User Assignments</h2>
 <form action="" method="post">
   <input type="hidden" name="dcvs_admin_changes" value="1">
   <input class="button-primary" type="submit" name="assignbusinesses" value="Assign Businesses">
