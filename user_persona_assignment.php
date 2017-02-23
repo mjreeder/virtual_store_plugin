@@ -25,19 +25,28 @@ function dcvs_admim_persona_assignments() {
       } else {
         dcvs_set_user_persona($userid, $newid, $oldid);
       }
+    } else if (isset($_POST['assignbusinesses'])) {
+      if(all_businesses_assigned()) {
+        dcvs_remove_all_user_businesses();
+        dcvs_assign_all_user_businesses();
+      } else {
+        dcvs_assign_all_user_businesses();
+      }
     } else if (isset($_POST['businessid'])) {
       $oldid = $_POST['businessId'];
       $userid = $_POST['id'];
       $newid = $_POST['businessid'];
       if ($newid == -1 && $oldid != NULL) {
-        dcvs_remove_user_business($userid, $oldid);
+        dcvs_remove_user_business($userid);
       } else if ($oldid == $newid) {
         echo "it's the same lol";
       } else if (dcvs_user_id_from_business($newid)) {
         echo "TAKEN";
       } else {
-        dcvs_assign_user_business($userid, $newid);
+        dcvs_set_user_business($userid, $newid);
       }
+    } else if (isset($_POST['unsetbusinesses'])) {
+      dcvs_remove_all_user_businesses();
     }
   }
 
@@ -62,6 +71,9 @@ tr:nth-child(even) {
 <h2>Student Personas</h2>
 <form action="" method="post">
   <input type="hidden" name="dcvs_admin_changes" value="1">
+  <input class="button-primary" type="submit" name="assignbusinesses" value="Assign Businesses">
+  <input class="button-secondary" type="submit" name="unsetbusinesses" value="Unset All Businesses">
+  <br/><br/>
   <input class="button-primary" type="submit" name="assignpersonas" value="Assign Personas">
   <input class="button-secondary" type="submit" name="unsetpersonas" value="Unset All Personas">
 </form>
@@ -179,9 +191,29 @@ function dcvs_business_id_from_user($userid) {
   return $businessid;
 }
 
+function all_businesses_assigned() {
+  global $wpdb;
+  $businessesAssigned = $wpdb->get_results("SELECT business_id FROM dcvs_user_business");
+  $users = get_users();
+  if(sizeof($businessesAssigned) == sizeof($users)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // CREATE
 
-function dcvs_assign_user_business($userid,$businessid) {
+function dcvs_assign_all_user_businesses() {
+  $users = get_users();
+  for ($i = 0; $i < sizeof($users); $i++) {
+    $user = get_object_vars($users[$i]);
+    $id = $user["ID"];
+    dcvs_asign_user_business($id);
+  }
+}
+
+function dcvs_set_user_business($userid,$businessid) {
   global $wpdb;
   if(dcvs_business_id_from_user($userid)) {
     $wpdb->update("dcvs_user_business", array('business_id'=>$businessid), array('user_id'=>$userid));
@@ -190,10 +222,38 @@ function dcvs_assign_user_business($userid,$businessid) {
   }
 }
 
-//DELETE
-function dcvs_remove_user_business($userid, $businessid) {
+function dcvs_asign_user_business($userid) {
   global $wpdb;
-  $wpdb->delete('dcvs_user_business', array('user_id'=>$userid,'business_id'=>$businessid));
+  if(!dcvs_business_id_from_user($userid)) {
+    $allBusinesses = $wpdb->get_results("SELECT id FROM dcvs_business");
+    $randIndex = array_rand($allBusinesses);
+    $rand = get_object_vars($allBusinesses[$randIndex]);
+    $randId = $rand["id"];
+    while(dcvs_user_id_from_business($randId)) {
+      unset($allBusinesses[$randIndex]);
+      $allBusinesses = array_values($allBusinesses);
+      $randIndex = array_rand($allBusinesses);
+      $rand = get_object_vars($allBusinesses[$randIndex]);
+      $randId = $rand["id"];
+    }
+    $wpdb->insert('dcvs_user_business', ['user_id'=>$userid,'business_id'=>$randId]);
+  }
+}
+
+//DELETE
+function dcvs_remove_user_business($userid) {
+  global $wpdb;
+  $wpdb->delete('dcvs_user_business', array('user_id'=>$userid));
+}
+
+function dcvs_remove_all_user_businesses() {
+  global $wpdb;
+  $users = get_users();
+  for($i = 0; $i < sizeof($users); $i++) {
+    $user = get_object_vars($users[$i]);
+    $id = $user["ID"];
+    $wpdb->delete('dcvs_user_business', array('user_id'=>$id));
+  }
 }
 
 // dcvs_persona
