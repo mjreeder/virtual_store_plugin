@@ -7,16 +7,11 @@ body,
 html {
   height: 100%; }
 
-.wrapper {
-  height: calc(100% - 47px);
-  width: calc(100% - 273px);
-  float: right;
-  transform: translateY(47px); }
-
 .header {
   background-color: #EDB867;
   height: 75px;
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: row; }
@@ -40,13 +35,15 @@ html {
 
 .admin {
   height: calc(100% - 75px);
+  width: 100%;
   display: flex;
   flex-direction: row; }
 
 .sidebar {
-  height: 100%;
-  width: 230px;
-  background-color: #E0E0E0; }
+  height: calc(100% - 75px);
+  width: 17%;
+  background-color: #E0E0E0;
+  position: absolute; }
   .sidebar a {
     text-decoration: none; }
   .sidebar ul {
@@ -69,9 +66,9 @@ html {
 
 .studentList {
   height: 100%;
+  width: 15%;
   background-color: white;
-  width: 45%;
-  flex: 0 0 200px; }
+  margin-left: 17%; }
   .studentList .searchBar {
     height: 40px;
     width: 100%;
@@ -118,24 +115,30 @@ html {
 
 .studentInfo {
   height: 100%;
-  padding-left: 50px;
+  width: 70%;
+  padding-left: 100px;
   display: flex;
-  flex-direction: column;
-  flex: 1 1; }
+  flex-direction: column; }
   .studentInfo h1 {
     font-size: 45px;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     color: #5D5D5D;
     margin-top: 20px;
-    margin-bottom: 20px; }
+    margin-bottom: 30px; }
   .studentInfo .merchandiserInfo {
     height: 35%;
-    width: 90%; }
+    width: 85%; }
     .studentInfo .merchandiserInfo div {
       display: flex;
       flex-direction: row;
       justify-content: space-between; }
+    .studentInfo .merchandiserInfo h2 {
+      font-family: "Open Sans", sans-serif;
+      font-weight: 600;
+      color: #5D5D5D;
+      margin-bottom: 30px;
+      font-size: 30px; }
     .studentInfo .merchandiserInfo p {
       margin-bottom: 30px;
       font-family: "Lato", sans-serif;
@@ -144,9 +147,15 @@ html {
       color: #5D5D5D; }
   .studentInfo .shopperInfo {
     height: 35%;
-    width: 90%; }
+    width: 85%; }
+    .studentInfo .shopperInfo h2 {
+      font-family: "Open Sans", sans-serif;
+      font-weight: 600;
+      color: #5D5D5D;
+      margin-bottom: 30px;
+      font-size: 30px; }
     .studentInfo .shopperInfo .shopperOne {
-      width: 45%;
+      width: 40%;
       display: inline-block; }
       .studentInfo .shopperInfo .shopperOne div {
         height: 50px;
@@ -158,13 +167,13 @@ html {
           color: white;
           font-family: "Open Sans", sans-serif;
           font-weight: 600;
-          font-size: 20px;
-          padding-top: 12px;
-          padding-left: 20px; }
+          font-size: 25px;
+          padding-top: 7px;
+          padding-left: 25px; }
         .studentInfo .shopperInfo .shopperOne div img {
           position: absolute;
           top: -3px;
-          left: 190px;
+          left: 230px;
           height: 43px;
           margin-top: 10px;
           margin-left: 25px; }
@@ -176,7 +185,7 @@ html {
         color: #5D5D5D;
         margin-bottom: 30px; }
     .studentInfo .shopperInfo .shopperTwo {
-      width: 45%;
+      width: 40%;
       display: inline-block;
       float: right; }
       .studentInfo .shopperInfo .shopperTwo div {
@@ -189,13 +198,13 @@ html {
           color: white;
           font-family: "Open Sans", sans-serif;
           font-weight: 600;
-          font-size: 20px;
-          padding-top: 12px;
-          padding-left: 20px; }
+          font-size: 25px;
+          padding-top: 7px;
+          padding-left: 25px; }
         .studentInfo .shopperInfo .shopperTwo div img {
           position: absolute;
           top: -3px;
-          left: 190px;
+          left: 230px;
           height: 43px;
           margin-top: 10px;
           margin-left: 25px; }
@@ -212,10 +221,10 @@ html {
   color: white;
   font-family: 'Open Sans', sans-serif;
   height: 50px;
-  width: 175px;
+  width: 220px;
   border-radius: 0.07in;
   border: none;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 700;
   text-align: left;
   cursor: pointer;
@@ -225,96 +234,7 @@ html {
   background-color: #C19457; }
 
 .buttonSmall {
-  height: 40px;
-  width: 110px;
-  font-size: 12px;
+  height: 30px;
+  width: 120px;
+  font-size: 13px;
   margin-right: 10px; }
-
-.settings {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1;
-  padding-left: 50px; }
-  .settings h1 {
-    font-size: 45px;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 700;
-    color: #5D5D5D;
-    margin-top: 20px;
-    margin-bottom: 40px; }
-  .settings .settingsSub {
-    display: flex;
-    flex-direction: column;
-    background-color: #F2F2F2;
-    margin-bottom: 50px;
-    margin-left: -50px; }
-    .settings .settingsSub div {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between; }
-      .settings .settingsSub div h3 {
-        font-family: "Lato", sans-serif;
-        color: #5D5D5D;
-        font-weight: 600;
-        font-size: 21px;
-        align-self: center;
-        margin: 40px;
-        margin-left: 50px; }
-      .settings .settingsSub div .budgetInput {
-        background-color: #5D5D5D;
-        height: 40px;
-        width: 300px;
-        align-self: center;
-        margin-right: 40px;
-        display: flex;
-        justify-content: space-between; }
-        .settings .settingsSub div .budgetInput p {
-          font-family: "Open Sans", sans-serif;
-          font-size: 25px;
-          color: white;
-          margin-left: 20px;
-          align-self: center;
-          font-weight: 600; }
-        .settings .settingsSub div .budgetInput input {
-          width: 250px;
-          padding-left: 20px;
-          padding-right: 10px;
-          height: 100%;
-          border: none;
-          font-size: 25px;
-          font-family: "Lato", sans-serif;
-          font-weight: 700;
-          color: #5D5D5D; }
-      .settings .settingsSub div .dateInput {
-        background-color: #5D5D5D;
-        height: 40px;
-        width: 200px;
-        align-self: center;
-        margin-right: 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center; }
-        .settings .settingsSub div .dateInput input {
-          height: 100%;
-          width: 50%;
-          background-color: white;
-          padding-left: 20px;
-          padding-right: 10px;
-          height: 100%;
-          border: none;
-          font-family: "Lato", sans-serif;
-          font-weight: 700;
-          font-size: 20px;
-          color: #5D5D5D; }
-        .settings .settingsSub div .dateInput p {
-          color: white;
-          font-family: "Open Sans", sans-serif;
-          font-weight: 600;
-          margin-left: 25px; }
-
-.subTitle {
-  font-family: "Open Sans", sans-serif;
-  font-weight: 600;
-  color: #5D5D5D;
-  margin-bottom: 20px;
-  font-size: 30px; }
