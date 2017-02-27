@@ -86,11 +86,10 @@ function display_student_list()
     ?>
     <?php
     for ($i = 0; $i < sizeof($user_results); ++$i) {
-        $display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_users WHERE id = %d', $user_results[$i]->user_id));
+        $display_name = $wpdb->get_results($wpdb->prepare('SELECT * FROM wp_users WHERE id = %d', $user_results[$i]->user_id));
         $business = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business WHERE id = %d', $user_results[$i]->business_id));
         $personas = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.id WHERE user_id = %d', $user_results[$i]->user_id));
         ?>
-
 
       <li id="<?php echo $user_results[$i]->user_id;
         ?>" name="student_name" type="text"><a href="<?php echo $_SERVER['REQUEST_URI'].'&student_id='.$user_results[$i]->user_id;
@@ -132,8 +131,19 @@ function display_current_student_info()
     ?>" alt="">
               </div>
               <p><strong>you are:</strong> <?php echo $persona_info[0]->description ?></p>
-              <button class="button buttonSmall">ORDER HISTORY</button>
-              <button class="button buttonSmall">SURVEY</button>
+
+              <?php
+              if ($_GET) {
+                  if (isset($_POST['insert_one'])) {
+                      get_user_persona_order_history($currentDisplayStudent, $persona_info[0]->id);
+                  }
+              }
+    ?>
+              <form action="" method="post">
+                <button class="button buttonSmall" name="insert_one">ORDER HISTORY</button>
+                <button class="button buttonSmall" type="reset" value="Reset">SURVEY</button>
+              </form>
+
           </aside>
           <aside class="shopperTwo">
               <div>
@@ -142,8 +152,19 @@ function display_current_student_info()
     ?>" alt="">
               </div>
               <p><strong>you are:</strong> <?php echo $persona_info[1]->description ?></p>
-              <button class="button buttonSmall">ORDER HISTORY</button>
-              <button class="button buttonSmall">SURVEY</button>
+              <?php
+              if ($_GET) {
+                  if (isset($_POST['insert_two'])) {
+                      get_user_persona_order_history($currentDisplayStudent, $persona_info[1]->id);
+                  }
+              }
+    ?>
+              <form action="" method="post">
+
+                <button class="button buttonSmall" name="insert_two">ORDER HISTORY</button>
+                <button class="button buttonSmall" type="reset" value="Reset">SURVEY</button>
+              </form>
+
           </aside>
       </section>
 
@@ -156,8 +177,12 @@ function get_user_persona_order_history($user_id, $persona_id)
 {
     global $wpdb;
     $user_persona_order_history = $wpdb->get_results($wpdb->prepare('SELECT items, cost FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND user_persona_id = %d', $user_id, $persona_id));
-    for ($i = 0; $i < sizeOf($user_persona_order_history); ++$i) {
-        var_dump($user_persona_order_history[$i]->cost, $user_persona_order_history[$i]->items);
+    if (sizeOf($user_persona_order_history) > 1) {
+        for ($i = 0; $i < sizeOf($user_persona_order_history); ++$i) {
+            var_dump($user_persona_order_history[$i]->cost, $user_persona_order_history[$i]->items);
+        }
+    } else {
+        var_dump('user has not ordered anything');
     }
 }
 
