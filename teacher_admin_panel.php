@@ -15,7 +15,7 @@ function dcvs_admin_menu_init(){
     add_submenu_page("dcvs_virtual_store","User Assignments","User Assignments", "create_sites", "dcvs_persona_assignments", "dcvs_admim_persona_assignments");
 }
 
-//This function should be used for the default page when the super admin clicks virutal store
+//This function should be used for the default page when the super admin clicks virtual store
 function dcvs_admin_menu_draw(){
     if($_SERVER['REQUEST_METHOD']=="POST" && $_POST['dcvs_admin_changes']==1){
         $defaultPersonaMoney = $_POST['default_persona_money'];
@@ -24,12 +24,24 @@ function dcvs_admin_menu_draw(){
             return;
         }
         dcvs_set_option("default_persona_money", $defaultPersonaMoney);
-
+    }
+    if($_SERVER['REQUEST_METHOD']=="POST" && $_POST['dcvs_admin_changes']==2) {
+        $defaultBusinessMoney = $_POST['default_business_money'];
+        if (!money_is_number($defaultBusinessMoney)) {
+            echo('default business money must be a number');
+            return;
+        }
+        dcvs_set_option("default_business_money", $defaultBusinessMoney);
     }
     ?>
     <form action="" method="post">
         <input type="hidden" name="dcvs_admin_changes" value="1">
         <label>Default Persona Money</label> <input name="default_persona_money" type="text" value="<?php dcvs_echo_option("default_persona_money",0); ?>">
+        <input type="submit">
+    </form>
+    <form action="" method="post">
+        <input type="hidden" name="dcvs_admin_changes" value="2">
+        <label>Default Business Money</label> <input name="default_business_money" type="text" value="<?php dcvs_echo_option("default_business_money",0); ?>">
         <input type="submit">
     </form>
     <?php
