@@ -353,3 +353,5 @@ html {
   flex: 1 1; }
   .orderHistory h1 {
     margin-left: 50px; }
+  .orderHistory .orderTable td {
+    padding: 15px 50px; }
