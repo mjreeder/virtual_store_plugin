@@ -143,14 +143,6 @@ html {
     display: flex;
     flex-direction: column;
     flex: 1 1;
-    h1 {
-        font-size: 45px;
-        font-family: "Open Sans", sans-serif;
-        font-weight: 700;
-        color: $darkGray;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
     .merchandiserInfo {
         height: 35%;
         width: 90%;
@@ -266,19 +258,19 @@ html {
     font-size: 12px;
     margin-right: 10px;
 }
+.title {
+    font-size: 45px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: $darkGray;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
 .settings {
     display: flex;
     flex-direction: column;
     flex: 1 1;
     padding-left: 50px;
-    h1 {
-        font-size: 45px;
-        font-family: "Open Sans", sans-serif;
-        font-weight: 700;
-        color: $darkGray;
-        margin-top: 20px;
-        margin-bottom: 40px;
-    }
     .settingsSub {
         display: flex;
         flex-direction: column;
@@ -295,8 +287,7 @@ html {
                 font-weight: 600;
                 font-size: 21px;
                 align-self: center;
-                margin: 40px;
-                margin-left: 50px;
+                margin: 40px 40px 40px 50px;
             }
             .budgetInput {
                 background-color: $darkGray;
@@ -349,10 +340,10 @@ html {
                     color: $darkGray;
                 }
                 p {
-                  color: white;
-                  font-family: "Open Sans", sans-serif;
-                  font-weight: 600;
-                  margin-left: 25px;
+                    color: white;
+                    font-family: "Open Sans", sans-serif;
+                    font-weight: 600;
+                    margin-left: 25px;
                 }
             }
         }
@@ -364,4 +355,54 @@ html {
     color: $darkGray;
     margin-bottom: 20px;
     font-size: 30px;
+}
+.comparison {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+    h1 {
+        margin-left: 50px;
+    }
+}
+.tableWrapper {
+    height: auto;
+    overflow: scroll;
+}
+.virtualTable {
+    color: $darkGray;
+    border-collapse: collapse;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    .desc {
+        font-weight: 400;
+    }
+    th {
+        padding: 18px 0;
+    }
+    tr {
+        background-color: #F2F2F2;
+        font-size: 15px;
+    }
+    td {
+        padding: 15px 30px;
+    }
+    tr:nth-child(2n+1) {
+        background-color: #E0E0E0;
+    }
+    tr:first-child {
+        background-color: $darkGray;
+        width: calc(100% - 223px);
+        color: white;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 700;
+        font-size: 17px;
+    }
+}
+.orderHistory {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+    h1 {
+        margin-left: 50px;
+    }
 }
