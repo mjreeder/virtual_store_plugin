@@ -9,10 +9,8 @@
  date_default_timezone_set('UTC');
  $current_user_ID = wp_get_current_user()->ID;
  $business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $current_user_ID));
- $persona_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
+ $consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
  $var = dcvs_get_option('warehouse_end_date', 0);
-
- // var_dump($warehouse_end_shopping_date);
 
 ?>
 
@@ -39,7 +37,7 @@
 
         <h1>virtual store</h1>
 
-        <p>time left until shopping begins : <b id="remaining-time"> <script>getTime("<?php echo $var.""; ?>")</script></b></p>
+        <p>time left until shopping begins : <b id="remaining-time"> <script>getTime("<?php echo $var.''; ?>")</script></b></p>
 
     </header>
 
@@ -79,7 +77,8 @@
 
                 <div class="myStoreLeft">
 
-                    <button class="button">WAREHOUSE</button>
+                    <button class="button">WAREHOUSE<a href="/"></a></button>
+
                     <p><?php echo $business_info[0]->description ?>
                         <br>
                         <br><b>budget: $<?php echo $business_info[0]->money ?></b>
@@ -88,8 +87,8 @@
                 <div class="myStoreRight">
 
                     <button class="button btnStore">EDIT STORE</button>
-                    <!-- <button class="button btnStore">VIEW STORE</button> -->
-                    <a href="<?php echo $business_info[0]->url ?>" class="button">VIEW STORE</a>
+                    <button class="button btnStore">VIEW STORE<a href="<?php echo $business_info[0]->url ?>" class="button"></a></button>
+
                     <button class="button btnStore">STORE STATS</button>
 
                 </div>
@@ -109,10 +108,23 @@
                         <img src="../assets/images/personaRed.png" alt="">
                     </div>
 
-                    <p><?php echo $persona_info[0]->description ?>
+                    <?php
+
+                      if ($_POST) {
+                          if (isset($_POST['shop_as_consumer_one'])) {
+                              set_current_consumer($current_user_ID, $consumer_info[0]->id);
+                          }
+                      }
+
+                      ?>
+
+                    <p><?php echo $consumer_info[0]->description ?>
                         <br>
-                        <br><b>persona budget: $<?php echo $persona_info[0]->money ?></b></p>
-                    <button class="button personaSmall one">SHOP</button>
+                        <br><b>persona budget: $<?php echo $consumer_info[0]->money ?></b></p>
+
+                        <form action="" method="post">
+                            <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
+                        </form>
                     <button class="button personaSmall one">STATS</button>
 
                 </div>
@@ -124,10 +136,22 @@
                         <img src="../assets/images/personaBlue.png" alt="">
                     </div>
 
-                    <p><?php echo $persona_info[1]->description ?>
+                    <?php
+
+                      if ($_POST) {
+                          if (isset($_POST['shop_as_consumer_two'])) {
+                              set_current_consumer($current_user_ID, $consumer_info[1]->id);
+                          }
+                      }
+
+                      ?>
+                    <p><?php echo $consumer_info[1]->description ?>
                         <br>
-                        <br><b>persona budget: $<?php echo $persona_info[1]->money ?></b></p>
-                    <button class="button personaSmall two">SHOP</button>
+                        <br><b>persona budget: $<?php echo $consumer_info[1]->money ?></b></p>
+                        <form action="" method="post">
+                          <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
+                        </form>
+
                     <button class="button personaSmall two">STATS</button>
 
                 </div>
@@ -142,3 +166,17 @@
 
 
 </body>
+
+<?php
+function set_current_consumer($user_id, $consumer_id)
+{
+    global $wpdb;
+    $result = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_current_persona WHERE user_id = %d', $user_id));
+    if (sizeOf($result) > 0) {
+        $wpdb->get_results($wpdb->prepare('UPDATE dcvs_current_persona set current_persona_id = %d WHERE user_id = %d', $consumer_id, $user_id));
+    } else {
+        $wpdb->insert('dcvs_current_persona', ['user_id' => $user_id, 'current_persona_id' => $consumer_id]);
+    }
+}
+
+?>

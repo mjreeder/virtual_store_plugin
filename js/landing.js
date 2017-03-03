@@ -15,9 +15,4 @@ function getTime(value){
        $("#remaining-time").text(days + ":" + hours + ":" + minutes + ":" + seconds);
    },1000);
 
-
-
-
-
-
 }
