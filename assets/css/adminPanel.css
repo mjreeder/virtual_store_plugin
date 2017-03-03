@@ -327,7 +327,8 @@ html {
   color: #5D5D5D;
   border-collapse: collapse;
   font-family: "Open Sans", sans-serif;
-  font-weight: 600; }
+  font-weight: 600;
+  width: 100%; }
   .virtualTable .desc {
     font-weight: 400; }
   .virtualTable th {
@@ -337,6 +338,8 @@ html {
     font-size: 15px; }
   .virtualTable td {
     padding: 15px 30px; }
+    .virtualTable td img {
+      height: 25px; }
   .virtualTable tr:nth-child(2n+1) {
     background-color: #E0E0E0; }
   .virtualTable tr:first-child {
@@ -355,3 +358,19 @@ html {
     margin-left: 50px; }
   .orderHistory .orderTable td {
     padding: 15px 50px; }
+
+.assign {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .assign h1 {
+    margin-left: 50px; }
+  .assign .virtualTable td {
+    text-align: center; }
+
+.manage {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .manage h1 {
+    margin-left: 50px; }

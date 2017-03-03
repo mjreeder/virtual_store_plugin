@@ -373,6 +373,7 @@ html {
     border-collapse: collapse;
     font-family: "Open Sans", sans-serif;
     font-weight: 600;
+    width: 100%;
     .desc {
         font-weight: 400;
     }
@@ -385,6 +386,9 @@ html {
     }
     td {
         padding: 15px 30px;
+        img {
+            height: 25px;
+        }
     }
     tr:nth-child(2n+1) {
         background-color: #E0E0E0;
@@ -410,4 +414,26 @@ html {
             padding: 15px 50px;
         }
     }
+}
+.assign {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+    h1 {
+        margin-left: 50px;
+    }
+    .virtualTable {
+        td {
+            text-align: center;
+        }
+    }
+}
+.manage {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+    h1 {
+        margin-left: 50px;
+    }
+
 }
