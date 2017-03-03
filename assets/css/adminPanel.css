@@ -122,13 +122,6 @@ html {
   display: flex;
   flex-direction: column;
   flex: 1 1; }
-  .studentInfo h1 {
-    font-size: 45px;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 700;
-    color: #5D5D5D;
-    margin-top: 20px;
-    margin-bottom: 20px; }
   .studentInfo .merchandiserInfo {
     height: 35%;
     width: 90%; }
@@ -230,18 +223,19 @@ html {
   font-size: 12px;
   margin-right: 10px; }
 
+.title {
+  font-size: 45px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  color: #5D5D5D;
+  margin-top: 20px;
+  margin-bottom: 40px; }
+
 .settings {
   display: flex;
   flex-direction: column;
   flex: 1 1;
   padding-left: 50px; }
-  .settings h1 {
-    font-size: 45px;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 700;
-    color: #5D5D5D;
-    margin-top: 20px;
-    margin-bottom: 40px; }
   .settings .settingsSub {
     display: flex;
     flex-direction: column;
@@ -258,8 +252,7 @@ html {
         font-weight: 600;
         font-size: 21px;
         align-self: center;
-        margin: 40px;
-        margin-left: 50px; }
+        margin: 40px 40px 40px 50px; }
       .settings .settingsSub div .budgetInput {
         background-color: #5D5D5D;
         height: 40px;
@@ -318,3 +311,66 @@ html {
   color: #5D5D5D;
   margin-bottom: 20px;
   font-size: 30px; }
+
+.comparison {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .comparison h1 {
+    margin-left: 50px; }
+
+.tableWrapper {
+  height: auto;
+  overflow: scroll; }
+
+.virtualTable {
+  color: #5D5D5D;
+  border-collapse: collapse;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  width: 100%; }
+  .virtualTable .desc {
+    font-weight: 400; }
+  .virtualTable th {
+    padding: 18px 0; }
+  .virtualTable tr {
+    background-color: #F2F2F2;
+    font-size: 15px; }
+  .virtualTable td {
+    padding: 15px 30px; }
+    .virtualTable td img {
+      height: 25px; }
+  .virtualTable tr:nth-child(2n+1) {
+    background-color: #E0E0E0; }
+  .virtualTable tr:first-child {
+    background-color: #5D5D5D;
+    width: calc(100% - 223px);
+    color: white;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 17px; }
+
+.orderHistory {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .orderHistory h1 {
+    margin-left: 50px; }
+  .orderHistory .orderTable td {
+    padding: 15px 50px; }
+
+.assign {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .assign h1 {
+    margin-left: 50px; }
+  .assign .virtualTable td {
+    text-align: center; }
+
+.manage {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .manage h1 {
+    margin-left: 50px; }
