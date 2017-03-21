@@ -1,9 +1,10 @@
 <?php
-
-// get_shopping_end_date();
-// get_warehouse_end_date();
+global $wpdb;
+if(!isset($_REQUEST['student_id'])){
+  $user_results = $wpdb->get_results('SELECT * FROM dcvs_user_business', OBJECT);
+  header('Location: http://store/wp-admin/admin.php?page=dcvs_teacher&student_id='.$user_results[0]->user_id);
+}
 display_admin_panel();
-// display_some_random_user_data();
 
 function get_store_info($business_id)
 {
@@ -105,7 +106,6 @@ function display_current_student_info()
 {
     global $wpdb;
     $currentDisplayStudent = $_REQUEST['student_id'];
-
     $display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_users WHERE id = %d', $currentDisplayStudent));
     $business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $currentDisplayStudent));
     $persona_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $currentDisplayStudent));
