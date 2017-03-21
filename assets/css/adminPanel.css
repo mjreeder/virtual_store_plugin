@@ -1,0 +1,403 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body,
+html {
+  height: 100%; }
+
+.wrapper {
+  height: calc(100% - 47px);
+  width: calc(100% - 273px);
+  float: right;
+  transform: translateY(47px); }
+
+.header {
+  background-color: #EDB867;
+  height: 75px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row; }
+  .header h1 {
+    font-family: 'Open sans', sans-serif;
+    color: white;
+    font-size: 40px;
+    margin-left: 50px;
+    display: inline;
+    align-self: center; }
+  .header p {
+    color: white;
+    font-family: 'Open sans', sans-serif;
+    font-size: 15pt;
+    align-self: center;
+    margin-right: 100px;
+    vertical-align: super; }
+    .header p b {
+      font-size: 50px;
+      margin-left: 50px; }
+
+.admin {
+  height: calc(100% - 75px);
+  display: flex;
+  flex-direction: row; }
+
+.sidebar {
+  height: 100%;
+  width: 230px;
+  background-color: #E0E0E0; }
+  .sidebar a {
+    text-decoration: none; }
+  .sidebar ul {
+    height: 100%; }
+    .sidebar ul li {
+      padding-top: 20px;
+      height: 60px;
+      color: #5D5D5D;
+      font-size: 17px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      text-align: left;
+      padding-left: 20px;
+      cursor: pointer;
+      list-style: none; }
+
+#selectedTab {
+  background-color: #828282;
+  color: white; }
+
+.studentList {
+  height: 100%;
+  background-color: white;
+  width: 45%;
+  flex: 0 0 200px; }
+  .studentList .searchBar {
+    height: 40px;
+    width: 100%;
+    position: relative;
+    border-right: 2px solid #F2F2F2; }
+    .studentList .searchBar img {
+      position: absolute;
+      top: 7px;
+      left: 7px; }
+    .studentList .searchBar input {
+      padding-left: 40px;
+      padding-right: 10px;
+      height: 100%;
+      width: 100%;
+      border: none;
+      font-size: 20px;
+      font-family: "Lato", sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      color: #5D5D5D; }
+    .studentList .searchBar input:placeholder {
+      color: #E0E0E0; }
+    .studentList .searchBar input:focus {
+      outline-width: 0; }
+  .studentList ul {
+    height: calc(100% - 40px);
+    overflow: scroll; }
+    .studentList ul li {
+      width: 100%;
+      padding-left: 20px;
+      background-color: #F2F2F2;
+      color: #5D5D5D;
+      list-style: none;
+      height: 35px;
+      padding-top: 5px;
+      text-transform: uppercase;
+      font-size: 17px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      cursor: pointer; }
+    .studentList ul .selectedStudent {
+      color: white;
+      background-color: #828282; }
+
+.studentInfo {
+  height: 100%;
+  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .studentInfo .merchandiserInfo {
+    height: 35%;
+    width: 90%; }
+    .studentInfo .merchandiserInfo div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between; }
+    .studentInfo .merchandiserInfo p {
+      margin-bottom: 30px;
+      font-family: "Lato", sans-serif;
+      font-size: 15px;
+      width: 100%;
+      color: #5D5D5D; }
+  .studentInfo .shopperInfo {
+    height: 35%;
+    width: 90%; }
+    .studentInfo .shopperInfo .shopperOne {
+      width: 45%;
+      display: inline-block; }
+      .studentInfo .shopperInfo .shopperOne div {
+        height: 50px;
+        background-color: #EA6F6C;
+        border-radius: 0.07in;
+        margin-bottom: 30px;
+        position: relative; }
+        .studentInfo .shopperInfo .shopperOne div h3 {
+          color: white;
+          font-family: "Open Sans", sans-serif;
+          font-weight: 600;
+          font-size: 20px;
+          padding-top: 12px;
+          padding-left: 20px; }
+        .studentInfo .shopperInfo .shopperOne div img {
+          position: absolute;
+          top: -3px;
+          left: 190px;
+          height: 43px;
+          margin-top: 10px;
+          margin-left: 25px; }
+      .studentInfo .shopperInfo .shopperOne p {
+        color: white;
+        font-family: "Lato", sans-serif;
+        font-size: 15px;
+        width: 100%;
+        color: #5D5D5D;
+        margin-bottom: 30px; }
+    .studentInfo .shopperInfo .shopperTwo {
+      width: 45%;
+      display: inline-block;
+      float: right; }
+      .studentInfo .shopperInfo .shopperTwo div {
+        height: 50px;
+        background-color: #87B8C2;
+        border-radius: 0.07in;
+        margin-bottom: 30px;
+        position: relative; }
+        .studentInfo .shopperInfo .shopperTwo div h3 {
+          color: white;
+          font-family: "Open Sans", sans-serif;
+          font-weight: 600;
+          font-size: 20px;
+          padding-top: 12px;
+          padding-left: 20px; }
+        .studentInfo .shopperInfo .shopperTwo div img {
+          position: absolute;
+          top: -3px;
+          left: 190px;
+          height: 43px;
+          margin-top: 10px;
+          margin-left: 25px; }
+      .studentInfo .shopperInfo .shopperTwo p {
+        color: white;
+        font-family: "Lato", sans-serif;
+        font-size: 15px;
+        width: 100%;
+        color: #5D5D5D;
+        margin-bottom: 30px; }
+
+.button {
+  background-color: #EDB867;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  height: 50px;
+  width: 175px;
+  border-radius: 0.07in;
+  border: none;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  text-align: center; }
+
+.button:hover {
+  background-color: #C19457; }
+
+.buttonSmall {
+  height: 40px;
+  width: 110px;
+  font-size: 12px;
+  margin-right: 10px; }
+
+.title {
+  font-size: 45px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  color: #5D5D5D;
+  margin-top: 20px;
+  margin-bottom: 40px; }
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+  padding-left: 50px; }
+  .settings .settingsSub {
+    display: flex;
+    flex-direction: column;
+    background-color: #F2F2F2;
+    margin-bottom: 50px;
+    margin-left: -50px; }
+    .settings .settingsSub div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between; }
+      .settings .settingsSub div h3 {
+        font-family: "Lato", sans-serif;
+        color: #5D5D5D;
+        font-weight: 600;
+        font-size: 21px;
+        align-self: center;
+        margin: 40px 40px 40px 50px; }
+      .settings .settingsSub div .budgetInput {
+        background-color: #5D5D5D;
+        height: 40px;
+        width: 300px;
+        align-self: center;
+        margin-right: 40px;
+        display: flex;
+        justify-content: space-between; }
+        .settings .settingsSub div .budgetInput p {
+          font-family: "Open Sans", sans-serif;
+          font-size: 25px;
+          color: white;
+          margin-left: 20px;
+          align-self: center;
+          font-weight: 600; }
+        .settings .settingsSub div .budgetInput input {
+          width: 250px;
+          padding-left: 20px;
+          padding-right: 10px;
+          height: 100%;
+          border: none;
+          font-size: 25px;
+          font-family: "Lato", sans-serif;
+          font-weight: 700;
+          color: #5D5D5D; }
+      .settings .settingsSub div .dateInput {
+        background-color: #5D5D5D;
+        height: 40px;
+        width: 200px;
+        align-self: center;
+        margin-right: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center; }
+        .settings .settingsSub div .dateInput input {
+          height: 100%;
+          width: 50%;
+          background-color: white;
+          padding-left: 20px;
+          padding-right: 10px;
+          height: 100%;
+          border: none;
+          font-family: "Lato", sans-serif;
+          font-weight: 700;
+          font-size: 20px;
+          color: #5D5D5D; }
+        .settings .settingsSub div .dateInput p {
+          color: white;
+          font-family: "Open Sans", sans-serif;
+          font-weight: 600;
+          margin-left: 25px; }
+
+.subTitle {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #5D5D5D;
+  margin-bottom: 20px;
+  font-size: 30px; }
+
+.comparison {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .comparison h1 {
+    margin-left: 50px; }
+
+.tableWrapper {
+  height: auto;
+  overflow: scroll; }
+
+.virtualTable {
+  color: #5D5D5D;
+  border-collapse: collapse;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  width: 100%; }
+  .virtualTable .desc {
+    font-weight: 400; }
+  .virtualTable th {
+    padding: 18px 0; }
+  .virtualTable tr {
+    background-color: #F2F2F2;
+    font-size: 15px; }
+  .virtualTable td {
+    padding: 15px 30px; }
+    .virtualTable td img {
+      height: 25px; }
+  .virtualTable tr:nth-child(2n+1) {
+    background-color: #E0E0E0; }
+  .virtualTable tr:first-child {
+    background-color: #5D5D5D;
+    width: calc(100% - 223px);
+    color: white;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 17px; }
+
+.orderHistory {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .orderHistory h1 {
+    margin-left: 50px; }
+  .orderHistory .orderTable td {
+    padding: 15px 50px; }
+
+.assign {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .assign h1 {
+    margin-left: 50px; }
+  .assign .virtualTable td {
+    text-align: center; }
+
+.manage {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1; }
+  .manage h1 {
+    margin-left: 50px; }
+  .manage .virtualTable td img {
+    cursor: pointer; }
+
+.dropdown {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 0 !important;
+  color: white;
+  font-size: 15px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  padding: 10px;
+  width: 90%;
+  border-radius: 0;
+  cursor: pointer;
+  background: url("../images/dropdownarrow1.svg") no-repeat right center;
+  background-color: #EDB867;
+  background-size: 40px;
+  text-align: center; }
+
+#assignOne {
+  background: url("../images/dropdownarrow2.svg") no-repeat right center;
+  background-color: #EA6F6C; }
+
+#assignTwo {
+  background: url("../images/dropdownarrow3.svg") no-repeat right center;
+  background-color: #87B8C2; }
