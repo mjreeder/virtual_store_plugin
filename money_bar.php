@@ -18,7 +18,7 @@ function dcvs_add_money_bar() {
 		<h2>you are:</h2>
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada nibh eu pellentesque interdum. Sed pulvinar orci lacus, vel hendrerit tortor blandit quis. Nullam tempus dolor id tempus volutpat. Ut ultrices vel est et vulputate.</p>
 
-<!--	</footer>-->
+	</footer>
 <?php
 }
 
