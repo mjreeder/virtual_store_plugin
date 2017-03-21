@@ -72,8 +72,6 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			return $array_attribute_objects;
 		}
 
-//		TODO: UPDATE TERM COUNTS
-
 		function dcvs_export_attribute_terms( $table_prefix ) {
 
 			self::dcvs_create_new_attribute_terms( $table_prefix );
@@ -117,44 +115,67 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			}
 		}
 
+		// TODO: CLEAN UP BELOW FUNCTIONS
+
 		function dcvs_export_products( $order_id, $table_prefix ) {
+			global $wpdb;
+
 			$order_items = WC()->order_factory->get_order($order_id)->get_items();
 
 			$post_ids = array();
 			$new_ids = array();
 
-			$old_new_id_mapping = array();
-
 			$tracked_objects = array();
+
+			$product_id = -1;
 
 			foreach ($order_items as $order_item) {
 				$temp_product_id = $order_item['item_meta']['_product_id'][0];
 				$temp_variation_id = $order_item['item_meta']['_variation_id'][0];
 				$temp_quantity = $order_item['item_meta']['_qty'][0];
 
-				if (in_array( $temp_product_id, $post_ids )) {
-					$product_id = $old_new_id_mapping[$temp_product_id];
-				} else  {
+				if (!in_array( $temp_product_id, $post_ids )) {
+					$sql = $wpdb->prepare("SELECT * FROM wp_posts WHERE post_type = 'attachment' and post_parent = '%d'", [$temp_product_id]);
+					$attachments = $wpdb->get_results($sql, ARRAY_A);
+
+					$default_thumbnail_id = get_post_thumbnail_id($temp_product_id);
+
 					$post_ids[] = $temp_product_id;
-					$product_id = self::dcvs_add_new_product( $temp_product_id, $table_prefix );
+					$product_id = self::dcvs_add_new_product( $temp_product_id, $table_prefix, $temp_quantity  );
 					$new_ids[] = $product_id;
-					$old_new_id_mapping[$temp_product_id] = $product_id;
+
 
 					$tracking_object =  new stdClass();
 					$tracking_object->product_id = $product_id;
 					$tracking_object->variation_ids = array();
+					$tracking_object->thumbnail_ids = array();
+					$tracking_object->default_thumbnail_id = $default_thumbnail_id;
 					$tracking_object->variation_post_meta_array = array();
+					$tracking_object->variation_attachments_array = array();
 					$tracking_object->quantities = array();
-					$tracking_object->colors = array();
-					$tracking_object->sizes = array();
+					$tracking_object->product_attributes = array();
+					$tracking_object->attachments = $attachments;
+
+					$product = wc_get_product($temp_product_id);
+					$product_post_meta = get_post_meta($product_id);
+					$tracking_object->product_post_meta = $product_post_meta;
+
+					$attributes = $product->get_attributes();
+					foreach ( $attributes as $attribute ) {
+						$lowercase_attribute_name = strtolower( $attribute['name'] );
+						$tracking_object->product_attributes[$lowercase_attribute_name] = array();
+					}
+
 
 					$tracked_objects[$product_id] = $tracking_object;
 
 				}
 
-				if (!in_array( $temp_variation_id, $tracked_objects[$product_id]->variation_ids  ) && $temp_variation_id != '0') {
+				if (!in_array( $temp_variation_id, $tracked_objects[$product_id]->variation_ids  ) && $temp_variation_id != '0' && $product_id != -1) {
 
 					$tracked_objects[$product_id]->variation_ids[] = $temp_variation_id;
+
+					$tracked_objects[$product_id]->thumbnail_ids[] = get_post_thumbnail_id($temp_variation_id);
 
 					$tracked_objects[$product_id]->quantities[] = $temp_quantity;
 
@@ -162,19 +183,25 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 					$tracked_objects[$product_id]->variation_post_meta_array[$temp_variation_id] = $variation_post_meta;
 
-					if (!in_array( $variation_post_meta['attribute_pa_color'][0], $tracked_objects[$product_id]->colors )) {
-						array_push($tracked_objects[$product_id]->colors, $variation_post_meta['attribute_pa_color'][0]);
+					$product_attribute_keys = array_keys($tracked_objects[$product_id]->product_attributes);
+
+					for ($x = 0; $x < count($product_attribute_keys); $x++) {
+
+						$formatted_attribute_name = 'attribute_' . $product_attribute_keys[$x];
+
+						if (!in_array( $variation_post_meta[$formatted_attribute_name][0], $tracked_objects[$product_id]->product_attributes[$product_attribute_keys[$x]] )) {
+							array_push($tracked_objects[$product_id]->product_attributes[$product_attribute_keys[$x]], $variation_post_meta[$formatted_attribute_name][0]);
+						}
+
 					}
 
 
-					if (!in_array( $variation_post_meta['attribute_pa_size'][0], $tracked_objects[$product_id]->sizes )) {
-						array_push($tracked_objects[$product_id]->sizes, $variation_post_meta['attribute_pa_size'][0]);
-					}
 				}
 
 			}
 
 			switch_to_blog( $table_prefix );
+
 
 			for ($i = 0; $i < count($new_ids); $i++) {
 				$tracked_object = $tracked_objects[$new_ids[$i]];
@@ -183,19 +210,32 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 				$parent_product_post_data = get_post( $tracked_object->product_id);
 				$tracked_object->parent_product_post_data = $parent_product_post_data;
+				
+				$new_variation_ids =  self::dcvs_add_variations( $tracked_object, $product );
 
-
-				self::dcvs_add_variations( $tracked_object, $product );
+				self::dcvs_add_attachments( $tracked_object, $new_variation_ids, $table_prefix );
 
 				$current_product_variations = self::dcvs_get_current_variations( $product );
 
+				$product_attribute_keys = array_keys($tracked_object->product_attributes);
+
 				for ($z = 0; $z < count($current_product_variations); $z++) {
-					array_push($tracked_object->colors, $current_product_variations[$z]['attribute_pa_color']);
-					array_push($tracked_object->sizes,$current_product_variations[$z]['attribute_pa_size']);
+
+					for ($x = 0; $x < count($product_attribute_keys); $x++) {
+
+						$formatted_attribute_name = 'attribute_' . $product_attribute_keys[$x];
+
+						array_push($tracked_object->product_attributes[$product_attribute_keys[$x]], $current_product_variations[$z][$formatted_attribute_name]);
+
+					}
+
 				}
 
-				wp_set_object_terms( $tracked_object->product_id, $tracked_object->colors, 'pa_color' );
-				wp_set_object_terms( $tracked_object->product_id, $tracked_object->sizes, 'pa_size' );
+				for ($t = 0; $t < count($product_attribute_keys); $t++) {
+
+					wp_set_object_terms( $tracked_object->product_id, $tracked_object->product_attributes[$product_attribute_keys[$t]], $product_attribute_keys[$t] );
+
+				}
 
 				delete_transient( 'wc_product_children_' . $tracked_object->product_id );
 			}
@@ -204,7 +244,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 		}
 
-		function dcvs_add_new_product($warehouse_product_id, $table_prefix) {
+		function dcvs_add_new_product($warehouse_product_id, $table_prefix, $quantity) {
 			global $wpdb;
 
 			$post_data = get_post($warehouse_product_id);
@@ -216,9 +256,6 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			                       'post_status' => 'publish',
 			                       'post_type' => "product");
 
-			$sql = $wpdb->prepare("SELECT * FROM wp_posts WHERE post_type = 'attachment' and post_parent = '%d'", [$warehouse_product_id]);
-			$attachments = $wpdb->get_results($sql, ARRAY_A);
-
 			switch_to_blog( $table_prefix );
 
 			$escaped_title = esc_sql( $post_data->post_title );
@@ -226,6 +263,9 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			$existing_id = $wpdb->get_var( "SELECT ID FROM wp_" . $table_prefix . "_posts WHERE post_title =  '$escaped_title'" );
 
 			if ( $existing_id !== NULL ) {
+				$existing_post_meta = get_post_meta($existing_id);
+				$old_stock = $existing_post_meta['_stock'][0];
+				update_post_meta( $existing_id, '_stock', $old_stock +  $quantity);
 				restore_current_blog();
 				return $existing_id;
 			}
@@ -252,51 +292,16 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			update_post_meta( $new_product_post_id, '_product_attributes', unserialize( $post_meta['_product_attributes'][0] ));
 			update_post_meta( $new_product_post_id, '_sale_price_dates_from', '' );
 			update_post_meta( $new_product_post_id, '_sale_price_dates_to', '' );
-			update_post_meta( $new_product_post_id, '_price', '10.00' );
+			update_post_meta( $new_product_post_id, '_price', $post_meta['_price'][0] );
 			update_post_meta( $new_product_post_id, '_sold_individually', $post_meta['_sold_individually'][0] );
-			update_post_meta( $new_product_post_id, '_manage_stock', 'no' );
 			update_post_meta( $new_product_post_id, '_backorders', 'no' );
-			update_post_meta( $new_product_post_id, '_stock', '' );
 
-			for ($y = 0; $y < count($attachments); $y++) {
-				// Source: http://stackoverflow.com/questions/20131966/copy-a-wordpress-featured-image-over-multisite
-
-				$upload_dir = wp_upload_dir(); // Set upload folder
-				$image_data = file_get_contents($attachments[$y]['guid']); // Get image data
-				$filename   = basename($attachments[$y]['guid']); // Create image file name
-
-				// Check folder permission and define file location
-				if( wp_mkdir_p( $upload_dir['path'] ) ) {
-					$file = $upload_dir['path'] . '/' . $filename;
-				} else {
-					$file = $upload_dir['basedir'] . '/' . $filename;
-				}
-
-				// Create the image  file on the server
-				file_put_contents( $file, $image_data );
-
-				// Check image file type
-				$wp_filetype = wp_check_filetype( $filename, null );
-
-				// Set attachment data
-				$attachment = array(
-					'post_mime_type' => $wp_filetype['type'],
-					'post_title'     => sanitize_file_name( $filename ),
-					'post_content'   => '',
-					'post_status'    => 'inherit'
-				);
-
-				// Create the attachment
-				$attach_id = wp_insert_attachment( $attachment, $file, $new_product_post_id );
-
-				// Define attachment metadata
-				$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
-
-				// Assign metadata to attachment
-				wp_update_attachment_metadata( $attach_id, $attach_data );
-
-				// And finally assign featured image to post
-				set_post_thumbnail( $new_product_post_id, $attach_id );
+			if ($product_type_term[0]->name == 'simple') {
+				update_post_meta( $new_product_post_id, '_manage_stock', 'yes' );
+				update_post_meta( $new_product_post_id, '_stock', $quantity );
+			} else {
+				update_post_meta( $new_product_post_id, '_manage_stock', 'no' );
+				update_post_meta( $new_product_post_id, '_stock', '' );
 
 			}
 
@@ -305,12 +310,96 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			return $new_product_post_id;
 		}
 
+		function dcvs_add_attachments($tracked_object, $new_variation_ids, $table_prefix) {
+			global $wpdb;
+
+			$attachments = $tracked_object->attachments;
+			$product_default_thumbnail_set = false;
+			$product_has_existing_thumbnail = false;
+
+			if (get_post_thumbnail_id($tracked_object->product_id) != '') {
+				$product_default_thumbnail_set = true;
+				$product_has_existing_thumbnail = true;
+			}
+
+			for ($y = 0; $y < count($attachments); $y++) {
+
+				$index = array_search( $attachments[$y]['ID'], $tracked_object->thumbnail_ids );
+
+				if ( $index !== false ) {
+					$escaped_title = esc_sql( $attachments[$y]['post_title'] );
+
+					$existing_attach_id = $wpdb->get_var( "SELECT ID FROM wp_" . $table_prefix . "_posts WHERE post_title = '$escaped_title' and post_type = 'attachment'" );
+
+					if ( $existing_attach_id !== NULL ) {
+						$attach_id = $existing_attach_id;
+					} else {
+						$attach_id = self::dcvs_create_attachment( $attachments[$y], $tracked_object->product_id );
+					}
+
+					update_post_meta( $new_variation_ids[$index], '_thumbnail_id', $attach_id );
+					if (!$product_default_thumbnail_set) {
+						set_post_thumbnail( $tracked_object->product_id, $attach_id );
+						$product_default_thumbnail_set = true;
+					}
+				}
+
+				if (intval($attachments[$y]['ID']) == intval($tracked_object->default_thumbnail_id) && !$product_has_existing_thumbnail) {
+					$attach_id = self::dcvs_create_attachment( $attachments[$y], $tracked_object->product_id );
+					update_post_meta( $tracked_object->product_id, '_thumbnail_id', $attach_id );
+					$product_default_thumbnail_set = true;
+				}
+
+			}
+
+		}
+
+		function dcvs_create_attachment($attachment, $product_id) {
+			$upload_dir = wp_upload_dir(); // Set upload folder
+			$image_data = file_get_contents($attachment['guid']); // Get image data
+			$filename   = basename($attachment['guid']); // Create image file name
+
+			// Check folder permission and define file location
+			if( wp_mkdir_p( $upload_dir['path'] ) ) {
+				$file = $upload_dir['path'] . '/' . $filename;
+			} else {
+				$file = $upload_dir['basedir'] . '/' . $filename;
+			}
+
+			// Create the image  file on the server
+			file_put_contents( $file, $image_data );
+
+			// Check image file type
+			$wp_filetype = wp_check_filetype( $filename, null );
+
+			// Set attachment data
+			$attachment_data = array(
+				'post_mime_type' => $wp_filetype['type'],
+				'post_title'     => $attachment['post_title'],
+				'post_content'   => '',
+				'post_status'    => 'inherit'
+			);
+
+			// Create the attachment
+			$attach_id = wp_insert_attachment( $attachment_data, $file, $product_id );
+
+			// Define attachment metadata
+			$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+
+			// Assign metadata to attachment
+			wp_update_attachment_metadata( $attach_id, $attach_data );
+
+			return $attach_id;
+		}
+
 		function dcvs_add_variations($tracking_object, WC_Product $product) {
+
+			$new_variation_ids = array();
 
 
 			for($y = 0; $y < count($tracking_object->variation_ids); $y++) {
 
-				$new_variation = array('attribute_pa_size' => $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$y]]['attribute_pa_size'][0], 'attribute_pa_color' => $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$y]]['attribute_pa_color'][0]);
+				$new_variation = self::dcvs_get_new_variation( $tracking_object, $y );
 
 				$current_product_variations = self::dcvs_get_and_update_current_variations($product, $new_variation, $tracking_object->quantities[$y] );
 
@@ -327,9 +416,8 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 				);
 
 				$new_post_id = wp_insert_post( $new_variation_data );
+				$new_variation_ids[] = $new_post_id;
 
-				update_post_meta( $new_post_id, 'attribute_pa_size', $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$y]]['attribute_pa_size'][0] );
-				update_post_meta( $new_post_id, 'attribute_pa_color', $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$y]]['attribute_pa_color'][0] );
 				update_post_meta( $new_post_id, '_stock_status', 'instock' );
 				update_post_meta( $new_post_id, '_sale_price_dates_to', $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$y]]['_sale_price_dates_to'][0] );
 				update_post_meta( $new_post_id, '_sale_price_dates_from', $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$y]]['_sale_price_dates_from'][0] );
@@ -343,8 +431,37 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 				update_post_meta( $new_post_id, '_backorders', 'yes' );
 				update_post_meta( $new_post_id, '_stock', $tracking_object->quantities[$y] );
 
+				$product_attribute_keys = array_keys($tracking_object->product_attributes);
+
+				for ($x = 0; $x < count($product_attribute_keys); $x++) {
+
+					$formatted_attribute_name = 'attribute_' . $product_attribute_keys[$x];
+
+					update_post_meta( $new_post_id, $formatted_attribute_name, $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$y]][$formatted_attribute_name][0] );
+
+				}
+
 			}
 
+			return $new_variation_ids;
+
+		}
+
+		function dcvs_get_new_variation($tracking_object, $variation_index) {
+			$new_variation = array();
+
+			$product_attribute_keys = array_keys($tracking_object->product_attributes);
+
+
+			for ($x = 0; $x < count($product_attribute_keys); $x++) {
+
+				$formatted_attribute_name = 'attribute_' . $product_attribute_keys[$x];
+
+				$new_variation[$formatted_attribute_name] = $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$variation_index]][$formatted_attribute_name][0];
+
+			}
+
+			return $new_variation;
 		}
 
 		function dcvs_get_and_update_current_variations(WC_Product $_product, $new_variation, $quantity) {
