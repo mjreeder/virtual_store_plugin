@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html, body {
+  height: 100%; }
+
+.budgetBar {
+  height: 185px;
+  position: fixed;
+  display: flex;
+  bottom: -120px;
+  width: 100%;
+  background-color: #AA4444;
+  transition: bottom 0.5s; }
+  .budgetBar .barSummary h2 {
+    top: 65px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    font-family: "Open Sans", sans-serif;
+    font-size: 25px;
+    margin-left: 40px;
+    margin-top: 10px;
+    color: white;
+    padding: 0 0;
+    font-weight: bold; }
+  .budgetBar .barSummary p {
+    top: 110px;
+    left: 0;
+    width: 80%;
+    position: absolute;
+    font-family: "Lato", sans-serif;
+    font-size: 15px;
+    margin-left: 40px;
+    margin-top: 10px;
+    color: white; }
+  .budgetBar .bar {
+    width: 100%;
+    height: 65px;
+    background-color: #EA6F6C;
+    display: flex;
+    position: absolute;
+    justify-content: space-between; }
+    .budgetBar .bar h3 {
+      color: white;
+      text-align: center;
+      font-family: "Open Sans", sans-serif;
+      font-size: 25px;
+      font-weight: 600;
+      align-self: center;
+      padding: 0 0;
+      margin: 0 0; }
+      .budgetBar .bar h3 span {
+        font-weight: 400; }
+    .budgetBar .bar h3:first-of-type {
+      margin-left: 17%; }
+    .budgetBar .bar a {
+      text-decoration: none;
+      align-self: center; }
+      .budgetBar .bar a span {
+        color: white;
+        text-align: center;
+        font-family: "Open Sans", sans-serif;
+        font-size: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        margin-right: 25px; }
+    .budgetBar .bar .barLeft {
+      height: 100%;
+      width: 15%;
+      position: absolute;
+      background-color: #AA4444;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer; }
+      .budgetBar .bar .barLeft span h1 {
+        color: white;
+        text-align: center;
+        font-family: "Open Sans", sans-serif;
+        font-size: 25px;
+        margin: 0 0;
+        font-weight: bold; }
+
+.budgetBar:hover {
+  bottom: 0; }
+
+.barUp {
+  bottom: 0; }
+
+@media screen and (max-width: 1000px) {
+  .budgetBar .bar .barLeft span h1 {
+    font-size: 20px; } }
+
+@media screen and (max-width: 800px) {
+  .budgetBar .bar .barLeft span h1 {
+    font-size: 15px; } }
+
+@media screen and (max-width: 700px) {
+  .budgetBar .bar .barLeft span h1 {
+    font-size: 15px; }
+  .budgetBar .bar a span {
+    visibility: hidden; }
+  .budgetBar .bar a span:after {
+    position: absolute;
+    right: 5%;
+    visibility: visible;
+    content: 'store list';
+    white-space: nowrap; } }
+
+@media screen and (max-width: 600px) {
+  .budgetBar .bar .barLeft span {
+    visibility: hidden; }
+  .budgetBar .bar .abrLeft span:after {
+    visibility: visible;
+    content: '#1'; } }
