@@ -47,11 +47,36 @@
         <aside class="helpVideoList">
 
             <figure>
-                <img src="../assets/images/bg.jpg"></iframe>
+                <?php
+
+                $opts = array(
+                  'http'=>array(
+                    'method'=>"GET",
+                    'header'=>"Authorization: Bearer 2f31f4053bb21a971bad92c108b253bf"
+                  )
+                );
+
+                $context = stream_context_create($opts);
+
+                // Open the file using the HTTP headers set above
+                $file = json_decode(file_get_contents('https://api.vimeo.com/users/10466342/albums/4481462/videos', false, $context), $assoc_array = false );
+                $currentlyPlaying = $file->data[0]->embed->html;
+                ?>
+                <!-- <img src="../assets/images/bg.jpg"> -->
+                <?php echo $currentlyPlaying ?>
                 <figcaption>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum.</figcaption>
             </figure>
 
             <ol>
+                <?php
+                for ($i=0; $i < sizeof($file->data); $i++) {
+                  ?>
+                  <li class="finished">
+                      <p><?php echo $file->data[$i]->description ?></p><span><?php echo $file->data[$i]->duration ?></span>
+                  </li>
+                  <?php
+                }
+                 ?>
                 <li class="finished">
                     <p>Do the first thing</p><span>1:45</span>
                 </li>
