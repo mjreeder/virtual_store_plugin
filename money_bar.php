@@ -33,10 +33,10 @@ function dcvs_add_money_bar() {
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $business_url ?>"><span>back to your store</span></a>
 			</div>
-
-			<h2>you are:</h2>
-			<p><?php echo $business_description ?></p>
-
+			<div class="barSummary">
+				<h2>you are:</h2>
+				<p><?php echo $business_description ?></p>
+			</div>
 		</footer>
 		<?php
 	} else if (get_user_blog_id( $user_id ) != get_current_blog_id()) {
@@ -49,9 +49,10 @@ function dcvs_add_money_bar() {
 				<a href=""><span>back to store list</span></a>
 			</div>
 
-			<h2>you are:</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada nibh eu pellentesque interdum. Sed pulvinar orci lacus, vel hendrerit tortor blandit quis. Nullam tempus dolor id tempus volutpat. Ut ultrices vel est et vulputate.</p>
-
+			<div class="barSummary">
+				<h2>you are:</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada nibh eu pellentesque interdum. Sed pulvinar orci lacus, vel hendrerit tortor blandit quis. Nullam tempus dolor id tempus volutpat. Ut ultrices vel est et vulputate.</p>
+			</div>
 		</footer>
 		<?php
 	}
