@@ -1,88 +1,111 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-body,
-html {
-  height: 100%; }
+body, html {
+    height: 100%;
+}
 
 .header {
-  background-color: #5D5D5D;
-  height: 75px;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-direction: row; }
-  .header h1 {
+    background-color: #5D5D5D;
+    height: 75px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+.header h1 {
     font-family: 'Open sans', sans-serif;
     color: white;
     font-size: 40px;
     margin-left: 75px;
     display: inline;
-    align-self: center; }
-  .header p {
+    align-self: center;
+}
+
+.header p {
     color: white;
     font-family: 'Open sans', sans-serif;
     font-size: 15pt;
     align-self: center;
     margin-right: 100px;
-    vertical-align: super; }
-    .header p b {
-      font-size: 50px;
-      margin-left: 50px; }
+    vertical-align: super;
+}
+
+.header p b {
+    font-size: 50px;
+    margin-left: 50px;
+}
 
 .helpVideoList {
-  width: 500px;
-  flex: 0 0 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #F2F2F2; }
-  .helpVideoList figure {
-    margin-bottom: 20px; }
-    .helpVideoList figure img {
-      width: 500px;
-      height: inherit;
-      margin-bottom: 20px; }
-    .helpVideoList figure figcaption {
-      font-family: "Lato", sans-serif;
-      color: #5D5D5D;
-      width: 80%;
-      font-size: 15px;
-      margin-bottom: 20px;
-      margin-left: auto;
-      margin-right: auto;
-      font-style: italic; }
-  .helpVideoList ol {
-    padding-right: 10%; }
-    .helpVideoList ol li {
-      font-family: "Lato", sans-serif;
-      color: #5D5D5D;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      justify-content: space-between;
-      line-height: 1;
-      width: 80%;
-      margin-left: 18%;
-      margin-bottom: 20px; }
-      .helpVideoList ol li p {
-        font-family: "Lato", sans-serif;
-        color: #5D5D5D;
-        font-size: 17px;
-        max-width: 380px; }
-      .helpVideoList ol li span {
-        font-size: 13px;
-        padding-left: 50px;
-        color: #aaaaaa; }
+    width: 500px;
+    flex: 0 0 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F2F2F2;
+}
 
-.currentlyPlaying,
-.finished {
-  position: relative; }
-  .currentlyPlaying::before,
-  .finished::before {
+.helpVideoList figure {
+    margin-bottom: 20px;
+}
+
+.helpVideoList figure iframe {
+    height: 281px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.helpVideoList figure figcaption {
+    font-family: "Lato", sans-serif;
+    color: #5D5D5D;
+    width: 80%;
+    font-size: 15px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
+}
+
+.helpVideoList ol {
+    padding-right: 10%;
+}
+
+.helpVideoList ol li {
+    font-family: "Lato", sans-serif;
+    color: #5D5D5D;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 1;
+    width: 80%;
+    margin-left: 18%;
+    margin-bottom: 20px;
+}
+
+.helpVideoList ol li p {
+    font-family: "Lato", sans-serif;
+    color: #5D5D5D;
+    font-size: 17px;
+    max-width: 380px;
+}
+
+.helpVideoList ol li span {
+    font-size: 13px;
+    padding-left: 50px;
+    color: #aaaaaa;
+}
+
+.currentlyPlaying, .finished {
+    position: relative;
+}
+
+.currentlyPlaying::before, .finished::before {
     content: '';
     position: absolute;
     height: 20px;
@@ -92,262 +115,229 @@ html {
     left: -35px;
     background-size: 100% auto;
     background-repeat: no-repeat;
-    background-position: center center; }
+    background-position: center center;
+}
 
 .finished {
-  text-decoration: line-through; }
-  .finished::before {
-    background-image: url("../images/checkmark.svg"); }
-  .finished span {
-    display: none; }
+    text-decoration: line-through;
+}
+
+.finished::before {
+    background-image: url("../images/checkmark.svg");
+}
+
+.finished span {
+    display: none;
+}
 
 .currentlyPlaying {
-  font-weight: bold; }
-  .currentlyPlaying::before {
+    font-weight: bold;
+}
+
+.currentlyPlaying::before {
     background-image: url("../images/play.svg");
-    background-size: auto 100%; }
+    background-size: auto 100%;
+}
 
 .time {
-  font-size: 15px;
-  margin-left: 75px;
-  text-decoration: none; }
+    font-size: 15px;
+    margin-left: 75px;
+    text-decoration: none;
+}
 
 .dashboard {
-  width: 100%;
-  flex: 1 1 auto;
-  padding-top: 20px;
-  padding-left: 75px; }
-  .dashboard h1 {
+    width: 100%;
+    flex: 1 1 auto;
+    padding-top: 20px;
+    padding-left: 75px;
+}
+
+.dashboard h1 {
     font-family: 'Open sans', sans-serif;
     color: #5D5D5D;
     font-size: 35px;
-    display: inline; }
-  .dashboard hr {
+    display: inline;
+}
+
+.dashboard hr {
     margin-bottom: 10px;
     margin-left: 25px;
     border: #EDB867 1px solid;
     width: 60%;
-    display: inline-block; }
+    display: inline-block;
+}
 
 .mainContent {
-  display: flex;
-  flex-direction: row;
-  height: calc(100% - 75px); }
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 75px);
+}
 
 .myStore {
-  display: flex;
-  flex-direction: row;
-  margin-top: 30px;
-  margin-bottom: 20px; }
-  .myStore .myStoreLeft {
-    width: 50%;
-    flex: 0 0 auto; }
-    .myStore .myStoreLeft p {
-      margin-top: 20px;
-      width: 320px;
-      font-family: 'Lato', sans-serif;
-      font-size: 15px;
-      color: #5D5D5D; }
-  .myStore .myStoreRight {
-    width: 50%;
-    flex: 0 0 auto; }
-  .myStore section {
-    flex-direction: row; }
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.myStore .myStoreLeft {
+    width: 35%;
+    margin-right: 15%;
+    flex: 0 0 auto;
+}
+
+.myStore .myStoreLeft p {
+    margin-top: 20px;
+    width: 320px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: #5D5D5D;
+}
+
+.myStore .myStoreRight {
+    width: 35%;
+    flex: 0 0 auto;
+}
+
+.myStore section {
+    flex-direction: row;
+}
 
 .goShopping {
-  display: flex;
-  flex-direction: row;
-  margin-top: 30px; }
-  .goShopping p {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+
+.goShopping p {
     margin-top: 20px;
     width: 75%;
     font-family: 'Lato', sans-serif;
     font-size: 15px;
-    color: #5D5D5D; }
+    color: #5D5D5D;
+}
+
+@media screen and (max-width: 1300px) {
+    .myStore .myStoreRight {
+        align-self: center;
+        width: 40%;
+    }
+    .myStore .myStoreLeft p {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1220px) {
+    .myStore .myStoreRight {
+        align-self: center;
+        width: 40%;
+    }
+    .myStore .myStoreLeft p {
+        width: 100%;
+    }
+}
 
 .button {
-  background-color: #EDB867;
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-  height: 50px;
-  width: 300px;
-  border-radius: 0.07in;
-  border: none;
-  font-size: 25px;
-  font-weight: 700;
-  text-align: left;
-  padding-left: 25px;
-  cursor: pointer; }
+    background-color: #EDB867;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    height: 50px;
+    width: 300px;
+    border-radius: 0.07in;
+    border: none;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: left;
+    padding-left: 25px;
+    cursor: pointer;
+}
 
 .button:hover {
-  background-color: #C19457; }
+    background-color: #C19457;
+}
 
 .btnStore {
-  margin-bottom: 20px; }
+    margin-bottom: 20px;
+}
 
 .persona {
-  background-color: #EA6F6C;
-  text-align: left;
-  height: 78px;
-  width: 300px;
-  border-radius: 0.1in;
-  padding-left: 25px;
-  display: flex; }
-  .persona h3 {
+    background-color: #EA6F6C;
+    text-align: left;
+    height: 78px;
+    width: 300px;
+    border-radius: 0.1in;
+    padding-left: 25px;
+    display: flex;
+}
+
+.persona h3 {
     font-size: 27px;
     color: white;
     font-family: 'Open Sans', sans-serif;
-    padding-top: 20px; }
-  .persona img {
+    padding-top: 20px;
+}
+
+.persona img {
     height: 68px;
     margin-top: 10px;
-    margin-left: 25px; }
+    margin-left: 25px;
+}
 
 .personaSmall {
-  background-color: #EA6F6C;
-  margin-top: 30px;
-  margin-right: 20px;
-  height: 35px;
-  width: 100px;
-  font-size: 17px; }
-
-.personaSmall.one:hover {
-  background-color: #AA4444; }
-
-.personaSmall.two:hover {
-  background-color: #547072; }
-
-.one {
-  background-color: #EA6F6C; }
-
-.two {
-  background-color: #87B8C2; }
-
-@media screen and (max-width: 1300px) {
-  .myStore .myStoreRight {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    align-self: center; }
-    .myStore .myStoreRight .btnStore {
-      align-self: flex-start; }
-  .myStore .myStoreLeft p {
-    width: 70%; }
-  .button {
-    text-align: center;
-    width: 250px;
-    font-size: 20px;
-    padding: 0; }
-  .btnStore {
-    text-align: center;
-    width: 250px;
-    font-size: 20px;
-    padding: 0;
-    display: block;
-    float: right;
-    margin-right: 40px;
-    align-self: flex-end; }
-  .persona {
-    width: 250px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0; }
-    .persona img {
-      display: none; }
-    .persona h3 {
-      text-align: center;
-      font-size: 22px;
-      padding: 0; }
-  .personaSmall {
+    background-color: #EA6F6C;
     margin-top: 30px;
     margin-right: 20px;
     height: 35px;
-    width: 75px;
-    font-size: 17px; } }
+    width: 100px;
+    font-size: 17px;
+}
 
-@media screen and (max-width: 1200px) {
-  .helpVideoList {
-    display: flex;
-    justify-content: flex-start;
-    flex: 0 0 400px;
-    width: 400px; }
-    .helpVideoList figure img {
-      height: inherit;
-      width: 400px; } }
+.personaSmall.one:hover {
+    background-color: #AA4444;
+}
 
-@media screen and (max-width: 1000px) {
-  .header p span {
-    display: none; } }
+.personaSmall.two:hover {
+    background-color: #547072;
+}
 
-@media screen and (max-width: 1050px) {
-  .helpVideoList {
-    display: flex;
-    justify-content: flex-start;
-    flex: 0 0 300px;
-    width: 300px; }
-    .helpVideoList figure img {
-      height: inherit;
-      width: 300px; } }
+.one {
+    background-color: #EA6F6C;
+}
 
-@media screen and (max-width: 400px) {
-  .mainContent {
-    flex-direction: column; } }
+.two {
+    background-color: #87B8C2;
+}
 
-@media screen and (max-width: 400px) {
-  .header h1 {
-    font-size: 25px;
-    margin-left: 50px; }
-  .header p {
-    margin-right: 50px; }
-    .header p b {
-      font-size: 30px;
-      margin: 0; }
-  .mainContent {
-    display: flex;
-    flex-direction: column;
-    height: auto; }
-    .mainContent .helpVideoList {
-      order: 1;
-      width: 100%;
-      height: 100%;
-      display: flex; }
-      .mainContent .helpVideoList figure {
-        margin-bottom: 20px; }
-        .mainContent .helpVideoList figure img {
-          height: inherit;
-          width: 100%; }
-    .mainContent .dashboard {
-      width: 100%;
-      flex: 1 1 auto;
-      padding-top: 20px;
-      padding-left: 50px; }
-      .mainContent .dashboard .myStore {
+@media screen and (max-width: 1300px) {
+    .button {
+        text-align: center;
+        width: 200px;
+        font-size: 20px;
+        padding: 0;
+    }
+    .btnStore {
+        text-align: center;
+        width: 200px;
+        font-size: 20px;
+        padding: 0;
+        display: block;
+        float: right;
+        margin-right: 40px;
+        align-self: center;
+    }
+    .persona {
+        width: 250px;
         display: flex;
-        flex-direction: column;
-        margin-top: 30px;
-        margin-bottom: 20px; }
-        .mainContent .dashboard .myStore .myStoreLeft {
-          width: 100%;
-          flex: 0 0 auto; }
-          .mainContent .dashboard .myStore .myStoreLeft p {
-            width: 90%;
-            margin-bottom: 20px; }
-          .mainContent .dashboard .myStore .myStoreLeft .button {
-            width: 300px; }
-        .mainContent .dashboard .myStore .myStoreRight {
-          width: 100%; }
-          .mainContent .dashboard .myStore .myStoreRight .button {
-            width: 300px; }
-      .mainContent .dashboard .goShopping {
-        flex-direction: column; }
-        .mainContent .dashboard .goShopping div {
-          margin-bottom: 50px; }
-          .mainContent .dashboard .goShopping div div {
-            width: 300px; }
-          .mainContent .dashboard .goShopping div p {
-            width: 90%; }
-          .mainContent .dashboard .goShopping div button {
-            width: 138px; } }
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+    .persona img {
+        display: none;
+    }
+    .persona h3 {
+        text-align: center;
+        font-size: 22px;
+        padding: 0;
+    }
+}
