@@ -9,6 +9,7 @@ $darkYellow: #C19457;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    // border: 1px solid black;
 }
 body,
 html {
@@ -53,7 +54,8 @@ html {
     figure {
         margin-bottom: 20px;
         img {
-            height: 281px;
+            width: 500px;
+            height: inherit;
             margin-bottom: 20px;
         }
         figcaption {
@@ -161,8 +163,7 @@ html {
     margin-top: 30px;
     margin-bottom: 20px;
     .myStoreLeft {
-        width: 35%;
-        margin-right: 15%;
+        width: 50%;
         flex: 0 0 auto;
         p {
             margin-top: 20px;
@@ -173,7 +174,7 @@ html {
         }
     }
     .myStoreRight {
-        width: 35%;
+        width: 50%;
         flex: 0 0 auto;
     }
     section {
@@ -192,32 +193,7 @@ html {
         color: $darkGray;
     }
 }
-@media screen and (max-width:1300px) {
-    .myStore {
-        .myStoreRight {
-            align-self: center;
-            width: 40%;
-        }
-        .myStoreLeft {
-            p {
-                width: 100%;
-            }
-        }
-    }
-}
-@media screen and (max-width:1220px) {
-    .myStore {
-        .myStoreRight {
-            align-self: center;
-            width: 40%;
-        }
-        .myStoreLeft {
-            p {
-                width: 100%;
-            }
-        }
-    }
-}
+@media screen and (max-width:1300px) {}
 // BUTTONS
 .button {
     background-color: $yellow;
@@ -280,24 +256,42 @@ html {
     background-color: $blue;
 }
 @media screen and (max-width:1300px) {
+    .myStore {
+        .myStoreRight {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            align-self: center;
+            .btnStore {
+                align-self: flex-start;
+            }
+        }
+        .myStoreLeft {
+            p {
+                width: 70%;
+            }
+        }
+    }
     .button {
         text-align: center;
-        width: 200px;
+        width: 250px;
         font-size: 20px;
         padding: 0;
     }
     .btnStore {
         text-align: center;
-        width: 200px;
+        width: 250px;
         font-size: 20px;
         padding: 0;
         display: block;
         float: right;
         margin-right: 40px;
-        align-self: center;
+        align-self: flex-end;
     }
     .persona {
         width: 250px;
+        height: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -309,6 +303,134 @@ html {
             text-align: center;
             font-size: 22px;
             padding: 0;
+        }
+    }
+    .personaSmall {
+        margin-top: 30px;
+        margin-right: 20px;
+        height: 35px;
+        width: 75px;
+        font-size: 17px;
+    }
+}
+@media screen and (max-width:1200px) {
+    .helpVideoList {
+        display: flex;
+        justify-content: flex-start;
+        flex: 0 0 400px;
+        width: 400px;
+        figure {
+            img {
+                height: inherit;
+                width: 400px;
+            }
+        }
+    }
+}
+@media screen and (max-width:1000px) {
+    .header {
+        p {
+            span {
+                display: none;
+            }
+        }
+    }
+}
+@media screen and (max-width:1050px) {
+    .helpVideoList {
+        display: flex;
+        justify-content: flex-start;
+        flex: 0 0 300px;
+        width: 300px;
+        figure {
+            img {
+                height: inherit;
+                width: 300px;
+            }
+        }
+    }
+}
+@media screen and (max-width:400px) {
+    .mainContent {
+        
+        flex-direction: column;
+    }
+}
+@media screen and (max-width:400px) {
+    .header {
+        h1 {
+            font-size: 25px;
+            margin-left: 50px;
+        }
+        p {
+            margin-right: 50px;
+            b {
+                font-size: 30px;
+                margin: 0;
+            }
+        }
+    }
+    .mainContent {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        .helpVideoList {
+            order: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            figure {
+                margin-bottom: 20px;
+                img {
+                    height: inherit;
+                    width: 100%;
+                }
+                figcaption {}
+            }
+        }
+        .dashboard {
+            width: 100%;
+            flex: 1 1 auto;
+            padding-top: 20px;
+            padding-left: 50px;
+            .myStore {
+                display: flex;
+                flex-direction: column;
+                margin-top: 30px;
+                margin-bottom: 20px;
+                .myStoreLeft {
+                    width: 100%;
+                    flex: 0 0 auto;
+                    p {
+                        width: 90%;
+                        margin-bottom: 20px;
+                    }
+                    .button {
+                        width: 300px;
+                    }
+                }
+                .myStoreRight {
+                    width: 100%;
+                    .button {
+                        width: 300px;
+                    }
+                }
+            }
+            .goShopping {
+                flex-direction: column;
+                div {
+                    margin-bottom: 50px;
+                    div {
+                        width: 300px;
+                    }
+                    p {
+                        width: 90%;
+                    }
+                    button {
+                        width: 138px;
+                    }
+                }
+            }
         }
     }
 }
