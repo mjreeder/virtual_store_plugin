@@ -14,20 +14,25 @@ function get_store_info($business_id)
     $description = $business->description;
     $display_name = $business->display_name;
 }
+function dcvs_enqueue_teacher_admin_style() {
+
+    wp_enqueue_style( 'adminPanel_css', plugins_url( 'assets/css/adminPanel.css', dirname(__FILE__)) );
+}
+
+add_action( 'wp_enqueue_scripts', 'dcvs_enqueue_teacher_admin_style' );
 function display_admin_panel()
 {
     ?>
   <head>
       <title>Virtual Store Admin Panel</title>
-      <!-- CSS -->
-      <link href="<?php echo 'wp-content/plugins/virtual_store_plugin/assets/css/adminPanel.css';
+      <link href="<?php echo plugins_url( 'assets/css/adminPanel.css', dirname(__FILE__));
     ?>" rel="stylesheet" type="text/css">
-      <!-- FONTS -->
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
       <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-      <script src="<?php echo 'wp-content/plugins/virtual_store_plugin/js/teacherAdminPanel.js';
+      <script src="<?php echo plugins_url( 'js/teacherAdminPanel.js', dirname(__FILE__));
     ?>" rel="stylesheet"></script>
 
       <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
@@ -35,7 +40,6 @@ function display_admin_panel()
   <body>
 
       <header class="header">
-
           <h1>virtual store admin panel</h1>
 
       </header>
@@ -61,7 +65,7 @@ function display_admin_panel()
           </nav>
           <aside class="studentList">
               <div class="searchBar">
-                  <img src="<?php echo 'wp-content/plugins/virtual_store_plugin/assets/images/search.svg';
+                  <img src="<?php echo plugins_url( 'assets/images/search.svg', dirname(__FILE__));
     ?>" rel="stylesheet" alt="">
                   <input type="text" id='search' placeholder="search" oninput="studentSearch()">
               </div>
@@ -128,7 +132,7 @@ function display_current_student_info()
           <aside class="shopperOne">
               <div>
                   <h3><?php echo $persona_info[0]->name ?></h3>
-                  <img src="<?php echo 'wp-content/plugins/virtual_store_plugin/assets/images/personaRed.png';
+                  <img src="<?php echo plugins_url( 'assets/images/personaRed.png', dirname(__FILE__));
     ?>" alt="">
               </div>
               <p><strong>you are:</strong> <?php echo $persona_info[0]->description ?></p>
@@ -149,7 +153,7 @@ function display_current_student_info()
           <aside class="shopperTwo">
               <div>
                   <h3><?php echo $persona_info[1]->name ?></h3>
-                  <img src="<?php echo 'wp-content/plugins/virtual_store_plugin/assets/images/personaBlue.png';
+                  <img src="<?php echo plugins_url( 'assets/images/personaBlue.png', dirname(__FILE__));
     ?>" alt="">
               </div>
               <p><strong>you are:</strong> <?php echo $persona_info[1]->description ?></p>
