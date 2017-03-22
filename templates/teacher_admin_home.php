@@ -2,7 +2,7 @@
 global $wpdb;
 if(!isset($_REQUEST['student_id'])){
   $user_results = $wpdb->get_results('SELECT * FROM dcvs_user_business', OBJECT);
-  header('Location: http://store/wp-admin/admin.php?page=dcvs_teacher&student_id='.$user_results[0]->user_id);
+  header('Location: '. get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$user_results[0]->user_id);
 }
 display_admin_panel();
 
