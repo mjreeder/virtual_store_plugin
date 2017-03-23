@@ -97,8 +97,8 @@ tr:nth-child(even) {
     $business = dcvs_get_user_business($id);
 
     $user_business_id = isset($business['id']) ? $business['id'] : "";
-    $persona_1_id = isset( $personas['Persona 1 id'] ) ? $personas['Persona 1 id'] : "";
-    $persona_2_id = isset( $personas['Persona 2 id'] ) ? $personas['Persona 2 id'] : "";
+    $persona_1_id = isset( $personas['Persona 1 id'] ) ? $personas['Persona 1 id'] : null;
+    $persona_2_id = isset( $personas['Persona 2 id'] ) ? $personas['Persona 2 id'] : null;
     ?>
     <tr>
       <td><?php echo $usermeta["first_name"][0]." ".$usermeta["last_name"][0]; ?></td>
@@ -129,7 +129,7 @@ tr:nth-child(even) {
         <form action="" method="post">
           <input type="hidden" name="dcvs_admin_changes" value="1">
           <input type="hidden" name="id" value="<?php echo $id; ?>">
-          <input type="hidden" name="oldid" value="<?php echo $personas["Persona 1 id"]; ?>">
+          <input type="hidden" name="oldid" value="<?php echo $persona_1_id; ?>">
           <select onchange="this.form.submit()" name="personaid" style="width:100%;">
             <option value="-1"></option>
             <?php
@@ -150,7 +150,7 @@ tr:nth-child(even) {
         <form action="" method="post">
           <input type="hidden" name="dcvs_admin_changes" value="1">
           <input type="hidden" name="id" value="<?php echo $id; ?>">
-          <input type="hidden" name="oldid" value="<?php echo $personas["Persona 2 id"]; ?>">
+          <input type="hidden" name="oldid" value="<?php echo $persona_2_id; ?>">
           <select onchange="this.form.submit()" name="personaid" style="width:100%;">
             <option value="-1"></option>
             <?php
