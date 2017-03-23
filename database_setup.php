@@ -8,7 +8,7 @@
  * https://codex.wordpress.org/Class_Reference/wpdb
  */
 defined( 'ABSPATH' ) or die( 'invalid access' );
-define("DCVS_DATABASE_VERSION", 0.25);
+define("DCVS_DATABASE_VERSION", 0.37);
 
 $dcvs_current_version = dcvs_get_option("dcvs_database_version");
 
@@ -74,7 +74,7 @@ if($dcvs_current_version != DCVS_DATABASE_VERSION){
         ) $charset_collate;";
         dbDelta($optionsTable);
 
-    }else if($dcvs_current_version < 0.25){
+    } if($dcvs_current_version < 0.25){
         $purchaseTable = "CREATE TABLE dcvs_business_purchase(
             id BIGINT(10) NOT NULL AUTO_INCREMENT,
             user_persona_id BIGINT(10) NOT NULL,
@@ -85,7 +85,15 @@ if($dcvs_current_version != DCVS_DATABASE_VERSION){
         ) $charset_collate;";
         dbDelta($purchaseTable);
     }
+     if($dcvs_current_version < 0.37){
+       $wpdb->query("DROP TABLE dcvs_current_persona;");
+      $currentPersona = "CREATE TABLE dcvs_current_persona(
+          user_id BIGINT(10) NOT NULL,
+          current_persona_id BIGINT(10)
+      ) $charset_collate;";
+
+      dbDelta($currentPersona);
+    }
 
     dcvs_set_option("dcvs_database_version", DCVS_DATABASE_VERSION);
 }
-
