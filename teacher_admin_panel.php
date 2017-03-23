@@ -12,6 +12,7 @@ function dcvs_admin_menu_init(){
     add_menu_page("Virtual Store", "Virtual Store", "create_sites", "dcvs_virtual_store", "dcvs_admin_menu_draw");
     add_submenu_page("dcvs_virtual_store","Personas","Personas","create_sites","dcvs_personas", "dcvs_admin_personas_settings");
     add_submenu_page("dcvs_virtual_store","Businesses","Businesses","create_sites", "dcvs_businesses", "dcvs_admin_businesses_settings");
+    add_submenu_page('dcvs_virtual_store', 'Businesses', 'Teacher', 'create_sites', 'dcvs_teacher', 'dvcs_admin_teacher_settings');
     add_submenu_page("dcvs_virtual_store","User Assignments","User Assignments", "create_sites", "dcvs_persona_assignments", "dcvs_admim_persona_assignments");
 }
 
@@ -45,4 +46,9 @@ function dcvs_admin_menu_draw(){
         <input type="submit">
     </form>
     <?php
+}
+
+function dvcs_admin_teacher_settings()
+{
+    require_once __DIR__."/templates/teacher_admin_home.php";
 }
