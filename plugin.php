@@ -7,8 +7,13 @@
  */
 defined('ABSPATH') or die('invalid access');
 
-require_once __DIR__.'/teacher_admin_panel.php';
-require_once __DIR__.'/landing_page.php';
+require_once __DIR__."/teacher_admin_panel.php";
+require_once __DIR__."/landing_page.php";
+require_once __DIR__."/purchase_functions.php";
+require_once __DIR__."/personas_admin_settings.php";
+require_once __DIR__."/businesses_admin_settings.php";
+require_once __DIR__."/user_persona_assignment.php";
+require_once __DIR__."/money_bar.php";
 
 add_action('woocommerce_review_order_before_payment', 'dcvs_before_cart_contents');
 add_action('woocommerce_review_order_after_payment', 'dcvs_after_cart_contents');
@@ -54,7 +59,6 @@ function dcvs_before_cart_contents()
     -->
     <div class="hide-payment" style="display:none;">
     <?php
-
 }
 
 //This function is used to close the hidden div that hides the payment processing section of checkout
@@ -89,3 +93,30 @@ function dcvs_echo_option($key, $default_value = false)
 {
     echo dcvs_get_option($key, $default_value);
 }
+
+function calculate_spent($costs) {
+  $spent = 0;
+  for($i = 0; $i < sizeof($costs); $i++) {
+    $costObject = get_object_vars($costs[$i]);
+    $cost = $costObject["cost"];
+    $spent+=$cost;
+  }
+  return $spent;
+}
+
+function money_is_number($money) {
+  return filter_var($money, FILTER_VALIDATE_FLOAT);
+}
+
+function fields_are_blank($array) {
+  foreach ($array as $s) {
+    if($s == "") {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+
+
