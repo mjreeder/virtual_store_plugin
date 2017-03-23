@@ -14,6 +14,13 @@ body,
 html {
     height: 100%;
 }
+h3 {
+    color: $darkGray;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Open Sans", sans-serif;
+    margin-bottom: 20px;
+}
 .wrapper {
     height: calc(100% - 47px);
     width: calc(100% - 273px);
@@ -137,6 +144,34 @@ html {
         }
     }
 }
+.facts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    .fact {
+        height: 100px;
+        width: 130px;
+        background-color: #E0E0E0;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+            margin-top: 15px;
+            height: 25px;
+        }
+        p {
+            font-size: 12px;
+            font-weight: 700;
+            font-family: "Open Sans", sans-serif;
+            text-align: center;
+            color: $darkGray;
+            margin-top: 10px;
+        }
+    }
+}
+
 .studentInfo {
     height: 100%;
     padding-left: 50px;
@@ -144,18 +179,29 @@ html {
     flex-direction: column;
     flex: 1 1;
     .merchandiserInfo {
-        height: 35%;
+        height: 38%;
         width: 90%;
-        div {
+        display: flex;
+        flex-direction: column;
+        section {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            .merchandiserLeft {
+                display: flex;
+                flex-direction: column;
+                width: 45%;
+            }
+            .merchandiserRight {
+                display: flex;
+                flex-direction: column;
+                width: 45%;
+            }
         }
-        p {
-            margin-bottom: 30px;
-            font-family: "Lato", sans-serif;
-            font-size: 15px;
-            width: 100%;
+        span {
+            text-align: center;
+            margin-top: 20px;
+            font-family: "Open Sans", sans-serif;
             color: $darkGray;
         }
     }
@@ -165,73 +211,11 @@ html {
         .shopperOne {
             width: 45%;
             display: inline-block;
-            div {
-                height: 50px;
-                background-color: $red;
-                border-radius: 0.07in;
-                margin-bottom: 30px;
-                position: relative;
-                h3 {
-                    color: white;
-                    font-family: "Open Sans", sans-serif;
-                    font-weight: 600;
-                    font-size: 20px;
-                    padding-top: 12px;
-                    padding-left: 20px;
-                }
-                img {
-                    position: absolute;
-                    top: -3px;
-                    left: 190px;
-                    height: 43px;
-                    margin-top: 10px;
-                    margin-left: 25px;
-                }
-            }
-            p {
-                color: white;
-                font-family: "Lato", sans-serif;
-                font-size: 15px;
-                width: 100%;
-                color: $darkGray;
-                margin-bottom: 30px;
-            }
         }
         .shopperTwo {
             width: 45%;
             display: inline-block;
             float: right;
-            div {
-                height: 50px;
-                background-color: $blue;
-                border-radius: 0.07in;
-                margin-bottom: 30px;
-                position: relative;
-                h3 {
-                    color: white;
-                    font-family: "Open Sans", sans-serif;
-                    font-weight: 600;
-                    font-size: 20px;
-                    padding-top: 12px;
-                    padding-left: 20px;
-                }
-                img {
-                    position: absolute;
-                    top: -3px;
-                    left: 190px;
-                    height: 43px;
-                    margin-top: 10px;
-                    margin-left: 25px;
-                }
-            }
-            p {
-                color: white;
-                font-family: "Lato", sans-serif;
-                font-size: 15px;
-                width: 100%;
-                color: $darkGray;
-                margin-bottom: 30px;
-            }
         }
     }
 }
@@ -239,18 +223,22 @@ html {
     background-color: $yellow;
     color: white;
     font-family: 'Open Sans', sans-serif;
-    height: 50px;
-    width: 175px;
+    height: 40px;
+    width: 100%;
     border-radius: 0.07in;
     border: none;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
     text-align: left;
     cursor: pointer;
     text-align: center;
+    margin-bottom: 10px;
 }
-.button:hover {
-    background-color: $darkYellow;
+.one {
+    background-color: $red;
+}
+.two {
+    background-color: $blue;
 }
 .buttonSmall {
     height: 40px;
@@ -264,7 +252,7 @@ html {
     font-weight: 700;
     color: $darkGray;
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 .settings {
     display: flex;
@@ -277,6 +265,7 @@ html {
         background-color: #F2F2F2;
         margin-bottom: 50px;
         margin-left: -50px;
+        margin-top: 20px;
         div {
             display: flex;
             flex-direction: row;
@@ -353,8 +342,8 @@ html {
     font-family: "Open Sans", sans-serif;
     font-weight: 600;
     color: $darkGray;
-    margin-bottom: 20px;
-    font-size: 30px;
+    font-size: 32px;
+    margin-bottom: -5px;
 }
 .comparison {
     display: flex;
@@ -367,6 +356,13 @@ html {
 .tableWrapper {
     height: auto;
     overflow: scroll;
+}
+.stats {
+    tr {
+        th {
+            font-size: 14px;
+        }
+    }
 }
 .virtualTable {
     color: $darkGray;
@@ -467,5 +463,4 @@ html {
 #assignTwo {
     background: url("../images/dropdownarrow3.svg") no-repeat right center;
     background-color: $blue;
-
 }

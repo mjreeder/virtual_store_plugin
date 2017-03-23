@@ -10,6 +10,8 @@ gulp.task('styles', function() {
 });
 
 //Watch task
-gulp.task('default', function() {
+gulp.task('watch', function() {
     gulp.watch('assets/sass/**/*.scss', ['styles']);
 });
+
+gulp.task('default', ['styles', 'watch']);

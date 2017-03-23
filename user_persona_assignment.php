@@ -95,6 +95,10 @@ tr:nth-child(even) {
     $usermeta = get_user_meta($id);
     $personas = dcvs_get_user_personas($id);
     $business = dcvs_get_user_business($id);
+
+    $user_business_id = isset($business['id']) ? $business['id'] : "";
+    $persona_1_id = isset( $personas['Persona 1 id'] ) ? $personas['Persona 1 id'] : "";
+    $persona_2_id = isset( $personas['Persona 2 id'] ) ? $personas['Persona 2 id'] : "";
     ?>
     <tr>
       <td><?php echo $usermeta["first_name"][0]." ".$usermeta["last_name"][0]; ?></td>
@@ -106,12 +110,12 @@ tr:nth-child(even) {
           <input type="hidden" name="id" value="<?php echo $id; ?>">
           <input type="hidden" name="businessId" value="<?php echo $business["id"]; ?>">
           <select onchange="this.form.submit()" name="businessid" style="width:100%;">
-            <option value="<?php echo dcvs_get_user_business($id); ?>"><?php echo $business["title"]; ?></option>
+            <option value="-1"></option>
             <?php
             for($j = 0; $j < sizeof($allBusinesses); $j++) {
               $business = get_object_vars($allBusinesses[$j]);
               ?>
-              <option value="<?php echo $business["id"]; ?>"><?php echo $business["title"]; ?></option>
+              <option value="<?php echo $business["id"]; ?>" <?php echo $user_business_id == $business["id"] ? "selected": "";?> ><?php echo $business["title"]; ?></option>
               <?php
             }
             ?>
@@ -127,12 +131,12 @@ tr:nth-child(even) {
           <input type="hidden" name="id" value="<?php echo $id; ?>">
           <input type="hidden" name="oldid" value="<?php echo $personas["Persona 1 id"]; ?>">
           <select onchange="this.form.submit()" name="personaid" style="width:100%;">
-            <option value="<?php echo $personas["Persona 1 id"]; ?>"><?php echo $personas["Persona 1"]; ?></option>
+            <option value="-1"></option>
             <?php
             for($j = 0; $j < sizeof($allPersonas); $j++) {
               $persona = get_object_vars($allPersonas[$j]);
               ?>
-              <option value="<?php echo $persona["id"]; ?>"><?php echo $persona["name"]; ?></option>
+              <option value="<?php echo $persona["id"]; ?>" <?php echo $persona_1_id == $persona["id"] ? "selected": "";?> ><?php echo $persona["name"]; ?></option>
               <?php
             }
             ?>
@@ -148,12 +152,12 @@ tr:nth-child(even) {
           <input type="hidden" name="id" value="<?php echo $id; ?>">
           <input type="hidden" name="oldid" value="<?php echo $personas["Persona 2 id"]; ?>">
           <select onchange="this.form.submit()" name="personaid" style="width:100%;">
-            <option value="<?php echo $personas["Persona 2 id"]; ?>"><?php echo $personas["Persona 2"]; ?></option>
+            <option value="-1"></option>
             <?php
             for($j = 0; $j < sizeof($allPersonas); $j++) {
               $persona = get_object_vars($allPersonas[$j]);
               ?>
-              <option value="<?php echo $persona["id"]; ?>"><?php echo $persona["name"]; ?></option>
+              <option value="<?php echo $persona["id"]; ?>" <?php echo $persona_2_id == $persona["id"] ? "selected": "";?> ><?php echo $persona["name"]; ?></option>
               <?php
             }
             ?>
