@@ -58,7 +58,7 @@ function dcvs_before_cart_contents()
     This combined with dc_after_cart_contents create a hidden
     div that removes the payment processing section of checkout
     -->
-    <div class="hide-payment" style="display:none;">
+<!--    <div class="hide-payment" style="display:none;">-->
     <?php
 }
 
@@ -66,7 +66,7 @@ function dcvs_before_cart_contents()
 function dcvs_after_cart_contents()
 {
     ?>
-        </div>
+<!--        </div>-->
     <?php
 
 }
