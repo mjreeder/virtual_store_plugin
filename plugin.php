@@ -7,6 +7,7 @@
  */
 defined('ABSPATH') or die('invalid access');
 
+require_once __DIR__ . "/models/warehouse_checkout.php";
 require_once __DIR__."/teacher_admin_panel.php";
 require_once __DIR__."/landing_page.php";
 require_once __DIR__."/purchase_functions.php";
@@ -57,7 +58,7 @@ function dcvs_before_cart_contents()
     This combined with dc_after_cart_contents create a hidden
     div that removes the payment processing section of checkout
     -->
-    <div class="hide-payment" style="display:none;">
+<!--    <div class="hide-payment" style="display:none;">-->
     <?php
 }
 
@@ -65,7 +66,7 @@ function dcvs_before_cart_contents()
 function dcvs_after_cart_contents()
 {
     ?>
-        </div>
+<!--        </div>-->
     <?php
 
 }
