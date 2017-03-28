@@ -114,7 +114,7 @@
 
                 <div class="myStoreLeft">
 
-                    <button class="button">WAREHOUSE<a href="/"></a></button>
+                    <a href="<?php echo get_site_url() ?>"><button class="button">WAREHOUSE</button></a>
 
                     <p><?php echo $business_info[0]->description ?>
                         <br>
