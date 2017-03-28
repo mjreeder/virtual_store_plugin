@@ -65,8 +65,11 @@ function display_admin_panel()
                   </a>
               </ul>
           </nav>
-          <?php if (!isset($_REQUEST['section'])) {
+          <?php
+          if (!isset($_REQUEST['section'])) {
               require_once __DIR__ . "/teacher_admin_student_info.php";
+          } else if ($_REQUEST['section'] = 'manage') {
+              require_once __DIR__ . "/teacher_admin_manage_personas.php";
           }
           ?>
       </main>
