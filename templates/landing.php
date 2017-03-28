@@ -63,12 +63,11 @@
                 $currently_playing_video = $file->data[0]->embed->html;
                 $current_playing_caption = $file->data[0]->description;
                 ?>
-
+                <!-- ORIGINAL DESIGN IMAGE BELOW -->
                 <!-- <img src="../assets/images/bg.jpg"> -->
                 <div id="video"></div>
                 <figcaption id="caption"></figcaption>
                 <script>setDisplayVideo('<?php echo $currently_playing_video?>', '<?php echo $current_playing_caption?>')</script>
-                <!-- TODO add caption to params, set like video, create on clicks for list -->
 
             </figure>
 
@@ -125,7 +124,7 @@
                 <div class="myStoreRight">
 
                     <button class="button btnStore">EDIT STORE</button>
-                    <button class="button btnStore">VIEW STORE<a href="<?php echo $business_info[0]->url ?>" class="button"></a></button>
+                    <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
 
                     <button class="button btnStore">STORE STATS</button>
 
