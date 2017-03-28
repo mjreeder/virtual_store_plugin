@@ -28,7 +28,7 @@ h3 {
     transform: translateY(47px);
 }
 .header {
-    background-color: $yellow;
+    background-color: $darkGray;
     height: 75px;
     display: flex;
     justify-content: space-between;
@@ -273,8 +273,8 @@ h3 {
             h3 {
                 font-family: "Lato", sans-serif;
                 color: $darkGray;
-                font-weight: 600;
-                font-size: 21px;
+                font-weight: 400;
+                font-size: 20px;
                 align-self: center;
                 margin: 40px 40px 40px 50px;
             }
