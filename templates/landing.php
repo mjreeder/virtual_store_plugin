@@ -60,11 +60,16 @@
 
                 // Open the file using the HTTP headers set above
                 $file = json_decode(file_get_contents('https://api.vimeo.com/users/10466342/albums/4481462/videos', false, $context), $assoc_array = false );
-                $currentlyPlaying = $file->data[0]->embed->html;
+                $currently_playing_video = $file->data[0]->embed->html;
+                $current_playing_caption = $file->data[0]->description;
                 ?>
+
                 <!-- <img src="../assets/images/bg.jpg"> -->
-                <?php echo $currentlyPlaying ?>
-                <figcaption>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum.</figcaption>
+                <div id="video"></div>
+                <figcaption id="caption"></figcaption>
+                <script>setDisplayVideo('<?php echo $currently_playing_video?>', '<?php echo $current_playing_caption?>')</script>
+                <!-- TODO add caption to params, set like video, create on clicks for list -->
+
             </figure>
 
             <ol>
@@ -72,7 +77,15 @@
                 for ($i=0; $i < sizeof($file->data); $i++) {
                   ?>
                   <li class="finished">
-                      <p><?php echo $file->data[$i]->description ?></p><span><?php echo $file->data[$i]->duration ?></span>
+                    <?php
+                    $framestring = $file->data[$i]->embed->html;
+                    $descriptionString = $file->data[$i]->description;
+                    $descriptionString = str_replace("\n", "\\n",$file->data[$i]->description);
+
+                    echo "<script>frameString".$i." = '$framestring'</script>";
+                    echo "<script>descriptionString".$i." = '$descriptionString'</script>";
+                    ?>
+                      <p onclick="setDisplayVideo(frameString<?php echo $i ?>, descriptionString<?php echo $i ?>)"><?php echo $file->data[$i]->description;?></p><span><?php echo gmdate("H:i:s", $file->data[$i]->duration); ?></span>
                   </li>
                   <?php
                 }
