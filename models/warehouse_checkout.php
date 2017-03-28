@@ -15,11 +15,16 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 		}
 
 		function dcvs_export_cart( $order_id ) {
-			$table_prefix = self::dcvs_get_table_prefix();
-			self::dcvs_export_attributes( $table_prefix );
-			self::dcvs_export_attribute_terms( $table_prefix );
-			self::dcvs_export_products( $order_id, $table_prefix );
-			self::dcvs_add_warehouse_purchase($order_id);
+			if (get_current_blog_id() == 1) {
+				$table_prefix = self::dcvs_get_table_prefix();
+				self::dcvs_export_attributes( $table_prefix );
+				self::dcvs_export_attribute_terms( $table_prefix );
+				self::dcvs_export_products( $order_id, $table_prefix );
+				self::dcvs_add_warehouse_purchase($order_id);
+			} else if (self::dcvs_get_user_blog_id(get_current_user_id()) != get_current_blog_id()) {
+				self::dcvs_add_business_purchase( $order_id );
+			}
+
 		}
 
 		function dcvs_get_table_prefix() {
@@ -515,6 +520,53 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 			$wpdb->insert( "dcvs_warehouse_purchase", [ "user_id" => $user_id, "cost" => $cost, "items" => $items ] );
 		}
+
+		function dcvs_add_business_purchase($order_id){
+			global $wpdb;
+
+			$order = WC()->order_factory->get_order($order_id);
+			$order_items = $order->get_items();
+
+			$user_id = get_current_user_id();
+			$current_persona_id = self::dcvs_get_current_persona_id( $user_id );
+			$business_id = self::dcvs_get_current_business_id();
+			$cost = floatval( substr(preg_replace( '#[^\d.]#', '', $order->get_formatted_order_total()), 2));
+			$order_item_names = [];
+			foreach ($order_items as $item){
+				$order_item_names[] = $item;
+			}
+			$items = serialize($order_item_names);
+
+			$wpdb->insert( "dcvs_business_purchase", [ "user_persona_id" => $current_persona_id, "business_id" => $business_id, "cost" => $cost, "items" => $items ] );
+		}
+
+		function dcvs_get_current_persona_id($user_id) {
+			global $wpdb;
+
+			$current_persona_id = $wpdb->get_var("SELECT current_persona_id FROM dcvs_current_persona WHERE user_id =  '" . esc_sql( $user_id ) . "'");
+			return $current_persona_id;
+		}
+
+		function dcvs_get_current_business_id() {
+			global $wpdb;
+
+			$store_url = get_site_url(get_current_blog_id()) . "/";
+			$business_id = $wpdb->get_var("SELECT id FROM dcvs_business WHERE url = '" . esc_sql( $store_url ) . "'");
+			return $business_id;
+
+		}
+
+		function dcvs_get_user_blog_id($user_id) {
+			global $wpdb;
+			$business_url = $wpdb->get_var( "SELECT url FROM dcvs_business WHERE id = (SELECT business_id FROM dcvs_user_business WHERE user_id = " . esc_sql( $user_id ) . ")" );
+			$parsed_url = parse_url( $business_url );
+			$blog_path = $parsed_url['path'];
+			$blog_id = $wpdb->get_var( "SELECT blog_id FROM wp_blogs WHERE path = '" . esc_sql( $blog_path ) . "'" );
+
+			return $blog_id;
+
+		}
+
 
 	}
 
