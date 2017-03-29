@@ -104,7 +104,12 @@ function display_current_student_info()
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 						?> alt="">
-						<p>52 <br>SHOPPERS</p>
+						<p><?php if (isset($persona_one_purchase_count[0])) {
+							# code...
+							echo count(get_object_vars($persona_one_purchase_count[0]));
+						}else{
+							echo 0;
+						} ?> <br>PURCHASES</p>
 					</div>
 				</section>
 			</aside>
@@ -136,7 +141,12 @@ function display_current_student_info()
 						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 						?> alt="">
 						<!-- TODO get numb of shopperes -->
-						<p>52 <br>SHOPPERS</p>
+							<p><?php if (isset($persona_one_purchase_count[1])) {
+								# code...
+								echo count(get_object_vars($persona_one_purchase_count[1]));
+							}else{
+								echo 0;
+							} ?> <br>PURCHASES</p>
 					</div>
 				</section>
 
