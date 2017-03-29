@@ -137,7 +137,10 @@ function register_landing_page_widget() {
     $sorted_dashboard = array_merge( $my_widget, $dashboard );
     $wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
 }
-add_action( 'wp_dashboard_setup', 'register_landing_page_widget' );
+if (get_current_blog_id() != 1) {
+    add_action( 'wp_dashboard_setup', 'register_landing_page_widget' );
+}
+
 
 function landing_page_widget_display() {
     $landing_page_url = dcvs_get_landing_page_url();
