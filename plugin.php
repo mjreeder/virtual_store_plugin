@@ -140,17 +140,34 @@ function register_landing_page_widget() {
 add_action( 'wp_dashboard_setup', 'register_landing_page_widget' );
 
 function landing_page_widget_display() {
-    $plugin_basename = plugin_basename( __FILE__ );
-    $split_basename = explode("/",$plugin_basename);
-    $plugin_name = $split_basename[0];
-
-    $site_url = get_site_url();
-    $landing_page_url = $site_url . '/wp-content/plugins/' . $plugin_name . '/templates/landing.php';
+    $landing_page_url = dcvs_get_landing_page_url();
     ?>
 
     <a href="<?php echo $landing_page_url ?>"><?php echo $landing_page_url ?></a>
 
     <?php
+}
+
+function dcvs_get_landing_page_url() {
+    $plugin_basename = plugin_basename( __FILE__ );
+    $split_basename = explode("/",$plugin_basename);
+    $plugin_name = $split_basename[0];
+
+    $user_business = dcvs_get_business_by_user_id( get_current_user_id() );
+    $site_url = $user_business['url'];
+    $landing_page_url = $site_url . '/wp-content/plugins/' . $plugin_name . '/templates/landing.php';
+    return $landing_page_url;
+}
+
+function dcvs_get_store_list_url() {
+    $plugin_basename = plugin_basename( __FILE__ );
+    $split_basename = explode("/",$plugin_basename);
+    $plugin_name = $split_basename[0];
+
+    $user_business = dcvs_get_business_by_user_id( get_current_user_id() );
+    $site_url = $user_business['url'];
+    $store_list_url = $site_url . '/wp-content/plugins/' . $plugin_name . '/templates/stores.php';
+    return $store_list_url;
 }
 
 

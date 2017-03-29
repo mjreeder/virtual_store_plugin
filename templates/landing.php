@@ -21,10 +21,13 @@ if( isset( $current_user ) && !empty($current_user->roles) ){
 }
 
 
- $current_user_ID = wp_get_current_user()->ID;
- $business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $current_user_ID));
- $consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
- $var = dcvs_get_option('warehouse_end_date', 0);
+$current_user_ID = wp_get_current_user()->ID;
+$business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $current_user_ID));
+$business_expense = dcvs_get_business_expenses( $current_user_ID );
+$consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
+$consumer_1_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[0]->persona_id);
+$consumer_2_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[1]->persona_id);
+$var = dcvs_get_option('warehouse_end_date', 0);
 
 ?>
 
@@ -121,7 +124,7 @@ if( isset( $current_user ) && !empty($current_user->roles) ){
 
         <main class="dashboard">
 
-            <h1><a href="<?php echo plugins_url( 'templates/store_list.php', dirname(__FILE__)); ?>"> my store</a></h1>
+            <h1>my store</h1>
             <!-- <hr> -->
             <section class="myStore">
 
@@ -132,7 +135,7 @@ if( isset( $current_user ) && !empty($current_user->roles) ){
 
                     <p><?php echo $business_info[0]->description ?>
                         <br>
-                        <br><b>budget: $<?php echo $business_info[0]->money ?></b>
+                        <br><b>budget: $<?php echo $business_info[0]->money - $business_expense ?></b>
                     </p>
                 </div>
                 <div class="myStoreRight">
@@ -159,23 +162,15 @@ if( isset( $current_user ) && !empty($current_user->roles) ){
                         <img src="../assets/images/personaRed.png" alt="">
                     </div>
 
-                    <?php
-
-                      if ($_POST) {
-                          if (isset($_POST['shop_as_consumer_one'])) {
-                              set_current_consumer($current_user_ID, $consumer_info[0]->id);
-                          }
-                      }
-
-                      ?>
-
                     <p><?php echo $consumer_info[0]->description ?>
                         <br>
-                        <br><b>persona budget: $<?php echo $consumer_info[0]->money ?></b></p>
-
-                        <form action="" method="post">
-                            <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
-                        </form>
+                        <br>
+                        <b>persona budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
+                    </p>
+                    <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
+                        <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
+                    </a>
+                    <br>
                     <button class="button personaSmall one">STATS</button>
 
                 </div>
@@ -187,22 +182,16 @@ if( isset( $current_user ) && !empty($current_user->roles) ){
                         <img src="../assets/images/personaBlue.png" alt="">
                     </div>
 
-                    <?php
-
-                      if ($_POST) {
-                          if (isset($_POST['shop_as_consumer_two'])) {
-                              set_current_consumer($current_user_ID, $consumer_info[1]->id);
-                          }
-                      }
-
-                      ?>
                     <p><?php echo $consumer_info[1]->description ?>
                         <br>
-                        <br><b>persona budget: $<?php echo $consumer_info[1]->money ?></b></p>
-                        <form action="" method="post">
-                          <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
-                        </form>
+                        <br>
+                        <b>persona budget: $<?php echo $consumer_info[1]->money - $consumer_2_expense ?></b>
+                    </p>
+                    <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
+                        <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
+                    </a>
 
+                    <br>
                     <button class="button personaSmall two">STATS</button>
 
                 </div>
@@ -219,15 +208,5 @@ if( isset( $current_user ) && !empty($current_user->roles) ){
 </body>
 
 <?php
-function set_current_consumer($user_id, $consumer_id)
-{
-    global $wpdb;
-    $result = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_current_persona WHERE user_id = %d', $user_id));
-    if (sizeOf($result) > 0) {
-        $wpdb->get_results($wpdb->prepare('UPDATE dcvs_current_persona set current_persona_id = %d WHERE user_id = %d', $consumer_id, $user_id));
-    } else {
-        $wpdb->insert('dcvs_current_persona', ['user_id' => $user_id, 'current_persona_id' => $consumer_id]);
-    }
-}
 
 ?>
