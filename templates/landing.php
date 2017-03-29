@@ -124,7 +124,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
         <main class="dashboard">
 
-            <h1>my store</h1>
+            <h1><?php echo $business_info[0]->title ?></h1>
             <!-- <hr> -->
             <section class="myStore">
 
