@@ -7,6 +7,20 @@
  */
  require_once __DIR__.'/../../../../wp-blog-header.php';
  date_default_timezone_set('UTC');
+
+global $current_user;
+
+if( isset( $current_user ) && !empty($current_user->roles) ){
+    if(!in_array('administrator', $current_user->roles)) {
+        wp_redirect( get_site_url() . '/wp-admin' );
+        exit;
+    }
+} else {
+    wp_redirect( get_site_url() . '/wp-admin' );
+    exit;
+}
+
+
  $current_user_ID = wp_get_current_user()->ID;
  $business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $current_user_ID));
  $consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
@@ -107,7 +121,7 @@
 
         <main class="dashboard">
 
-            <h1>my store</h1>
+            <h1><a href="<?php echo plugins_url( 'templates/store_list.php', dirname(__FILE__)); ?>"> my store</a></h1>
             <!-- <hr> -->
             <section class="myStore">
 

@@ -145,7 +145,7 @@ function landing_page_widget_display() {
     $plugin_name = $split_basename[0];
 
     $site_url = get_site_url();
-    $landing_page_url = $site_url . '/wp-admin/wp-content/plugins/' . $plugin_name . '/templates/landing.php';
+    $landing_page_url = $site_url . '/wp-content/plugins/' . $plugin_name . '/templates/landing.php';
     ?>
 
     <a href="<?php echo $landing_page_url ?>"><?php echo $landing_page_url ?></a>
