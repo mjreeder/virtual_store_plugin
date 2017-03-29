@@ -44,8 +44,8 @@ function display_current_student_info()
 	$business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $currentDisplayStudent));
 	$persona_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $currentDisplayStudent));
 	$number_of_shoppers = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT business_id) FROM dcvs_business_purchase WHERE business_id = %d', $business_info[0]->id));
-	$persona_one_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase WHERE user_persona_id = %d', $persona_info[0]->id));
-	$persona_two_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase WHERE user_persona_id = %d', $persona_info[1]->id));
+	$persona_one_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE persona_id = %d', $persona_info[0]->id));
+	$persona_two_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE persona_id = %d', $persona_info[1]->id));
 	?>
 
 	<section class="studentInfo">
@@ -71,7 +71,15 @@ function display_current_student_info()
 						<div class="fact">
 							<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 							?>  alt="">
-							<p><?php echo count(get_object_vars($number_of_shoppers[0])) ?> <br>SHOPPERS</p>
+							<p><?php
+							$array = get_object_vars($number_of_shoppers[0]);
+							reset($array);
+							$first_key = key($array);
+							if (intval($array[$first_key]) > 0) {
+								echo $array[$first_key];
+							}else{
+								echo 0;
+							} ?> <br>SHOPPERS</p>
 						</div>
 					</section>
 					<!-- TODO comparison page -->
@@ -104,9 +112,12 @@ function display_current_student_info()
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 						?> alt="">
-						<p><?php if (isset($persona_one_purchase_count[0])) {
-							# code...
-							echo count(get_object_vars($persona_one_purchase_count[0]));
+						<p><?php
+						$array = get_object_vars($persona_one_purchase_count[0]);
+						reset($array);
+						$first_key = key($array);
+						if (intval($array[$first_key]) > 0) {
+							echo $array[$first_key];
 						}else{
 							echo 0;
 						} ?> <br>PURCHASES</p>
@@ -141,9 +152,12 @@ function display_current_student_info()
 						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 						?> alt="">
 						<!-- TODO get numb of shopperes -->
-							<p><?php if (isset($persona_one_purchase_count[1])) {
-								# code...
-								echo count(get_object_vars($persona_one_purchase_count[1]));
+							<p><?php
+							$array = get_object_vars($persona_two_purchase_count[0]);
+							reset($array);
+							$first_key = key($array);
+							if (intval($array[$first_key]) > 0) {
+								echo $array[$first_key];
 							}else{
 								echo 0;
 							} ?> <br>PURCHASES</p>
