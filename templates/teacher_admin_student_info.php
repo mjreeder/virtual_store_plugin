@@ -85,6 +85,7 @@ function display_current_student_info()
 							<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 							?>  alt="">
 							<p><?php
+							echo get_value_from_stdClass($number_of_shoppers[0]);
 							?> <br>SHOPPERS</p>
 						</div>
 					</section>
