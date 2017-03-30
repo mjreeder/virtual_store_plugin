@@ -135,13 +135,8 @@ function display_current_student_info()
 						?> alt="">
 						<!-- TODO get profit -->
 						<p><?php
-						 if(isset($persona_two_money_spent[0])){
 							 $difference = get_value_from_stdClass($persona_two_total_money[0]) - get_value_from_stdClass($persona_two_money_spent[0]);
 							 echo '$'.$difference;
-						 }
-						 else{
-							 echo get_value_from_stdClass($persona_two_total_money[0]);
-						 }
 						 ?>
 						 <br>Remaining</p>
 					</div>
