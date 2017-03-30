@@ -12,7 +12,16 @@
 	</aside>
 
 <?php display_current_student_info();
-
+function get_value_from_stdClass($obj){
+	$array = get_object_vars($obj);
+	reset($array);
+	$first_key = key($array);
+	if (intval($array[$first_key]) > 0) {
+		return $array[$first_key];
+	}else{
+		return 0;
+	}
+}
 function display_student_list()
 {
 	global $wpdb;
@@ -46,7 +55,11 @@ function display_current_student_info()
 	$number_of_shoppers = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT business_id) FROM dcvs_business_purchase WHERE business_id = %d', $business_info[0]->id));
 	$persona_one_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE persona_id = %d', $persona_info[0]->id));
 	$persona_two_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE persona_id = %d', $persona_info[1]->id));
-
+	$persona_one_total_money = $wpdb->get_results($wpdb->prepare('SELECT money FROM dcvs_persona WHERE id = %d', $persona_info[0]->id));
+	$persona_two_total_money = $wpdb->get_results($wpdb->prepare('SELECT money FROM dcvs_persona WHERE id = %d', $persona_info[1]->id));
+	$persona_one_money_spent = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND persona_id = %d', $currentDisplayStudent, $persona_info[0]->id));
+	$persona_two_money_spent = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND persona_id = %d', $currentDisplayStudent, $persona_info[1]->id));
+	// var_dump($persona_one_total_money, $persona_two_total_money);
 	?>
 		<section class="studentInfo" id='mainView'>
 		<h1><?php echo $display_name[0]->display_name ?></h1>
@@ -72,14 +85,7 @@ function display_current_student_info()
 							<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 							?>  alt="">
 							<p><?php
-							$array = get_object_vars($number_of_shoppers[0]);
-							reset($array);
-							$first_key = key($array);
-							if (intval($array[$first_key]) > 0) {
-								echo $array[$first_key];
-							}else{
-								echo 0;
-							} ?> <br>SHOPPERS</p>
+							?> <br>SHOPPERS</p>
 						</div>
 					</section>
 					<!-- TODO comparison page -->
@@ -100,20 +106,17 @@ function display_current_student_info()
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
 						?> alt="">
-						<p>$450 <br>PROFIT</p>
+						<p><?php
+						 $difference = get_value_from_stdClass($persona_one_total_money[0]) - get_value_from_stdClass($persona_one_money_spent[0]);
+						 echo '$'.$difference?>
+						 <br>Remaining</p>
 					</div>
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 						?> alt="">
 						<p><?php
-						$array = get_object_vars($persona_one_purchase_count[0]);
-						reset($array);
-						$first_key = key($array);
-						if (intval($array[$first_key]) > 0) {
-							echo $array[$first_key];
-						}else{
-							echo 0;
-						} ?> <br>PURCHASES</p>
+						echo get_value_from_stdClass($persona_one_purchase_count[0])
+						?> <br>PURCHASES</p>
 					</div>
 				</section>
 			</aside>
@@ -130,21 +133,18 @@ function display_current_student_info()
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
 						?> alt="">
 						<!-- TODO get profit -->
-						<p>$450 <br>PROFIT</p>
+						<p><?php
+						 $difference = get_value_from_stdClass($persona_two_total_money[0]) - get_value_from_stdClass($persona_two_money_spent[0]);
+						 echo '$'.$difference?>
+						 <br>Remaining</p>
 					</div>
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 						?> alt="">
 						<!-- TODO get numb of shopperes -->
-							<p><?php
-							$array = get_object_vars($persona_two_purchase_count[0]);
-							reset($array);
-							$first_key = key($array);
-							if (intval($array[$first_key]) > 0) {
-								echo $array[$first_key];
-							}else{
-								echo 0;
-							} ?> <br>PURCHASES</p>
+						<p><?php
+						echo get_value_from_stdClass($persona_two_purchase_count[0])
+						?> <br>PURCHASES</p>
 					</div>
 				</section>
 
