@@ -1,0 +1,109 @@
+<?php
+
+require_once __DIR__.'/../../../../wp-blog-header.php';
+
+if ( !is_user_logged_in() ) {
+	wp_redirect( get_site_url() . '/wp-admin' );
+	exit;
+}
+
+if (isset($_REQUEST['persona_id'])) {
+	dcvs_set_current_consumer(get_current_user_id(),$_REQUEST['persona_id']);
+}
+
+$businesses = dcvs_get_all_available_businesses();
+
+function dcvs_set_current_consumer($user_id, $consumer_id)
+{
+	global $wpdb;
+	$result = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_current_persona WHERE user_id = %d', $user_id));
+	if (sizeOf($result) > 0) {
+		$wpdb->get_results($wpdb->prepare('UPDATE dcvs_current_persona set current_persona_id = %d WHERE user_id = %d', $consumer_id, $user_id));
+	} else {
+		$wpdb->insert('dcvs_current_persona', ['user_id' => $user_id, 'current_persona_id' => $consumer_id]);
+	}
+}
+
+function dcvs_get_all_available_businesses()
+{
+	global $wpdb;
+	$user_id = get_current_user_id();
+	$sql = $wpdb->prepare('SELECT * FROM dcvs_business WHERE id != (SELECT business_id FROM dcvs_user_business WHERE user_id = %d)', $user_id);
+	$businesses = $wpdb->get_results($sql, ARRAY_A);
+	return $businesses;
+
+}
+
+?>
+
+<?php
+
+$user_id = get_current_user_id();
+
+$persona = dcvs_get_current_persona($user_id);
+
+$persona_name = $persona['name'];
+$persona_description = $persona['description'];
+$persona_budget = $persona['money'];
+$persona_expense = dcvs_get_persona_expenses($user_id, $persona['id']);
+
+$current_budget = $persona_budget - $persona_expense ;
+
+?>
+<!doctype HTML>
+<html>
+
+<head>
+	<title>Virtual Store</title>
+	<!-- CSS -->
+	<link href="../assets/css/storeList.css" rel="stylesheet" type="text/css">
+	<link href="../assets/css/budgetBar.css" rel="stylesheet" type="text/css">
+	<!-- FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<header class="header">
+
+		<h1>virtual store</h1>
+
+	</header>
+
+	<div class="mainContent">
+
+		<ul class="storeList">
+			<?php
+			foreach ($businesses as $business) {
+			?>
+				<li>
+					<div onclick="window.location='<?php echo $business['url']?>'"></div>
+					<p><?php echo $business['title'] ?></p>
+				</li>
+			<?php
+			}
+			?>
+		</ul>
+
+	</div>
+
+	<footer class="budgetBar">
+
+		<div class="bar">
+			<div class="barLeft"><span><h1><?php echo $persona_name ?></h1></span></div>
+			<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+			<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
+		</div>
+
+		<div class="barSummary">
+			<h2>you are:</h2>
+			<p><?php echo $persona_description ?></p>
+		</div>
+	</footer>
+
+</body>
+
+</html>
+<?php
+?>

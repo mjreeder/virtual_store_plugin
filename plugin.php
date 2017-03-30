@@ -118,6 +118,61 @@ function fields_are_blank($array) {
   return false;
 }
 
+//TODO: Style widget and hide when viewed by non students
+
+function register_landing_page_widget() {
+    global $wp_meta_boxes;
+
+    wp_add_dashboard_widget(
+        'landing_page_widget',
+        'Store Dashboard',
+        'landing_page_widget_display'
+    );
+
+    $dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
+
+    $my_widget = array( 'landing_page_widget' => $dashboard['landing_page_widget'] );
+    unset( $dashboard['landing_page_widget'] );
+
+    $sorted_dashboard = array_merge( $my_widget, $dashboard );
+    $wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
+}
+if (get_current_blog_id() != 1) {
+    add_action( 'wp_dashboard_setup', 'register_landing_page_widget' );
+}
+
+
+function landing_page_widget_display() {
+    $landing_page_url = dcvs_get_landing_page_url();
+    ?>
+
+    <a href="<?php echo $landing_page_url ?>"><?php echo $landing_page_url ?></a>
+
+    <?php
+}
+
+function dcvs_get_landing_page_url() {
+    $plugin_basename = plugin_basename( __FILE__ );
+    $split_basename = explode("/",$plugin_basename);
+    $plugin_name = $split_basename[0];
+
+    $user_business = dcvs_get_business_by_user_id( get_current_user_id() );
+    $site_url = $user_business['url'];
+    $landing_page_url = $site_url . '/wp-content/plugins/' . $plugin_name . '/templates/landing.php';
+    return $landing_page_url;
+}
+
+function dcvs_get_store_list_url() {
+    $plugin_basename = plugin_basename( __FILE__ );
+    $split_basename = explode("/",$plugin_basename);
+    $plugin_name = $split_basename[0];
+
+    $user_business = dcvs_get_business_by_user_id( get_current_user_id() );
+    $site_url = $user_business['url'];
+    $store_list_url = $site_url . '/wp-content/plugins/' . $plugin_name . '/templates/stores.php';
+    return $store_list_url;
+}
+
 
 
 

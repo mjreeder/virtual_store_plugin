@@ -15,3 +15,9 @@ function getTime(value){
        $("#remaining-time").text(days + ":" + hours + ":" + minutes + ":" + seconds);
    },1000);
 }
+
+function setDisplayVideo(video, caption){
+  console.log(video, caption);
+  document.getElementById("video").innerHTML = video;
+  document.getElementById("caption").innerHTML = caption;
+}
