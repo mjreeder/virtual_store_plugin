@@ -73,6 +73,9 @@ function display_admin_panel()
           } else if ($_REQUEST['section'] == 'settings') {
               require_once __DIR__ . "/teacher_admin_general_settings.php";
           }
+          else if($_REQUEST['section'] == 'order_history'){
+            require_once __DIR__ . "/teacher_admin_orderHistory.php";
+          }
           ?>
       </main>
 

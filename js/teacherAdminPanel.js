@@ -21,7 +21,7 @@ function studentSearch() {
   var studentElements = document.getElementById('students');
   var searchQuery = $("#search").val();
   var possible = [];
-  
+
   for (var i = 0; i < studentElements.children.length; i++) {
     if (studentElements.children[i] !== undefined) {
       var sliced = studentElements.children[i].innerText.slice(0, searchQuery.length);

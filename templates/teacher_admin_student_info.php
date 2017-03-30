@@ -46,9 +46,9 @@ function display_current_student_info()
 	$number_of_shoppers = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT business_id) FROM dcvs_business_purchase WHERE business_id = %d', $business_info[0]->id));
 	$persona_one_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE persona_id = %d', $persona_info[0]->id));
 	$persona_two_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE persona_id = %d', $persona_info[1]->id));
-	?>
 
-	<section class="studentInfo">
+	?>
+		<section class="studentInfo" id='mainView'>
 		<h1><?php echo $display_name[0]->display_name ?></h1>
 		<section class="merchandiserInfo">
 			<h2 class="subTitle">buyer</h2>
@@ -92,16 +92,9 @@ function display_current_student_info()
 			<aside class="shopperOne">
 				<h2 class="subTitle">consumer #1</h2>
 				<h3><?php echo $persona_info[0]->name ?></h3>
-				<?php
-				if ($_GET) {
-					if (isset($_POST['insert_one'])) {
-						get_user_persona_order_history($currentDisplayStudent, $persona_info[0]->id);
-					}
-				}
-				?>
-				<form action="" method="post">
-					<button class="button buttonSmall" name="insert_one">ORDER HISTORY</button>
-				</form>
+				<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->id ?>">
+					<button class="button one">ORDER HISTORY</button>
+				</a>
 				<button class="button one">FINAL SURVEY</button>
 				<section class="facts">
 					<div class="fact">
@@ -128,18 +121,9 @@ function display_current_student_info()
 			<aside class="shopperTwo">
 				<h2 class="subTitle">consumer #2</h2>
 				<h3><?php echo $persona_info[1]->name ?></h3>
-				<?php
-				if ($_GET) {
-					if (isset($_POST['insert_two'])) {
-						get_user_persona_order_history($currentDisplayStudent, $persona_info[1]->id);
-					}
-				}
-				?>
-				<form action="" method="post">
-
-					<button class="button buttonSmall" name="insert_two">ORDER HISTORY</button>
-				</form>
-
+				<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->id ?>">
+					<button class="button one">ORDER HISTORY</button>
+				</a>
 				<button class="button two">FINAL SURVEY</button>
 				<section class="facts">
 					<div class="fact">
@@ -169,19 +153,8 @@ function display_current_student_info()
 		</section>
 
 	</section>
+
+
 	<?php
 
-}
-
-function get_user_persona_order_history($user_id, $persona_id)
-{
-	global $wpdb;
-	$user_persona_order_history = $wpdb->get_results($wpdb->prepare('SELECT items, cost FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND user_persona_id = %d', $user_id, $persona_id));
-	if (sizeOf($user_persona_order_history) > 1) {
-		for ($i = 0; $i < sizeOf($user_persona_order_history); ++$i) {
-			var_dump($user_persona_order_history[$i]->cost, $user_persona_order_history[$i]->items);
-		}
-	} else {
-		var_dump('user has not ordered anything');
-	}
 }
