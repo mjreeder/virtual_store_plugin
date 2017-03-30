@@ -51,6 +51,8 @@ function display_current_student_info()
 	$currentDisplayStudent = $_REQUEST['student_id'];
 	$display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_users WHERE id = %d', $currentDisplayStudent));
 	$business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $currentDisplayStudent));
+	$warehouse_purchase_sum = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_warehouse_purchase WHERE user_id = %d', $currentDisplayStudent));
+	$budget_remaining = $business_info[0]->money - get_value_from_stdClass($warehouse_purchase_sum[0]);
 	$persona_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $currentDisplayStudent));
 	$number_of_shoppers = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT business_id) FROM dcvs_business_purchase WHERE business_id = %d', $business_info[0]->id));
 	$persona_one_purchase_count = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT user_persona_id) FROM dcvs_business_purchase LEFT JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE persona_id = %d', $persona_info[0]->persona_id));
@@ -59,7 +61,6 @@ function display_current_student_info()
 	$persona_two_total_money = $wpdb->get_results($wpdb->prepare('SELECT money FROM dcvs_persona WHERE id = %d', $persona_info[1]->persona_id));
 	$persona_one_money_spent = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND persona_id = %d', $currentDisplayStudent, $persona_info[0]->persona_id));
 	$persona_two_money_spent = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND persona_id = %d', $currentDisplayStudent, $persona_info[1]->persona_id));
-	// var_dump($persona_info[1]);
 	?>
 		<section class="studentInfo" id='mainView'>
 		<h1><?php echo $display_name[0]->display_name ?></h1>
@@ -71,7 +72,7 @@ function display_current_student_info()
 					<a href="<?php echo $business_info[0]->url ?>" class="button">Personal Site</a>
 					<button class="button">FINAL SURVEY</button>
 					<!-- TODO get remaining budget-->
-					<span><b>BUDGET REMAINING:</b> $12,000</span>
+					<span><b>BUDGET REMAINING:</b> $<?php echo $budget_remaining?></span>
 				</aside>
 				<aside class="merchandiserRight">
 					<section class="facts">
