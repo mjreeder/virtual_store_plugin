@@ -87,6 +87,7 @@ html {
                 color: $darkGray;
                 font-size: 17px;
                 max-width: 380px;
+                cursor: pointer;
             }
             span {
                 font-size: 13px;
@@ -96,6 +97,7 @@ html {
         }
     }
 }
+
 .currentlyPlaying,
 .finished {
     position: relative;
@@ -208,6 +210,7 @@ html {
     text-align: left;
     padding-left: 25px;
     cursor: pointer;
+    text-decoration: none;
 }
 .button:hover {
     background-color: $darkYellow;

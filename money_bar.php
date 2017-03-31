@@ -17,10 +17,11 @@ function dcvs_add_money_bar() {
 		$business_title = $business['title'];
 		$business_description = $business['description'];
 		$business_budget = $business['money'];
-		$business_url = $business['url'];
 		$business_expense = dcvs_get_business_expenses($user_id);
 
 		$current_budget = $business_budget - $business_expense - $cart_cost;
+
+		$landing_page_url = dcvs_get_landing_page_url();
 
 		?>
 		<!-- FONTS -->
@@ -31,7 +32,7 @@ function dcvs_add_money_bar() {
 			<div class="bar">
 				<div class="barLeft"><span><h1><?php echo $business_title ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
-				<a href="<?php echo $business_url ?>"><span>back to your store</span></a>
+				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
 			</div>
 			<div class="barSummary">
 				<h2>you are:</h2>
@@ -49,6 +50,8 @@ function dcvs_add_money_bar() {
 		$persona_expense = dcvs_get_persona_expenses($user_id, $persona['id']);
 
 		$current_budget = $persona_budget - $persona_expense - $cart_cost;
+
+		$store_list_url = dcvs_get_store_list_url();
 		
 		?>
 		<footer class="budgetBar">
@@ -56,7 +59,7 @@ function dcvs_add_money_bar() {
 			<div class="bar">
 				<div class="barLeft"><span><h1><?php echo $persona_name ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
-				<a href=""><span>back to store list</span></a>
+				<a href="<?php echo $store_list_url ?>"><span>Back To Store List</span></a>
 			</div>
 
 			<div class="barSummary">

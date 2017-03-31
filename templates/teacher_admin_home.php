@@ -38,6 +38,7 @@ function display_admin_panel()
       <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
   </head>
   <body>
+  <div class="wrapper">
 
       <header class="header">
           <h1>virtual store admin panel</h1>
@@ -68,11 +69,15 @@ function display_admin_panel()
           <?php
           if (!isset($_REQUEST['section'])) {
               require_once __DIR__ . "/teacher_admin_student_info.php";
-          } else if ($_REQUEST['section'] = 'manage') {
+          } else if ($_REQUEST['section'] == 'manage') {
               require_once __DIR__ . "/teacher_admin_manage_personas.php";
+          } else if ($_REQUEST['section'] == 'settings') {
+              require_once __DIR__ . "/teacher_admin_general_settings.php";
           }
           ?>
       </main>
+
+  </div>
 
   </body>
 
