@@ -1,6 +1,8 @@
 <?php
 
-// TODO: Add functionality to create/edit/delete to template
+// TODO: Update feedback label once we have a design
+
+$user_message = "";
 
 if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 
@@ -9,15 +11,18 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 		$budget = $_REQUEST['budget'];
 		$description = $_REQUEST['description'];
 		dcvs_insert_new_persona($name, $description, $budget);
+		$user_message = "Created!";
 	} else if ($_REQUEST['submit'] == "UPDATE") {
 		$persona_id = $_REQUEST['persona_id'];
 		$name = $_REQUEST['name'];
 		$budget = $_REQUEST['budget'];
 		$description = $_REQUEST['description'];
 		dcvs_update_persona( $persona_id, $name, $description, $budget );
+		$user_message = "Updated!";
 	} else if($_REQUEST['submit'] == "DELETE") {
 		$persona_id = $_REQUEST['persona_id'];
 		dcvs_delete_persona( $persona_id );
+		$user_message = "Deleted!";
 	}
 }
 
@@ -51,18 +56,24 @@ function dcvs_get_all_personas() {
 
 //	http://stackoverflow.com/questions/1403615/use-jquery-to-hide-a-div-when-the-user-clicks-outside-of-it
 	$(document).mouseup(function (e) {
-		var container = $("#createModal");
+		var createModal = $("#createModal");
+		var editModal = $("#editModal");
 
-		if (!container.is(e.target) && container.has(e.target).length === 0) {
-			container.hide();
-			$('#backdrop').hide();
+		var clickedOutsideCreateModal = !createModal.is(e.target) && createModal.has(e.target).length === 0;
+		var clickedOutsideEditModal = !editModal.is(e.target) && editModal.has(e.target).length === 0;
+
+		if (clickedOutsideCreateModal) {
+			createModal.hide();
+			if (clickedOutsideEditModal) {
+				$('#backdrop').hide();
+			}
 		}
 
-		container = $("#editModal");
-
-		if (!container.is(e.target) && container.has(e.target).length === 0) {
-			container.hide();
-			$('#backdrop').hide();
+		if (clickedOutsideEditModal) {
+			editModal.hide();
+			if (clickedOutsideCreateModal) {
+				$('#backdrop').hide();
+			}
 		}
 	});
 
@@ -84,6 +95,7 @@ function dcvs_get_all_personas() {
 		<button class="headerButton">CONSUMER</button>
 		<button class="headerButton selectedFilter">BUYER</button>
 		<button class="headerButton createNew" id="createNew">CREATE NEW</button>
+		<label><?php echo $user_message; ?></label>
 	</div>
 
 	<section class="createModal" id="createModal">
