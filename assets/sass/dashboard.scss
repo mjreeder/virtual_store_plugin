@@ -45,7 +45,7 @@ html {
     }
 }
 .helpVideoList {
-    width: 500px;
+    width: 100%;
     flex: 0 0 500px;
     display: flex;
     flex-direction: column;
@@ -54,7 +54,7 @@ html {
     figure {
         margin-bottom: 20px;
         iframe {
-            width: 500px;
+            width: 100%;
             height: inherit;
             margin-bottom: 20px;
         }
