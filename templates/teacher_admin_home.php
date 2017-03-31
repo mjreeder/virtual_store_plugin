@@ -40,6 +40,8 @@ function display_admin_panel()
   <body>
   <div class="wrapper">
 
+      <div id="backdrop"></div>
+
       <header class="header">
           <h1>virtual store admin panel</h1>
 
