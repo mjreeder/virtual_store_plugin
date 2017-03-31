@@ -123,7 +123,7 @@
 
                 <div class="myStoreLeft">
 
-                    <a href="<?php echo get_site_url() ?>"><button class="button">WAREHOUSE</button></a>
+                    <a href="<?php echo get_site_url().'/shop' ?>"><button class="button">WAREHOUSE</button></a>
 
                     <p><?php echo $business_info[0]->description ?>
                         <br>
