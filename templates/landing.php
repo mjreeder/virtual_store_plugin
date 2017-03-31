@@ -110,18 +110,6 @@
 
                 }
                  ?>
-                <li class="finished">
-                    <p>Do the first thing</p><span>1:45</span>
-                </li>
-                <li class="currentlyPlaying">
-                    <p>Do the second thing</p><span>1:45</span>
-                </li>
-                <li>
-                    <p>This is a super long video title that's gonna tell you a bunch of stuff to do.</p><span>1:45</span>
-                </li>
-                <li>
-                    <p>Go to this other place</p><span>1:45</span>
-                </li>
             </ol>
 
         </aside>
