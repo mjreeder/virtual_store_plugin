@@ -38,6 +38,7 @@ function display_admin_panel()
       <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
   </head>
   <body>
+  <div class="wrapper">
 
       <header class="header">
           <h1>virtual store admin panel</h1>
@@ -75,6 +76,8 @@ function display_admin_panel()
           }
           ?>
       </main>
+
+  </div>
 
   </body>
 
