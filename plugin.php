@@ -16,6 +16,7 @@ require_once __DIR__."/businesses_admin_settings.php";
 require_once __DIR__."/user_persona_assignment.php";
 require_once __DIR__."/money_bar.php";
 
+add_action( 'admin_init', 'dcvs_remove_footer' );
 add_action('woocommerce_review_order_before_payment', 'dcvs_before_cart_contents');
 add_action('woocommerce_review_order_after_payment', 'dcvs_after_cart_contents');
 add_action('init', 'dcvs_plugin_init');
@@ -42,6 +43,12 @@ function dcvs_plugin_init()
         wp_update_post(array('ID' => $landingPage->ID, 'status' => 'publish'));
     }
 
+}
+
+function dcvs_remove_footer()
+{
+    add_filter( 'admin_footer_text', '__return_false', 11 );
+    add_filter( 'update_footer', '__return_false', 11 );
 }
 
 function dcvs_before_cart_contents()
@@ -71,7 +78,7 @@ function dcvs_after_cart_contents()
 
 }
 
-function dcvs_get_option($key, $default_value = false)
+function dcvs_get_option($key, $default_value = null)
 {
     global $wpdb;
 
