@@ -73,6 +73,8 @@ function display_admin_panel()
               require_once __DIR__ . "/teacher_admin_manage_personas.php";
           } else if ($_REQUEST['section'] == 'settings') {
               require_once __DIR__ . "/teacher_admin_general_settings.php";
+          } else if ($_REQUEST['section'] == 'assign') {
+              require_once __DIR__ . "/teacher_admin_assign_personas.php";
           }
           ?>
       </main>
