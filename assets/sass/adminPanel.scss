@@ -38,6 +38,15 @@ h3 {
     background: rgba(0,0,0,0.7);
     display: none;
 }
+label {
+    height: 40px;
+    font-size: 14px;
+    align-self: center;
+    line-height: 40px;
+    margin-left: 50px;
+    color: green;
+    cursor: default;
+}
 .header {
     background-color: $darkGray;
     height: 75px;
