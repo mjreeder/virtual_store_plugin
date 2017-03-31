@@ -1,7 +1,24 @@
 <?php
 $users = get_users();
 if($_SERVER['REQUEST_METHOD']=="POST") {
-  if (isset($_POST['personaid'])) {
+  if(isset($_POST['assignpersonas'])) {
+   if(all_businesses_assigned()) {
+     dcvs_remove_all_user_businesses();
+     dcvs_assign_all_user_businesses();
+   } else {
+     dcvs_assign_all_user_businesses();
+   }
+   if (all_personas_assigned()) {
+     // echo "All Personas Already Assigned";
+     dcvs_reset_and_assign_user_personas($users);
+   } else {
+     for ($i = 0; $i < sizeof($users); $i++) {
+       $user = get_object_vars($users[$i]);
+       $id = $user["ID"];
+       dcvs_assign_persona($id);
+     }
+   }
+ } else if (isset($_POST['personaid'])) {
     $newid = $_POST['personaid'];
     $userid = $_POST['id'];
     $oldid = $_POST['oldid'];
@@ -23,22 +40,18 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
     } else {
       dcvs_set_user_persona($userid, $newid, $oldid);
     }
-  } else if(isset($_POST['assignpersonas'])) {
-    if(all_businesses_assigned()) {
-      dcvs_remove_all_user_businesses();
-      dcvs_assign_all_user_businesses();
+  } else if (isset($_POST['businessid'])) {
+    $oldid = $_POST['businessId'];
+    $userid = $_POST['id'];
+    $newid = $_POST['businessid'];
+    if ($newid == -1 && $oldid != NULL) {
+      dcvs_remove_user_business($userid);
+    } else if ($oldid == $newid) {
+      echo "it's the same lol";
+    } else if (dcvs_user_id_from_business($newid)) {
+      echo "TAKEN";
     } else {
-      dcvs_assign_all_user_businesses();
-    }
-    if (all_personas_assigned()) {
-      // echo "All Personas Already Assigned";
-      dcvs_reset_and_assign_user_personas($users);
-    } else {
-      for ($i = 0; $i < sizeof($users); $i++) {
-        $user = get_object_vars($users[$i]);
-        $id = $user["ID"];
-        dcvs_assign_persona($id);
-      }
+      dcvs_set_user_business($userid, $newid);
     }
   }
 }
