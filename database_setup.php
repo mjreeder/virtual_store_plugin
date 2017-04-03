@@ -13,7 +13,7 @@ define("DCVS_DATABASE_VERSION", 0.37);
 $dcvs_current_version = dcvs_get_option("dcvs_database_version");
 
 if($dcvs_current_version != DCVS_DATABASE_VERSION){
-    require_once __DIR__."/../../../wp-admin/includes/upgrade.php";
+    require_once  ABSPATH."/wp-admin/includes/upgrade.php";
     $charset_collate = $wpdb->get_charset_collate();
     if($dcvs_current_version < 0.1){
         $personaTable = "CREATE TABLE dcvs_persona(

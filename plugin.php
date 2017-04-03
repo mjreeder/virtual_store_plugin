@@ -24,7 +24,7 @@ add_action('init', 'dcvs_plugin_init');
 register_activation_hook(__FILE__, 'dcvs_activation_plugin');
 function dcvs_activation_plugin()
 {
-    include 'database_setup.php';
+    include __DIR__.'/database_setup.php';
 }
 
 function dcvs_plugin_init()
@@ -34,7 +34,7 @@ function dcvs_plugin_init()
         auth_redirect();
         exit;
     }
-    include 'database_setup.php';
+    include __DIR__.'/database_setup.php';
     //create the landing page if it doesn't exist already
     $landingPage = get_page_by_path('virtual-store-landing');
     if ($landingPage == null) {
