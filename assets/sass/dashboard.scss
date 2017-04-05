@@ -45,7 +45,7 @@ html {
     }
 }
 .helpVideoList {
-    width: 500px;
+    width: 100%;
     flex: 0 0 500px;
     display: flex;
     flex-direction: column;
@@ -53,8 +53,8 @@ html {
     background-color: #F2F2F2;
     figure {
         margin-bottom: 20px;
-        img {
-            width: 500px;
+        iframe {
+            width: 100%;
             height: inherit;
             margin-bottom: 20px;
         }
@@ -87,6 +87,7 @@ html {
                 color: $darkGray;
                 font-size: 17px;
                 max-width: 380px;
+                cursor: pointer;
             }
             span {
                 font-size: 13px;
@@ -96,6 +97,7 @@ html {
         }
     }
 }
+
 .currentlyPlaying,
 .finished {
     position: relative;
@@ -155,7 +157,7 @@ html {
 .mainContent {
     display: flex;
     flex-direction: row;
-    height: calc(100% - 75px);
+    height: auto;
 }
 .myStore {
     display: flex;
@@ -208,6 +210,7 @@ html {
     text-align: left;
     padding-left: 25px;
     cursor: pointer;
+    text-decoration: none;
 }
 .button:hover {
     background-color: $darkYellow;
@@ -320,7 +323,7 @@ html {
         flex: 0 0 400px;
         width: 400px;
         figure {
-            img {
+            iframe {
                 height: inherit;
                 width: 400px;
             }
@@ -343,7 +346,7 @@ html {
         flex: 0 0 300px;
         width: 300px;
         figure {
-            img {
+            iframe {
                 height: inherit;
                 width: 300px;
             }
@@ -352,7 +355,7 @@ html {
 }
 @media screen and (max-width:400px) {
     .mainContent {
-        
+
         flex-direction: column;
     }
 }
@@ -381,7 +384,7 @@ html {
             display: flex;
             figure {
                 margin-bottom: 20px;
-                img {
+                iframe {
                     height: inherit;
                     width: 100%;
                 }
