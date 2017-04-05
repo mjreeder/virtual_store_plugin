@@ -40,6 +40,8 @@ function display_admin_panel()
   <body>
   <div class="wrapper">
 
+      <div id="backdrop"></div>
+
       <header class="header">
           <h1>virtual store admin panel</h1>
 
@@ -73,6 +75,8 @@ function display_admin_panel()
               require_once __DIR__ . "/teacher_admin_manage_personas.php";
           } else if ($_REQUEST['section'] == 'settings') {
               require_once __DIR__ . "/teacher_admin_general_settings.php";
+          } else if ($_REQUEST['section'] == 'assign') {
+              require_once __DIR__ . "/teacher_admin_assign_personas.php";
           }
           else if($_REQUEST['section'] == 'order_history'){
             require_once __DIR__ . "/teacher_admin_orderHistory.php";
