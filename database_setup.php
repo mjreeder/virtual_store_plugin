@@ -8,7 +8,7 @@
  * https://codex.wordpress.org/Class_Reference/wpdb
  */
 defined( 'ABSPATH' ) or die( 'invalid access' );
-define("DCVS_DATABASE_VERSION", 0.45);
+define("DCVS_DATABASE_VERSION", 0.50);
 
 $dcvs_current_version = dcvs_get_option("dcvs_database_version");
 if($dcvs_current_version != DCVS_DATABASE_VERSION){
@@ -98,6 +98,14 @@ if($dcvs_current_version != DCVS_DATABASE_VERSION){
           business_product_id BIGINT(10) NOT NULL
       ) $charset_collate;";
         dbDelta($warehouseBusinessProductTable);
+    } if($dcvs_current_version < 0.50){
+        $businessProductPriceTable = "CREATE TABLE dcvs_business_product_price(
+          business_id BIGINT(10) NOT NULL,
+          business_product_id BIGINT(10) NOT NULL,
+          price DOUBLE(8,2) NOT NULL,
+          number_bought BIGINT(10) NOT NULL
+      ) $charset_collate;";
+        dbDelta($businessProductPriceTable);
     }
 
     dcvs_set_option("dcvs_database_version", DCVS_DATABASE_VERSION);

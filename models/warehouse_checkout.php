@@ -531,7 +531,6 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 		function dcvs_add_business_purchase($order_id){
 			global $wpdb;
-
 			$order = WC()->order_factory->get_order($order_id);
 			$order_items = $order->get_items();
 
@@ -542,6 +541,15 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			$order_item_names = [];
 			foreach ($order_items as $item){
 				$order_item_names[] = $item;
+				$id = $item['variation_id'] != '0' ? $item['variation_id'] : $item['product_id'];
+				$quantity =  $item['qty'];
+				$subtotal = $item['line_subtotal'];
+				$item_price = number_format($subtotal/$quantity,2);
+				if(!self::dcvs_check_business_product_price_exists($business_id, $id, $item_price)) {
+					self::dcvs_create_business_product_price($business_id, $id, $item_price, $quantity);
+				} else {
+					self::dcvs_update_business_product_price($business_id, $id, $item_price, $quantity);
+				}
 			}
 			$items = serialize($order_item_names);
 
@@ -590,6 +598,31 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 		function dcvs_create_warehouse_business_product($business_id, $warehouse_product_id, $business_product_id) {
 			global $wpdb;
 			$wpdb->insert( "dcvs_warehouse_business_product", [ "business_id" => $business_id, "warehouse_product_id" => $warehouse_product_id, "business_product_id" => $business_product_id ] );
+		}
+
+		function dcvs_check_business_product_price_exists($business_id, $business_product_id, $price) {
+			global $wpdb;
+
+			$sql = $wpdb->prepare("SELECT * FROM dcvs_business_product_price WHERE business_id = '%d' and business_product_id = '%d' and price = '%d'", [$business_id, $business_product_id, $price]);
+			$rows = $wpdb->get_results($sql, ARRAY_A);
+
+			if (count($rows) < 1) {
+				return false;
+			} else {
+				return true;
+			}
+
+		}
+
+		function dcvs_create_business_product_price($business_id, $business_product_id, $price, $number_bought) {
+			global $wpdb;
+			$wpdb->insert( "dcvs_business_product_price", [ "business_id" => $business_id, "business_product_id" => $business_product_id, "price" => $price, "number_bought" => $number_bought ] );
+		}
+
+		function dcvs_update_business_product_price($business_id, $business_product_id, $price, $number_bought) {
+			global $wpdb;
+			$sql = $wpdb->prepare("UPDATE dcvs_business_product_price SET number_bought = number_bought + '%d' WHERE business_id = '%d' and business_product_id = '%d' and price = '%d'", [$number_bought, $business_id, $business_product_id, $price]);
+			$wpdb->get_results($sql, ARRAY_A);
 		}
 
 
