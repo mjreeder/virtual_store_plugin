@@ -1,5 +1,4 @@
 <?php
-
 add_action('woocommerce_thankyou','dcvs_survey_time');
 function dcvs_survey_time($order_id){
 	if( get_current_blog_id() == 1 ){
@@ -13,7 +12,12 @@ function dcvs_survey_time($order_id){
 
 add_action( 'gform_after_submission', 'dcvs_redirect_to_dashboard_after_evaluation' );
 function dcvs_redirect_to_dashboard_after_evaluation($entry){
-	wp_redirect('matts/dashboard');
+	global $wpdb;
+	if (!isset($_REQUEST['student_id'])) {
+		$user_results = $wpdb->get_results('SELECT * FROM dcvs_user_business', OBJECT);
+		wp_redirect('/wp-admin/admin.php?page=dcvs_teacher&student_id='.$user_results->user_id);
+		echo $user_results;
+	}
 }
 
 add_filter( 'gform_field_value_user_id', 'dcvs_add_user_id_to_form' );
