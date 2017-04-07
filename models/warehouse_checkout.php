@@ -125,6 +125,8 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 		function dcvs_export_products( $order_id, $table_prefix ) {
 			global $wpdb;
 
+			$business_id = dcvs_business_id_from_user(get_current_user_id());
+
 			$order_items = WC()->order_factory->get_order($order_id)->get_items();
 
 			$post_ids = array();
@@ -148,6 +150,10 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 					$post_ids[] = $temp_product_id;
 					$product_id = self::dcvs_add_new_product( $temp_product_id, $table_prefix, $temp_quantity  );
 					$new_ids[] = $product_id;
+
+					if (!self::dcvs_check_warehouse_business_product_exists($business_id, $temp_product_id, $product_id) && $temp_variation_id == '0') {
+						self::dcvs_create_warehouse_business_product($business_id, $temp_product_id, $product_id);
+					}
 
 
 					$tracking_object =  new stdClass();
@@ -216,7 +222,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 				$parent_product_post_data = get_post( $tracked_object->product_id);
 				$tracked_object->parent_product_post_data = $parent_product_post_data;
 				
-				$new_variation_ids =  self::dcvs_add_variations( $tracked_object, $product );
+				$new_variation_ids =  self::dcvs_add_variations( $tracked_object, $product, $business_id );
 
 				self::dcvs_add_attachments( $tracked_object, $new_variation_ids, $table_prefix );
 
@@ -397,7 +403,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			return $attach_id;
 		}
 
-		function dcvs_add_variations($tracking_object, WC_Product $product) {
+		function dcvs_add_variations($tracking_object, WC_Product $product, $business_id) {
 
 			$new_variation_ids = array();
 
@@ -445,6 +451,8 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 					update_post_meta( $new_post_id, $formatted_attribute_name, $tracking_object->variation_post_meta_array[$tracking_object->variation_ids[$y]][$formatted_attribute_name][0] );
 
 				}
+
+				self::dcvs_create_warehouse_business_product($business_id, $tracking_object->variation_ids[$y], $new_post_id);
 
 			}
 
@@ -523,7 +531,6 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 		function dcvs_add_business_purchase($order_id){
 			global $wpdb;
-
 			$order = WC()->order_factory->get_order($order_id);
 			$order_items = $order->get_items();
 
@@ -534,6 +541,15 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 			$order_item_names = [];
 			foreach ($order_items as $item){
 				$order_item_names[] = $item;
+				$id = $item['variation_id'] != '0' ? $item['variation_id'] : $item['product_id'];
+				$quantity =  $item['qty'];
+				$subtotal = $item['line_subtotal'];
+				$item_price = number_format($subtotal/$quantity,2);
+				if(!self::dcvs_check_business_product_price_exists($business_id, $id, $item_price)) {
+					self::dcvs_create_business_product_price($business_id, $id, $item_price, $quantity);
+				} else {
+					self::dcvs_update_business_product_price($business_id, $id, $item_price, $quantity);
+				}
 			}
 			$items = serialize($order_item_names);
 
@@ -565,6 +581,48 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 			return $blog_id;
 
+		}
+
+		function dcvs_check_warehouse_business_product_exists($business_id, $warehouse_product_id, $business_product_id ) {
+			global $wpdb;
+			$sql = $wpdb->prepare("SELECT * FROM dcvs_warehouse_business_product WHERE business_id = '%d' and warehouse_product_id = '%d' and business_product_id = '%d'", [$business_id, $warehouse_product_id, $business_product_id]);
+			$rows = $wpdb->get_results($sql, ARRAY_A);
+
+			if (count($rows) < 1) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		function dcvs_create_warehouse_business_product($business_id, $warehouse_product_id, $business_product_id) {
+			global $wpdb;
+			$wpdb->insert( "dcvs_warehouse_business_product", [ "business_id" => $business_id, "warehouse_product_id" => $warehouse_product_id, "business_product_id" => $business_product_id ] );
+		}
+
+		function dcvs_check_business_product_price_exists($business_id, $business_product_id, $price) {
+			global $wpdb;
+
+			$sql = $wpdb->prepare("SELECT * FROM dcvs_business_product_price WHERE business_id = '%d' and business_product_id = '%d' and price = '%d'", [$business_id, $business_product_id, $price]);
+			$rows = $wpdb->get_results($sql, ARRAY_A);
+
+			if (count($rows) < 1) {
+				return false;
+			} else {
+				return true;
+			}
+
+		}
+
+		function dcvs_create_business_product_price($business_id, $business_product_id, $price, $number_bought) {
+			global $wpdb;
+			$wpdb->insert( "dcvs_business_product_price", [ "business_id" => $business_id, "business_product_id" => $business_product_id, "price" => $price, "number_bought" => $number_bought ] );
+		}
+
+		function dcvs_update_business_product_price($business_id, $business_product_id, $price, $number_bought) {
+			global $wpdb;
+			$sql = $wpdb->prepare("UPDATE dcvs_business_product_price SET number_bought = number_bought + '%d' WHERE business_id = '%d' and business_product_id = '%d' and price = '%d'", [$number_bought, $business_id, $business_product_id, $price]);
+			$wpdb->get_results($sql, ARRAY_A);
 		}
 
 

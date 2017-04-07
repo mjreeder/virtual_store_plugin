@@ -154,7 +154,6 @@ function dcvs_delete_persona($id) {
     echo "At least one student is using this persona, so it cannot be deleted";
   } else {
     $wpdb->delete("dcvs_persona", array("id"=>$id));
-    echo "Persona deleted";
   }
 }
 
