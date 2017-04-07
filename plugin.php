@@ -27,6 +27,10 @@ add_filter('woocommerce_checkout_fields' , 'dcvs_override_checkout_fields');
 add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_cart');
 add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_checkout');
 
+add_filter('woocommerce_is_purchasable', 'dvcs_is_purchasable', 10, 2);
+add_filter('woocommerce_variation_is_purchasable', 'dvcs_is_purchasable', 10, 2);
+add_filter('gettext', 'dvcs_customize_product_variation_message', 10, 3);
+
 register_activation_hook(__FILE__, 'dcvs_activation_plugin');
 function dcvs_activation_plugin()
 {
@@ -202,7 +206,8 @@ function dcvs_after_billing_form()
 
 }
 
-function dcvs_override_checkout_fields( $fields ) {
+function dcvs_override_checkout_fields( $fields )
+{
     unset($fields['billing']['billing_first_name']);
     unset($fields['billing']['billing_last_name']);
     unset($fields['billing']['billing_company']);
@@ -223,19 +228,41 @@ function dcvs_override_checkout_fields( $fields ) {
     return $fields;
 }
 
-function dcvs_hide_coupon_field_on_cart( $enabled ) {
+function dcvs_hide_coupon_field_on_cart( $enabled )
+{
     if ( is_cart() ) {
         $enabled = false;
     }
     return $enabled;
 }
 
-function dcvs_hide_coupon_field_on_checkout( $enabled ) {
+function dcvs_hide_coupon_field_on_checkout( $enabled )
+{
     if ( is_checkout() ) {
         $enabled = false;
     }
     return $enabled;
 }
 
+function dvcs_is_purchasable($is_purchasable, $product)
+{
+    if (get_current_blog_id() == get_user_blog_id( get_current_user_id())) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
-
+function dvcs_customize_product_variation_message( $translated_text, $untranslated_text, $domain )
+{
+    if ($untranslated_text == 'Sorry, this product is unavailable. Please choose a different combination.') {
+        if (get_current_blog_id() == get_user_blog_id( get_current_user_id())) {
+            $translated_text = __( "You can't buy products from your own store!", $domain );
+        }
+    } else if ($untranslated_text == 'Please select some product options before adding this product to your cart.') {
+        if (get_current_blog_id() == get_user_blog_id( get_current_user_id())) {
+            $translated_text = __( "You can't buy products from your own store!", $domain );
+        }
+    }
+    return $translated_text;
+}
