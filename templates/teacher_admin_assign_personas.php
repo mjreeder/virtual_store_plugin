@@ -2,12 +2,6 @@
 $users = get_users();
 if($_SERVER['REQUEST_METHOD']=="POST") {
   if(isset($_POST['assignpersonas'])) {
-   if(all_businesses_assigned()) {
-     dcvs_remove_all_user_businesses();
-     dcvs_assign_all_user_businesses();
-   } else {
-     dcvs_assign_all_user_businesses();
-   }
    if (all_personas_assigned()) {
      // echo "All Personas Already Assigned";
      dcvs_reset_and_assign_user_personas($users);
@@ -18,6 +12,13 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
        dcvs_assign_persona($id);
      }
    }
+ } else if (isset($_POST['assignbusinesses'])) {
+  if(all_businesses_assigned()) {
+    dcvs_remove_all_user_businesses();
+    dcvs_assign_all_user_businesses();
+  } else {
+    dcvs_assign_all_user_businesses();
+  }
  } else if (isset($_POST['personaid'])) {
     $newid = $_POST['personaid'];
     $userid = $_POST['id'];
@@ -62,7 +63,8 @@ if($_SERVER['REQUEST_METHOD']=="POST") {
   <input type="hidden" name="dcvs_admin_changes" value="1">
     <div>
         <h1 class="title">Assign Personas</h1>
-        <button class="headerButton randomize" name="assignpersonas" type="submit">RANDOMIZE</button>
+        <button class="headerButton randomize" name="assignbusinesses" type="submit">RANDOMIZE BUYERS</button>
+        <button class="headerButton randomize" name="assignpersonas" type="submit">RANDOMIZE CONSUMERS</button>
     </div>
 
     <div class="tableWrapper">
