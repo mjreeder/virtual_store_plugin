@@ -19,7 +19,13 @@ require_once __DIR__."/money_bar.php";
 add_action( 'admin_init', 'dcvs_remove_footer' );
 add_action('woocommerce_review_order_before_payment', 'dcvs_before_cart_contents');
 add_action('woocommerce_review_order_after_payment', 'dcvs_after_cart_contents');
+add_action('woocommerce_checkout_before_customer_details', 'dcvs_before_billing_form');
+add_action('woocommerce_checkout_after_customer_details', 'dcvs_after_billing_form');
 add_action('init', 'dcvs_plugin_init');
+
+add_filter('woocommerce_checkout_fields' , 'dcvs_override_checkout_fields');
+add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_cart');
+add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_checkout');
 
 register_activation_hook(__FILE__, 'dcvs_activation_plugin');
 function dcvs_activation_plugin()
@@ -56,10 +62,10 @@ function dcvs_before_cart_contents()
     ?>
     <div class="cart-export">
         <?php
-            echo '<pre>';
-    echo var_dump(WC()->cart->get_cart());
-    echo '</pre>';
-    ?>
+//            echo '<pre>';
+//            echo var_dump(WC()->cart->get_cart());
+//            echo '</pre>';
+        ?>
     </div>
     <!--
     This combined with dc_after_cart_contents create a hidden
@@ -180,6 +186,56 @@ function dcvs_get_store_list_url() {
     return $store_list_url;
 }
 
+function dcvs_before_billing_form()
+{
+    ?>
+
+    <div style="display:none;">
+    <?php
+}
+
+function dcvs_after_billing_form()
+{
+    ?>
+    </div>
+    <?php
+
+}
+
+function dcvs_override_checkout_fields( $fields ) {
+    unset($fields['billing']['billing_first_name']);
+    unset($fields['billing']['billing_last_name']);
+    unset($fields['billing']['billing_company']);
+    unset($fields['billing']['billing_address_1']);
+    unset($fields['billing']['billing_address_2']);
+    unset($fields['billing']['billing_city']);
+    unset($fields['billing']['billing_postcode']);
+    unset($fields['billing']['billing_country']);
+    unset($fields['billing']['billing_state']);
+    unset($fields['billing']['billing_phone']);
+    unset($fields['order']['order_comments']);
+    unset($fields['billing']['billing_address_2']);
+    unset($fields['billing']['billing_postcode']);
+    unset($fields['billing']['billing_company']);
+    unset($fields['billing']['billing_last_name']);
+    unset($fields['billing']['billing_email']);
+    unset($fields['billing']['billing_city']);
+    return $fields;
+}
+
+function dcvs_hide_coupon_field_on_cart( $enabled ) {
+    if ( is_cart() ) {
+        $enabled = false;
+    }
+    return $enabled;
+}
+
+function dcvs_hide_coupon_field_on_checkout( $enabled ) {
+    if ( is_checkout() ) {
+        $enabled = false;
+    }
+    return $enabled;
+}
 
 
 
