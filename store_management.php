@@ -181,6 +181,13 @@ if( !class_exists('DCVS_Store_Management') ) {
 			return $sites;
 		}
 
+		public static function get_active_users(){
+			$stores = self::get_active_stores();
+			$users = array_map(function($store){
+				return self::get_user_by_store($store->blog_id);
+			}, $stores);
+			return $users;
+		}
 	}
 
 	new DCVS_Store_Management();
