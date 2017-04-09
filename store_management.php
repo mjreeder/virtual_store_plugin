@@ -1,0 +1,187 @@
+<?php
+
+if( !class_exists('DCVS_Store_Management') ) {
+	class DCVS_Store_Management {
+		private $wpdb;
+		private $network_site;
+
+		const ADD_USERS_BY_EMAIL_POST_KEY = 'dcvs_new_student_emails';
+		const ARCHIVE_STORE_POST_KEY = 'dcvs_archive_store';
+		const ARCHIVE_ALL_STORES_POST_KEY = 'dcvs_archive_all';
+		const UNARCHIVE_STORE_POST_KEY = 'dcvs_unarchive_store';
+		const DELETE_STORE_POST_KEY = 'dcvs_delete_store';
+
+		const DEFAULT_PASSWORD = 'password';
+		const USER_ASSOCIATION_KEY = 'primary_owner_id';
+		const STORE_ASSOCIATION_KEY = 'generated_store_id';
+
+		public static $SUPER_ADMIN_IDs; //not a constant in case of an older version of PHP
+		public static $messages;
+
+		function __construct() {
+			add_action("init", array($this,"init"));
+			add_action("init", array($this,"process_new_users"));
+			add_action("init", array($this,"process_store_archival"));
+			add_action("init", array($this,"process_store_unarchival"));
+			add_action("init", array($this,"process_store_deletion"));
+			add_action("admin_menu", array($this, "register_submenus"));
+		}
+
+		//not so fast. this stuff has to be in here and not __construct to ensure that the WP bootstrapping is complete
+		public function init(){
+			global $wpdb;
+			$this->wpdb = $wpdb;
+
+			self::$messages = [];
+
+			$this->network_site = get_current_site();
+
+			self::$SUPER_ADMIN_IDs = $this->get_super_admins();
+		}
+
+		public function register_submenus(){
+			add_submenu_page('dcvs_virtual_store', 'Add Users', 'Add Users', 'create_sites', 'dcvs_add_users', array($this, 'add_users_page'));
+		}
+
+		public function add_users_page(){
+			require_once(__DIR__."/templates/manage_users.php");
+		}
+
+		public function process_new_users(){
+			if( !isset($_POST[self::ADD_USERS_BY_EMAIL_POST_KEY]) ){
+				return;
+			}
+
+			$count = 0;
+			$rawEmails = $_POST[self::ADD_USERS_BY_EMAIL_POST_KEY];
+			$emails = array_filter(preg_split('/[\,\s]/um', $rawEmails));
+
+			if( empty($emails) ){
+				return;
+			}
+
+			add_action("user_register", array($this,"add_store_on_register"));
+			foreach($emails as $email):
+				if( $this->register_user_from_email($email) ) {
+					$count++;
+				} else {
+					self::$messages[] = 'Error adding '.$email;
+				}
+			endforeach;
+
+			self::$messages[] = 'Successfully Added '.$count.' Users';
+		}
+
+		public function process_store_archival(){
+			if( isset($_POST[self::ARCHIVE_ALL_STORES_POST_KEY]) ){
+				$count = 0;
+				$stores = self::get_active_stores();
+				foreach($stores as $store):
+					$this->archive_site($store->blog_id);
+					$count++;
+				endforeach;
+				self::$messages[] = 'Successfully Archived '.$count.' stores';
+			}
+
+			if( isset($_POST[self::ARCHIVE_STORE_POST_KEY]) ){
+				$this->archive_site($_POST['site_id']);
+				self::$messages[] = 'Successfully Archived Store';
+			}
+		}
+
+		public function process_store_unarchival(){
+			if( isset($_POST[self::UNARCHIVE_STORE_POST_KEY]) ){
+				$this->unarchive_site($_POST['site_id']);
+				self::$messages[] = 'Successfully Un-Archived Store';
+			}
+		}
+
+		public function process_store_deletion(){
+			if( isset($_POST[self::DELETE_STORE_POST_KEY]) ){
+				$this->delete_site($_POST['site_id']);
+				self::$messages[] = 'Successfully Deleted Store and User';
+			}
+		}
+
+		private function archive_site($siteID){
+			update_archived($siteID, true);
+		}
+
+		private function unarchive_site($siteID){
+			update_archived($siteID, false);
+		}
+
+		private function delete_site($siteID){
+			$userID = self::get_user_by_store($siteID);
+			wpmu_delete_blog($siteID, true);
+			wpmu_delete_user($userID);
+		}
+
+		public function register_user_from_email($email){
+			if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
+				return false;
+			}
+
+			$username = preg_replace('/@.+/', '', $email);
+			$user_id = wp_create_user($username, self::DEFAULT_PASSWORD, $email);
+			if( is_wp_error($user_id) ){
+				return false;
+			}
+			add_user_to_blog(get_main_network_id(), $user_id,'customer');
+
+			return true;
+		}
+
+		public function add_store_on_register($user_id){
+			$user = get_userdata($user_id);
+
+			$blogID = wpmu_create_blog($this->network_site->domain,$this->network_site->path.$user->data->user_login, $user->data->user_login."’s Store", $user_id);
+			add_blog_option($blogID, self::USER_ASSOCIATION_KEY, $user_id); //set this for future use when archiving/deleting
+			add_user_meta($user_id, self::STORE_ASSOCIATION_KEY,$blogID);
+
+			foreach(self::$SUPER_ADMIN_IDs as $superID):
+				add_user_to_blog($blogID, $superID,'administrator');
+			endforeach;
+
+			//TODO set up the defaults for the theme
+			//http://wordpress.stackexchange.com/a/73951
+			//fires hook: wpmu_new_blog
+			//lots of stuff here: https://markwilkinson.me/2014/01/activate-wordpress-plugins-site-creation-using-multisite/
+			//http://gregorygrubbs.com/wordpress/how-to-give-wpmu-blogs-default-properties-theme-and-pages/
+			//https://premium.wpmudev.org/forums/topic/firing-actions-after-create-a-new-blog-using-pro-sites
+			//https://developer.wordpress.org/reference/hooks/wpmu_activate_blog/
+		}
+
+		private function get_super_admins(){
+			$supers = get_super_admins(); //these are just usernames; seriously, that's all WP stores to differentiate superadmins...
+			$supersWHERE = "user_login='".implode("' OR user_login='", $supers)."'";
+
+			return $this->wpdb->get_col("SELECT id FROM {$this->wpdb->users} WHERE $supersWHERE"); //storing this globally to prevent repeated queries when adding multiple users at once
+		}
+
+		public static function get_store_by_user($userID){
+			return get_user_meta($userID, self::STORE_ASSOCIATION_KEY, true);
+		}
+
+		public static function get_user_by_store($storeID){
+			return get_blog_option($storeID, self::USER_ASSOCIATION_KEY);
+		}
+
+		public static function get_archived_stores(){
+			$sites = array_filter(get_sites(['archived'=>1, 'orderby'=>'path']), function($site){
+				return ( DCVS_Store_Management::get_user_by_store($site->blog_id) );
+			});
+			return $sites;
+		}
+
+		public static function get_active_stores(){
+			$sites = array_filter(get_sites(['archived'=>0, 'orderby'=>'path']), function($site){
+				return ( DCVS_Store_Management::get_user_by_store($site->blog_id) );
+			});
+			return $sites;
+		}
+
+	}
+
+	new DCVS_Store_Management();
+}
