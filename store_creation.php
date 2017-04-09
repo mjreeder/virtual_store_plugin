@@ -10,6 +10,7 @@ function dcvs_add_store_on_register($user_id){
 
 	$blogID = wpmu_create_blog('localhost','/virtual_store/'.date('Y').'/'.$user->data->user_login, $user->data->user_login."’s Store", $user_id);
 	add_blog_option($blogID, 'primary_owner', $user_id); //set this for future use when archiving/deleting
+	add_user_meta($user_id, 'store_id',$blogID);
 
 	foreach($SUPER_ADMIN_IDs as $superID):
 		add_user_to_blog($blogID, $superID,'administrator');
