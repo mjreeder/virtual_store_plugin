@@ -4,6 +4,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 	class DCVS_Store_Management {
 		private $wpdb;
 		private $network_site;
+		private $student_site_defaults;
 
 		const ADD_USERS_BY_EMAIL_POST_KEY = 'dcvs_new_student_emails';
 		const ARCHIVE_STORE_POST_KEY = 'dcvs_archive_store';
@@ -11,6 +12,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 		const UNARCHIVE_STORE_POST_KEY = 'dcvs_unarchive_store';
 		const DELETE_STORE_POST_KEY = 'dcvs_delete_store';
 
+		const DEFAULT_THEME = 'storefront';
 		const DEFAULT_PASSWORD = 'password';
 		const USER_ASSOCIATION_KEY = 'primary_owner_id';
 		const STORE_ASSOCIATION_KEY = 'generated_store_id';
@@ -40,10 +42,10 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		public function register_submenus(){
-			add_submenu_page('dcvs_virtual_store', 'Add Users', 'Add Users', 'create_sites', 'dcvs_add_users', array($this, 'add_users_page'));
+			add_submenu_page('dcvs_virtual_store', 'Manage Stores', 'Manage Stores', 'create_sites', 'dcvs_manage_stores', array($this, 'add_manage_stores_page'));
 		}
 
-		public function add_users_page(){
+		public function add_manage_stores_page(){
 			require_once(__DIR__."/templates/manage_users.php");
 		}
 
@@ -60,7 +62,8 @@ if( !class_exists('DCVS_Store_Management') ) {
 				return;
 			}
 
-			add_action("user_register", array($this,"add_store_on_register"));
+			$this->student_site_defaults = $this->get_site_defaults();
+
 			foreach($emails as $email):
 				if( $this->register_user_from_email($email) ) {
 					$count++;
@@ -70,6 +73,37 @@ if( !class_exists('DCVS_Store_Management') ) {
 			endforeach;
 
 			self::$messages[] = 'Successfully Added '.$count.' Users';
+		}
+
+		private function get_site_defaults(){
+			$siteSettings = [
+				'public'=>1,
+				'blogdescription'=>'Store tagline goes here',
+				'template'=>self::DEFAULT_THEME,
+				'stylesheet'=>self::DEFAULT_THEME,
+				'timezone_string'=>'America/Indiana/Indianapolis'
+			];
+
+			//TODO figure out a way to determine this? maybe just a class constant; maybe lookup a specific store by name
+			$defaultStoreID = 1;
+
+			//TODO find out bunch more of these
+			$desiredOptions = [
+				'bodhi_svgs_admin_notice_dismissed',
+				'woocommerce_paypal_settings',
+				'woocommerce_cod_settings',
+				//TODO add more here
+			];
+
+			$options = array_map(function($key) use ($defaultStoreID){
+				return get_blog_option($defaultStoreID, $key);
+			}, $desiredOptions);
+
+			$options = array_combine($desiredOptions, $options);
+
+			$defaults = array_merge($siteSettings, $options);
+
+			return $defaults;
 		}
 
 		public function process_store_archival(){
@@ -127,29 +161,37 @@ if( !class_exists('DCVS_Store_Management') ) {
 			if( is_wp_error($user_id) ){
 				return false;
 			}
+
+			$storeID = $this->add_store_on_register($user_id);
+			$this->finish_site_setup($storeID);
+
 			add_user_to_blog(get_main_network_id(), $user_id,'customer');
 
 			return true;
 		}
 
-		public function add_store_on_register($user_id){
+		private function add_store_on_register($user_id){
 			$user = get_userdata($user_id);
 
-			$blogID = wpmu_create_blog($this->network_site->domain,$this->network_site->path.$user->data->user_login, $user->data->user_login."’s Store", $user_id);
+			$blogID = wpmu_create_blog($this->network_site->domain,$this->network_site->path.$user->data->user_login, $user->data->user_login."’s Store", $user_id, $this->student_site_defaults);
 			add_blog_option($blogID, self::USER_ASSOCIATION_KEY, $user_id); //set this for future use when archiving/deleting
 			add_user_meta($user_id, self::STORE_ASSOCIATION_KEY,$blogID);
 
+			return $blogID;
+		}
+
+		private function finish_site_setup($blog_id){
+			//add all superadmins as admins to the new site
 			foreach(self::$SUPER_ADMIN_IDs as $superID):
-				add_user_to_blog($blogID, $superID,'administrator');
+				add_user_to_blog($blog_id, $superID,'administrator');
 			endforeach;
 
-			//TODO set up the defaults for the theme
-			//http://wordpress.stackexchange.com/a/73951
-			//fires hook: wpmu_new_blog
-			//lots of stuff here: https://markwilkinson.me/2014/01/activate-wordpress-plugins-site-creation-using-multisite/
-			//http://gregorygrubbs.com/wordpress/how-to-give-wpmu-blogs-default-properties-theme-and-pages/
-			//https://premium.wpmudev.org/forums/topic/firing-actions-after-create-a-new-blog-using-pro-sites
-			//https://developer.wordpress.org/reference/hooks/wpmu_activate_blog/
+			//use the built-in WooCommerce function to install and setup the pages needed to run WooCommerce (ex: cart, checkout, etc.)
+			if( class_exists('WC_Install') ){
+				switch_to_blog( $blog_id );
+				WC_Install::create_pages();
+				restore_current_blog();
+			}
 		}
 
 		private function get_super_admins(){
