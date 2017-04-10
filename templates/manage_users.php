@@ -7,6 +7,16 @@
 		width:200px;
 		height:200px;
 	}
+	[value*=All]{
+		background-color:tomato;
+		border-radius:4px;
+		border:none;
+		font-size:11px;
+		color:white;
+	}
+	input[type=submit]{
+		cursor: pointer;
+	}
 </style>
 <h1>matt & corey should put some stuff here</h1>
 <div class="messages">
