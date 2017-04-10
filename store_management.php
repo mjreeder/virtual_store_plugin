@@ -54,8 +54,10 @@ if( !class_exists('DCVS_Store_Management') ) {
 				return;
 			}
 
+			check_admin_referer( self::ADD_USERS_BY_EMAIL_POST_KEY );
+
 			$count = 0;
-			$rawEmails = $_POST[self::ADD_USERS_BY_EMAIL_POST_KEY];
+			$rawEmails = filter_var($_POST[self::ADD_USERS_BY_EMAIL_POST_KEY], FILTER_SANITIZE_STRING);
 			$emails = array_filter(preg_split('/[\,\s]/um', $rawEmails));
 
 			if( empty($emails) ){
@@ -108,6 +110,8 @@ if( !class_exists('DCVS_Store_Management') ) {
 
 		public function process_store_archival(){
 			if( isset($_POST[self::ARCHIVE_ALL_STORES_POST_KEY]) ){
+				check_admin_referer( self::ARCHIVE_ALL_STORES_POST_KEY );
+
 				$count = 0;
 				$stores = self::get_active_stores();
 				foreach($stores as $store):
@@ -118,21 +122,27 @@ if( !class_exists('DCVS_Store_Management') ) {
 			}
 
 			if( isset($_POST[self::ARCHIVE_STORE_POST_KEY]) ){
-				$this->archive_site($_POST['site_id']);
+				$siteID = filter_var($_POST['site_id'], FILTER_SANITIZE_NUMBER_INT);
+				check_admin_referer( self::ARCHIVE_STORE_POST_KEY.$siteID );
+				$this->archive_site($siteID);
 				self::$messages[] = 'Successfully Archived Store';
 			}
 		}
 
 		public function process_store_unarchival(){
 			if( isset($_POST[self::UNARCHIVE_STORE_POST_KEY]) ){
-				$this->unarchive_site($_POST['site_id']);
+				$siteID = filter_var($_POST['site_id'], FILTER_SANITIZE_NUMBER_INT);
+				check_admin_referer( self::UNARCHIVE_STORE_POST_KEY.$siteID );
+				$this->unarchive_site($siteID);
 				self::$messages[] = 'Successfully Un-Archived Store';
 			}
 		}
 
 		public function process_store_deletion(){
 			if( isset($_POST[self::DELETE_STORE_POST_KEY]) ){
-				$this->delete_site($_POST['site_id']);
+				$siteID = filter_var($_POST['site_id'], FILTER_SANITIZE_NUMBER_INT);
+				check_admin_referer( self::DELETE_STORE_POST_KEY.$siteID );
+				$this->delete_site($siteID);
 				self::$messages[] = 'Successfully Deleted Store and User';
 			}
 		}

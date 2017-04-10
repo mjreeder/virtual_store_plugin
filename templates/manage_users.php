@@ -27,6 +27,7 @@
 <h2>Add Users</h2>
 <p>Paste a list of student email addresses here. Separate users with new lines or commas.</p>
 <form action="" method="post">
+	<?php wp_nonce_field( DCVS_Store_Management::ADD_USERS_BY_EMAIL_POST_KEY ); ?>
 	<textarea name="<?php echo DCVS_Store_Management::ADD_USERS_BY_EMAIL_POST_KEY; ?>"></textarea>
 	<br>
 	<input type="submit" value="Add Users"/>
@@ -34,7 +35,10 @@
 <hr>
 <div class="active store-list">
 	<h2>Active Users’ Stores</h2>
-	<form action="" class="warning" method="post"><input type="submit" name="<?php echo DCVS_Store_Management::ARCHIVE_ALL_STORES_POST_KEY; ?>" value="Archive All Stores"/></form>
+	<form action="" class="warning" method="post">
+		<?php wp_nonce_field( DCVS_Store_Management::ARCHIVE_ALL_STORES_POST_KEY ); ?>
+		<input type="submit" name="<?php echo DCVS_Store_Management::ARCHIVE_ALL_STORES_POST_KEY; ?>" value="Archive All Stores"/>
+	</form>
 	<ul>
 		<?php foreach(DCVS_Store_Management::get_active_stores() as $site):
 			$store = get_blog_details($site->blog_id);
@@ -42,7 +46,11 @@
 			?>
 			<li>
 				<h4><?php echo $user->user_email; ?> | <?php echo $store->blogname; ?> | Created: <?php echo date('F Y',strtotime($store->registered)); ?></h4>
-				<form action="" class="warning" method="post"><input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/><input type="submit" name="<?php echo DCVS_Store_Management::ARCHIVE_STORE_POST_KEY; ?>" value="Archive Store"/></form>
+				<form action="" class="warning" method="post">
+					<?php wp_nonce_field( DCVS_Store_Management::ARCHIVE_STORE_POST_KEY.$site->blog_id ); ?>
+					<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
+					<input type="submit" name="<?php echo DCVS_Store_Management::ARCHIVE_STORE_POST_KEY; ?>" value="Archive Store"/>
+				</form>
 			</li>
 		<?php endforeach; ?>
 	</ul>
@@ -56,8 +64,16 @@
 		?>
 			<li>
 				<h4><?php echo $user->user_email; ?> | <?php echo $store->blogname; ?> | Created: <?php echo date('F Y',strtotime($store->registered)); ?></h4>
-				<form action="" class="warning" method="post"><input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/><input type="submit" name="<?php echo DCVS_Store_Management::UNARCHIVE_STORE_POST_KEY; ?>" value="Un-Archive Store"/></form>
-				<form action="" class="warning" method="post"><input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/><input type="submit" name="<?php echo DCVS_Store_Management::DELETE_STORE_POST_KEY; ?>" value="Delete Store and User"/></form>
+				<form action="" class="warning" method="post">
+					<?php wp_nonce_field( DCVS_Store_Management::UNARCHIVE_STORE_POST_KEY.$site->blog_id ); ?>
+					<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
+					<input type="submit" name="<?php echo DCVS_Store_Management::UNARCHIVE_STORE_POST_KEY; ?>" value="Un-Archive Store"/>
+				</form>
+				<form action="" class="warning" method="post">
+					<?php wp_nonce_field( DCVS_Store_Management::DELETE_STORE_POST_KEY.$site->blog_id ); ?>
+					<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
+					<input type="submit" name="<?php echo DCVS_Store_Management::DELETE_STORE_POST_KEY; ?>" value="Delete Store and User"/>
+				</form>
 			</li>
 		<?php endforeach; ?>
 	</ul>
