@@ -1,10 +1,10 @@
 $darkGray: #5D5D5D;
-$red: #EA6F6C;
-$darkRed: #AA4444;
-$blue: #87B8C2;
-$darkBlue: #547072;
-$yellow: #EDB867;
-$darkYellow: #C19457;
+$personaOne: #A3C9BB;
+$personaOneDark: #839B91;
+$personaTwo: #ABBD78;
+$personaTwoDark: #889360;
+$mainButton: #E9B364;
+$mainButtonDark: #BF9256;
 * {
     margin: 0;
     padding: 0;
@@ -220,7 +220,7 @@ h3 {
     }
 }
 .button {
-    background-color: $yellow;
+    background-color: $mainButton;
     color: white;
     font-family: 'Open Sans', sans-serif;
     height: 40px;
@@ -235,10 +235,10 @@ h3 {
     margin-bottom: 10px;
 }
 .one {
-    background-color: $red;
+    background-color: $personaOne;
 }
 .two {
-    background-color: $blue;
+    background-color: $personaTwo;
 }
 .buttonSmall {
     height: 40px;
@@ -350,6 +350,21 @@ h3 {
     display: flex;
     flex-direction: column;
     flex: 1 1;
+    div {
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: row;
+        align-items: center;
+        a {
+            text-decoration: none;
+            p {
+              font-family: "Lato", sans-serif;
+              color: $darkGray;
+              font-size: 25px;
+              margin-left: 60px;
+            }
+        }
+    }
     h1 {
         margin-left: 50px;
     }
@@ -403,6 +418,21 @@ h3 {
     display: flex;
     flex-direction: column;
     flex: 1 1;
+    div {
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: row;
+        align-items: center;
+        a {
+            text-decoration: none;
+            p {
+              font-family: "Lato", sans-serif;
+              color: $darkGray;
+              font-size: 25px;
+              margin-left: 175px;
+            }
+        }
+    }
     h1 {
         margin-left: 50px;
         margin-right: 100px;
@@ -426,14 +456,16 @@ h3 {
     cursor: pointer;
 }
 .randomize {
-    width: 300px;
+    width: 140px;
+    font-size: 10px;
+    margin-right: 15px;
 }
 .selectedFilter {
     background-color: #E0E0E0;
     color: $darkGray;
 }
 .createNew {
-    background-color: $yellow;
+    background-color: $mainButton;
     margin-left: 50px;
 }
 .assign {
@@ -447,7 +479,7 @@ h3 {
         flex: 0 0 auto;
         h1 {
             margin-left: 50px;
-            margin-right: 100px;
+            margin-right: 50px;
         }
     }
     .virtualTable {
@@ -494,17 +526,17 @@ h3 {
     border-radius: 0;
     cursor: pointer;
     background: url("../images/dropdownarrow1.svg") no-repeat right center;
-    background-color: $yellow;
+    background-color: $mainButton;
     background-size: 40px;
     text-align: center;
 }
 #assignOne {
     background: url("../images/dropdownarrow2.svg") no-repeat right center;
-    background-color: $red;
+    background-color: $personaOne;
 }
 #assignTwo {
     background: url("../images/dropdownarrow3.svg") no-repeat right center;
-    background-color: $blue;
+    background-color: $personaTwo;
 }
 .saveButton {
     background-color: $darkGray;
@@ -567,7 +599,7 @@ h3 {
             border: none;
             margin-top: 20px;
             float: right;
-            background-color: $yellow;
+            background-color: $mainButton;
             color: white;
             font-family: "Open Sans", sans-serif;
             font-weight: 700;

@@ -1,10 +1,10 @@
 $darkGray: #5D5D5D;
-$red: #EA6F6C;
-$darkRed: #AA4444;
-$blue: #87B8C2;
-$darkBlue: #547072;
-$yellow: #EDB867;
-$darkYellow: #C19457;
+$personaOne: #A3C9BB;
+$personaOneDark: #839B91;
+$personaTwo: #ABBD78;
+$personaTwoDark: #889360;
+$mainButton: #E9B364;
+$mainButtonDark: #BF9256;
 * {
     margin: 0;
     padding: 0;
@@ -149,7 +149,7 @@ html {
     hr {
         margin-bottom: 10px;
         margin-left: 25px;
-        border: $yellow 1px solid;
+        border: $mainButton 1px solid;
         width: 60%;
         display: inline-block;
     }
@@ -198,7 +198,7 @@ html {
 @media screen and (max-width:1300px) {}
 // BUTTONS
 .button {
-    background-color: $yellow;
+    background-color: $mainButton;
     color: white;
     font-family: 'Open Sans', sans-serif;
     height: 50px;
@@ -213,13 +213,13 @@ html {
     text-decoration: none;
 }
 .button:hover {
-    background-color: $darkYellow;
+    background-color: $mainButtonDark;
 }
 .btnStore {
     margin-bottom: 20px;
 }
 .persona {
-    background-color: $red;
+    background-color: $personaOne;
     text-align: left;
     height: 78px;
     width: 300px;
@@ -239,7 +239,7 @@ html {
     }
 }
 .personaSmall {
-    background-color: $red;
+    background-color: $personaOne;
     margin-top: 30px;
     margin-right: 20px;
     height: 35px;
@@ -247,16 +247,16 @@ html {
     font-size: 17px;
 }
 .personaSmall.one:hover {
-    background-color: $darkRed;
+    background-color: $personaOneDark;
 }
 .personaSmall.two:hover {
-    background-color: $darkBlue;
+    background-color: $personaTwoDark;
 }
 .one {
-    background-color: $red;
+    background-color: $personaOne;
 }
 .two {
-    background-color: $blue;
+    background-color: $personaTwo;
 }
 @media screen and (max-width:1300px) {
     .myStore {
