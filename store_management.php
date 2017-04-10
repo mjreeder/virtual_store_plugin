@@ -218,7 +218,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 
 		public static function get_active_stores(){
 			$sites = array_filter(get_sites(['archived'=>0, 'orderby'=>'path']), function($site){
-				return ( DCVS_Store_Management::get_user_by_store($site->blog_id) );
+				return ( DCVS_Store_Management::get_user_by_store($site->blog_id) !== false );
 			});
 			return $sites;
 		}
