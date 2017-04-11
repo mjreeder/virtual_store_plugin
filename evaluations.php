@@ -1,4 +1,7 @@
 <?php
+
+global $current_user;
+
 add_action('woocommerce_thankyou','dcvs_survey_time');
 function dcvs_survey_time($order_id){
 	if( get_current_blog_id() == 1 ){
@@ -13,10 +16,14 @@ function dcvs_survey_time($order_id){
 add_action( 'gform_after_submission', 'dcvs_redirect_to_dashboard_after_evaluation' );
 function dcvs_redirect_to_dashboard_after_evaluation($entry){
 	global $wpdb;
-	if (!isset($_REQUEST['student_id'])) {
-		$user_results = $wpdb->get_results('SELECT * FROM dcvs_user_business', OBJECT);
-		wp_redirect('/wp-admin/admin.php?page=dcvs_teacher&student_id='.$user_results->user_id);
-		echo $user_results;
+	if( isset( $current_user ) && !empty($current_user->roles) ){
+		if(!in_array('administrator', $current_user->roles)) {
+			wp_redirect( get_site_url() . '//wp-content/plugins/virtual_store_plugin/templates/landing.php' );
+			exit;
+		}
+	} else {
+		wp_redirect( get_site_url() . '//wp-content/plugins/virtual_store_plugin/templates/landing.php' );
+		exit;
 	}
 }
 
