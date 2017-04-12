@@ -15,6 +15,7 @@ require_once __DIR__."/personas_admin_settings.php";
 require_once __DIR__."/businesses_admin_settings.php";
 require_once __DIR__."/user_persona_assignment.php";
 require_once __DIR__."/money_bar.php";
+require_once __DIR__."/store_management.php";
 
 add_action( 'admin_init', 'dcvs_remove_footer' );
 add_action('woocommerce_review_order_before_payment', 'dcvs_before_cart_contents');
