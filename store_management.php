@@ -22,12 +22,10 @@ if( !class_exists('DCVS_Store_Management') ) {
 
 		function __construct() {
 			add_action("init", array($this,"init"));
-			if( current_user_can('create_sites') ){
-				add_action("init", array($this,"process_new_users"));
-				add_action("init", array($this,"process_store_archival"));
-				add_action("init", array($this,"process_store_unarchival"));
-				add_action("init", array($this,"process_store_deletion"));
-			}
+			add_action("init", array($this,"process_new_users"));
+			add_action("init", array($this,"process_store_archival"));
+			add_action("init", array($this,"process_store_unarchival"));
+			add_action("init", array($this,"process_store_deletion"));
 			add_action("admin_menu", array($this, "register_submenus"));
 		}
 
@@ -52,7 +50,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		public function process_new_users(){
-			if( !isset($_POST[self::ADD_USERS_BY_EMAIL_POST_KEY]) ){
+			if( !current_user_can('create_sites') || !isset($_POST[self::ADD_USERS_BY_EMAIL_POST_KEY]) ){
 				return;
 			}
 
@@ -111,7 +109,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		public function process_store_archival(){
-			if( isset($_POST[self::ARCHIVE_ALL_STORES_POST_KEY]) ){
+			if( !current_user_can('create_sites') || isset($_POST[self::ARCHIVE_ALL_STORES_POST_KEY]) ){
 				check_admin_referer( self::ARCHIVE_ALL_STORES_POST_KEY );
 
 				$count = 0;
@@ -132,7 +130,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		public function process_store_unarchival(){
-			if( isset($_POST[self::UNARCHIVE_STORE_POST_KEY]) ){
+			if( !current_user_can('create_sites') || isset($_POST[self::UNARCHIVE_STORE_POST_KEY]) ){
 				$siteID = filter_var($_POST['site_id'], FILTER_SANITIZE_NUMBER_INT);
 				check_admin_referer( self::UNARCHIVE_STORE_POST_KEY.$siteID );
 				$this->unarchive_site($siteID);
@@ -141,7 +139,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		public function process_store_deletion(){
-			if( isset($_POST[self::DELETE_STORE_POST_KEY]) ){
+			if( !current_user_can('create_sites') || isset($_POST[self::DELETE_STORE_POST_KEY]) ){
 				$siteID = filter_var($_POST['site_id'], FILTER_SANITIZE_NUMBER_INT);
 				check_admin_referer( self::DELETE_STORE_POST_KEY.$siteID );
 				$this->delete_site($siteID);
