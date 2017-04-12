@@ -10,6 +10,8 @@
 defined( 'ABSPATH' ) or die( 'invalid access' );
 define("DCVS_DATABASE_VERSION", 0.50);
 
+global $wpdb;
+
 $dcvs_current_version = dcvs_get_option("dcvs_database_version");
 if($dcvs_current_version != DCVS_DATABASE_VERSION){
     require_once  ABSPATH."/wp-admin/includes/upgrade.php";
