@@ -16,20 +16,21 @@ require_once __DIR__."/businesses_admin_settings.php";
 require_once __DIR__."/user_persona_assignment.php";
 require_once __DIR__."/money_bar.php";
 
-add_action( 'admin_init', 'dcvs_remove_footer' );
+add_action('admin_init', 'dcvs_remove_footer');
 add_action('woocommerce_review_order_before_payment', 'dcvs_before_cart_contents');
 add_action('woocommerce_review_order_after_payment', 'dcvs_after_cart_contents');
 add_action('woocommerce_checkout_before_customer_details', 'dcvs_before_billing_form');
 add_action('woocommerce_checkout_after_customer_details', 'dcvs_after_billing_form');
+add_action('admin_enqueue_scripts', 'dcvs_enqueue_admin_script' );
 add_action('init', 'dcvs_plugin_init');
 
 add_filter('woocommerce_checkout_fields' , 'dcvs_override_checkout_fields');
 add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_cart');
 add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_checkout');
-
 add_filter('woocommerce_is_purchasable', 'dvcs_is_purchasable', 10, 2);
 add_filter('woocommerce_variation_is_purchasable', 'dvcs_is_purchasable', 10, 2);
 add_filter('gettext', 'dvcs_customize_product_variation_message', 10, 3);
+add_filter('woocommerce_product_data_tabs', 'dcvs_remove_product_tabs', 10, 1);
 
 register_activation_hook(__FILE__, 'dcvs_activation_plugin');
 function dcvs_activation_plugin()
@@ -257,12 +258,34 @@ function dvcs_customize_product_variation_message( $translated_text, $untranslat
 {
     if ($untranslated_text == 'Sorry, this product is unavailable. Please choose a different combination.') {
         if (get_current_blog_id() == get_user_blog_id( get_current_user_id())) {
-            $translated_text = __( "You can't buy products from your own store!", $domain );
+            $translated_text = __( "You can't buy products from your own store! \n\nPlease choose another store!", $domain );
         }
     } else if ($untranslated_text == 'Please select some product options before adding this product to your cart.') {
         if (get_current_blog_id() == get_user_blog_id( get_current_user_id())) {
-            $translated_text = __( "You can't buy products from your own store!", $domain );
+            $translated_text = __( "You can't buy products from your own store! \n\nPlease choose another store!", $domain );
         }
     }
     return $translated_text;
+}
+
+function dcvs_remove_product_tabs($tabs)
+{
+
+    if (get_current_blog_id() != 1) {
+        unset($tabs['inventory']);
+        unset($tabs['shipping']);
+        unset($tabs['attribute']);
+    }
+
+    return($tabs);
+
+}
+
+function dcvs_enqueue_admin_script()
+{
+    if (get_current_blog_id() != 1) {
+        wp_register_script( 'dcvs_product_edit_script', plugins_url( '/js/editProduct.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
+        wp_enqueue_script( 'dcvs_product_edit_script' );
+        wp_enqueue_style( 'dcvs_product_edit_style', plugins_url( '/assets/css/editProduct.css', __FILE__ ) );
+    }
 }
