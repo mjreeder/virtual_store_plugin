@@ -96,7 +96,6 @@ function display_admin_panel()
 
 }
 
-
 function get_shopping_end_date()
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['dcvs_admin_changes'] == 1 && isset($_POST['shopping_end_date'])) {
@@ -142,4 +141,10 @@ function get_warehouse_end_date()
   </form>
   <?php
 
+}
+
+function dcvs_get_all_categories() {
+    global $wpdb;
+    $categories = $wpdb->get_results("SELECT * FROM dcvs_category", ARRAY_A);
+    return $categories;
 }

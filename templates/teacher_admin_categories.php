@@ -24,12 +24,6 @@ $trash_image = plugins_url( 'assets/images/trash.svg', dirname(__FILE__));
 
 $categories = dcvs_get_all_categories();
 
-function dcvs_get_all_categories() {
-	global $wpdb;
-	$categories = $wpdb->get_results("SELECT * FROM dcvs_category", ARRAY_A);
-	return $categories;
-}
-
 ?>
 
 <script>
