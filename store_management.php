@@ -78,6 +78,8 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		private function get_site_defaults(){
+			global $wpdb;
+
 			$siteSettings = [
 				'public'=>1,
 				'blogdescription'=>'Store tagline goes here',
@@ -89,13 +91,9 @@ if( !class_exists('DCVS_Store_Management') ) {
 			//TODO figure out a way to determine this? maybe just a class constant; maybe lookup a specific store by name
 			$defaultStoreID = 1;
 
-			//TODO find out bunch more of these
-			$desiredOptions = [
-				'bodhi_svgs_admin_notice_dismissed',
-				'woocommerce_paypal_settings',
-				'woocommerce_cod_settings',
-				//TODO add more here
-			];
+			$desiredOptions = $wpdb->get_col("SELECT option_name FROM wp_options WHERE `option_name` LIKE '%woocommerce%' and `option_name` NOT LIKE '%transient%'and `option_name` not LIKE '%page_id%'");
+
+			$desiredOptions[] = 'bodhi_svgs_admin_notice_dismissed';
 
 			$options = array_map(function($key) use ($defaultStoreID){
 				return get_blog_option($defaultStoreID, $key);
@@ -187,7 +185,28 @@ if( !class_exists('DCVS_Store_Management') ) {
 			add_blog_option($blogID, self::USER_ASSOCIATION_KEY, $user_id); //set this for future use when archiving/deleting
 			add_user_meta($user_id, self::STORE_ASSOCIATION_KEY,$blogID);
 
+			$business_id = self::add_business_on_store_creation( $blogID, $user->data->user_login."’s Store" );
+
+			self::add_user_business_relationship_on_business_creation( $user_id, $business_id );
+
 			return $blogID;
+		}
+
+		private function add_business_on_store_creation( $blog_id, $business_title ) {
+			global $wpdb;
+
+			$business_url = get_site_url($blog_id) . '/';
+			$business_budget = dcvs_get_option( 'default_business_money' );
+
+			$wpdb->insert('dcvs_business', ['title'=>$business_title, 'description'=>'', 'money'=>$business_budget, 'url'=>$business_url] );
+
+			return $wpdb->insert_id;
+		}
+
+		private function add_user_business_relationship_on_business_creation($user_id, $business_id) {
+			global $wpdb;
+
+			$wpdb->insert('dcvs_user_business', ['user_id'=>$user_id, 'business_id'=>$business_id] );
 		}
 
 		private function finish_site_setup($blog_id){
