@@ -1,3 +1,4 @@
+<!doctype HTML>
 <html>
 
 <head>
@@ -6,8 +7,6 @@
     <link href="../assets/css/adminPanel.css" rel="stylesheet" type="text/css">
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
-    <!-- JS -->
-    <script type="text/javascript" src="../assets/virtualStore.js"></script>
 </head>
 
 <body>
@@ -21,6 +20,7 @@
         </header>
 
         <main class="admin">
+
             <nav class="sidebar">
                 <ul>
                     <a href="../views/studentInfo.html">
@@ -31,81 +31,88 @@
                         <a href="../views/manage.html">
                             <li>MANAGE PERSONAS</li>
                         </a>
-                        <li id="selectedTab">GENERAL SETTINGS</li>
-                        <a href="../views/categories.html">
-                            <li>CATEGORIES</li>
+                        <a href="../views/settings.html">
+                            <li>GENERAL SETTINGS</li>
                         </a>
+                        <li id="selectedTab">CATEGORIES</li>
                         <a href="../views/users.html">
                             <li>USERS</li>
                         </a>
                 </ul>
             </nav>
 
-            <section class="orderHistory">
+            <section class="manage">
 
-              <div>
-                  <h1 class="title">Ryan Bitzegaio</h1>
-                  <a href="../views/studentInfo.html"><p>Back to Student Info</p></a>
-              </div>
+                <div>
+                    <h1 class="title">Manage Categories</h1>
+                    <button class="headerButton createNew">CREATE NEW</button>
+                </div>
+
+                <section class="createModal">
+                    <h1>CREATE NEW</h1>
+                    <form action="">
+                        <input type="text" placeholder="name">
+                        <textarea rows="5" cols="36" placeholder="description"></textarea>
+                        <input type="submit" value="SAVE">
+
+                    </form>
+                </section>
 
                 <div class="tableWrapper">
                     <table class="virtualTable orderTable">
                         <tr>
-                            <th>ITEMS</th>
+                            <th>TITLE</th>
                             <th>DESCRIPTION</th>
-                            <th>PRICE</th>
+                        <tr>
+                            <td>Single Mom 35</td>
+                            <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                         <tr>
-                            <td>WHITE DRESS</td>
+                            <td>Single Mom 35</td>
                             <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                            <td>$2.99</td>
                         </tr>
                     </table>
                 </div>
 
             </section>
 
+
+
         </main>
+
+
     </div>
 
 

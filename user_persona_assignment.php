@@ -175,6 +175,15 @@ tr:nth-child(even) {
 }
 
 // dcvs_business
+function dcvs_deal_with_business_assigning() {
+  if(all_businesses_assigned()) {
+    dcvs_remove_all_user_businesses();
+    dcvs_assign_all_user_businesses();
+  } else {
+    dcvs_assign_all_user_businesses();
+  }
+}
+
 // READ
 function dcvs_get_user_business($userId) {
   global $wpdb;
@@ -261,6 +270,20 @@ function dcvs_remove_all_user_businesses() {
 }
 
 // dcvs_persona
+function dcvs_deal_with_persona_assigning() {
+  $users = get_users();
+  if (all_personas_assigned()) {
+    // echo "All Personas Already Assigned";
+    dcvs_reset_and_assign_user_personas($users);
+  } else {
+    for ($i = 0; $i < sizeof($users); $i++) {
+      $user = get_object_vars($users[$i]);
+      $id = $user["ID"];
+      dcvs_assign_persona($id);
+    }
+  }
+}
+
 // READ
 function dcvs_get_user_persona_ids($userId) {
   global $wpdb;

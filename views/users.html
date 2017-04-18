@@ -1,0 +1,135 @@
+<!doctype HTML>
+<html>
+
+<head>
+    <title>Virtual Store Admin Panel</title>
+    <!-- CSS -->
+    <link href="../assets/css/adminPanel.css" rel="stylesheet" type="text/css">
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <header class="header">
+
+            <h1>virtual store admin panel</h1>
+
+        </header>
+
+        <main class="admin">
+
+            <nav class="sidebar">
+                <ul>
+                    <a href="../views/studentInfo.html">
+                        <li>STUDENT INFO</li>
+                        <a href="../views/assign.html">
+                            <li>ASSIGN PERSONAS</li>
+                        </a>
+                        <a href="../views/manage.html">
+                            <li>MANAGE PERSONAS</li>
+                        </a>
+                        <a href="../views/settings.html">
+                            <li>GENERAL SETTINGS</li>
+                        </a>
+                        <a href="../views/categories.html">
+                            <li>CATEGORIES</li>
+                        </a>
+                        <li id="selectedTab">USERS</li>
+                </ul>
+            </nav>
+
+            <section class="users">
+                <h1 class="title">Create Users</h1>
+
+                <div class="addUsers">
+                    <h2 class="subTitle">add users</h2>
+                    <p>paste a list of student email addresses here, separated by a comma or a new line.</p>
+                    <form action="">
+                        <textarea name="addUsers" rows="8" cols="80"></textarea>
+                        <submit class="saveButton">ADD</submit>
+                    </form>
+
+                </div>
+                <div class="userLists">
+                    <section class="userLeft">
+                        <h2 class="subTitle">active users</h2>
+                        <button>ARCHIVE ALL</button>
+                        <ul>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="userRight">
+                        <h2 class="subTitle">archived users</h2>
+                        <button>UNARCHIVE ALL</button>
+                        <ul>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                            <li>
+                                <p>corey@test.com</p>
+                                <p>Corey's Store</p>
+                                <p>Created: April 17th</p>
+                                <button>ARCHIVE</button>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+
+            </section>
+
+
+
+        </main>
+
+
+    </div>
+
+
+</body>
