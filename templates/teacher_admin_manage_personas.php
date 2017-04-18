@@ -115,8 +115,6 @@ function dcvs_get_all_personas() {
 
 	<div>
 		<h1 class="title">Manage Personas</h1>
-		<button class="headerButton">CONSUMER</button>
-		<button class="headerButton selectedFilter">BUYER</button>
 		<button class="headerButton createNew" id="createNew">CREATE NEW</button>
 		<label><?php echo $user_message; ?></label>
 	</div>

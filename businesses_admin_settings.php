@@ -144,7 +144,7 @@ function dcvs_get_business($title, $default_value=false){
     return $result == NULL ? $default_value : $result;
 }
 
-function dcvs_update_business($id, $title, $description, $money, $url) {
+function dcvs_update_business($id, $title, $description, $money) {
     global $wpdb;
     $checkid = dcvs_get_business($title);
     if ($checkid != NULL && $checkid != $id) {
@@ -153,7 +153,7 @@ function dcvs_update_business($id, $title, $description, $money, $url) {
          echo "Money must be a number";
      } else {
          $wpdb->update("dcvs_business", array("title"=>$title, "description"=>$description,"money"
-         =>$money, "url"=>$url), array("id"=>$id));
+         =>$money), array("id"=>$id));
      }
 }
 

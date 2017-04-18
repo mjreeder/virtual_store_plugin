@@ -63,6 +63,9 @@ function display_admin_panel()
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=manage' ?>">
                       <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "manage") ? "id='selectedTab'" : ""?> >MANAGE PERSONAS</li>
                   </a>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=business' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "business") ? "id='selectedTab'" : ""?> >MANAGE BUSINESSES</li>
+                  </a>
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=settings' ?>">
                       <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "settings") ? "id='selectedTab'" : ""?> >GENERAL SETTINGS</li>
                   </a>
@@ -84,6 +87,8 @@ function display_admin_panel()
               require_once __DIR__ . "/teacher_admin_orderHistory.php";
           } else if($_REQUEST['section'] == 'categories') {
               require_once __DIR__ . "/teacher_admin_categories.php";
+          } else if ($_REQUEST['section'] == 'business') {
+              require_once __DIR__ . "/teacher_admin_manage_businesses.php";
           }
           ?>
       </main>
