@@ -37,17 +37,21 @@ echo "</pre>";
                         </tr>
                         <tr>
                           <?php
-                            for ($i=0; $i < sizeof($items) ; $i++) {
-                                ?>
-                                <td><?php echo $items[$i]['name']?></td>
-                                <td><?php echo $items[$i]["item_meta"]["_qty"][0]?></td>
-                                <td><?php ?></td>
-                                <td><?php ?></td>
-                                <td><?php ?></td>
-                                <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
-                              </tr>
-                                <?php
-                            }
+														for ($j=0; $j < sizeof($ware_house_order_history) ; $j++) {
+															$items = unserialize(get_value_from_stdClass($ware_house_order_history[$j])['items']);
+															for ($i=0; $i < sizeof($items) ; $i++) {
+	                                ?>
+	                                <td><?php echo $items[$i]['name']?></td>
+	                                <td><?php echo $items[$i]["item_meta"]["_qty"][0]?></td>
+	                                <td><?php ?></td>
+	                                <td><?php ?><?php echo $items[$i]["item_meta"]["_line_subtotal"][0]?></td>
+	                                <td><?php ?></td>
+	                                <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
+	                              </tr>
+	                                <?php
+	                            }
+														}
+
 
                           ?>
 

@@ -5,6 +5,7 @@ $display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_u
 $user_id = $_REQUEST['user_id'];
 $persona_id = $_REQUEST['persona_id'];
 $user_persona_order_history = $wpdb->get_results($wpdb->prepare('SELECT items, cost FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND persona_id = %d', $user_id, $persona_id));
+// var_dump(unserialize($user_persona_order_history[0]->items));
  ?>
 <section class="orderHistory" id='history'>
 <h1 class="title"><?php echo $display_name[0]->display_name ?></h1>
@@ -21,7 +22,7 @@ $user_persona_order_history = $wpdb->get_results($wpdb->prepare('SELECT items, c
         for ($i = 0; $i < sizeOf($user_persona_order_history); ++$i) {
           ?>
           <tr>
-              <td><?php echo $user_persona_order_history[$i]->items ?></td>
+              <td><?php echo unserialize($user_persona_order_history[$i]->items)[0]["name"];  ?></td>
               <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuadxa nibh eu pellentesque interdum. Sed pulvinar orci lacus</td>
               <td>$ <?php echo $user_persona_order_history[$i]->cost ?></td>
           </tr>
