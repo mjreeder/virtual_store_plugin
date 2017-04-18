@@ -8,12 +8,13 @@
  * https://codex.wordpress.org/Class_Reference/wpdb
  */
 defined( 'ABSPATH' ) or die( 'invalid access' );
-define("DCVS_DATABASE_VERSION", 0.37);
+define("DCVS_DATABASE_VERSION", 0.50);
+
+global $wpdb;
 
 $dcvs_current_version = dcvs_get_option("dcvs_database_version");
-
 if($dcvs_current_version != DCVS_DATABASE_VERSION){
-    require_once __DIR__."/../../../wp-admin/includes/upgrade.php";
+    require_once  ABSPATH."/wp-admin/includes/upgrade.php";
     $charset_collate = $wpdb->get_charset_collate();
     if($dcvs_current_version < 0.1){
         $personaTable = "CREATE TABLE dcvs_persona(
@@ -84,8 +85,7 @@ if($dcvs_current_version != DCVS_DATABASE_VERSION){
             PRIMARY KEY  (id)
         ) $charset_collate;";
         dbDelta($purchaseTable);
-    }
-     if($dcvs_current_version < 0.37){
+    } if($dcvs_current_version < 0.37){
        $wpdb->query("DROP TABLE dcvs_current_persona;");
       $currentPersona = "CREATE TABLE dcvs_current_persona(
           user_id BIGINT(10) NOT NULL,
@@ -93,6 +93,21 @@ if($dcvs_current_version != DCVS_DATABASE_VERSION){
       ) $charset_collate;";
 
       dbDelta($currentPersona);
+    } if($dcvs_current_version < 0.45){
+        $warehouseBusinessProductTable = "CREATE TABLE dcvs_warehouse_business_product(
+          business_id BIGINT(10) NOT NULL,
+          warehouse_product_id BIGINT(10) NOT NULL,
+          business_product_id BIGINT(10) NOT NULL
+      ) $charset_collate;";
+        dbDelta($warehouseBusinessProductTable);
+    } if($dcvs_current_version < 0.50){
+        $businessProductPriceTable = "CREATE TABLE dcvs_business_product_price(
+          business_id BIGINT(10) NOT NULL,
+          business_product_id BIGINT(10) NOT NULL,
+          price DOUBLE(8,2) NOT NULL,
+          number_bought BIGINT(10) NOT NULL
+      ) $charset_collate;";
+        dbDelta($businessProductPriceTable);
     }
 
     dcvs_set_option("dcvs_database_version", DCVS_DATABASE_VERSION);
