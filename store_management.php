@@ -109,7 +109,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		public function process_store_archival(){
-			if( !current_user_can('create_sites') || isset($_POST[self::ARCHIVE_ALL_STORES_POST_KEY]) ){
+			if( current_user_can('create_sites') && isset($_POST[self::ARCHIVE_ALL_STORES_POST_KEY]) ){
 				check_admin_referer( self::ARCHIVE_ALL_STORES_POST_KEY );
 
 				$count = 0;
@@ -121,7 +121,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 				self::$messages[] = 'Successfully Archived '.$count.' stores';
 			}
 
-			if( isset($_POST[self::ARCHIVE_STORE_POST_KEY]) ){
+			if( current_user_can('create_sites') && isset($_POST['site_id'], $_POST[self::ARCHIVE_STORE_POST_KEY]) ){
 				$siteID = filter_var($_POST['site_id'], FILTER_SANITIZE_NUMBER_INT);
 				check_admin_referer( self::ARCHIVE_STORE_POST_KEY.$siteID );
 				$this->archive_site($siteID);
@@ -130,7 +130,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		public function process_store_unarchival(){
-			if( !current_user_can('create_sites') || isset($_POST[self::UNARCHIVE_STORE_POST_KEY]) ){
+			if( current_user_can('create_sites') && isset($_POST['site_id'], $_POST[self::UNARCHIVE_STORE_POST_KEY]) ){
 				$siteID = filter_var($_POST['site_id'], FILTER_SANITIZE_NUMBER_INT);
 				check_admin_referer( self::UNARCHIVE_STORE_POST_KEY.$siteID );
 				$this->unarchive_site($siteID);
@@ -139,7 +139,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 		}
 
 		public function process_store_deletion(){
-			if( !current_user_can('create_sites') || isset($_POST[self::DELETE_STORE_POST_KEY]) ){
+			if( current_user_can('create_sites') && isset($_POST['site_id'], $_POST[self::DELETE_STORE_POST_KEY]) ){
 				$siteID = filter_var($_POST['site_id'], FILTER_SANITIZE_NUMBER_INT);
 				check_admin_referer( self::DELETE_STORE_POST_KEY.$siteID );
 				$this->delete_site($siteID);
