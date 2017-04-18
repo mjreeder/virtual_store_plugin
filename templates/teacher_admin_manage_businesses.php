@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 		$title = $_REQUEST['title'];
 		$budget = $_REQUEST['budget'];
 		$description = $_REQUEST['description'];
-		$category_id = $_REQUEST['category_id'];
+		$category_id = isset($_REQUEST['category_id']) ? $_REQUEST['category_id'] : -1;
 		$current_business_category_id = $_REQUEST['current_business_category_id'];
 		dcvs_update_business( $business_id, $title, $description, $budget );
 		if ($category_id != -1 && $current_business_category_id != -1) {
@@ -44,7 +44,7 @@ function dcvs_get_all_student_businesses($formatted_user_ids) {
 	$businesses = $wpdb->get_results("SELECT dcvs_business.*, dcvs_business_category.category_id as category_id, dcvs_category.name as category_name, dcvs_user_business.user_id as user_id
 		FROM dcvs_business
 		LEFT JOIN dcvs_user_business
-		ON dcvs_user_business.user_id IN ($formatted_user_ids)
+		ON dcvs_user_business.user_id = (SELECT dcvs_user_business.user_id from dcvs_user_business WHERE dcvs_user_business.business_id = dcvs_business.id)
 		LEFT JOIN dcvs_business_category
 		ON dcvs_business.id = dcvs_business_category.business_id
 		LEFT JOIN dcvs_category

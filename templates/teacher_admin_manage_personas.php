@@ -12,7 +12,7 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 		$name = $_REQUEST['name'];
 		$budget = $_REQUEST['budget'];
 		$description = $_REQUEST['description'];
-		$category_id = $_REQUEST['category_id'];
+		$category_id = isset($_REQUEST['category_id']) ? $_REQUEST['category_id'] : -1;
 		dcvs_insert_new_persona($name, $description, $budget);
 		if ($wpdb->insert_id && $category_id != -1) {
 			dcvs_insert_new_persona_category($wpdb->insert_id, $_REQUEST['category_id']);
