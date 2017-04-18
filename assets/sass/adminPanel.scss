@@ -612,6 +612,20 @@ label {
         textarea:placeholder {
             color: #E0E0E0;
         }
+        select {
+            border: none;
+            width: 100%;
+            height: 40px;
+            margin-bottom: 20px;
+            font-family: "Lato", sans-serif;
+            color: $darkGray;
+            font-weight: 700;
+            font-size: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-top: 10px;
+            font-style: italic;
+        }
     }
 }
 .users {

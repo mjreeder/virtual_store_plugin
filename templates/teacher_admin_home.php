@@ -63,8 +63,14 @@ function display_admin_panel()
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=manage' ?>">
                       <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "manage") ? "id='selectedTab'" : ""?> >MANAGE PERSONAS</li>
                   </a>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=business' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "business") ? "id='selectedTab'" : ""?> >MANAGE BUSINESSES</li>
+                  </a>
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=settings' ?>">
                       <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "settings") ? "id='selectedTab'" : ""?> >GENERAL SETTINGS</li>
+                  </a>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=categories' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "categories") ? "id='selectedTab'" : ""?> >CATEGORIES</li>
                   </a>
               </ul>
           </nav>
@@ -77,9 +83,12 @@ function display_admin_panel()
               require_once __DIR__ . "/teacher_admin_general_settings.php";
           } else if ($_REQUEST['section'] == 'assign') {
               require_once __DIR__ . "/teacher_admin_assign_personas.php";
-          }
-          else if($_REQUEST['section'] == 'order_history'){
-            require_once __DIR__ . "/teacher_admin_orderHistory.php";
+          } else if($_REQUEST['section'] == 'order_history'){
+              require_once __DIR__ . "/teacher_admin_orderHistory.php";
+          } else if($_REQUEST['section'] == 'categories') {
+              require_once __DIR__ . "/teacher_admin_categories.php";
+          } else if ($_REQUEST['section'] == 'business') {
+              require_once __DIR__ . "/teacher_admin_manage_businesses.php";
           }
           ?>
       </main>
@@ -91,7 +100,6 @@ function display_admin_panel()
   <?php
 
 }
-
 
 function get_shopping_end_date()
 {
@@ -138,4 +146,10 @@ function get_warehouse_end_date()
   </form>
   <?php
 
+}
+
+function dcvs_get_all_categories() {
+    global $wpdb;
+    $categories = $wpdb->get_results("SELECT * FROM dcvs_category", ARRAY_A);
+    return $categories;
 }
