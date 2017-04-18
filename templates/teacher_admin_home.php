@@ -54,9 +54,6 @@ function display_admin_panel()
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] ?>">
                       <li <?php echo !isset($_REQUEST['section']) ? "id='selectedTab'" : ""?>>STUDENT INFO</li>
                   </a>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=merchandiser' ?>">
-                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "merchandiser") ? "id='selectedTab'" : ""?> >MERCHANDISER</li>
-                  </a>
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=assign' ?>">
                       <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "assign") ? "id='selectedTab'" : ""?> >ASSIGN PERSONAS</li>
                   </a>

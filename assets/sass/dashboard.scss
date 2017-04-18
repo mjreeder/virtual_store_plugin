@@ -9,7 +9,6 @@ $darkYellow: #C19457;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    // border: 1px solid black;
 }
 body,
 html {
@@ -187,12 +186,20 @@ html {
     display: flex;
     flex-direction: row;
     margin-top: 30px;
+    justify-content: space-between;
     p {
         margin-top: 20px;
         width: 75%;
         font-family: 'Lato', sans-serif;
         font-size: 15px;
         color: $darkGray;
+    }
+    div:nth-child(2) {
+        margin-right: 130px;
+    }
+    .personaButtons {
+        display: flex;
+        flex-direction: row;
     }
 }
 @media screen and (max-width:1300px) {}
