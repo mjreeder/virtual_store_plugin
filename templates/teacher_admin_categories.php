@@ -89,7 +89,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="student_id" value="<?php echo $_REQUEST['student_id'] ?>">
 			<input type="hidden" name="section" value="categories">
 
-			<input type="text" name="name" placeholder="name">
+			<input type="text" name="name" placeholder="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description"></textarea>
 			<input type="submit" name="submit" value="SAVE">
 
@@ -105,7 +105,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="section" value="categories">
 			<input type="hidden" name="category_id" value="" id="category_id">
 
-			<input type="text" name="name" placeholder="name" id="name">
+			<input type="text" name="name" placeholder="name" id="name" required>
 			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
 			<input type="submit" name="submit" value="UPDATE">
 
@@ -129,7 +129,7 @@ $categories = dcvs_get_all_categories();
 
 				<tr>
 					<td><?php echo $category_name; ?></td>
-					<td class="desc"><?php echo $category_description; ?></td>
+					<td class="desc"><?php echo ($category_description != "") ? $category_description : '<i>NOT SET</i>'; ?></td>
 					<td><img src="<?php echo $pencil_image; ?>" alt="edit category button" onclick="editCategory('<?php echo $category_id ?>', '<?php echo $category_name ?>', '<?php echo $category_description ?>')"></td>
 					<td>
 						<form action="" method="post">
