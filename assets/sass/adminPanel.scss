@@ -99,6 +99,7 @@ label {
             padding-left: 20px;
             cursor: pointer;
             list-style: none;
+            margin-bottom: 0;
         }
     }
 }
@@ -143,6 +144,12 @@ label {
     ul {
         height: calc(100% - 40px);
         overflow: scroll;
+        .selectedStudent {
+            a {
+                color: white;
+            }
+            background-color: #828282;
+        }
         li {
             width: 100%;
             padding-left: 20px;
@@ -150,16 +157,17 @@ label {
             color: $darkGray;
             list-style: none;
             height: 35px;
-            padding-top: 5px;
+            padding-top: 7px;
             text-transform: uppercase;
             font-size: 17px;
             font-family: "Open Sans", sans-serif;
             font-weight: 700;
             cursor: pointer;
-        }
-        .selectedStudent {
-            color: white;
-            background-color: #828282;
+            margin-bottom: 0;
+            a {
+                color: $darkGray;
+                text-decoration: none;
+            }
         }
     }
 }
@@ -314,19 +322,23 @@ label {
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     color: $darkGray;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 .settings {
     display: flex;
     flex-direction: column;
     flex: 1 1;
     padding-left: 50px;
+    form {
+        .title {
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+    }
     .settingsSub {
         display: flex;
         flex-direction: column;
         background-color: #F2F2F2;
-        margin-bottom: 25px;
+        margin-bottom: 50px;
         margin-left: -50px;
         margin-top: 20px;
         height: 150px;
@@ -396,6 +408,11 @@ label {
                     color: white;
                     font-family: "Open Sans", sans-serif;
                     font-weight: 600;
+                    margin-left: 18px;
+                }
+            }
+            .dateInput:nth-child(2) {
+                p {
                     margin-left: 25px;
                 }
             }
@@ -446,6 +463,7 @@ label {
     }
     td {
         padding: 15px 30px;
+        text-align: center;
         img {
             height: 25px;
         }
@@ -492,7 +510,9 @@ label {
     cursor: pointer;
 }
 .randomize {
-    width: 300px;
+    width: 160px;
+    margin-right: 10px;
+    font-size: 10px;
 }
 .selectedFilter {
     background-color: #E0E0E0;
@@ -532,8 +552,7 @@ label {
         flex-direction: row;
         flex: 0 0 auto;
         h1 {
-            margin-left: 50px;
-            margin-right: 50px;
+            margin: 40px 50px;
         }
     }
     .virtualTable {
@@ -593,7 +612,6 @@ label {
     display: none;
     flex-direction: column;
     position: absolute;
-    height: 400px;
     width: 500px;
     background-color: $darkGray;
     padding-top: 25px;
@@ -640,6 +658,7 @@ label {
             font-family: "Open Sans", sans-serif;
             font-weight: 700;
             font-size: 15px;
+            margin-bottom: 20px;
         }
         textarea {
             font-family: "Lato", sans-serif;
@@ -733,16 +752,18 @@ label {
             display: flex;
             flex-direction: column;
             width: 40%;
-            button {
-                margin-top: 20px;
-                margin-bottom: 20px;
-                background-color: $red;
-                border: none;
-                color: white;
-                font-family: "Open Sans", sans-serif;
-                font-weight: 700;
-                height: 25px;
-                width: 50%;
+            form {
+              button {
+                  margin-top: 20px;
+                  margin-bottom: 20px;
+                  background-color: $red;
+                  border: none;
+                  color: white;
+                  font-family: "Open Sans", sans-serif;
+                  font-weight: 700;
+                  height: 25px;
+                  width: 50%;
+              }
             }
             ul {
                 overflow: scroll;
@@ -755,11 +776,12 @@ label {
                     height: 40px;
                     position: relative;
                     justify-content: space-between;
+                    margin: 0;
                     p {
                         font-family: "Lato", sans-serif;
                         color: $darkGray;
                         font-size: 15px;
-                        margin-left: 10px;
+                        margin: 0 0 0 10px;
                     }
                     p:nth-child(2) {
                         position: absolute;
@@ -772,13 +794,16 @@ label {
                         margin-right: 15px;
                         padding-top: 10px;
                     }
-                    button {
-                        background-color: $darkGray;
-                        border: none;
-                        margin: 0;
-                        width: 20%;
-                        align-self: center;
-                        margin-right: 10px;
+                    form {
+                        margin-right: 20px;
+                        button {
+                            background-color: $darkGray;
+                            border: none;
+                            margin: 0;
+                            width: 100px;
+                            align-self: center;
+                            margin-top: 7px;
+                        }
                     }
                 }
                 li:nth-child(2n) {
@@ -812,11 +837,13 @@ label {
                     height: 40px;
                     position: relative;
                     justify-content: space-between;
+                    margin: 0;
                     p {
                         font-family: "Lato", sans-serif;
                         color: $darkGray;
+                        font-size: 15px;
                         font-weight: 400;
-                        margin-left: 10px;
+                        margin: 0 0 0 10px;
                     }
                     p:nth-child(2) {
                         position: absolute;
@@ -829,14 +856,19 @@ label {
                         margin-right: 15px;
                         padding-top: 10px;
                     }
-                    button {
-                        background-color: $darkGray;
-                        border: none;
-                        margin: 0;
-                        width: 20%;
-                        align-self: center;
-                        margin-right: 10px;
+                    form {
+                      margin-right: 25px;
+                      button {
+                          background-color: $darkGray;
+                          border: none;
+                          margin: 0;
+                          align-self: center;
+                          margin-right: 20px;
+                          width: 100%;
+                          margin-top: 7px;
+                      }
                     }
+
                 }
                 li:nth-child(2n) {
                     background-color: #E0E0E0;

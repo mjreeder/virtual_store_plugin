@@ -48,7 +48,6 @@
 		</section>
 		<section class="userRight">
 			<h2 class="subTitle">archived users</h2>
-			<button>UNARCHIVE ALL</button>
 			<ul>
 				<?php foreach(DCVS_Store_Management::get_archived_stores() as $site):
 					$store = get_blog_details($site->blog_id);
