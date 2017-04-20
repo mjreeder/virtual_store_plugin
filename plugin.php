@@ -8,6 +8,7 @@
 defined('ABSPATH') or die('invalid access');
 
 require_once __DIR__ . "/models/warehouse_checkout.php";
+require_once __DIR__ . "/models/dcvs_toast.php";
 require_once __DIR__."/teacher_admin_panel.php";
 require_once __DIR__."/landing_page.php";
 require_once __DIR__."/purchase_functions.php";
