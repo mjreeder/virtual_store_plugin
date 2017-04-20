@@ -55,6 +55,8 @@ function dcvs_plugin_init()
     } elseif ($landingPage->post_status == 'trash') {
         wp_update_post(array('ID' => $landingPage->ID, 'status' => 'publish'));
     }
+    // set default options if they are not currently set
+    dcvs_set_default_options();
 
 }
 
@@ -89,6 +91,27 @@ function dcvs_after_cart_contents()
 <!--        </div>-->
     <?php
 
+}
+
+function dcvs_set_default_options() {
+    if (dcvs_get_option( 'default_business_money' ) == null) {
+        dcvs_set_option( 'default_business_money', '2500' );
+    }
+    if (dcvs_get_option( 'default_persona_money' ) == null) {
+        dcvs_set_option( 'default_persona_money', '1500' );
+    }
+    if (dcvs_get_option( 'warehouse_start_date' ) == null) {
+        dcvs_set_option( 'warehouse_start_date', '2017-01-01' );
+    }
+    if (dcvs_get_option( 'warehouse_end_date' ) == null) {
+        dcvs_set_option( 'warehouse_end_date', '2017-01-02' );
+    }
+    if (dcvs_get_option( 'shopping_start_date' ) == null) {
+        dcvs_set_option( 'shopping_start_date', '2017-01-03' );
+    }
+    if (dcvs_get_option( 'shopping_end_date' ) == null) {
+        dcvs_set_option( 'shopping_end_date', '2017-01-04' );
+    }
 }
 
 function dcvs_get_option($key, $default_value = null)
