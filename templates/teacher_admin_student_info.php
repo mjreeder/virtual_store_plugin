@@ -68,6 +68,9 @@ function display_current_student_info()
 	$persona_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $currentDisplayStudent));
 	if(isset($business_info[0])){
 		$number_of_shoppers = $wpdb->get_results($wpdb->prepare('SELECT COUNT(DISTINCT business_id) FROM dcvs_business_purchase WHERE business_id = %d', $business_info[0]->id));
+		$totalSpentOnWarehouse = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_warehouse_purchase WHERE user_id = %d', $currentDisplayStudent));
+		$revenue = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_business_purchase WHERE business_id = %d', $business_info[0]->id));
+		$profit = (get_value_from_stdClass($revenue[0])) - (get_value_from_stdClass($totalSpentOnWarehouse[0]));
 	}
 	if(isset($persona_info[0])){
 		$persona_one_total_money = $wpdb->get_results($wpdb->prepare('SELECT money FROM dcvs_persona WHERE id = %d', $persona_info[0]->persona_id));
@@ -136,8 +139,20 @@ function display_current_student_info()
 						<div class="fact">
 							<img src=<?php echo plugins_url( "assets/images/dollarSign.svg", dirname(__FILE__));
 							?> alt="">
-							<!-- TODO get profit-->
-							<p>$450 <br>PROFIT</p>
+							<?php
+							if(isset($profit)){
+								?>
+								<p>$<?php echo $profit ?> <br></p>
+								<?php
+							}
+							else{
+								?>
+								<p>$0 <br>PROFIT</p>
+								<?php
+							}
+
+							 ?>
+
 						</div>
 						<div class="fact">
 							<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
