@@ -97,6 +97,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
           }
           else{
             $shopping_over = true;
+            $ware_house_shopping_over = true;
             ?>
             <p>
               Shopping over
