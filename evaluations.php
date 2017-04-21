@@ -9,7 +9,13 @@ function dcvs_survey_time($order_id){
 	} else {
 		wp_redirect(network_site_url('/shopping-evaluation?store_id='.get_current_blog_id()));
 	}
-	wp_redirect(network_site_url('/final-evaluation'));
+}
+
+add_action('admin_init', 'dcvs_check_for_final_survey');
+function dcvs_check_for_final_survey(){
+	if (timeIsLaterThan(dcvs_get_option('shopping_end_date', 0))) {
+		wp_redirect(network_site_url('/final-evaluation'));
+	}
 }
 
 add_action( 'gform_after_submission', 'dcvs_redirect_to_dashboard_after_evaluation' );
@@ -29,4 +35,13 @@ function dcvs_redirect_to_dashboard_after_evaluation($entry){
 add_filter( 'gform_field_value_user_id', 'dcvs_add_user_id_to_form' );
 function dcvs_add_user_id_to_form( $value ) {
 	return get_current_user_id();
+}
+
+function timeIsLaterThan($date) {
+	$date_time = DateTime::createFromFormat("Y-m-d", $date);
+	$timestamp = $date_time->getTimestamp();
+	if (time() >= $timestamp){
+		return true;
+	}
+	return false;
 }
