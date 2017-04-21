@@ -12,6 +12,7 @@ function get_value_from_stdClass($obj){
 }
 $orderMap = array();
 if($ware_house_order_history){
+
 	for ($j=0; $j < sizeof($ware_house_order_history) ; $j++) {
 		$items = unserialize(get_value_from_stdClass($ware_house_order_history[$j])['items']);
 		for ($i=0; $i < sizeof($items) ; $i++) {
@@ -26,6 +27,7 @@ if($ware_house_order_history){
 		}
 	}
 }
+
  ?>
         <main class="admin">
 
