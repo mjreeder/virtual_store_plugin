@@ -55,17 +55,35 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
         <h1>virtual store</h1>
         <?php
+          $ware_house_start_date = dcvs_get_option('warehouse_start_date', 0);
           $ware_house_end_date = dcvs_get_option('warehouse_end_date', 0);
-          $shopping_end_date = dvcs_get_option('shopping_end_date', 0);
+          $shopping_start_date = dcvs_get_option('shopping_start_date', 0);
+          $shopping_end_date = dcvs_get_option('shopping_end_date', 0);
 
           $date_now = date("Y-m-d");
 
-          if($date_now <= $ware_house_end_date){
-            // DISPLAY TIME TO WAREHOUSE SHOPPING ENDS
+          if($date_now <= $ware_house_start_date){
+            // DISPLAY TIME TO WAREHOUSE SHOPPING BEGINS
             ?>
             <p>
-              time left until warehouse shopping ends :
+              time left until warehouse shopping Begins :
+            <b id="remaining-time"> <script>getTime("<?php echo $ware_house_start_date.''; ?>")</script></b></p>
+            <?php
+          }
+          elseif ($date_now >= $ware_house_start_date && $date_now <= $ware_house_end_date) {
+            # code...
+            ?>
+            <p>
+              time left until warehouse shopping Ends :
             <b id="remaining-time"> <script>getTime("<?php echo $ware_house_end_date.''; ?>")</script></b></p>
+            <?php
+          }
+          elseif ($date_now <= $shopping_start_date && $date_now >= $ware_house_end_date) {
+            # code...
+            ?>
+            <p>
+              time left until shopping starts :
+            <b id="remaining-time"> <script>getTime("<?php echo $shopping_start_date.''; ?>")</script></b></p>
             <?php
           }
           else{
@@ -75,11 +93,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <b id="remaining-time"> <script>getTime("<?php echo $shopping_end_date.''; ?>")</script></b></p>
             <?php
           }
-
-
          ?>
-        <p>time left until shopping begins : <b id="remaining-time"> <script>getTime("<?php echo $var.''; ?>")</script></b></p>
-
     </header>
 
     <div class="mainContent">
@@ -183,7 +197,8 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                     <div class="persona one">
                         <h3>PERSONA #1</h3>
-                        <img src="../assets/images/personaRed.png" alt="">
+
+                        <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaOne.svg' ?> alt="">
                     </div>
 
                     <p><?php echo $consumer_info[0]->description ?>
@@ -193,7 +208,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     </p>
                     <div class="personaButtons">
                       <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
-                          <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button><
+                          <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
                       </a>
                       <br>
                       <a href=""><button class="button personaSmall one">STATS</button></a>
@@ -206,7 +221,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                     <div class="persona two">
                         <h3>PERSONA #2</h3>
-                        <img src="../assets/images/personaBlue.png" alt="">
+                        <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaTwo.svg' ?> alt="">
                     </div>
 
                     <p><?php echo $consumer_info[1]->description ?>
