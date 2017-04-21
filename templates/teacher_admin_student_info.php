@@ -70,7 +70,7 @@ function display_current_student_info()
 			<section>
 				<aside class="merchandiserLeft">
 					<a href="<?php echo $business_info[0]->url ?>" class="button">Personal Site</a>
-					<button class="button">FINAL SURVEY</button>
+					<a href="" class="button">FINAL SURVEY</a>
 					<!-- TODO get remaining budget-->
 					<span><b>BUDGET REMAINING:</b> $<?php echo $budget_remaining?></span>
 				</aside>
@@ -101,7 +101,7 @@ function display_current_student_info()
 				<h2 class="subTitle">consumer #1</h2>
 				<h3><?php echo $persona_info[0]->name ?></h3>
 				<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id ?>">
-					<button class="button one">ORDER HISTORY</button>
+					<a href="" class="button one">ORDER HISTORY</button>
 				</a>
 				<button class="button one">FINAL SURVEY</button>
 				<section class="facts">

@@ -5,8 +5,9 @@
  * Date: 1/22/17
  * Time: 10:57 PM.
  */
- require_once __DIR__.'/../../../../wp-blog-header.php';
- date_default_timezone_set('UTC');
+require_once __DIR__.'/../../../../wp-blog-header.php';
+
+date_default_timezone_set('UTC');
 
 global $current_user;
 
@@ -140,10 +141,10 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 </div>
                 <div class="myStoreRight">
 
-                    <button class="button btnStore">EDIT STORE</button>
+                    <a href=""><button class="button btnStore">EDIT STORE</button></a>
                     <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
 
-                    <button class="button btnStore">STORE STATS</button>
+                    <a href=""><button class="button btnStore">STORE STATS</button></a>
 
                 </div>
 
@@ -167,11 +168,14 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <br>
                         <b>persona budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
                     </p>
-                    <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
-                        <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
-                    </a>
-                    <br>
-                    <button class="button personaSmall one">STATS</button>
+                    <div class="personaButtons">
+                      <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
+                          <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button><
+                      </a>
+                      <br>
+                      <a href=""><button class="button personaSmall one">STATS</button></a>
+                    </div>
+
 
                 </div>
 
@@ -187,12 +191,15 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <br>
                         <b>persona budget: $<?php echo $consumer_info[1]->money - $consumer_2_expense ?></b>
                     </p>
-                    <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
-                        <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
-                    </a>
+                    <div class="personaButtons">
+                      <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
+                          <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
+                      </a>
 
-                    <br>
-                    <button class="button personaSmall two">STATS</button>
+                      <br>
+                      <a href=""><button class="button personaSmall two">STATS</button></a>
+                    </div>
+
 
                 </div>
 
