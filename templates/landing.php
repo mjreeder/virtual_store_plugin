@@ -5,8 +5,9 @@
  * Date: 1/22/17
  * Time: 10:57 PM.
  */
- require_once __DIR__.'/../../../../wp-blog-header.php';
- date_default_timezone_set('UTC');
+require_once __DIR__.'/../../../../wp-blog-header.php';
+
+date_default_timezone_set('UTC');
 
 global $current_user;
 
@@ -53,9 +54,56 @@ $var = dcvs_get_option('warehouse_end_date', 0);
     <header class="header">
 
         <h1>virtual store</h1>
+        <?php
+          $ware_house_start_date = dcvs_get_option('warehouse_start_date', 0);
+          $ware_house_end_date = dcvs_get_option('warehouse_end_date', 0);
+          $shopping_start_date = dcvs_get_option('shopping_start_date', 0);
+          $shopping_end_date = dcvs_get_option('shopping_end_date', 0);
+          $ware_house_shopping_over = false;
+          $shopping_over = false;
+          $date_now = date("Y-m-d");
 
-        <p>time left until shopping begins : <b id="remaining-time"> <script>getTime("<?php echo $var.''; ?>")</script></b></p>
-
+          if($date_now <= $ware_house_start_date){
+            // DISPLAY TIME TO WAREHOUSE SHOPPING BEGINS
+            ?>
+            <p>
+              time left until warehouse shopping Begins :
+            <b id="remaining-time"> <script>getTime("<?php echo $ware_house_start_date.''; ?>")</script></b></p>
+            <?php
+          }
+          elseif ($date_now >= $ware_house_start_date && $date_now <= $ware_house_end_date) {
+            # code...
+            ?>
+            <p>
+              time left until warehouse shopping Ends :
+            <b id="remaining-time"> <script>getTime("<?php echo $ware_house_end_date.''; ?>")</script></b></p>
+            <?php
+          }
+          elseif ($date_now <= $shopping_start_date && $date_now >= $ware_house_end_date) {
+            # code...
+            $ware_house_shopping_over = true;
+            ?>
+            <p>
+              time left until shopping starts :
+            <b id="remaining-time"> <script>getTime("<?php echo $shopping_start_date.''; ?>")</script></b></p>
+            <?php
+          }
+          elseif($date_now >= $shopping_start_date && $date_now <= $shopping_end_date){
+            ?>
+            <p>
+              time left until shopping ends :
+            <b id="remaining-time"> <script>getTime("<?php echo $shopping_end_date.''; ?>")</script></b></p>
+            <?php
+          }
+          else{
+            $shopping_over = true;
+            ?>
+            <p>
+              Shopping over
+            </p>
+            <?php
+          }
+         ?>
     </header>
 
     <div class="mainContent">
@@ -89,10 +137,22 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             </figure>
 
             <ol>
+              <li class="currentlyPlaying" id="<?php echo 0; ?>">
                 <?php
-                for ($i=0; $i < sizeof($file->data); $i++) {
+                $framestring = $file->data[0]->embed->html;
+                $descriptionString = $file->data[0]->description;
+                $descriptionString = str_replace("\n", "\\n",$file->data[0]->description);
+
+                echo "<script>frameString".'0'." = '$framestring'</script>";
+                echo "<script>descriptionString".'0'." = '$descriptionString'</script>";
+                ?>
+                  <p onclick="setDisplayVideo(frameString<?php echo 0 ?>, descriptionString<?php echo 0 ?>, <?php echo 0; ?>)"><?php echo $file->data[0]->description;?></p><span><?php echo gmdate("i:s", $file->data[0]->duration); ?></span>
+              </li>
+                <?php
+
+                for ($i=1; $i < sizeof($file->data); $i++) {
                   ?>
-                  <li class="finished">
+                  <li id="<?php echo $i ?>">
                     <?php
                     $framestring = $file->data[$i]->embed->html;
                     $descriptionString = $file->data[$i]->description;
@@ -101,23 +161,11 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     echo "<script>frameString".$i." = '$framestring'</script>";
                     echo "<script>descriptionString".$i." = '$descriptionString'</script>";
                     ?>
-                      <p onclick="setDisplayVideo(frameString<?php echo $i ?>, descriptionString<?php echo $i ?>)"><?php echo $file->data[$i]->description;?></p><span><?php echo gmdate("H:i:s", $file->data[$i]->duration); ?></span>
+                      <p onclick="setDisplayVideo(frameString<?php echo $i ?>, descriptionString<?php echo $i ?>, <?php echo $i ?>)"><?php echo $file->data[$i]->description;?></p><span><?php echo gmdate("i:s", $file->data[$i]->duration); ?></span>
                   </li>
                   <?php
                 }
                  ?>
-                <li class="finished">
-                    <p>Do the first thing</p><span>1:45</span>
-                </li>
-                <li class="currentlyPlaying">
-                    <p>Do the second thing</p><span>1:45</span>
-                </li>
-                <li>
-                    <p>This is a super long video title that's gonna tell you a bunch of stuff to do.</p><span>1:45</span>
-                </li>
-                <li>
-                    <p>Go to this other place</p><span>1:45</span>
-                </li>
             </ol>
 
         </aside>
@@ -130,8 +178,20 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
 
                 <div class="myStoreLeft">
+                    <?php
+                    if($ware_house_shopping_over == false){
+                      ?>
+                      <a href="<?php echo network_home_url() ?>"><button class="button">WAREHOUSE</button></a>
+                      <?php
+                    }
+                    else{
+                      ?>
+                      <a href="<?php echo network_home_url() ?>"><button class="button" disabled>WAREHOUSE</button></a>
+                      <?php
+                    }
 
-                    <a href="<?php echo get_site_url() ?>"><button class="button">WAREHOUSE</button></a>
+                     ?>
+
 
                     <p><?php echo $business_info[0]->description ?>
                         <br>
@@ -140,10 +200,9 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 </div>
                 <div class="myStoreRight">
 
-                    <button class="button btnStore">EDIT STORE</button>
+                    <a href="<?php echo get_home_url().'/wp-admin/edit.php?post_type=product'; ?>"><button class="button btnStore">EDIT STORE</button></a>
                     <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
-
-                    <button class="button btnStore">STORE STATS</button>
+                    <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
 
                 </div>
 
@@ -159,7 +218,8 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                     <div class="persona one">
                         <h3>PERSONA #1</h3>
-                        <img src="../assets/images/personaRed.png" alt="">
+
+                        <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaOne.svg' ?> alt="">
                     </div>
 
                     <p><?php echo $consumer_info[0]->description ?>
@@ -167,11 +227,28 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <br>
                         <b>persona budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
                     </p>
-                    <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
-                        <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
-                    </a>
-                    <br>
-                    <button class="button personaSmall one">STATS</button>
+                    <div class="personaButtons">
+                      <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
+                          <?php
+                          if($shopping_over == false){
+                            ?>
+                            <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
+                            <?php
+                          }
+                          else{
+                            ?>
+                            <button class="button personaSmall one" name="shop_as_consumer_one" disabled>SHOP</button>
+                            <?php
+                          }
+
+
+                           ?>
+
+                      </a>
+                      <br>
+                      <a href=""><button class="button personaSmall one">STATS</button></a>
+                    </div>
+
 
                 </div>
 
@@ -179,7 +256,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                     <div class="persona two">
                         <h3>PERSONA #2</h3>
-                        <img src="../assets/images/personaBlue.png" alt="">
+                        <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaTwo.svg' ?> alt="">
                     </div>
 
                     <p><?php echo $consumer_info[1]->description ?>
@@ -187,12 +264,29 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <br>
                         <b>persona budget: $<?php echo $consumer_info[1]->money - $consumer_2_expense ?></b>
                     </p>
-                    <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
-                        <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
-                    </a>
+                    <div class="personaButtons">
+                      <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
 
-                    <br>
-                    <button class="button personaSmall two">STATS</button>
+                          <?php
+                          if($shopping_over == false){
+                            ?>
+                            <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
+                            <?php
+                          }
+                          else{
+                            ?>
+                            <button class="button personaSmall two" name="shop_as_consumer_two" disabled>SHOP</button>
+                            <?php
+                          }
+
+
+                           ?>
+                      </a>
+
+                      <br>
+                      <a href=""><button class="button personaSmall two">STATS</button></a>
+                    </div>
+
 
                 </div>
 

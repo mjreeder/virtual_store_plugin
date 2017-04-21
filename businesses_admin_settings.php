@@ -144,19 +144,6 @@ function dcvs_get_business($title, $default_value=false){
     return $result == NULL ? $default_value : $result;
 }
 
-function dcvs_update_business($id, $title, $description, $money) {
-    global $wpdb;
-    $checkid = dcvs_get_business($title);
-    if ($checkid != NULL && $checkid != $id) {
-        echo "You've entered a title that's already taken";
-     } else if (!money_is_number($money)) {
-         echo "Money must be a number";
-     } else {
-         $wpdb->update("dcvs_business", array("title"=>$title, "description"=>$description,"money"
-         =>$money), array("id"=>$id));
-     }
-}
-
 function dcvs_delete_business($id) {
   //check that no user_business matches the business_id
   //if not, delete the business, otherwise give user warning

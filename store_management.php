@@ -21,11 +21,11 @@ if( !class_exists('DCVS_Store_Management') ) {
 		public static $messages;
 
 		function __construct() {
-			add_action("init", array($this,"init"));
-			add_action("init", array($this,"process_new_users"));
-			add_action("init", array($this,"process_store_archival"));
-			add_action("init", array($this,"process_store_unarchival"));
-			add_action("init", array($this,"process_store_deletion"));
+			add_action("admin_init", array($this,"init"));
+			add_action("admin_init", array($this,"process_new_users"));
+			add_action("admin_init", array($this,"process_store_archival"));
+			add_action("admin_init", array($this,"process_store_unarchival"));
+			add_action("admin_init", array($this,"process_store_deletion"));
 			add_action("admin_menu", array($this, "register_submenus"));
 		}
 

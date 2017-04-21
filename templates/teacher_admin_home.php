@@ -54,9 +54,6 @@ function display_admin_panel()
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] ?>">
                       <li <?php echo !isset($_REQUEST['section']) ? "id='selectedTab'" : ""?>>STUDENT INFO</li>
                   </a>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=merchandiser' ?>">
-                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "merchandiser") ? "id='selectedTab'" : ""?> >MERCHANDISER</li>
-                  </a>
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=assign' ?>">
                       <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "assign") ? "id='selectedTab'" : ""?> >ASSIGN PERSONAS</li>
                   </a>
@@ -71,6 +68,9 @@ function display_admin_panel()
                   </a>
                   <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=categories' ?>">
                       <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "categories") ? "id='selectedTab'" : ""?> >CATEGORIES</li>
+                  </a>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=users' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "users") ? "id='selectedTab'" : ""?> >USERS</li>
                   </a>
               </ul>
           </nav>
@@ -89,6 +89,8 @@ function display_admin_panel()
               require_once __DIR__ . "/teacher_admin_categories.php";
           } else if ($_REQUEST['section'] == 'business') {
               require_once __DIR__ . "/teacher_admin_manage_businesses.php";
+          } else if ($_REQUEST['section'] == 'users') {
+              require_once __DIR__ . "/teacher_admin_users.php";
           }
           ?>
       </main>

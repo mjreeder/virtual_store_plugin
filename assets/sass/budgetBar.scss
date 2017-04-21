@@ -1,17 +1,17 @@
 $darkGray: #5D5D5D;
-$red: #EA6F6C;
-$darkRed: #AA4444;
-$blue: #87B8C2;
-$darkBlue: #547072;
-$yellow: #EDB867;
-$darkYellow: #C19457;
+$personaOne: #A3C9BB;
+$personaOneDark: #839B91;
+$personaTwo: #ABBD78;
+$personaTwoDark: #889360;
+$mainButton: #E9B364;
+$mainButtonDark: #BF9256;
 .budgetBar {
     height: 185px;
     position: fixed;
     display: flex;
     bottom: -120px;
     width: 100%;
-    background-color: $darkBlue;
+    background-color: $personaTwoDark;
     transition: bottom 0.5s;
     .barSummary {
         h2 {
@@ -42,7 +42,7 @@ $darkYellow: #C19457;
     .bar {
         width: 100%;
         height: 65px;
-        background-color: $blue;
+        background-color: $personaTwo;
         display: flex;
         position: absolute;
         justify-content: space-between;
@@ -79,7 +79,7 @@ $darkYellow: #C19457;
             height: 100%;
             width: 15%;
             position: absolute;
-            background-color: $darkBlue;
+            background-color: $personaTwoDark;
             display: flex;
             justify-content: center;
             align-items: center;

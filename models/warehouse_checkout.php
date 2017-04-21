@@ -103,8 +103,8 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 		function dcvs_delete_old_attribute_terms( $table_prefix ) {
 			global $wpdb;
 
-			$sql = $wpdb->prepare("SELECT wp_". $table_prefix . "_terms.term_id FROM wp_". $table_prefix . "_terms 
-				JOIN wp_". $table_prefix . "_term_taxonomy ON wp_". $table_prefix . "_terms.term_id = wp_". $table_prefix . "_term_taxonomy.term_id 
+			$sql = $wpdb->prepare("SELECT wp_". $table_prefix . "_terms.term_id FROM wp_". $table_prefix . "_terms
+				JOIN wp_". $table_prefix . "_term_taxonomy ON wp_". $table_prefix . "_terms.term_id = wp_". $table_prefix . "_term_taxonomy.term_id
 				WHERE wp_". $table_prefix . "_terms.name NOT IN (SELECT name FROM wp_terms)", []);
 			$old_terms = $wpdb->get_results($sql, ARRAY_A);
 
@@ -221,7 +221,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 				$parent_product_post_data = get_post( $tracked_object->product_id);
 				$tracked_object->parent_product_post_data = $parent_product_post_data;
-				
+
 				$new_variation_ids =  self::dcvs_add_variations( $tracked_object, $product, $business_id );
 
 				self::dcvs_add_attachments( $tracked_object, $new_variation_ids, $table_prefix );
@@ -603,10 +603,10 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 		function dcvs_check_business_product_price_exists($business_id, $business_product_id, $price) {
 			global $wpdb;
 
-			$sql = $wpdb->prepare("SELECT * FROM dcvs_business_product_price WHERE business_id = '%d' and business_product_id = '%d' and price = '%d'", [$business_id, $business_product_id, $price]);
+			$sql = $wpdb->prepare("SELECT * FROM dcvs_business_product_price WHERE business_id = '%d' and business_product_id = '%d' and price = '%f'", [$business_id, $business_product_id, $price]);
 			$rows = $wpdb->get_results($sql, ARRAY_A);
 
-			if (count($rows) < 1) {
+			if (count($rows) == 0) {
 				return false;
 			} else {
 				return true;
@@ -621,7 +621,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 		function dcvs_update_business_product_price($business_id, $business_product_id, $price, $number_bought) {
 			global $wpdb;
-			$sql = $wpdb->prepare("UPDATE dcvs_business_product_price SET number_bought = number_bought + '%d' WHERE business_id = '%d' and business_product_id = '%d' and price = '%d'", [$number_bought, $business_id, $business_product_id, $price]);
+			$sql = $wpdb->prepare("UPDATE dcvs_business_product_price SET number_bought = number_bought + '%d' WHERE business_id = '%d' and business_product_id = '%d' and price = '%f'", [$number_bought, $business_id, $business_product_id, $price]);
 			$wpdb->get_results($sql, ARRAY_A);
 		}
 
