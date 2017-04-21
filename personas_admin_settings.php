@@ -118,45 +118,6 @@ function dcvs_get_persona($name, $default_value=false){
     return $result == NULL ? $default_value : $result;
 }
 
-function dcvs_insert_new_persona($name, $description, $money) {
-  global $wpdb;
-  $id = dcvs_get_persona($name);
-  if ($id != NULL) {
-    echo "That name is already taken";
-  } else if (!money_is_number($money)) {
-    echo "Money must be a number";
-  } else {
-    $wpdb->insert("dcvs_persona", ["name"=>$name, "description"=>$description, "money"=>$money] );
-  }
-}
-
-function dcvs_update_persona($id, $name, $description, $money) {
-  global $wpdb;
-  // check if name is taken BY A DIFFERENT ID
-  // check if money is a floatval
-  $checkid = dcvs_get_persona($name);
-  if ($checkid != NULL && $checkid != $id) {
-    echo "You've entered a name that's already taken";
-  } else if (!money_is_number($money)) {
-    echo "Money must be a number";
-  } else {
-    $wpdb->update("dcvs_persona", array("name"=>$name, "description"=>$description,"money"
-=>$money), array("id"=>$id));
-  }
-}
-
-function dcvs_delete_persona($id) {
-  //check that no user_persona matches the persona_id
-  //if not, delete the persona, otherwise give user warning
-  global $wpdb;
-  $users = $wpdb->get_results("SELECT * FROM dcvs_user_persona WHERE persona_id='".esc_sql($id)."'");
-  if(sizeof($users) != 0) {
-    echo "At least one student is using this persona, so it cannot be deleted";
-  } else {
-    $wpdb->delete("dcvs_persona", array("id"=>$id));
-  }
-}
-
 function dcvs_get_user_persona_money($user_persona_id) {
   global $wpdb;
   $persona_id = $wpdb->get_var("SELECT persona_id FROM dcvs_user_persona WHERE id='".esc_sql($user_persona_id)."'");

@@ -1,10 +1,9 @@
 <?php
 
-global $wpdb;
+$toast = null;
+$error = false;
 
 // TODO: Update feedback label once we have a design
-
-$user_message = "";
 
 if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 
@@ -13,11 +12,11 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 		$budget = $_REQUEST['budget'];
 		$description = $_REQUEST['description'];
 		$category_id = isset($_REQUEST['category_id']) ? $_REQUEST['category_id'] : -1;
-		dcvs_insert_new_persona($name, $description, $budget);
-		if ($wpdb->insert_id && $category_id != -1) {
-			dcvs_insert_new_persona_category($wpdb->insert_id, $_REQUEST['category_id']);
+		$toast = dcvs_insert_new_persona($name, $description, $budget);
+		$created_persona = dcvs_get_persona_by_name($name);
+		if (count($created_persona) != 0 && $category_id != -1) {
+			dcvs_insert_new_persona_category($created_persona[0]['id'], $_REQUEST['category_id']);
 		}
-		$user_message = "Created!";
 	} else if ($_REQUEST['submit'] == "UPDATE") {
 		$persona_id = $_REQUEST['persona_id'];
 		$name = $_REQUEST['name'];
@@ -25,19 +24,27 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 		$description = $_REQUEST['description'];
 		$category_id = $_REQUEST['category_id'];
 		$current_persona_category_id = $_REQUEST['current_persona_category_id'];
-		dcvs_update_persona( $persona_id, $name, $description, $budget );
-		if ($category_id != -1 && $current_persona_category_id != -1) {
-			dcvs_update_persona_category($persona_id, $current_persona_category_id, $category_id);
-		} else if ($category_id != -1 && $current_persona_category_id == -1){
-			dcvs_insert_new_persona_category($persona_id, $category_id);
-		} else if ($category_id == -1 && $current_persona_category_id != -1) {
-			dcvs_delete_persona_category($persona_id, $current_persona_category_id);
+
+
+		if (dcvs_business_have_category($persona_id, $category_id)) {
+			$error = true;
+			$toast = DCVS_Toast::create_new_toast( 'Selected category already assigned to a persona associated with a students business', true );
 		}
-		$user_message = "Updated!";
+		if (!$error) {
+			$toast = dcvs_update_persona( $persona_id, $name, $description, $budget );
+			$updated_persona = dcvs_get_persona_by_id($persona_id);
+			$perona_name = count($updated_persona) != 0 ? $updated_persona[0]['name'] : '';
+			if ($category_id != -1 && $current_persona_category_id != -1 && $perona_name == $name) {
+				dcvs_update_persona_category($persona_id, $current_persona_category_id, $category_id);
+			} else if ($category_id != -1 && $current_persona_category_id == -1 && $perona_name == $name){
+				dcvs_insert_new_persona_category($persona_id, $category_id);
+			} else if ($category_id == -1 && $current_persona_category_id != -1 && $perona_name == $name) {
+				dcvs_delete_persona_category($persona_id, $current_persona_category_id);
+			}
+		}
 	} else if($_REQUEST['submit'] == "DELETE") {
 		$persona_id = $_REQUEST['persona_id'];
-		dcvs_delete_persona( $persona_id );
-		$user_message = "Deleted!";
+		$toast = dcvs_delete_persona( $persona_id );
 	}
 }
 
@@ -46,17 +53,6 @@ $trash_image = plugins_url( 'assets/images/trash.svg', dirname(__FILE__));
 
 $personas = dcvs_get_all_personas();
 $categories = dcvs_get_all_categories();
-
-function dcvs_get_all_personas() {
-	global $wpdb;
-	$personas = $wpdb->get_results("SELECT dcvs_persona.*, dcvs_persona_category.category_id as category_id, dcvs_category.name as category_name
-		FROM dcvs_persona
-		LEFT JOIN dcvs_persona_category
-		ON dcvs_persona.id = dcvs_persona_category.persona_id
-		LEFT JOIN dcvs_category
-		ON dcvs_persona_category.category_id = dcvs_category.id", ARRAY_A);
-	return $personas;
-}
 
 ?>
 
@@ -116,7 +112,6 @@ function dcvs_get_all_personas() {
 	<div>
 		<h1 class="title">Manage Personas</h1>
 		<button class="headerButton createNew" id="createNew">CREATE NEW</button>
-		<label><?php echo $user_message; ?></label>
 	</div>
 
 	<section class="createModal" id="createModal">
@@ -127,8 +122,8 @@ function dcvs_get_all_personas() {
 			<input type="hidden" name="student_id" value="<?php echo $_REQUEST['student_id'] ?>">
 			<input type="hidden" name="section" value="manage">
 
-			<input type="text" name="name" placeholder="name">
-			<input type="text" name="budget" placeholder="budget">
+			<input type="text" name="name" placeholder="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
+			<input type="text" name="budget" placeholder="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description"></textarea>
 			<select name="category_id">
 				<option value="-1" disabled selected>Select a category</option>
@@ -158,8 +153,8 @@ function dcvs_get_all_personas() {
 			<input type="hidden" name="persona_id" value="" id="persona_id">
 			<input type="hidden" name="current_persona_category_id" value="" id="current_persona_category_id">
 
-			<input type="text" name="name" placeholder="name" id="name">
-			<input type="text" name="budget" placeholder="budget" id="budget">
+			<input type="text" name="name" placeholder="name" id="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
+			<input type="text" name="budget" placeholder="budget" id="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
 			<select id="categorySelect" name="category_id">
 				<option value="-1" disabled selected>Select a category</option>
@@ -224,6 +219,86 @@ function dcvs_get_all_personas() {
 </section>
 
 <?php
+
+if ($toast != null) {
+	echo $toast;
+
+	?>
+
+	<script src="<?php echo plugins_url( 'js/toast.js', dirname(__FILE__)); ?>"></script>
+
+	<?php
+}
+
+
+
+function dcvs_get_all_personas() {
+	global $wpdb;
+	$personas = $wpdb->get_results("SELECT dcvs_persona.*, dcvs_persona_category.category_id as category_id, dcvs_category.name as category_name
+		FROM dcvs_persona
+		LEFT JOIN dcvs_persona_category
+		ON dcvs_persona.id = dcvs_persona_category.persona_id
+		LEFT JOIN dcvs_category
+		ON dcvs_persona_category.category_id = dcvs_category.id", ARRAY_A);
+	return $personas;
+}
+
+function dcvs_get_persona_by_name($name) {
+	global $wpdb;
+	$persona = $wpdb->get_results("SELECT * FROM dcvs_persona WHERE name = '" . esc_sql( $name ) . "'" , ARRAY_A);
+	return $persona;
+}
+
+function dcvs_get_persona_by_id($id) {
+	global $wpdb;
+	$persona = $wpdb->get_results("SELECT * FROM dcvs_persona WHERE id = '" . esc_sql( $id ) . "'" , ARRAY_A);
+	return $persona;
+}
+
+function dcvs_business_have_category($persona_id, $category_id) {
+	global $wpdb;
+	$sql = $wpdb->prepare("SELECT * FROM dcvs_business_category WHERE category_id = '%d' AND business_id IN (SELECT business_id FROM dcvs_user_business WHERE user_id IN (SELECT user_id FROM dcvs_user_persona WHERE persona_id = '%d'))", [$category_id, $persona_id]);
+	$response = $wpdb->get_results($sql, ARRAY_A);
+	if (count( $response ) == 0) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function dcvs_insert_new_persona($name, $description, $money) {
+	global $wpdb;
+	$id = dcvs_get_persona($name);
+	if ($id != NULL) {
+		return DCVS_Toast::create_new_toast( "That name is already taken", true );
+	} else if (!is_numeric($money)) {
+		return DCVS_Toast::create_new_toast( "Budget must be a number", true );
+	} else {
+		$wpdb->insert("dcvs_persona", ["name"=>$name, "description"=>$description, "money"=>$money] );
+		return DCVS_Toast::create_new_toast( "Persona Created!" );
+	}
+}
+
+function dcvs_update_persona($id, $name, $description, $money) {
+	global $wpdb;
+	// check if name is taken BY A DIFFERENT ID
+	// check if money is a floatval
+	$checkid = dcvs_get_persona($name);
+	if ($checkid != NULL && $checkid != $id) {
+		return DCVS_Toast::create_new_toast( "That name is already taken", true );
+	} else if (!money_is_number($money)) {
+		return DCVS_Toast::create_new_toast( "Budget must be a number", true );
+	} else {
+		$wpdb->update("dcvs_persona", array("name"=>$name, "description"=>$description,"money"=>$money), array("id"=>$id));
+		return DCVS_Toast::create_new_toast( "Persona Updated!" );
+	}
+}
+
+function dcvs_delete_persona($id) {
+	global $wpdb;
+	$wpdb->delete("dcvs_persona", array("id"=>$id));
+	return DCVS_Toast::create_new_toast( "Persona Deleted!" );
+}
 
 function dcvs_insert_new_persona_category($persona_id, $category_id) {
 	global $wpdb;
