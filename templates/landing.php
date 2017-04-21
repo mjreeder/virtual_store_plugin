@@ -53,7 +53,30 @@ $var = dcvs_get_option('warehouse_end_date', 0);
     <header class="header">
 
         <h1>virtual store</h1>
+        <?php
+          $ware_house_end_date = dcvs_get_option('warehouse_end_date', 0);
+          $shopping_end_date = dvcs_get_option('shopping_end_date', 0);
 
+          $date_now = date("Y-m-d");
+
+          if($date_now <= $ware_house_end_date){
+            // DISPLAY TIME TO WAREHOUSE SHOPPING ENDS
+            ?>
+            <p>
+              time left until warehouse shopping ends :
+            <b id="remaining-time"> <script>getTime("<?php echo $ware_house_end_date.''; ?>")</script></b></p>
+            <?php
+          }
+          else{
+            ?>
+            <p>
+              time left until shopping ends :
+            <b id="remaining-time"> <script>getTime("<?php echo $shopping_end_date.''; ?>")</script></b></p>
+            <?php
+          }
+
+
+         ?>
         <p>time left until shopping begins : <b id="remaining-time"> <script>getTime("<?php echo $var.''; ?>")</script></b></p>
 
     </header>
