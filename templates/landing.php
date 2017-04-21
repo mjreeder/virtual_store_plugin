@@ -127,10 +127,22 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             </figure>
 
             <ol>
+              <li class="currentlyPlaying" id="<?php echo 0; ?>">
                 <?php
-                for ($i=0; $i < sizeof($file->data); $i++) {
+                $framestring = $file->data[0]->embed->html;
+                $descriptionString = $file->data[0]->description;
+                $descriptionString = str_replace("\n", "\\n",$file->data[0]->description);
+
+                echo "<script>frameString".'0'." = '$framestring'</script>";
+                echo "<script>descriptionString".'0'." = '$descriptionString'</script>";
+                ?>
+                  <p onclick="setDisplayVideo(frameString<?php echo 0 ?>, descriptionString<?php echo 0 ?>, <?php echo 0; ?>)"><?php echo $file->data[0]->description;?></p><span><?php echo gmdate("i:s", $file->data[0]->duration); ?></span>
+              </li>
+                <?php
+
+                for ($i=1; $i < sizeof($file->data); $i++) {
                   ?>
-                  <li class="finished">
+                  <li id="<?php echo $i ?>">
                     <?php
                     $framestring = $file->data[$i]->embed->html;
                     $descriptionString = $file->data[$i]->description;
@@ -139,23 +151,11 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     echo "<script>frameString".$i." = '$framestring'</script>";
                     echo "<script>descriptionString".$i." = '$descriptionString'</script>";
                     ?>
-                      <p onclick="setDisplayVideo(frameString<?php echo $i ?>, descriptionString<?php echo $i ?>)"><?php echo $file->data[$i]->description;?></p><span><?php echo gmdate("H:i:s", $file->data[$i]->duration); ?></span>
+                      <p onclick="setDisplayVideo(frameString<?php echo $i ?>, descriptionString<?php echo $i ?>, <?php echo $i ?>)"><?php echo $file->data[$i]->description;?></p><span><?php echo gmdate("i:s", $file->data[$i]->duration); ?></span>
                   </li>
                   <?php
                 }
                  ?>
-                <li class="finished">
-                    <p>Do the first thing</p><span>1:45</span>
-                </li>
-                <li class="currentlyPlaying">
-                    <p>Do the second thing</p><span>1:45</span>
-                </li>
-                <li>
-                    <p>This is a super long video title that's gonna tell you a bunch of stuff to do.</p><span>1:45</span>
-                </li>
-                <li>
-                    <p>Go to this other place</p><span>1:45</span>
-                </li>
             </ol>
 
         </aside>
@@ -169,7 +169,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                 <div class="myStoreLeft">
 
-                    <a href="<?php echo get_site_url() ?>"><button class="button">WAREHOUSE</button></a>
+                    <a href="<?php echo network_home_url() ?>"><button class="button">WAREHOUSE</button></a>
 
                     <p><?php echo $business_info[0]->description ?>
                         <br>
@@ -178,10 +178,9 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 </div>
                 <div class="myStoreRight">
 
-                    <a href=""><button class="button btnStore">EDIT STORE</button></a>
+                    <a href="<?php echo get_home_url().'/wp-admin/edit.php?post_type=product'; ?>"><button class="button btnStore">EDIT STORE</button></a>
                     <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
-
-                    <a href=""><button class="button btnStore">STORE STATS</button></a>
+                    <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
 
                 </div>
 
