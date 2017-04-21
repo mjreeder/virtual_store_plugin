@@ -59,7 +59,8 @@ $var = dcvs_get_option('warehouse_end_date', 0);
           $ware_house_end_date = dcvs_get_option('warehouse_end_date', 0);
           $shopping_start_date = dcvs_get_option('shopping_start_date', 0);
           $shopping_end_date = dcvs_get_option('shopping_end_date', 0);
-
+          $ware_house_shopping_over = false;
+          $shopping_over = false;
           $date_now = date("Y-m-d");
 
           if($date_now <= $ware_house_start_date){
@@ -80,17 +81,26 @@ $var = dcvs_get_option('warehouse_end_date', 0);
           }
           elseif ($date_now <= $shopping_start_date && $date_now >= $ware_house_end_date) {
             # code...
+            $ware_house_shopping_over = true;
             ?>
             <p>
               time left until shopping starts :
             <b id="remaining-time"> <script>getTime("<?php echo $shopping_start_date.''; ?>")</script></b></p>
             <?php
           }
-          else{
+          elseif($date_now >= $shopping_start_date && $date_now <= $shopping_end_date){
             ?>
             <p>
               time left until shopping ends :
             <b id="remaining-time"> <script>getTime("<?php echo $shopping_end_date.''; ?>")</script></b></p>
+            <?php
+          }
+          else{
+            $shopping_over = true;
+            ?>
+            <p>
+              Shopping over
+            </p>
             <?php
           }
          ?>
@@ -168,8 +178,20 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
 
                 <div class="myStoreLeft">
+                    <?php
+                    if($ware_house_shopping_over == false){
+                      ?>
+                      <a href="<?php echo network_home_url() ?>"><button class="button">WAREHOUSE</button></a>
+                      <?php
+                    }
+                    else{
+                      ?>
+                      <a href="<?php echo network_home_url() ?>"><button class="button" disabled>WAREHOUSE</button></a>
+                      <?php
+                    }
 
-                    <a href="<?php echo network_home_url() ?>"><button class="button">WAREHOUSE</button></a>
+                     ?>
+
 
                     <p><?php echo $business_info[0]->description ?>
                         <br>
@@ -207,7 +229,21 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     </p>
                     <div class="personaButtons">
                       <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
-                          <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
+                          <?php
+                          if($shopping_over == false){
+                            ?>
+                            <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
+                            <?php
+                          }
+                          else{
+                            ?>
+                            <button class="button personaSmall one" name="shop_as_consumer_one" disabled>SHOP</button>
+                            <?php
+                          }
+
+
+                           ?>
+
                       </a>
                       <br>
                       <a href=""><button class="button personaSmall one">STATS</button></a>
@@ -230,7 +266,21 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     </p>
                     <div class="personaButtons">
                       <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
-                          <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
+
+                          <?php
+                          if($shopping_over == false){
+                            ?>
+                            <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
+                            <?php
+                          }
+                          else{
+                            ?>
+                            <button class="button personaSmall two" name="shop_as_consumer_two" disabled>SHOP</button>
+                            <?php
+                          }
+
+
+                           ?>
                       </a>
 
                       <br>
