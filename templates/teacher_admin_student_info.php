@@ -91,7 +91,9 @@ function display_current_student_info()
 						</div>
 					</section>
 					<!-- TODO comparison page -->
-					<a href="../views/comparison.html"><button class="button">STATISTICS</button></a>
+					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>">
+						<button class="button">STATISTICS</button>
+					</a>
 				</aside>
 			</section>
 		</section>
