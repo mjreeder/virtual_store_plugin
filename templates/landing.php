@@ -5,8 +5,9 @@
  * Date: 1/22/17
  * Time: 10:57 PM.
  */
- require_once '/Users/coreyh/virtual_store/wp-blog-header.php';
- date_default_timezone_set('UTC');
+require_once __DIR__.'/../../../../wp-blog-header.php';
+
+date_default_timezone_set('UTC');
 
 global $current_user;
 
