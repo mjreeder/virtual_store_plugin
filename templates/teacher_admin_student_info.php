@@ -80,6 +80,7 @@ function display_current_student_info()
 	if (isset($persona_info[1])) {
 		$persona_two_total_money = $wpdb->get_results($wpdb->prepare('SELECT money FROM dcvs_persona WHERE id = %d', $persona_info[1]->persona_id));
 		$persona_two_money_spent = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id = dcvs_user_persona.id WHERE user_id = %d AND persona_id = %d', $currentDisplayStudent, $persona_info[1]->persona_id));
+
 	}
 
 
@@ -187,14 +188,26 @@ function display_current_student_info()
 					}
 					else{
 						?>
-						<h3><?php echo "Persona One not set" ?></h3>
+						<h3><?php echo "Persona One not set"; ?></h3>
+						<?php
+					}
+
+					if(isset($persona_info[0])){
+						?>
+
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>">
+							<button class="button one">ORDER HISTORY</button>
+						</a>
+						<?php
+					}
+					else{
+						?>
+						<a href="#">
+							<button class="button one">>No consumer</button>
+						</a>
 						<?php
 					}
 				 ?>
-
-				<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id ?>">
-					<a href="" class="button one">ORDER HISTORY</button>
-				</a>
 				<button class="button one">FINAL SURVEY</button>
 				<section class="facts">
 					<div class="fact">
@@ -215,13 +228,19 @@ function display_current_student_info()
 						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 						?> alt="">
 						<p><?php
-						if(isset($persona_one_purchase_count[0])){
-							echo get_value_from_stdClass($persona_one_purchase_count[0]);
+						if(isset($persona_info[0])){
+							$persona_one_purchase_count_sql = $wpdb->get_results($wpdb->prepare('SELECT COUNT(user_persona_id) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE user_id=%d AND persona_id=%d ', $currentDisplayStudent, $persona_info[0]->id));
+							$persona_one_purchase_count = get_value_from_stdClass($persona_one_purchase_count_sql[0]);
+							if($persona_one_purchase_count >=1){
+								echo get_value_from_stdClass($persona_one_purchase_count_sql[0]);
+							}
+							else{
+								echo "0";
+							}
 						}
 						else{
 							echo "0";
 						}
-
 						?> <br>PURCHASES</p>
 					</div>
 				</section>
@@ -240,19 +259,32 @@ function display_current_student_info()
 						<h3><?php echo "Persona One not set" ?></h3>
 						<?php
 					}
+
+					if(isset($persona_info[1])){
+						?>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id ?>">
+							<button class="button one">ORDER HISTORY</button>
+						</a>
+						<?php
+					}
+					else{
+						?>
+						<a href="#">
+							<button class="button one">No consumer</button>
+						</a>
+						<?php
+					}
 				 ?>
 
-				<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id ?>">
-					<a href="" class="button one">ORDER HISTORY</button>
-				</a>
+
 				<button class="button one">FINAL SURVEY</button>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
 						?> alt="">
 						<p><?php
-							if(isset($persona_one_total_money[1])){
-								$difference = get_value_from_stdClass($persona_one_total_money[1]) - get_value_from_stdClass($persona_one_money_spent[1]);
+							if(isset($persona_two_total_money[0])){
+								$difference = get_value_from_stdClass($persona_two_total_money[0]) - get_value_from_stdClass($persona_two_money_spent[0]);
 							 echo '$'.$difference;
 							}
 							else{
@@ -265,13 +297,19 @@ function display_current_student_info()
 						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
 						?> alt="">
 						<p><?php
-						if(isset($persona_one_purchase_count[1])){
-							echo get_value_from_stdClass($persona_one_purchase_count[1]);
+						if(isset($persona_info[1])){
+							$persona_two_purchase_count_sql = $wpdb->get_results($wpdb->prepare('SELECT COUNT(user_persona_id) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE user_id=%d AND persona_id=%d ', $currentDisplayStudent, $persona_info[1]->id));
+							$persona_one_purchase_count = get_value_from_stdClass($persona_two_purchase_count_sql[0]);
+							if($persona_one_purchase_count >=1){
+								echo get_value_from_stdClass($persona_two_purchase_count_sql[0]);
+							}
+							else{
+								echo "0";
+							}
 						}
 						else{
 							echo "0";
 						}
-
 						?> <br>PURCHASES</p>
 					</div>
 				</section>
