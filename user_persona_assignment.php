@@ -187,20 +187,20 @@ function dcvs_deal_with_business_assigning() {
 // READ
 function dcvs_get_user_business($userId) {
   global $wpdb;
-  $businessId = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id = ".esc_sql($userId)."");
-  $businessName = $wpdb->get_var("SELECT title FROM dcvs_business WHERE id = ".esc_sql($businessId)."");
+  $businessId = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id = '".esc_sql($userId)."'");
+  $businessName = $wpdb->get_var("SELECT title FROM dcvs_business WHERE id = '".esc_sql($businessId)."'");
   return array("title"=>$businessName,"id"=>$businessId);
 }
 
 function dcvs_user_id_from_business($business_id) {
   global $wpdb;
-  $userid = $wpdb->get_var("SELECT user_id FROM dcvs_user_business WHERE business_id = ".esc_sql($business_id)."");
+  $userid = $wpdb->get_var("SELECT user_id FROM dcvs_user_business WHERE business_id = '".esc_sql($business_id)."'");
   return $userid;
 }
 
 function dcvs_business_id_from_user($userid) {
   global $wpdb;
-  $businessid = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id = ".esc_sql($userid)."");
+  $businessid = $wpdb->get_var("SELECT business_id FROM dcvs_user_business WHERE user_id = '".esc_sql($userid)."'");
   return $businessid;
 }
 
@@ -270,26 +270,8 @@ function dcvs_remove_all_user_businesses() {
 }
 
 // dcvs_persona
-function dcvs_deal_with_persona_assigning() {
-  $users = get_users();
-  if (all_personas_assigned()) {
-    // echo "All Personas Already Assigned";
-    dcvs_reset_and_assign_user_personas($users);
-  } else {
-    for ($i = 0; $i < sizeof($users); $i++) {
-      $user = get_object_vars($users[$i]);
-      $id = $user["ID"];
-      dcvs_assign_persona($id);
-    }
-  }
-}
 
 // READ
-function dcvs_get_user_persona_ids($userId) {
-  global $wpdb;
-  $personaIds = $wpdb->get_results("SELECT persona_id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userId)."");
-  return $personaIds;
-}
 
 function dcvs_get_user_personas($userId) {
   global $wpdb;
@@ -298,7 +280,7 @@ function dcvs_get_user_personas($userId) {
   for($i = 0; $i < sizeof($personaIds); $i++) {
     $personaId = get_object_vars($personaIds[$i])["persona_id"];
     $personas["Persona ".($i+1)." id"] = $personaId;
-    $personaName = $wpdb->get_var("SELECT name FROM dcvs_persona WHERE id = ".esc_sql($personaId)."");
+    $personaName = $wpdb->get_var("SELECT name FROM dcvs_persona WHERE id = '".esc_sql($personaId)."'");
     $personas["Persona ".($i+1)] = $personaName;
   }
   return $personas;
@@ -306,100 +288,11 @@ function dcvs_get_user_personas($userId) {
 
 function num_personas_assigned($userid) {
   global $wpdb;
-  $personas = $wpdb->get_results("SELECT id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userid)."");
+  $personas = $wpdb->get_results("SELECT id FROM dcvs_user_persona WHERE user_id = '".esc_sql($userid)."'");
   return sizeof($personas);
 }
 
-function all_personas_assigned() {
-  global $wpdb;
-  $users = get_users();
-  $userPersonas = $wpdb->get_results("SELECT * FROM dcvs_user_persona");
-  if (sizeof($userPersonas) >= 2*sizeof($users)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 // CREATE
-function dcvs_assign_persona($userId) {
-  global $wpdb;
-  $userPersonaIds = dcvs_get_user_persona_ids($userId);
-
-  if (sizeof($userPersonaIds) >= 2) {
-    return;
-  } else if (sizeof($userPersonaIds) == 1 ) {
-    $persona1id = get_object_vars($userPersonaIds[0])["persona_id"];
-    $availablePersonaIds = $wpdb->get_results("SELECT id FROM dcvs_persona WHERE id != ".$persona1id."");
-    $randId = get_object_vars($availablePersonaIds[array_rand($availablePersonaIds)])["id"];
-    $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
-    return;
-  } else {
-    // 1st persona
-    $allPersonaIds = $wpdb->get_results("SELECT id FROM dcvs_persona");
-    $randIndex = array_rand($allPersonaIds);
-    $rand = get_object_vars($allPersonaIds[$randIndex]);
-    $randId = $rand["id"];
-    $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
-
-    // 2nd persona
-    unset($allPersonaIds[$randIndex]);
-    $availablePersonaIds = array_values($allPersonaIds);
-    $rand = get_object_vars($availablePersonaIds[array_rand($availablePersonaIds)]);
-    $randId = $rand["id"];
-    $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $randId]);
-    return;
-  }
-}
-
-function dcvs_set_user_persona($userid, $newid, $oldid){
-  global $wpdb;
-  $number = num_personas_assigned($userid);
-  if ($number == 2) {
-    $otherid = $wpdb->get_var("SELECT persona_id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userid)." AND persona_id != ".esc_sql($oldid)."");
-    if ($newid != $otherid) {
-      $wpdb->update('dcvs_user_persona', array('persona_id'=>$newid), array('user_id'=>$userid,'persona_id'=>$oldid));
-    } else {
-      echo "User is already using that persona";
-    }
-  } else if ($number == 1) {
-    if ($oldid != NULL) {
-      $wpdb->update('dcvs_user_persona', array('persona_id'=>$newid), array('user_id'=>$userid,'persona_id'=>$oldid));
-    } else {
-      $otherid = $wpdb->get_var("SELECT persona_id FROM dcvs_user_persona WHERE user_id = ".esc_sql($userid)."");
-      if ($newid != $otherid) {
-        $wpdb->insert('dcvs_user_persona', array('persona_id'=>$newid,'user_id'=>$userid));
-      } else {
-        echo "User is already using that persona";
-      }
-    }
-  } else if ($number == 0) {
-    $wpdb->insert('dcvs_user_persona', array('persona_id'=>$newid,'user_id'=>$userid));
-  }
-}
 
 // DELETE
-function dcvs_reset_all_user_personas($users) {
-  global $wpdb;
-  for($i = 0; $i < sizeof($users); $i++) {
-    $user = get_object_vars($users[$i]);
-    $id = $user["ID"];
-    $wpdb->delete('dcvs_user_persona', array('user_id'=>$id));
-  }
-}
-
-function dcvs_reset_and_assign_user_personas($users) {
-  global $wpdb;
-  for($i = 0; $i < sizeof($users); $i++) {
-    $user = get_object_vars($users[$i]);
-    $id = $user["ID"];
-    $wpdb->delete('dcvs_user_persona', array('user_id'=>$id));
-    dcvs_assign_persona($id);
-  }
-}
-
-function dcvs_remove_user_persona($userid, $personaid) {
-  global $wpdb;
-  $wpdb->delete('dcvs_user_persona', array('user_id'=>$userid,'persona_id'=>$personaid));
-}
 ?>
