@@ -219,6 +219,8 @@ if( !class_exists('DCVS_Store_Management') ) {
 			if( class_exists('WC_Install') ){
 				switch_to_blog( $blog_id );
 				WC_Install::create_pages();
+				WC_Install::remove_roles();
+				WC_Install::create_roles();
 				restore_current_blog();
 			}
 		}
