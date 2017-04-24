@@ -12,9 +12,10 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 		$budget = $_REQUEST['budget'];
 		$description = $_REQUEST['description'];
 		$category_id = isset($_REQUEST['category_id']) ? $_REQUEST['category_id'] : -1;
+		$existing_persona_with_name = dcvs_get_persona_by_name($name);
 		$toast = dcvs_insert_new_persona($name, $description, $budget);
 		$created_persona = dcvs_get_persona_by_name($name);
-		if (count($created_persona) != 0 && $category_id != -1) {
+		if (count($existing_persona_with_name) == 0 && $category_id != -1) {
 			dcvs_insert_new_persona_category($created_persona[0]['id'], $_REQUEST['category_id']);
 		}
 	} else if ($_REQUEST['submit'] == "UPDATE") {
@@ -268,7 +269,7 @@ function dcvs_business_have_category($persona_id, $category_id) {
 
 function dcvs_insert_new_persona($name, $description, $money) {
 	global $wpdb;
-	$id = dcvs_get_persona($name);
+	$id = dcvs_get_persona_by_name($name);
 	if ($id != NULL) {
 		return DCVS_Toast::create_new_toast( "That name is already taken", true );
 	} else if (!is_numeric($money)) {
@@ -283,7 +284,7 @@ function dcvs_update_persona($id, $name, $description, $money) {
 	global $wpdb;
 	// check if name is taken BY A DIFFERENT ID
 	// check if money is a floatval
-	$checkid = dcvs_get_persona($name);
+	$checkid = dcvs_get_persona_by_name($name);
 	if ($checkid != NULL && $checkid != $id) {
 		return DCVS_Toast::create_new_toast( "That name is already taken", true );
 	} else if (!money_is_number($money)) {
