@@ -86,7 +86,7 @@ function display_current_student_info()
 
 	?>
 		<section class="studentInfo" id='mainView'>
-		<h1><?php echo $display_name[0]->display_name ?></h1>
+		<h1 class="title"><?php echo $display_name[0]->display_name ?></h1>
 		<section class="merchandiserInfo">
 			<h2 class="subTitle">buyer</h2>
 			<?php
@@ -108,12 +108,12 @@ function display_current_student_info()
 					<?php
 					if(isset($business_info[0])){
 						?>
-						<a href="<?php echo $business_info[0]->url ?>" class="button">Personal Site</a>
+						<a href="<?php echo $business_info[0]->url ?>" class="button">PERSONAL SITE</a>
 						<?php
 					}
 					else{
 						?>
-						<a href="<?php echo "Business not set for user" ?>" class="button">Personal Site</a>
+						<a href="<?php echo "Business not set for user" ?>" class="button">PERSONAL SITE</a>
 						<?php
 					}
 					 ?>
@@ -170,8 +170,8 @@ function display_current_student_info()
 						</div>
 					</section>
 					<!-- TODO comparison page -->
-					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>">
-						<button class="button">STATISTICS</button>
+					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="button">
+						STATISTICS
 					</a>
 				</aside>
 			</section>
@@ -195,20 +195,20 @@ function display_current_student_info()
 					if(isset($persona_info[0])){
 						?>
 
-						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>">
-							<button class="button one">ORDER HISTORY</button>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">
+							ORDER HISTORY
 						</a>
 						<?php
 					}
 					else{
 						?>
-						<a href="#">
-							<button class="button one">>No consumer</button>
+						<a href="#" class="button unavailable">
+							NO CONSUMER
 						</a>
 						<?php
 					}
 				 ?>
-				<button class="button one">FINAL SURVEY</button>
+				<a href="" class="button">FINAL SURVEY</a>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
@@ -262,22 +262,22 @@ function display_current_student_info()
 
 					if(isset($persona_info[1])){
 						?>
-						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id ?>">
-							<button class="button one">ORDER HISTORY</button>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id ?>" class="button">
+							ORDER HISTORY
 						</a>
 						<?php
 					}
 					else{
 						?>
-						<a href="#">
-							<button class="button one">No consumer</button>
+						<a href="#" class="button unavailable">
+							NO CONSUMER
 						</a>
 						<?php
 					}
 				 ?>
 
 
-				<button class="button one">FINAL SURVEY</button>
+				<a href="" class="button">FINAL SURVEY</a>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
