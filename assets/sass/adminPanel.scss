@@ -5,6 +5,7 @@ $personaTwo: #ABBD78;
 $personaTwoDark: #889360;
 $yellow: #EDB867;
 $darkYellow: #C19457;
+$red: #E85D5D;
 * {
     margin: 0;
     padding: 0;
@@ -755,7 +756,7 @@ label {
                 button {
                     position: absolute;
                     width: 200px;
-                    background-color: $personaOne;
+                    background-color: $red;
                     border: none;
                     color: white;
                     font-family: "Open Sans", sans-serif;
@@ -913,5 +914,10 @@ label {
 .unavailable {
     opacity: .5;
     pointer-events: none;
-    cursor: default; 
+    cursor: default;
+}
+
+.wp-admin select {
+    padding: 0;
+    padding-left: 10px;
 }
