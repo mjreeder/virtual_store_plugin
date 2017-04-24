@@ -13,8 +13,14 @@ function dcvs_survey_time($order_id){
 
 add_action('admin_init', 'dcvs_check_for_final_survey');
 function dcvs_check_for_final_survey(){
-	if (timeIsLaterThan(dcvs_get_option('shopping_end_date', 0))) {
+	$current_user = _wp_get_current_user();
+	switch_to_blog( 1 );
+	$user_args = array( 'role' => 'Customer');
+	$users = get_users($user_args);
+	if (in_array( $current_user, $users ) && timeIsLaterThan(dcvs_get_option('shopping_end_date', 0))) {
+		restore_current_blog();
 		wp_redirect(network_site_url('/final-evaluation'));
+		exit;
 	}
 }
 
