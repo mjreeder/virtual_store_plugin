@@ -17,7 +17,7 @@
 		<form action="" method="post">
 			<?php wp_nonce_field( DCVS_Store_Management::ADD_USERS_BY_EMAIL_POST_KEY ); ?>
 			<textarea name="<?php echo DCVS_Store_Management::ADD_USERS_BY_EMAIL_POST_KEY; ?>" rows="8" cols="80"></textarea>
-			<button type="submit" class="saveButton">ADD</button>
+			<button type="submit" class="saveButton add">ADD</button>
 		</form>
 
 	</div>
