@@ -15,9 +15,23 @@ function getTime(value){
        $("#remaining-time").text(days + ":" + hours + ":" + minutes + ":" + seconds);
    },1000);
 }
-
-function setDisplayVideo(video, caption){
-  console.log(video, caption);
+var currentlyPlayingID = null;
+function setDisplayVideo(video, caption, id){
   document.getElementById("video").innerHTML = video;
   document.getElementById("caption").innerHTML = caption;
+  if(id !== undefined){
+    if(currentlyPlayingID == null ){
+      currentlyPlayingID = id;
+      document.getElementById(0).classList.remove('currentlyPlaying');
+      document.getElementById(id).classList.add('currentlyPlaying');
+
+    }
+    else{
+      document.getElementById(currentlyPlayingID).classList.remove('currentlyPlaying');
+      currentlyPlayingID = id;
+      document.getElementById(id).classList.add('currentlyPlaying');
+    }
+  }
+
+
 }

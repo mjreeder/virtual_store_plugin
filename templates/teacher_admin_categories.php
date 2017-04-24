@@ -1,21 +1,21 @@
 <?php
 
-$user_message = "";
+$toast = null;
 
 if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 
 	if ($_REQUEST['submit'] == "SAVE") {
 		$name = $_REQUEST['name'];
 		$description = $_REQUEST['description'];
-		$user_message = dcvs_insert_new_category($name, $description);
+		$toast = dcvs_insert_new_category($name, $description);
 	} else if ($_REQUEST['submit'] == "UPDATE") {
 		$category_id = $_REQUEST['category_id'];
 		$name = $_REQUEST['name'];
 		$description = $_REQUEST['description'];
-		$user_message = dcvs_update_category( $category_id, $name, $description );
+		$toast = dcvs_update_category( $category_id, $name, $description );
 	} else if($_REQUEST['submit'] == "DELETE") {
 		$category_id = $_REQUEST['category_id'];
-		$user_message = dcvs_delete_category( $category_id );
+		$toast = dcvs_delete_category( $category_id );
 	}
 }
 
@@ -79,7 +79,6 @@ $categories = dcvs_get_all_categories();
 	<div>
 		<h1 class="title">Manage Categories</h1>
 		<button class="headerButton createNew" id="createNew">CREATE NEW</button>
-		<label><?php echo $user_message; ?></label>
 	</div>
 
 	<section class="createModal" id="createModal">
@@ -90,7 +89,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="student_id" value="<?php echo $_REQUEST['student_id'] ?>">
 			<input type="hidden" name="section" value="categories">
 
-			<input type="text" name="name" placeholder="name">
+			<input type="text" name="name" placeholder="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description"></textarea>
 			<input type="submit" name="submit" value="SAVE">
 
@@ -106,7 +105,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="section" value="categories">
 			<input type="hidden" name="category_id" value="" id="category_id">
 
-			<input type="text" name="name" placeholder="name" id="name">
+			<input type="text" name="name" placeholder="name" id="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
 			<input type="submit" name="submit" value="UPDATE">
 
@@ -130,7 +129,7 @@ $categories = dcvs_get_all_categories();
 
 				<tr>
 					<td><?php echo $category_name; ?></td>
-					<td class="desc"><?php echo $category_description; ?></td>
+					<td class="desc"><?php echo ($category_description != "") ? $category_description : '<i>NOT SET</i>'; ?></td>
 					<td><img src="<?php echo $pencil_image; ?>" alt="edit category button" onclick="editCategory('<?php echo $category_id ?>', '<?php echo $category_name ?>', '<?php echo $category_description ?>')"></td>
 					<td>
 						<form action="" method="post">
@@ -154,6 +153,17 @@ $categories = dcvs_get_all_categories();
 
 <?php
 
+if ($toast != null) {
+	echo $toast;
+	
+	?>
+
+	<script src="<?php echo plugins_url( 'js/toast.js', dirname(__FILE__)); ?>"></script>
+	
+	<?php
+}
+
+
 function dcvs_get_category($name){
 	global $wpdb;
 
@@ -165,10 +175,10 @@ function dcvs_insert_new_category($name, $description) {
 	global $wpdb;
 	$id = dcvs_get_category($name);
 	if ($id != NULL) {
-		return "That title is already taken";
+		return DCVS_Toast::create_new_toast( "That title is already taken", true );
 	} else {
 		$wpdb->insert("dcvs_category", ["name"=>$name, "description"=>$description] );
-		return "Created!";
+		return DCVS_Toast::create_new_toast( "Created!" );
 	}
 }
 
@@ -176,10 +186,10 @@ function dcvs_update_category($id, $name, $description) {
 	global $wpdb;
 	$check_id = dcvs_get_category($name);
 	if ($check_id != NULL && $check_id != $id) {
-		return "You've entered a title that's already taken";
+		return DCVS_Toast::create_new_toast( "You've entered a title that's already taken", true );
 	} else {
 		$wpdb->update("dcvs_category", array("name"=>$name, "description"=>$description), array("id"=>$id));
-		return "Updated!";
+		return DCVS_Toast::create_new_toast( "Updated!" );
 	}
 }
 
@@ -188,10 +198,10 @@ function dcvs_delete_category($id) {
 	$business_categories = $wpdb->get_results("SELECT * FROM dcvs_business_category WHERE category_id='".esc_sql($id)."'");
 	$persona_categories = $wpdb->get_results("SELECT * FROM dcvs_persona_category WHERE category_id='".esc_sql($id)."'");
 	if(sizeof($business_categories) != 0 || sizeof($persona_categories) != 0) {
-		return "At least one business or persona is using this category, so it cannot be deleted";
+		return DCVS_Toast::create_new_toast( "At least one business or persona is using this category, so it cannot be deleted", true );
 	} else {
 		$wpdb->delete("dcvs_category", array("id"=>$id));
-		return "Deleted!";
+		return DCVS_Toast::create_new_toast( "Deleted!" );
 	}
 }
 

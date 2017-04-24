@@ -1,8 +1,10 @@
 <?php
 global $wpdb;
-if(!isset($_REQUEST['student_id'])){
-  $user_results = $wpdb->get_results('SELECT * FROM dcvs_user_business', OBJECT);
-  header('Location: '. get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$user_results[0]->user_id);
+if (!isset($_REQUEST['student_id'])) {
+    $users = DCVS_Store_Management::get_active_users();
+    reset($users);
+    $first_key = key($users);
+    header('Location: '.get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$users[$first_key]);
 }
 display_admin_panel();
 
@@ -14,25 +16,25 @@ function get_store_info($business_id)
     $description = $business->description;
     $display_name = $business->display_name;
 }
-function dcvs_enqueue_teacher_admin_style() {
-
-    wp_enqueue_style( 'adminPanel_css', plugins_url( 'assets/css/adminPanel.css', dirname(__FILE__)) );
+function dcvs_enqueue_teacher_admin_style()
+{
+    wp_enqueue_style('adminPanel_css', plugins_url('assets/css/adminPanel.css', dirname(__FILE__)));
 }
 
-add_action( 'wp_enqueue_scripts', 'dcvs_enqueue_teacher_admin_style' );
+add_action('wp_enqueue_scripts', 'dcvs_enqueue_teacher_admin_style');
 function display_admin_panel()
 {
     ?>
   <head>
       <title>Virtual Store Admin Panel</title>
-      <link href="<?php echo plugins_url( 'assets/css/adminPanel.css', dirname(__FILE__));
+      <link href="<?php echo plugins_url('assets/css/adminPanel.css', dirname(__FILE__));
     ?>" rel="stylesheet" type="text/css">
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
       <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-      <script src="<?php echo plugins_url( 'js/teacherAdminPanel.js', dirname(__FILE__));
+      <script src="<?php echo plugins_url('js/teacherAdminPanel.js', dirname(__FILE__));
     ?>" rel="stylesheet"></script>
 
       <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
@@ -51,48 +53,51 @@ function display_admin_panel()
 
           <nav class="sidebar">
               <ul>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] ?>">
-                      <li <?php echo !isset($_REQUEST['section']) ? "id='selectedTab'" : ""?>>STUDENT INFO</li>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'] ?>">
+                      <li <?php echo !isset($_REQUEST['section']) ? "id='selectedTab'" : ''?>>STUDENT INFO</li>
                   </a>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=assign' ?>">
-                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "assign") ? "id='selectedTab'" : ""?> >ASSIGN PERSONAS</li>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=assign' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'assign') ? "id='selectedTab'" : ''?> >ASSIGN PERSONAS</li>
                   </a>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=manage' ?>">
-                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "manage") ? "id='selectedTab'" : ""?> >MANAGE PERSONAS</li>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=manage' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'manage') ? "id='selectedTab'" : ''?> >MANAGE PERSONAS</li>
                   </a>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=business' ?>">
-                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "business") ? "id='selectedTab'" : ""?> >MANAGE BUSINESSES</li>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=business' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'business') ? "id='selectedTab'" : ''?> >MANAGE BUSINESSES</li>
                   </a>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=settings' ?>">
-                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "settings") ? "id='selectedTab'" : ""?> >GENERAL SETTINGS</li>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=settings' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'settings') ? "id='selectedTab'" : ''?> >GENERAL SETTINGS</li>
                   </a>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=categories' ?>">
-                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "categories") ? "id='selectedTab'" : ""?> >CATEGORIES</li>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=categories' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'categories') ? "id='selectedTab'" : ''?> >CATEGORIES</li>
                   </a>
-                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=users' ?>">
-                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == "users") ? "id='selectedTab'" : ""?> >USERS</li>
+                  <a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=users' ?>">
+                      <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'users') ? "id='selectedTab'" : ''?> >USERS</li>
                   </a>
               </ul>
           </nav>
           <?php
           if (!isset($_REQUEST['section'])) {
-              require_once __DIR__ . "/teacher_admin_student_info.php";
-          } else if ($_REQUEST['section'] == 'manage') {
-              require_once __DIR__ . "/teacher_admin_manage_personas.php";
-          } else if ($_REQUEST['section'] == 'settings') {
-              require_once __DIR__ . "/teacher_admin_general_settings.php";
-          } else if ($_REQUEST['section'] == 'assign') {
-              require_once __DIR__ . "/teacher_admin_assign_personas.php";
-          } else if($_REQUEST['section'] == 'order_history'){
-              require_once __DIR__ . "/teacher_admin_orderHistory.php";
-          } else if($_REQUEST['section'] == 'categories') {
-              require_once __DIR__ . "/teacher_admin_categories.php";
-          } else if ($_REQUEST['section'] == 'business') {
-              require_once __DIR__ . "/teacher_admin_manage_businesses.php";
-          } else if ($_REQUEST['section'] == 'users') {
-              require_once __DIR__ . "/teacher_admin_users.php";
+              require_once __DIR__.'/teacher_admin_student_info.php';
+          } elseif ($_REQUEST['section'] == 'manage') {
+              require_once __DIR__.'/teacher_admin_manage_personas.php';
+          } elseif ($_REQUEST['section'] == 'settings') {
+              require_once __DIR__.'/teacher_admin_general_settings.php';
+          } elseif ($_REQUEST['section'] == 'assign') {
+              require_once __DIR__.'/teacher_admin_assign_personas.php';
+          } elseif ($_REQUEST['section'] == 'order_history') {
+              require_once __DIR__.'/teacher_admin_orderHistory.php';
+          } elseif ($_REQUEST['section'] == 'categories') {
+              require_once __DIR__.'/teacher_admin_categories.php';
+          } elseif ($_REQUEST['section'] == 'business') {
+              require_once __DIR__.'/teacher_admin_manage_businesses.php';
+          } elseif ($_REQUEST['section'] == 'users') {
+              require_once __DIR__.'/teacher_admin_users.php';
+          } elseif ($_REQUEST['section'] == 'stats') {
+              require_once __DIR__.'/teacher_admin_stats.php';
           }
-          ?>
+
+    ?>
       </main>
 
   </div>
@@ -150,8 +155,10 @@ function get_warehouse_end_date()
 
 }
 
-function dcvs_get_all_categories() {
+function dcvs_get_all_categories()
+{
     global $wpdb;
-    $categories = $wpdb->get_results("SELECT * FROM dcvs_category", ARRAY_A);
+    $categories = $wpdb->get_results('SELECT * FROM dcvs_category', ARRAY_A);
+
     return $categories;
 }
