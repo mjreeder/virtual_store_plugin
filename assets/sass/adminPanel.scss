@@ -1,8 +1,8 @@
 $darkGray: #5D5D5D;
-$red: #EA6F6C;
-$darkRed: #AA4444;
-$blue: #87B8C2;
-$darkBlue: #547072;
+$personaOne: #A3C9BB;
+$personaOneDark: #819B90;
+$personaTwo: #ABBD78;
+$personaTwoDark: #889360;
 $yellow: #EDB867;
 $darkYellow: #C19457;
 * {
@@ -21,15 +21,13 @@ h3 {
     font-family: "Open Sans", sans-serif;
     margin-bottom: 20px;
 }
-#wpwrap {
+#wpwrap, #wpbody-content, #wpbody {
     background-color: white;
+    height: 100%;
 }
 .wrapper {
     margin-left: -20px;
-    // height: calc(100% - 47px);
-    // width: calc(100% - 273px);
-    // float: right;
-    // transform: translateY(47px);
+    height: 100%;
 }
 #backdrop {
     position: fixed;
@@ -48,7 +46,7 @@ label {
     cursor: default;
 }
 .header {
-    background-color: $darkGray;
+    background-color: $yellow;
     height: 75px;
     display: flex;
     justify-content: space-between;
@@ -144,6 +142,7 @@ label {
     ul {
         height: calc(100% - 40px);
         overflow: scroll;
+        background-color: #F2F2F2;
         .selectedStudent {
             a {
                 color: white;
@@ -178,7 +177,7 @@ label {
     margin-bottom: 10px;
     .fact {
         height: 100px;
-        width: 130px;
+        width: 150px;
         background-color: #E0E0E0;
         border-radius: 10px;
         display: flex;
@@ -217,7 +216,7 @@ label {
                 display: flex;
                 flex-direction: column;
                 width: 45%;
-                button {
+                a {
                     background-color: $yellow;
                     color: white;
                     font-family: 'Open Sans', sans-serif;
@@ -231,13 +230,15 @@ label {
                     cursor: pointer;
                     text-align: center;
                     margin-bottom: 10px;
+                    padding-top: 7px;
+
                 }
             }
             .merchandiserRight {
                 display: flex;
                 flex-direction: column;
                 width: 45%;
-                button {
+                a {
                     background-color: $yellow;
                     color: white;
                     font-family: 'Open Sans', sans-serif;
@@ -251,6 +252,8 @@ label {
                     cursor: pointer;
                     text-align: center;
                     margin-bottom: 10px;
+                    padding-top: 10px;
+                    text-decoration: none;
                 }
             }
         }
@@ -267,8 +270,8 @@ label {
         .shopperOne {
             width: 45%;
             display: inline-block;
-            button {
-                background-color: $yellow;
+            a {
+                background-color: $personaOne;
                 color: white;
                 font-family: 'Open Sans', sans-serif;
                 height: 40px;
@@ -281,14 +284,16 @@ label {
                 cursor: pointer;
                 text-align: center;
                 margin-bottom: 10px;
+                text-decoration: none;
+                padding-top: 7px;
             }
         }
         .shopperTwo {
             width: 45%;
             display: inline-block;
             float: right;
-            button {
-                background-color: $yellow;
+            a {
+                background-color: $personaTwo;
                 color: white;
                 font-family: 'Open Sans', sans-serif;
                 height: 40px;
@@ -301,15 +306,16 @@ label {
                 cursor: pointer;
                 text-align: center;
                 margin-bottom: 10px;
+                padding-top: 7px;
             }
         }
     }
 }
 .one {
-    background-color: $red;
+    background-color: $personaOne;
 }
 .two {
-    background-color: $blue;
+    background-color: $personaTwo;
 }
 .buttonSmall {
     height: 40px;
@@ -330,7 +336,7 @@ label {
     padding-left: 50px;
     form {
         .title {
-            margin-bottom: 40px;
+            margin-bottom: 60px;
             margin-top: 40px;
         }
     }
@@ -355,7 +361,7 @@ label {
                 margin: 40px 40px 40px 50px;
             }
             .budgetInput {
-                background-color: $darkGray;
+                background-color: $yellow;
                 height: 40px;
                 width: 300px;
                 align-self: center;
@@ -383,7 +389,7 @@ label {
                 }
             }
             .dateInput {
-                background-color: $darkGray;
+                background-color: $personaTwo;
                 height: 40px;
                 width: 300px;
                 align-self: center;
@@ -412,6 +418,7 @@ label {
                 }
             }
             .dateInput:nth-child(2) {
+                background-color: $personaOne;
                 p {
                     margin-left: 25px;
                 }
@@ -421,7 +428,7 @@ label {
 }
 .subTitle {
     font-family: "Open Sans", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     color: $darkGray;
     font-size: 25px;
     margin-bottom: -5px;
@@ -582,11 +589,11 @@ label {
 }
 #assignOne {
     background: url("../images/dropdownarrow2.svg") no-repeat right center;
-    background-color: $red;
+    background-color: $personaOne;
 }
 #assignTwo {
     background: url("../images/dropdownarrow3.svg") no-repeat right center;
-    background-color: $blue;
+    background-color: $personaTwo;
 }
 .saveButton {
     background-color: $darkGray;
@@ -748,7 +755,7 @@ label {
                 button {
                     position: absolute;
                     width: 200px;
-                    background-color: $red;
+                    background-color: $personaOne;
                     border: none;
                     color: white;
                     font-family: "Open Sans", sans-serif;
@@ -774,7 +781,7 @@ label {
                         button {
                             margin-top: 20px;
                             margin-bottom: 20px;
-                            background-color: $red;
+                            background-color: $personaOne;
                             border: none;
                             color: white;
                             font-family: "Open Sans", sans-serif;
@@ -897,4 +904,8 @@ label {
         font-family: "Lato", sans-serif;
         color: green;
     }
+}
+
+#wpbody-content {
+    padding: 0;
 }
