@@ -1,10 +1,11 @@
 $darkGray: #5D5D5D;
-$red: #EA6F6C;
-$darkRed: #AA4444;
-$blue: #87B8C2;
-$darkBlue: #547072;
+$personaOne: #A3C9BB;
+$personaOneDark: #819B90;
+$personaTwo: #ABBD78;
+$personaTwoDark: #889360;
 $yellow: #EDB867;
 $darkYellow: #C19457;
+$red: #E85D5D;
 * {
     margin: 0;
     padding: 0;
@@ -21,15 +22,15 @@ h3 {
     font-family: "Open Sans", sans-serif;
     margin-bottom: 20px;
 }
+#wpbody,
+#wpbody-content,
 #wpwrap {
     background-color: white;
+    height: 100%;
 }
 .wrapper {
     margin-left: -20px;
-    // height: calc(100% - 47px);
-    // width: calc(100% - 273px);
-    // float: right;
-    // transform: translateY(47px);
+    height: 100%;
 }
 #backdrop {
     position: fixed;
@@ -48,7 +49,7 @@ label {
     cursor: default;
 }
 .header {
-    background-color: $darkGray;
+    background-color: $yellow;
     height: 75px;
     display: flex;
     justify-content: space-between;
@@ -144,6 +145,7 @@ label {
     ul {
         height: calc(100% - 40px);
         overflow: scroll;
+        background-color: #F2F2F2;
         .selectedStudent {
             a {
                 color: white;
@@ -178,7 +180,7 @@ label {
     margin-bottom: 10px;
     .fact {
         height: 100px;
-        width: 130px;
+        width: 150px;
         background-color: #E0E0E0;
         border-radius: 10px;
         display: flex;
@@ -217,7 +219,7 @@ label {
                 display: flex;
                 flex-direction: column;
                 width: 45%;
-                button {
+                a {
                     background-color: $yellow;
                     color: white;
                     font-family: 'Open Sans', sans-serif;
@@ -231,13 +233,14 @@ label {
                     cursor: pointer;
                     text-align: center;
                     margin-bottom: 10px;
+                    padding-top: 7px;
                 }
             }
             .merchandiserRight {
                 display: flex;
                 flex-direction: column;
                 width: 45%;
-                button {
+                a {
                     background-color: $yellow;
                     color: white;
                     font-family: 'Open Sans', sans-serif;
@@ -251,6 +254,8 @@ label {
                     cursor: pointer;
                     text-align: center;
                     margin-bottom: 10px;
+                    padding-top: 7px;
+                    text-decoration: none;
                 }
             }
         }
@@ -267,8 +272,8 @@ label {
         .shopperOne {
             width: 45%;
             display: inline-block;
-            button {
-                background-color: $yellow;
+            a {
+                background-color: $personaOne;
                 color: white;
                 font-family: 'Open Sans', sans-serif;
                 height: 40px;
@@ -281,14 +286,16 @@ label {
                 cursor: pointer;
                 text-align: center;
                 margin-bottom: 10px;
+                text-decoration: none;
+                padding-top: 7px;
             }
         }
         .shopperTwo {
             width: 45%;
             display: inline-block;
             float: right;
-            button {
-                background-color: $yellow;
+            a {
+                background-color: $personaTwo;
                 color: white;
                 font-family: 'Open Sans', sans-serif;
                 height: 40px;
@@ -301,15 +308,16 @@ label {
                 cursor: pointer;
                 text-align: center;
                 margin-bottom: 10px;
+                padding-top: 7px;
             }
         }
     }
 }
 .one {
-    background-color: $red;
+    background-color: $personaOne;
 }
 .two {
-    background-color: $blue;
+    background-color: $personaTwo;
 }
 .buttonSmall {
     height: 40px;
@@ -330,7 +338,7 @@ label {
     padding-left: 50px;
     form {
         .title {
-            margin-bottom: 40px;
+            margin-bottom: 60px;
             margin-top: 40px;
         }
     }
@@ -355,7 +363,7 @@ label {
                 margin: 40px 40px 40px 50px;
             }
             .budgetInput {
-                background-color: $darkGray;
+                background-color: $yellow;
                 height: 40px;
                 width: 300px;
                 align-self: center;
@@ -383,7 +391,7 @@ label {
                 }
             }
             .dateInput {
-                background-color: $darkGray;
+                background-color: $personaTwo;
                 height: 40px;
                 width: 300px;
                 align-self: center;
@@ -412,6 +420,7 @@ label {
                 }
             }
             .dateInput:nth-child(2) {
+                background-color: $personaOne;
                 p {
                     margin-left: 25px;
                 }
@@ -421,7 +430,7 @@ label {
 }
 .subTitle {
     font-family: "Open Sans", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     color: $darkGray;
     font-size: 25px;
     margin-bottom: -5px;
@@ -582,11 +591,11 @@ label {
 }
 #assignOne {
     background: url("../images/dropdownarrow2.svg") no-repeat right center;
-    background-color: $red;
+    background-color: $personaOne;
 }
 #assignTwo {
     background: url("../images/dropdownarrow3.svg") no-repeat right center;
-    background-color: $blue;
+    background-color: $personaTwo;
 }
 .saveButton {
     background-color: $darkGray;
@@ -707,6 +716,7 @@ label {
         flex: 0 0 auto;
         height: 35%;
         width: 100%;
+        margin-bottom: 25px;
         h2 {
             margin-left: 50px;
         }
@@ -723,16 +733,6 @@ label {
                 width: 40%;
                 margin-left: 50px;
                 padding-left: 10px;
-            }
-            submit {
-                align-self: flex-start;
-                height: 40px;
-                font-size: 12px;
-                padding-top: 6px;
-                margin-left: 350px;
-                margin-top: 15px;
-                width: 75px;
-                border-radius: 0;
             }
         }
         p {
@@ -752,22 +752,24 @@ label {
             display: flex;
             flex-direction: column;
             width: 40%;
+            position: relative;
             form {
-              button {
-                  margin-top: 20px;
-                  margin-bottom: 20px;
-                  background-color: $red;
-                  border: none;
-                  color: white;
-                  font-family: "Open Sans", sans-serif;
-                  font-weight: 700;
-                  height: 25px;
-                  width: 50%;
-              }
+                button {
+                    position: absolute;
+                    width: 200px;
+                    background-color: $red;
+                    border: none;
+                    color: white;
+                    font-family: "Open Sans", sans-serif;
+                    font-weight: 700;
+                    height: 25px;
+                    top: 25px;
+                    left: 200px;
+                }
             }
             ul {
-                overflow: scroll;
                 max-height: 200px;
+                margin-top: 25px;
                 li {
                     display: flex;
                     flex-direction: row;
@@ -777,6 +779,20 @@ label {
                     position: relative;
                     justify-content: space-between;
                     margin: 0;
+                    form {
+                        button {
+                            margin-top: 20px;
+                            margin-bottom: 20px;
+                            background-color: $personaOne;
+                            border: none;
+                            color: white;
+                            font-family: "Open Sans", sans-serif;
+                            font-weight: 700;
+                            height: 25px;
+                            width: 50%;
+                            position: inherit;
+                        }
+                    }
                     p {
                         font-family: "Lato", sans-serif;
                         color: $darkGray;
@@ -827,8 +843,8 @@ label {
                 width: 50%;
             }
             ul {
-                overflow: scroll;
                 max-height: 200px;
+                margin-top: 25px;
                 li {
                     display: flex;
                     flex-direction: row;
@@ -853,22 +869,28 @@ label {
                         font-weight: 400;
                     }
                     p:nth-child(3) {
-                        margin-right: 15px;
                         padding-top: 10px;
                     }
                     form {
-                      margin-right: 25px;
-                      button {
-                          background-color: $darkGray;
-                          border: none;
-                          margin: 0;
-                          align-self: center;
-                          margin-right: 20px;
-                          width: 100%;
-                          margin-top: 7px;
-                      }
+                        button {
+                            background-color: $darkGray;
+                            border: none;
+                            margin: 0;
+                            align-self: center;
+                            width: 100%;
+                            margin-top: 7px;
+                            font-size: 10px;
+                            padding: 5px;
+                            margin-left: 10px;
+                        }
+                        button[name="dcvs_delete_store"] {
+                            background: none;
+                            img {
+                                height: 20px;
+                                margin-right: 15px;
+                            }
+                        }
                     }
-
                 }
                 li:nth-child(2n) {
                     background-color: #E0E0E0;
@@ -876,4 +898,27 @@ label {
             }
         }
     }
+}
+.messages {
+    margin-left: 50px;
+    p {
+        font-family: "Lato", sans-serif;
+        color: green;
+    }
+}
+#wpbody-content {
+    padding: 0;
+}
+.unavailable {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
+.wp-admin select {
+    padding: 0 0 0 10px;
+}
+.add {
+    align-self: flex-start;
+    margin-top: 15px;
+    margin-left: 345px;
 }

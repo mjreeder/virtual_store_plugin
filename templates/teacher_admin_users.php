@@ -17,7 +17,7 @@
 		<form action="" method="post">
 			<?php wp_nonce_field( DCVS_Store_Management::ADD_USERS_BY_EMAIL_POST_KEY ); ?>
 			<textarea name="<?php echo DCVS_Store_Management::ADD_USERS_BY_EMAIL_POST_KEY; ?>" rows="8" cols="80"></textarea>
-			<button type="submit" class="saveButton">ADD</button>
+			<button type="submit" class="saveButton add">ADD</button>
 		</form>
 
 	</div>
@@ -65,7 +65,7 @@
 						<form action="" class="warning" method="post">
 							<?php wp_nonce_field( DCVS_Store_Management::DELETE_STORE_POST_KEY.$site->blog_id ); ?>
 							<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
-							<button type="submit" name="<?php echo DCVS_Store_Management::DELETE_STORE_POST_KEY; ?>">DELETE STORE & USER</button>
+							<button type="submit" name="<?php echo DCVS_Store_Management::DELETE_STORE_POST_KEY; ?>"><img src="<?php echo plugins_url("../assets/images/trash.svg", __FILE__); ?>" alt=""></button>
 						</form>
 					</li>
 				<?php endforeach; ?>
