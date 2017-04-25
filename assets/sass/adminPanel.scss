@@ -768,8 +768,9 @@ label {
                 }
             }
             ul {
-                max-height: 200px;
+                max-height: 225px;
                 margin-top: 25px;
+                overflow: scroll;
                 li {
                     display: flex;
                     flex-direction: row;
@@ -843,8 +844,9 @@ label {
                 width: 50%;
             }
             ul {
-                max-height: 200px;
+                max-height: 225px;
                 margin-top: 25px;
+                overflow: scroll;
                 li {
                     display: flex;
                     flex-direction: row;
