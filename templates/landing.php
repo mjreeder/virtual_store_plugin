@@ -11,6 +11,7 @@ date_default_timezone_set('UTC');
 
 global $current_user;
 
+
 if( isset( $current_user ) && !empty($current_user->roles) ){
     if(!in_array('administrator', $current_user->roles)) {
         wp_redirect( get_site_url() . '/wp-admin' );
@@ -71,7 +72,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <b id="remaining-time"> <script>getTime("<?php echo $ware_house_start_date.''; ?>")</script></b></p>
             <?php
           }
-          elseif ($date_now >= $ware_house_start_date && $date_now <= $ware_house_end_date) {
+          elseif ($date_now >= $ware_house_start_date && $date_now < $ware_house_end_date) {
             # code...
             ?>
             <p>
@@ -79,7 +80,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <b id="remaining-time"> <script>getTime("<?php echo $ware_house_end_date.''; ?>")</script></b></p>
             <?php
           }
-          elseif ($date_now <= $shopping_start_date && $date_now >= $ware_house_end_date) {
+          elseif ($date_now <= $shopping_start_date && $date_now > $ware_house_end_date) {
             # code...
             $ware_house_shopping_over = true;
             ?>
@@ -88,7 +89,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <b id="remaining-time"> <script>getTime("<?php echo $shopping_start_date.''; ?>")</script></b></p>
             <?php
           }
-          elseif($date_now >= $shopping_start_date && $date_now <= $shopping_end_date){
+          elseif($date_now >= $shopping_start_date && $date_now < $shopping_end_date){
             ?>
             <p>
               time left until shopping ends :
