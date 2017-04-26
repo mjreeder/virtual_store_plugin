@@ -78,7 +78,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <b id="remaining-time"> <script>getTime("<?php echo $ware_house_start_date.''; ?>")</script></b></p>
             <?php
           }
-          elseif ($date_now >= $ware_house_start_date && $date_now < $ware_house_end_date) {
+          elseif ($date_now >= $ware_house_start_date && $date_now <= $ware_house_end_date) {
             # code...
             ?>
             <p>
