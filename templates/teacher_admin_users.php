@@ -24,7 +24,7 @@
 	<div class="userLists">
 		<section class="userLeft">
 			<h2 class="subTitle">active users</h2>
-			<form action="" class="warning" method="post">
+			<form action="" class="warning" method="post" onsubmit="return confirm('Archive All Stores?');">
 				<?php wp_nonce_field( DCVS_Store_Management::ARCHIVE_ALL_STORES_POST_KEY ); ?>
 				<button type="submit" name="<?php echo DCVS_Store_Management::ARCHIVE_ALL_STORES_POST_KEY; ?>">ARCHIVE ALL</button>
 			</form>
@@ -37,7 +37,7 @@
 						<p><?php echo $user->user_email; ?></p>
 						<p><?php echo $store->blogname; ?></p>
 						<p>Created: <?php echo date('F Y',strtotime($store->registered)); ?></p>
-						<form action="" class="warning" method="post">
+						<form action="" class="warning" method="post" onsubmit="return confirm('Archive <?php echo $store->blogname ?>?');">
 							<?php wp_nonce_field( DCVS_Store_Management::ARCHIVE_STORE_POST_KEY.$site->blog_id ); ?>
 							<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
 							<button type="submit" name="<?php echo DCVS_Store_Management::ARCHIVE_STORE_POST_KEY; ?>">ARCHIVE</button>
@@ -57,12 +57,12 @@
 						<p><?php echo $user->user_email; ?></p>
 						<p><?php echo $store->blogname; ?></p>
 						<p>Created: <?php echo date('F Y',strtotime($store->registered)); ?></p>
-						<form action="" class="warning" method="post">
+						<form action="" class="warning" method="post" onsubmit="return confirm('Un-Archive <?php echo $store->blogname ?>?');">
 							<?php wp_nonce_field( DCVS_Store_Management::UNARCHIVE_STORE_POST_KEY.$site->blog_id ); ?>
 							<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
 							<button type="submit" name="<?php echo DCVS_Store_Management::UNARCHIVE_STORE_POST_KEY; ?>">UN-ARCHIVE</button>
 						</form>
-						<form action="" class="warning" method="post">
+						<form action="" class="warning" method="post" onsubmit="return confirm('Delete <?php echo $store->blogname ?>?');">
 							<?php wp_nonce_field( DCVS_Store_Management::DELETE_STORE_POST_KEY.$site->blog_id ); ?>
 							<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
 							<button type="submit" name="<?php echo DCVS_Store_Management::DELETE_STORE_POST_KEY; ?>"><img src="<?php echo plugins_url("../assets/images/trash.svg", __FILE__); ?>" alt=""></button>
