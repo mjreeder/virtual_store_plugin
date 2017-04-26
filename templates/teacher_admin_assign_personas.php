@@ -243,7 +243,7 @@ function dcvs_assign_persona($userId) {
             $user_business_category_id = -1;
         }
         // 1st persona
-        $sql = $wpdb->prepare("SELECT id FROM dcvs_persona WHERE id IN (SELECT persona_id FROM dcvs_persona_category WHERE category_id != '%d')", [$user_business_category_id]);
+        $sql = $wpdb->prepare("SELECT id FROM dcvs_persona WHERE (id IN (SELECT persona_id FROM dcvs_persona_category WHERE category_id != '%d') OR id IN (SELECT id FROM dcvs_persona WHERE id NOT IN (SELECT persona_id FROM dcvs_persona_category)))", [$user_business_category_id]);
         $available_persona_ids = $wpdb->get_results($sql, ARRAY_A);
         $random_index = array_rand($available_persona_ids);
         $random_persona = $available_persona_ids[$random_index];
@@ -251,7 +251,7 @@ function dcvs_assign_persona($userId) {
         $wpdb->insert("dcvs_user_persona", ["user_id" => $userId, "persona_id" => $random_id]);
 
         // 2nd persona
-        $sql = $wpdb->prepare("SELECT id FROM dcvs_persona WHERE id != '%d' AND id IN (SELECT persona_id FROM dcvs_persona_category WHERE category_id NOT IN (SELECT category_id FROM dcvs_persona_category WHERE persona_id = '%d') AND category_id != '%d')", [$random_id, $random_id, $user_business_category_id]);
+        $sql = $wpdb->prepare("SELECT id FROM dcvs_persona WHERE id != '%d' AND (id IN (SELECT persona_id FROM dcvs_persona_category WHERE category_id NOT IN (SELECT category_id FROM dcvs_persona_category WHERE persona_id = '%d') AND category_id != '%d') OR id IN (SELECT id FROM dcvs_persona WHERE id NOT IN (SELECT persona_id FROM dcvs_persona_category)))", [$random_id, $random_id, $user_business_category_id]);
         $available_persona_ids = $wpdb->get_results($sql, ARRAY_A);
         $random_persona = $available_persona_ids[array_rand($available_persona_ids)];
         $random_id = $random_persona["id"];
