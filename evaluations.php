@@ -11,16 +11,6 @@ function dcvs_survey_time($order_id){
 	}
 }
 
-add_action('admin_init', 'dcvs_check_for_final_survey');
-function dcvs_check_for_final_survey(){
-	if (!current_user_can('create_sites') && timeIsLaterThan(dcvs_get_option('shopping_end_date', 0))) {
-//		restore_current_blog();
-		// TODO - add button to dashboard that will redirect to final evaluation instead
-//		wp_redirect(network_site_url('/final-evaluation'));
-//		exit;
-	}
-}
-
 add_action( 'gform_after_submission', 'dcvs_redirect_to_dashboard_after_evaluation' );
 function dcvs_redirect_to_dashboard_after_evaluation($entry){
 	global $wpdb;
