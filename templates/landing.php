@@ -172,8 +172,21 @@ $var = dcvs_get_option('warehouse_end_date', 0);
         </aside>
 
         <main class="dashboard">
+            <?php
+              if(isset($business_info[0])){
+                ?>
+                <h1><?php echo $business_info[0]->title ?></h1>
+                <?php
+              }
 
-            <h1><?php echo $business_info[0]->title ?></h1>
+              else{
+                ?>
+                <h1><?php echo "Business not set" ?></h1>
+                <?php
+              }
+
+             ?>
+
             <!-- <hr> -->
             <section class="myStore">
 
@@ -194,10 +207,30 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                      ?>
 
 
-                    <p><?php echo $business_info[0]->description ?>
-                        <br>
-                        <br><b>budget: $<?php echo $business_info[0]->money - $business_expense ?></b>
-                    </p>
+
+
+                    <?php
+                      if(isset($business_info[0])){
+                        ?>
+                        <p><?php echo $business_info[0]->description ?>
+                            <br>
+                            <br><b>budget: $<?php echo $business_info[0]->money - $business_expense ?></b>
+                        </p>
+                        <?php
+                      }
+
+                      else{
+                        ?>
+                        <p><?php echo "Business not set" ?>
+                            <br>
+                            <br><b>budget: $<?php echo "Business not set" ?></b>
+                        </p>
+                        <?php
+                      }
+
+                     ?>
+
+
                 </div>
                 <div class="myStoreRight">
 
@@ -223,15 +256,33 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaOne.svg' ?> alt="">
                     </div>
 
-                    <p><?php echo $consumer_info[0]->description ?>
-                        <br>
-                        <br>
-                        <b>persona budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
-                    </p>
+                    <?php
+                      if(isset($consumer_info[0])){
+                        ?>
+                        <p><?php echo $consumer_info[0]->description ?>
+                            <br>
+                            <br>
+                            <b>persona budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
+                        </p>
+                        <?php
+                      }
+
+                      else{
+                        ?>
+                        <p><?php echo "Consumer 1 info not set" ?>
+                            <br>
+                            <br>
+                            <b>persona budget: $<?php ?></b>
+                        </p>
+                        <?php
+                      }
+
+                     ?>
+
                     <div class="personaButtons">
                       <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
                           <?php
-                          if($shopping_over == false){
+                          if($shopping_over == false|| isset($consumer_info[0])){
                             ?>
                             <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
                             <?php
@@ -260,16 +311,33 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaTwo.svg' ?> alt="">
                     </div>
 
-                    <p><?php echo $consumer_info[1]->description ?>
-                        <br>
-                        <br>
-                        <b>persona budget: $<?php echo $consumer_info[1]->money - $consumer_2_expense ?></b>
-                    </p>
+                    <?php
+                      if(isset($consumer_info[1])){
+                        ?>
+                        <p><?php echo $consumer_info[1]->description ?>
+                            <br>
+                            <br>
+                            <b>persona budget: $<?php echo $consumer_info[1]->money - $consumer_1_expense ?></b>
+                        </p>
+                        <?php
+                      }
+
+                      else{
+                        ?>
+                        <p><?php echo "Consumer 1 info not set" ?>
+                            <br>
+                            <br>
+                            <b>persona budget: $<?php ?></b>
+                        </p>
+                        <?php
+                      }
+
+                     ?>
                     <div class="personaButtons">
                       <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
 
                           <?php
-                          if($shopping_over == false){
+                          if($shopping_over == false || isset($consumer_info[1])){
                             ?>
                             <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
                             <?php
