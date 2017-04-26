@@ -70,6 +70,7 @@ html {
     }
     ol {
         padding-right: 10%;
+        overflow: scroll;
         li {
             font-family: "Lato", sans-serif;
             color: $darkGray;
@@ -139,6 +140,7 @@ html {
     flex: 1 1 auto;
     padding-top: 20px;
     padding-left: 75px;
+    overflow: scroll;
     h1 {
         font-family: 'Open sans', sans-serif;
         color: $darkGray;
@@ -156,7 +158,7 @@ html {
 .mainContent {
     display: flex;
     flex-direction: row;
-    height: auto;
+    height: calc(100% - 75px);
 }
 .myStore {
     display: flex;
@@ -186,6 +188,7 @@ html {
     display: flex;
     flex-direction: row;
     margin-top: 30px;
+    margin-bottom: 30px;
     justify-content: space-between;
     p {
         margin-top: 20px;
@@ -443,4 +446,9 @@ html {
             }
         }
     }
+}
+.unavailable {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
 }

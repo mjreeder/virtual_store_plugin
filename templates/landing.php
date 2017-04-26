@@ -5,7 +5,7 @@
  * Date: 1/22/17
  * Time: 10:57 PM.
  */
-require_once __DIR__.'/../../../../wp-blog-header.php';
+require_once '/Users/coreyh/virtual_store/wp-blog-header.php';
 
 date_default_timezone_set('UTC');
 
@@ -207,7 +207,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     }
                     else{
                       ?>
-                      <a href="<?php echo network_home_url() ?>"><button class="button" disabled>WAREHOUSE</button></a>
+                      <a href="<?php echo network_home_url() ?>" class="unavailable"><button class="button">WAREHOUSE</button></a>
                       <?php
                     }
 
