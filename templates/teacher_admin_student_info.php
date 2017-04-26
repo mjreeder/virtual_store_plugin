@@ -93,7 +93,7 @@ function display_current_student_info()
 				}
 			else{
 				?>
-				<h1 class="title"><?php echo $display_name[0]->display_name ?></h1>
+				<h1 class="title"><?php echo "User not set" ?></h1>
 				<?php
 			}
 		 ?>
