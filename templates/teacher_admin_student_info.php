@@ -123,7 +123,7 @@ function display_current_student_info()
 					}
 					else{
 						?>
-						<a href="<?php echo "Business not set for user" ?>" class="button" disabled>PERSONAL SITE</a>
+						<a href="#" class="unavailable">PERSONAL SITE</a>
 						<?php
 					}
 					 ?>
