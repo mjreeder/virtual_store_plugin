@@ -62,13 +62,28 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
         <h1>virtual store</h1>
         <?php
-          $ware_house_start_date = dcvs_get_option('warehouse_start_date', 0);
-          $ware_house_end_date = dcvs_get_option('warehouse_end_date', 0);
-          $shopping_start_date = dcvs_get_option('shopping_start_date', 0);
-          $shopping_end_date = dcvs_get_option('shopping_end_date', 0);
+          $ware_house_start_date = date_create(dcvs_get_option('warehouse_start_date', 0));
+          $ware_house_end_date = date_create(dcvs_get_option('warehouse_end_date', 0));
+          $shopping_start_date = date_create(dcvs_get_option('shopping_start_date', 0));
+          $shopping_end_date = date_create(dcvs_get_option('shopping_end_date', 0));
+          $date_now = date("Y-m-d H:i:s");
+
           $ware_house_shopping_over = false;
           $shopping_over = false;
-          $date_now = date("Y-m-d");
+
+
+          date_add(date_create(date($ware_house_start_date->format("Y-m-d H:i:s"))), date_interval_create_from_date_string("23 hours 59 minutes 59 seconds"));
+          $ware_house_start_date = $ware_house_start_date->format("Y-m-d H:i:s");
+
+          date_add(date_create(date($ware_house_end_date->format("Y-m-d H:i:s"))), date_interval_create_from_date_string("23 hours 59 minutes 59 seconds"));
+          $ware_house_end_date = $ware_house_end_date->format("Y-m-d H:i:s");
+
+          date_add(date_create(date($shopping_start_date->format("Y-m-d H:i:s"))), date_interval_create_from_date_string("23 hours 59 minutes 59 seconds"));
+          $shopping_start_date = $shopping_start_date->format("Y-m-d H:i:s");
+
+          date_add(date_create(date($shopping_end_date->format("Y-m-d H:i:s"))), date_interval_create_from_date_string("23 hours 59 minutes 59 seconds"));
+          $shopping_end_date = $shopping_end_date->format("Y-m-d H:i:s");
+
 
           if($date_now <= $ware_house_start_date){
             // DISPLAY TIME TO WAREHOUSE SHOPPING BEGINS
