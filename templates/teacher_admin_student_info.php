@@ -86,7 +86,17 @@ function display_current_student_info()
 
 	?>
 		<section class="studentInfo" id='mainView'>
-		<h1 class="title"><?php echo $display_name[0]->display_name ?></h1>
+		<?php if(isset($display_name[0])){
+			?>
+			<h1 class="title"><?php echo $display_name[0]->display_name ?></h1>
+			<?php
+				}
+			else{
+				?>
+				<h1 class="title"><?php echo $display_name[0]->display_name ?></h1>
+				<?php
+			}
+		 ?>
 		<section class="merchandiserInfo">
 			<h2 class="subTitle">buyer</h2>
 			<?php
