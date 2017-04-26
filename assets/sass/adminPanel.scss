@@ -83,6 +83,7 @@ label {
 }
 .sidebar {
     width: 230px;
+    overflow: scroll;
     background-color: #E0E0E0;
     a {
         text-decoration: none;
@@ -203,11 +204,9 @@ label {
 .studentInfo {
     height: 100%;
     padding-left: 50px;
-    display: flex;
-    flex-direction: column;
     flex: 1 1;
+    overflow: scroll;
     .merchandiserInfo {
-        height: 38%;
         width: 90%;
         display: flex;
         flex-direction: column;
@@ -267,7 +266,6 @@ label {
         }
     }
     .shopperInfo {
-        height: 35%;
         width: 90%;
         .shopperOne {
             width: 45%;
