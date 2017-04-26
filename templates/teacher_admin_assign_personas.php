@@ -284,9 +284,9 @@ function dcvs_update_user_persona($user_id, $old_persona_id, $new_persona_id){
 
 function dcvs_enough_distinct_persona_categories() {
     global $wpdb;
-    $sql = $wpdb->prepare("SELECT DISTINCT `category_id` FROM `dcvs_persona_category`;",[]);
+    $sql = "SELECT DISTINCT category_id FROM dcvs_persona_category";
     $response_one = $wpdb->get_results($sql, ARRAY_A);
-    $sql = $wpdb->prepare("SELECT * FROM `dcvs_persona` WHERE `id` NOT IN (SELECT persona_id FROM dcvs_persona_category)",[]);
+    $sql = "SELECT * FROM dcvs_persona WHERE id NOT IN (SELECT persona_id FROM dcvs_persona_category)";
     $response_two = $wpdb->get_results($sql, ARRAY_A);
     if ((count($response_one) + count($response_two)) < 3) {
         return false;
