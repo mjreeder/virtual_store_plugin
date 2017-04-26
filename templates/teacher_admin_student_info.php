@@ -129,6 +129,9 @@ function display_current_student_info()
 					 ?>
 
 					<a href="" class="button">FINAL SURVEY</a>
+					<form class="" action="index.html" method="post">
+							<select class="" name=""></select>
+					</form>
 					<!-- TODO get remaining budget-->
 					<?php
 					if (isset($budget_remaining)) {
@@ -243,6 +246,9 @@ function display_current_student_info()
 					}
 				 ?>
 				<a href="" class="button">FINAL SURVEY</a>
+				<form class="" action="index.html" method="post">
+					<select class="" name=""></select>
+				</form>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
@@ -323,6 +329,9 @@ function display_current_student_info()
 
 
 				<a href="" class="button">FINAL SURVEY</a>
+				<form class="" action="index.html" method="post">
+					<select class="" name=""></select>
+				</form>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
