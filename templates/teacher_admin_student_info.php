@@ -123,7 +123,7 @@ function display_current_student_info()
 					}
 					else{
 						?>
-						<a href="#" class="button unavailable">PERSONAL SITE</a>
+						<a href="#" class="unavailable">PERSONAL SITE</a>
 						<?php
 					}
 					 ?>
