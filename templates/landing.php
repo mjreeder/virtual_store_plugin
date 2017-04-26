@@ -27,8 +27,14 @@ $current_user_ID = wp_get_current_user()->ID;
 $business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $current_user_ID));
 $business_expense = dcvs_get_business_expenses( $current_user_ID );
 $consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
-$consumer_1_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[0]->persona_id);
-$consumer_2_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[1]->persona_id);
+if(isset($consumer_info[0])){
+  $consumer_1_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[0]->persona_id);
+
+}
+if(isset($consumer_info[1])){
+  $consumer_2_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[1]->persona_id);
+}
+
 $var = dcvs_get_option('warehouse_end_date', 0);
 
 ?>
@@ -80,7 +86,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <b id="remaining-time"> <script>getTime("<?php echo $ware_house_end_date.''; ?>")</script></b></p>
             <?php
           }
-          elseif ($date_now < $shopping_start_date && $date_now >= $ware_house_end_date) {
+          elseif ($date_now <= $shopping_start_date && $date_now >= $ware_house_end_date) {
             # code...
             $ware_house_shopping_over = true;
             ?>
