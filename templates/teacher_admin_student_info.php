@@ -181,7 +181,7 @@ function display_current_student_info()
 					</section>
 					<!-- TODO comparison page -->
 					<?php
-						if(isset($currentDisplayStudent)){
+						if(isset($currentDisplayStudent) && $currentDisplayStudent != ''){
 							?>
 							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="button">
 								STATISTICS
