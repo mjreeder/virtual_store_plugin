@@ -284,8 +284,9 @@ function dcvs_update_persona($id, $name, $description, $money) {
 	global $wpdb;
 	// check if name is taken BY A DIFFERENT ID
 	// check if money is a floatval
-	$checkid = dcvs_get_persona_by_name($name);
-	if ($checkid != NULL && $checkid != $id) {
+	$persona = dcvs_get_persona_by_name($name);
+	$checked_persona_id = isset($persona[0]['id']) ? $persona[0]['id'] : NUll;
+	if ($checked_persona_id != NULL && $checked_persona_id != $id) {
 		return DCVS_Toast::create_new_toast( "That name is already taken", true );
 	} else if (!money_is_number($money)) {
 		return DCVS_Toast::create_new_toast( "Budget must be a number", true );
