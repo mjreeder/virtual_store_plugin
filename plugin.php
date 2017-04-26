@@ -200,9 +200,10 @@ function dcvs_get_landing_page_url() {
     $split_basename = explode("/",$plugin_basename);
     $plugin_name = $split_basename[0];
 
-    $user_business = dcvs_get_business_by_user_id( get_current_user_id() );
-    $site_url = $user_business['url'];
-    $landing_page_url = $site_url . '/wp-content/plugins/' . $plugin_name . '/templates/landing.php';
+    switch_to_blog( 1 );
+    $landing_page_url = network_site_url() . 'wp-content/plugins/' . $plugin_name . '/templates/landing.php';
+    restore_current_blog();
+    
     return $landing_page_url;
 }
 
