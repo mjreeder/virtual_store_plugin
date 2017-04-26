@@ -33,10 +33,9 @@
 					$store = get_blog_details($site->blog_id);
 					$user = get_userdata(DCVS_Store_Management::get_user_by_store($site->blog_id));
 					?>
-					<li>
+					<li title="Created: <?php echo date('F Y',strtotime($store->registered)); ?>">
 						<p><?php echo $user->user_email; ?></p>
 						<p><?php echo $store->blogname; ?></p>
-						<p>Created: <?php echo date('F Y',strtotime($store->registered)); ?></p>
 						<form action="" class="warning" method="post" onsubmit="return confirm('Archive <?php echo $store->blogname ?>?');">
 							<?php wp_nonce_field( DCVS_Store_Management::ARCHIVE_STORE_POST_KEY.$site->blog_id ); ?>
 							<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
@@ -53,10 +52,9 @@
 					$store = get_blog_details($site->blog_id);
 					$user = get_userdata(DCVS_Store_Management::get_user_by_store($site->blog_id));
 					?>
-					<li>
+					<li title="Created: <?php echo date('F Y',strtotime($store->registered)); ?>">
 						<p><?php echo $user->user_email; ?></p>
 						<p><?php echo $store->blogname; ?></p>
-						<p>Created: <?php echo date('F Y',strtotime($store->registered)); ?></p>
 						<form action="" class="warning" method="post" onsubmit="return confirm('Un-Archive <?php echo $store->blogname ?>?');">
 							<?php wp_nonce_field( DCVS_Store_Management::UNARCHIVE_STORE_POST_KEY.$site->blog_id ); ?>
 							<input type="hidden" name="site_id" value="<?php echo $site->blog_id; ?>"/>
