@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
   <input type="hidden" name="dcvs_admin_changes" value="1">
     <div>
         <h1 class="title">Assign Personas</h1>
-        <button class="headerButton randomize" name="assign_personas" type="submit">RANDOMIZE CONSUMERS</button>
+        <button class="headerButton randomize" name="assign_personas" type="submit" <?php echo dcvs_enough_distinct_persona_categories() ? "": "disabled"?> >RANDOMIZE CONSUMERS</button>
     </div>
 
     <div class="tableWrapper">
@@ -280,6 +280,19 @@ function dcvs_set_user_persona($user_id, $new_persona_id){
 function dcvs_update_user_persona($user_id, $old_persona_id, $new_persona_id){
     global $wpdb;
     $wpdb->update('dcvs_user_persona', array('persona_id'=>$new_persona_id), array('user_id'=>$user_id,'persona_id'=>$old_persona_id));
+}
+
+function dcvs_enough_distinct_persona_categories() {
+    global $wpdb;
+    $sql = $wpdb->prepare("SELECT DISTINCT `category_id` FROM `dcvs_persona_category`;",[]);
+    $response_one = $wpdb->get_results($sql, ARRAY_A);
+    $sql = $wpdb->prepare("SELECT * FROM `dcvs_persona` WHERE `id` NOT IN (SELECT persona_id FROM dcvs_persona_category)",[]);
+    $response_two = $wpdb->get_results($sql, ARRAY_A);
+    if ((count($response_one) + count($response_two)) < 3) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function dcvs_check_personas_same_category($persona_id_one, $persona_id_two) {
