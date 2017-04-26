@@ -195,12 +195,16 @@ function landing_page_widget_display() {
     <?php
 }
 
-function dcvs_get_landing_page_url() {
+function dcvs_get_landing_page_url($user_id = NULL) {
     $plugin_basename = plugin_basename( __FILE__ );
     $split_basename = explode("/",$plugin_basename);
     $plugin_name = $split_basename[0];
 
-    $user_business = dcvs_get_business_by_user_id( get_current_user_id() );
+    if ($user_id == NULL) {
+        $user_id = get_current_user_id();
+    }
+
+    $user_business = dcvs_get_business_by_user_id( $user_id );
     $site_url = $user_business['url'];
     $landing_page_url = $site_url . 'wp-content/plugins/' . $plugin_name . '/templates/landing.php';
 
@@ -330,12 +334,26 @@ function dcvs_getUrl() {
 function dcvs_forcelogin() {
     if( !is_user_logged_in() ) {
         $url = dcvs_getUrl();
-        $whitelist = apply_filters('v_forcelogin_whitelist', array());
-        $redirect_url = apply_filters('v_forcelogin_redirect', $url);
+        $whitelist = apply_filters('dcvs_forcelogin_whitelist', array());
+        $redirect_url = apply_filters('dcvs_forcelogin_redirect', $url);
         if( preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) ) {
             wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit();
         }
     }
 }
 add_action('init', 'dcvs_forcelogin');
+
+function dcvs_redirect_to_dashboard($redirect_to, $request, $user){
+    if( !is_wp_error($user) && !is_super_admin($user->ID) ){
+        //we're supposed to just be able to return a changed $redirect_to,
+        //but it appears something else is taking control there, so we'll just do it directly.
+
+        wp_safe_redirect(dcvs_get_landing_page_url($user->ID));
+        exit; //wp_redirect doesn't exit by itself
+    }
+    return $redirect_to;
+}
+
+add_filter( 'login_redirect', 'dcvs_redirect_to_dashboard', 10, 3 );
+
 
