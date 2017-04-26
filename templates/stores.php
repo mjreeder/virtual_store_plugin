@@ -28,7 +28,9 @@ function dcvs_get_all_available_businesses()
 {
 	global $wpdb;
 	$user_id = get_current_user_id();
-	$sql = $wpdb->prepare('SELECT * FROM dcvs_business WHERE id != (SELECT business_id FROM dcvs_user_business WHERE user_id = %d)', $user_id);
+	$active_user_ids = DCVS_Store_Management::get_active_users();
+	$formatted_user_ids = implode(",",$active_user_ids);
+	$sql = $wpdb->prepare('SELECT dcvs_business.*, dcvs_user_business.user_id FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id = dcvs_user_business.business_id  WHERE id != (SELECT business_id FROM dcvs_user_business WHERE user_id = %d) AND dcvs_user_business.user_id IN ('.$formatted_user_ids.')' , $user_id);
 	$businesses = $wpdb->get_results($sql, ARRAY_A);
 	return $businesses;
 
@@ -76,9 +78,21 @@ $current_budget = $persona_budget - $persona_expense ;
 		<ul class="storeList">
 			<?php
 			foreach ($businesses as $business) {
+				$user_blog_id = intval(get_user_blog_id( $business['user_id'] ));
+				$user_site_icon = get_site_icon_url(512, '', $user_blog_id);
 			?>
 				<li>
-					<div onclick="window.location='<?php echo $business['url']?>'"></div>
+					<?php
+					if($user_site_icon == "") {
+						?>
+						<div onclick="window.location='<?php echo $business['url']?>'"></div>
+						<?php
+					} else {
+						?>
+						<img src="<?php echo $user_site_icon; ?>" onclick="window.location='<?php echo $business['url']?>'">
+						<?php
+					}
+					?>
 					<p><?php echo $business['title'] ?></p>
 				</li>
 			<?php
