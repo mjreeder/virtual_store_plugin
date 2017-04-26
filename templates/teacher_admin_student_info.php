@@ -180,9 +180,22 @@ function display_current_student_info()
 						</div>
 					</section>
 					<!-- TODO comparison page -->
-					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="button">
-						STATISTICS
-					</a>
+					<?php
+						if(isset($currentDisplayStudent)){
+							?>
+							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="button">
+								STATISTICS
+							</a>
+							<?php
+						}
+						else{
+							?>
+							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="unavailable">
+								STATISTICS
+							</a>
+							<?php
+						}
+					 ?>
 				</aside>
 			</section>
 		</section>
@@ -204,11 +217,22 @@ function display_current_student_info()
 
 					if(isset($persona_info[0])){
 						?>
-
-						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">
-							ORDER HISTORY
-						</a>
 						<?php
+							if(isset($currentDisplayStudent)){
+								?>
+	 						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">
+	 							ORDER HISTORY
+	 						</a>
+	 						<?php
+							}
+							else{
+								?>
+							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>" class="unavailable">
+								ORDER HISTORY
+							</a>
+							<?php
+							}
+
 					}
 					else{
 						?>
@@ -272,10 +296,21 @@ function display_current_student_info()
 
 					if(isset($persona_info[1])){
 						?>
-						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id ?>" class="button">
+						<?php
+						if(isset($currentDisplayStudent)){
+							?>
+							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id ?>" class="button">
+								ORDER HISTORY
+							</a>
+						<?php
+						}
+						else{
+							?>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id; ?>" class="unavailable">
 							ORDER HISTORY
 						</a>
 						<?php
+						}
 					}
 					else{
 						?>
