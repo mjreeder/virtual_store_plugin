@@ -156,7 +156,7 @@ function display_current_student_info()
 							<?php
 							if(isset($profit)){
 								?>
-								<p>$<?php echo $profit ?> <br></p>
+								<p>$<?php echo $profit ?> PROFIT<br></p>
 								<?php
 							}
 							else{

@@ -54,12 +54,15 @@ if($ware_house_order_history){
 																		$itemInformation = reset($orderMap[$i]);
 																		$id = $itemInformation["item_meta"]['_variation_id'][0];
 																		$productInfo = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
+																		$productDescription = '';
+																		for ($j=0; $j <sizeof($terms) ; $j++) {
+																			$productDescription = $productDescription.' '.$itemInformation[$terms[$j]["taxonomy"]];
+																		}
+
 																		if(isset($productInfo[0])){
 																			$saleInfo = get_value_from_stdClass($productInfo[0]);
-																			$productDescription = '';
-																			for ($j=0; $j <sizeof($terms) ; $j++) {
-																				$productDescription = $productDescription.' '.$itemInformation[$terms[$j]["taxonomy"]];
-																			}
+
+
 																		}
 																		else{
 																			$saleInfo = NUll;

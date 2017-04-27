@@ -26,6 +26,8 @@ add_action('woocommerce_checkout_before_customer_details', 'dcvs_before_billing_
 add_action('woocommerce_checkout_after_customer_details', 'dcvs_after_billing_form');
 add_action('admin_enqueue_scripts', 'dcvs_enqueue_admin_script' );
 add_action('init', 'dcvs_plugin_init');
+add_action('current_screen', 'dcvs_new_post_redirect');
+add_action('current_screen', 'dcvs_enqueue_product_edit_styles');
 
 add_filter('woocommerce_checkout_fields' , 'dcvs_override_checkout_fields');
 add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_cart');
@@ -61,6 +63,17 @@ function dcvs_plugin_init()
     // set default options if they are not currently set
     dcvs_set_default_options();
 
+}
+
+function dcvs_new_post_redirect() {
+    if (is_user_logged_in()) {
+        if (!is_super_admin(get_current_user_id())) {
+            $screen = get_current_screen();
+            if ($screen->action == "add" && $screen->id == "product") {
+                wp_safe_redirect( get_home_url().'/wp-admin/edit.php?post_type=product' );
+            }
+        }
+    }
 }
 
 function dcvs_remove_footer()
@@ -309,6 +322,7 @@ function dcvs_remove_product_tabs($tabs)
         unset($tabs['inventory']);
         unset($tabs['shipping']);
         unset($tabs['attribute']);
+        unset($tabs['advanced']);
     }
 
     return($tabs);
@@ -320,7 +334,17 @@ function dcvs_enqueue_admin_script()
     if (get_current_blog_id() != 1) {
         wp_register_script( 'dcvs_product_edit_script', plugins_url( '/js/editProduct.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
         wp_enqueue_script( 'dcvs_product_edit_script' );
-        wp_enqueue_style( 'dcvs_product_edit_style', plugins_url( '/assets/css/editProduct.css', __FILE__ ) );
+    }
+}
+
+function dcvs_enqueue_product_edit_styles() {
+    if (is_user_logged_in()) {
+        if (!is_super_admin(get_current_user_id())) {
+            $screen = get_current_screen();
+            if ($screen->post_type == "product") {
+                wp_enqueue_style( 'dcvs_product_edit_style', plugins_url( '/assets/css/editProduct.css', __FILE__ ) );
+            }
+        }
     }
 }
 

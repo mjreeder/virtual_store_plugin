@@ -83,7 +83,6 @@ $var = dcvs_get_option('warehouse_end_date', 0);
           date_add(date_create(date($shopping_end_date->format("Y-m-d H:i:s"))), date_interval_create_from_date_string("23 hours 59 minutes 59 seconds"));
           $shopping_end_date = $shopping_end_date->format("Y-m-d H:i:s");
 
-
           if($date_now <= $ware_house_start_date){
             // DISPLAY TIME TO WAREHOUSE SHOPPING BEGINS
             ?>
