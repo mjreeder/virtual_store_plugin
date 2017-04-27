@@ -261,7 +261,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                         if($shopping_over) {
                             ?>
-                            <a href="#">
+                            <a href="/personal-store-evaluation">
                                 <button class="button btnStore">FINAL SURVEY</button>
                             </a>
                             <?php
@@ -333,7 +333,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <?php
                         if($shopping_over) {
                             ?>
-                            <a href="">
+                            <a href="/end-of-shopping-evaluation">
                                 <button class="button personaSmall one">FINAL SURVEY</button>
                             </a>
                             <?php
@@ -397,7 +397,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <?php
                         if($shopping_over) {
                             ?>
-                            <a href="">
+                            <a href="/end-of-shopping-evaluation">
                                 <button class="button personaSmall two">FINAL SURVEY</button>
                             </a>
                             <?php
