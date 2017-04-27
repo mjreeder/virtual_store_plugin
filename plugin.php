@@ -43,6 +43,8 @@ function dcvs_activation_plugin()
 
 function dcvs_plugin_init()
 {
+    register_taxonomy("pa_size", "product");
+    register_taxonomy("pa_color", "product");
     //if the user is not logged in redirect them to do so
     if (!is_user_logged_in() && $GLOBALS['pagenow'] !== 'wp-login.php') {
         auth_redirect();
