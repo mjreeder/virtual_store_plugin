@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
 
     function disableInputs() {
         $("[name*='variable_sku']").attr("type", "hidden").siblings('label').addClass('disabled');
-        $("[name*='variable_stock']").attr("type", "hidden").siblings('label').addClass('disabled');
+        $("[name*='variable_stock']").attr("readonly", "readonly").siblings('label').addClass('disabled');
         $("[name*='variable_backorders']").attr("type", "hidden").siblings('label').addClass('disabled');
         $("[name*='variable_enabled']").attr("type", "hidden").parent('label').addClass('disabled');
         $("[name*='variable_is_downloadable']").attr("type", "hidden").parent('label').addClass('disabled');
