@@ -258,7 +258,16 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <a href="<?php echo get_home_url().'/wp-admin/edit.php?post_type=product'; ?>"><button class="button btnStore">EDIT STORE</button></a>
                     <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
                     <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
-                    <a href="#"><button class="button btnStore">FINAL SURVEY</button></a>
+                    <?php
+                        if($shopping_over) {
+                            ?>
+                            <a href="/personal-store-evaluation">
+                                <button class="button btnStore">FINAL SURVEY</button>
+                            </a>
+                            <?php
+                        }
+                    ?>
+
 
                 </div>
 
@@ -321,7 +330,15 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       </a>
                       <br>
                       <a href=""><button class="button personaSmall one">STATS</button></a>
-                      <a href=""><button class="button personaSmall one">FINAL SURVEY</button></a>
+                        <?php
+                        if($shopping_over) {
+                            ?>
+                            <a href="/end-of-shopping-evaluation">
+                                <button class="button personaSmall one">FINAL SURVEY</button>
+                            </a>
+                            <?php
+                        }
+                        ?>
                     </div>
 
 
@@ -377,7 +394,15 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                       <br>
                       <a href=""><button class="button personaSmall two">STATS</button></a>
-                      <a href=""><button class="button personaSmall two">FINAL SURVEY</button></a>
+                      <?php
+                        if($shopping_over) {
+                            ?>
+                            <a href="/end-of-shopping-evaluation">
+                                <button class="button personaSmall two">FINAL SURVEY</button>
+                            </a>
+                            <?php
+                        }
+                        ?>
                     </div>
 
 
