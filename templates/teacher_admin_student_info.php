@@ -126,9 +126,9 @@ function display_current_student_info()
 						<a href="#" class="button unavailable">PERSONAL SITE</a>
 						<?php
 					}
-					 ?>
 
-					<a href="" class="button">FINAL SURVEY</a>
+					echo '<a href="/wp-admin/admin.php?page=gf_entries&view=entries&id=4&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
+					?>
 					<form class="" action="index.html" method="post">
 							<select class="" name=""></select>
 					</form>
