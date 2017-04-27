@@ -1,3 +1,12 @@
 .disabled {
   opacity: 0.2;
 }
+.duplicate, .delete {
+  display: none;
+}
+#delete-action, #duplicate-action {
+  display: none;
+}
+.woocommerce-BlankState a.button-primary{
+  display: none !important;
+}
