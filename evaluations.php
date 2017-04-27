@@ -16,11 +16,11 @@ function dcvs_redirect_to_dashboard_after_evaluation($entry){
 	global $wpdb;
 	if( isset( $current_user ) && !empty($current_user->roles) ){
 		if(!in_array('administrator', $current_user->roles)) {
-			wp_redirect( get_site_url() . '//wp-content/plugins/virtual_store_plugin/templates/landing.php' );
+			wp_redirect( get_site_url() . '/wp-content/plugins/virtual_store_plugin/templates/landing.php' );
 			exit;
 		}
 	} else {
-		wp_redirect( get_site_url() . '//wp-content/plugins/virtual_store_plugin/templates/landing.php' );
+		wp_redirect( get_site_url() . '/wp-content/plugins/virtual_store_plugin/templates/landing.php' );
 		exit;
 	}
 }
