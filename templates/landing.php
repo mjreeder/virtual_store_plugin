@@ -313,23 +313,26 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                      ?>
 
                     <div class="personaButtons">
-                      <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
-                          <?php
-                          if($shopping_over == false && $shopping_started == true && isset($consumer_info[0])){
-                            ?>
-                            <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
-                            <?php
-                          }
-                          else{
-                            ?>
-                            <button class="button personaSmall one" name="shop_as_consumer_one" disabled>SHOP</button>
-                            <?php
-                          }
+                      <?php
+                      if($shopping_over == false && $shopping_started == true && isset($consumer_info[0])){
+                        ?>
+                        <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
+                          <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
+                          </a>
+                        <?php
 
+                      }
+                      else{
+                        ?>
+                        <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>" class="unavailable">
+                          <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
+                          </a>
+                        <?php
+                      }
 
                            ?>
 
-                      </a>
+
                       <br>
                       <a href=""><button class="button personaSmall one">STATS</button></a>
                         <?php
@@ -376,24 +379,24 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                      ?>
                     <div class="personaButtons">
-                      <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
+                      <?php
+                      if($shopping_over == false && $shopping_started == true && isset($consumer_info[1])){
+                        ?>
+                        <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
+                          <button class="button personaSmall two" name="shop_as_consumer_one">SHOP</button>
+                          </a>
+                        <?php
 
-                          <?php
-
-                          if($shopping_over == false && $shopping_started == true && isset($consumer_info[1])){
-                            ?>
-                            <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
-                            <?php
-                          }
-                          else{
-                            ?>
-                            <button class="button personaSmall two" name="shop_as_consumer_two" disabled>SHOP</button>
-                            <?php
-                          }
-
+                      }
+                      else{
+                        ?>
+                        <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>" class="unavailable">
+                          <button class="button personaSmall two" name="shop_as_consumer_one">SHOP</button>
+                          </a>
+                        <?php
+                      }
 
                            ?>
-                      </a>
 
                       <br>
                       <a href=""><button class="button personaSmall two">STATS</button></a>
