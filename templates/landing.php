@@ -215,12 +215,12 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                     if($ware_house_shopping_over == false){
                       ?>
-                      <a href="<?php echo network_home_url() ?>"><button class="button">WAREHOUSE</button></a>
+                      <a href="<?php echo network_home_url() .'shop' ?>"><button class="button">WAREHOUSE</button></a>
                       <?php
                     }
                     else{
                       ?>
-                      <a href="<?php echo network_home_url() ?>" class="unavailable"><button class="button">WAREHOUSE</button></a>
+                      <a href="<?php echo network_home_url() .'shop'  ?>" class="unavailable"><button class="button">WAREHOUSE</button></a>
                       <?php
                     }
 
