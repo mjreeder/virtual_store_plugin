@@ -127,7 +127,7 @@ function display_current_student_info()
 						<?php
 					}
 
-					echo '<a href="/wp-admin/admin.php?page=gf_entries&view=entries&id=4&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entries&id=4&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
 					?>
 					<form class="" action="index.html" method="post">
 							<select class="mainColor" name=""></select>
@@ -244,7 +244,7 @@ function display_current_student_info()
 						</a>
 						<?php
 					}
-				echo '<a href="/wp-admin/admin.php?page=gf_entries&view=entries&id=3&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
+				echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entries&id=3&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
 				?>
 				<form class="" action="index.html" method="post">
 					<select class="one" name=""></select>
@@ -325,7 +325,7 @@ function display_current_student_info()
 						</a>
 						<?php
 					}
-					echo '<a href="/wp-admin/admin.php?page=gf_entries&view=entries&id=3&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
+					echo '<a href="'. get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entries&id=3&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
 				?>
 
 				<form class="" action="index.html" method="post">
