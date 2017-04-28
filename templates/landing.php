@@ -263,7 +263,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                         if($shopping_over) {
                             ?>
-                            <a href=" <?php echo get_site_url() . '/personal-store-evaluation'; ?>">
+                            <a href=" <?php echo get_home_url() . '/personal-store-evaluation'; ?>">
                                 <button class="button btnStore">FINAL SURVEY</button>
                             </a>
                             <?php
@@ -338,7 +338,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <?php
                         if($shopping_over) {
                             ?>
-                            <a href="<?php echo get_site_url() . '/end-of-shopping-evaluation'?>">
+                            <a href="<?php echo get_home_url() . '/end-of-shopping-evaluation'?>">
                                 <button class="button personaSmall one">FINAL SURVEY</button>
                             </a>
                             <?php
@@ -403,7 +403,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <?php
                         if($shopping_over) {
                             ?>
-                            <a href="<?php echo get_site_url() . '/end-of-shopping-evaluation'?>">
+                            <a href="<?php echo get_home_url() . '/end-of-shopping-evaluation'?>">
                                 <button class="button personaSmall two">FINAL SURVEY</button>
                             </a>
                             <?php
