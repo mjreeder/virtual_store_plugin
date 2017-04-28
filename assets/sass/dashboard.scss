@@ -462,3 +462,57 @@ html {
     pointer-events: none;
     cursor: default;
 }
+.stats {
+    display: flex;
+    flex-direction: column;
+    h1 {
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      color: $darkGray;
+      font-size: 45px;
+      margin-left: 75px;
+      padding: 25px;
+    }
+}
+.tableWrapper {
+    height: auto;
+    overflow: scroll;
+}
+.virtualTable {
+    color: $darkGray;
+    border-collapse: collapse;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    width: 100%;
+    .desc {
+        font-weight: 400;
+    }
+    th {
+        padding: 18px 0;
+    }
+    tr {
+        background-color: #F2F2F2;
+        font-size: 15px;
+    }
+    td {
+        padding: 15px 30px;
+        text-align: center;
+        img {
+            height: 25px;
+        }
+    }
+    tr:nth-child(2n+1) {
+        background-color: #E0E0E0;
+    }
+    tr:first-child {
+        background-color: $darkGray;
+        width: calc(100% - 223px);
+        color: white;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 700;
+        font-size: 17px;
+    }
+    input[type=image] {
+        height: 25px;
+    }
+}
