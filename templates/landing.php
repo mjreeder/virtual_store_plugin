@@ -69,6 +69,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
           $ware_house_shopping_over = false;
           $shopping_over = false;
+          $shopping_started = false;
 
 
           date_add(date_create(date($ware_house_start_date->format("Y-m-d H:i:s"))), date_interval_create_from_date_string("23 hours 59 minutes 59 seconds"));
@@ -109,7 +110,9 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <?php
           }
           elseif($date_now >= $shopping_start_date && $date_now < $shopping_end_date){
+            $shopping_started = true;
             ?>
+
             <p>
               time left until shopping ends :
             <b id="remaining-time"> <script>getTime("<?php echo $shopping_end_date.''; ?>")</script></b></p>
@@ -312,7 +315,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <div class="personaButtons">
                       <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>">
                           <?php
-                          if($shopping_over == false|| isset($consumer_info[0])){
+                          if($shopping_over == false && $shopping_started == true && isset($consumer_info[0])){
                             ?>
                             <button class="button personaSmall one" name="shop_as_consumer_one">SHOP</button>
                             <?php
@@ -376,7 +379,8 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <a href="<?php echo plugins_url( 'templates/stores.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>">
 
                           <?php
-                          if($shopping_over == false || isset($consumer_info[1])){
+
+                          if($shopping_over == false && $shopping_started == true && isset($consumer_info[1])){
                             ?>
                             <button class="button personaSmall two" name="shop_as_consumer_two">SHOP</button>
                             <?php
