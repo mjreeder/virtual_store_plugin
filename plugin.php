@@ -380,7 +380,7 @@ function dcvs_redirect_to_dashboard($redirect_to, $request, $user){
         //we're supposed to just be able to return a changed $redirect_to,
         //but it appears something else is taking control there, so we'll just do it directly.
 
-        wp_safe_redirect(dcvs_get_landing_page_url($user->ID));
+        wp_redirect(dcvs_get_landing_page_url($user->ID));
         exit; //wp_redirect doesn't exit by itself
     }
     return $redirect_to;
