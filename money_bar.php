@@ -1,5 +1,17 @@
 <?php
 
+function dcvs_include_money_bar()
+{
+	if (is_user_logged_in()) {
+		if (!is_super_admin(get_current_user_id())) {
+			add_action( 'wp_enqueue_scripts', 'dcvs_enqueue_money_bar_style' );
+			add_action( 'wp_footer', 'dcvs_add_money_bar' );
+		}
+	}
+}
+add_action('init', 'dcvs_include_money_bar');
+
+
 function dcvs_enqueue_money_bar_style() {
 	wp_enqueue_style( 'budgetBar_css', plugins_url('assets/css/budgetBar.css', __FILE__) );
 }
@@ -68,11 +80,37 @@ function dcvs_add_money_bar() {
 			</div>
 		</footer>
 		<?php
+	} else {
+		$business = dcvs_get_business_by_user_id( $user_id );
+
+		$business_description = $business['description'];
+		$business_budget = $business['money'];
+		$business_expense = dcvs_get_business_expenses($user_id);
+
+		$current_budget = $business_budget - $business_expense - $cart_cost;
+
+		$landing_page_url = dcvs_get_landing_page_url();
+
+		?>
+		<!-- FONTS -->
+		<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
+
+		<footer class="budgetBar">
+
+			<div class="bar">
+				<div class="barLeft"><span><h1>Your Store</h1></span></div>
+				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
+			</div>
+			<div class="barSummary">
+				<h2>you are:</h2>
+				<p><?php echo $business_description ?></p>
+			</div>
+		</footer>
+		<?php
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'dcvs_enqueue_money_bar_style' );
-add_action( 'wp_footer', 'dcvs_add_money_bar' );
 
 function get_user_blog_id($user_id) {
 	global $wpdb;
@@ -112,6 +150,9 @@ function dcvs_get_current_persona($user_id) {
 	global $wpdb;
 	$sql = $wpdb->prepare("SELECT * FROM dcvs_persona WHERE id = (SELECT persona_id FROM dcvs_user_persona WHERE id = ( SELECT current_persona_id FROM dcvs_current_persona WHERE user_id = '%d'))", [$user_id]);
 	$response = $wpdb->get_results($sql, ARRAY_A);
+	if (count($response) < 1) {
+		return null;
+	}
 	$persona = $response[0];
 	return $persona;
 }

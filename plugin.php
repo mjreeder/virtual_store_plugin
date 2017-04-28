@@ -388,4 +388,21 @@ function dcvs_redirect_to_dashboard($redirect_to, $request, $user){
 
 add_filter( 'login_redirect', 'dcvs_redirect_to_dashboard', 10, 3 );
 
+function dcvs_redirect_if_no_current_persona() {
+    if (is_user_logged_in()) {
+        $user_id = get_current_user_id();
+        if (!is_super_admin($user_id)) {
+            $persona = dcvs_get_current_persona( $user_id );
+            $user_business_id = get_user_blog_id( $user_id );
+
+            if (get_current_blog_id() != $user_business_id && get_current_blog_id() != 1) {
+                if ($persona == null) {
+                    wp_redirect(dcvs_get_landing_page_url($user_id));
+                    exit;
+                }
+            }
+        }
+    }
+}
+add_action('init', 'dcvs_redirect_if_no_current_persona');
 
