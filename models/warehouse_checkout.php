@@ -440,7 +440,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 				update_post_meta( $new_post_id, 'is_taxonomy', '1' );
 				update_post_meta( $new_post_id, 'is_purchasable', true);
 				update_post_meta( $new_post_id, '_manage_stock', 'yes' );
-				update_post_meta( $new_post_id, '_backorders', 'yes' );
+				update_post_meta( $new_post_id, '_backorders', 'no' );
 				update_post_meta( $new_post_id, '_stock', $tracking_object->quantities[$y] );
 
 				$product_attribute_keys = array_keys($tracking_object->product_attributes);
