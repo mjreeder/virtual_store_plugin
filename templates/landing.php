@@ -351,7 +351,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <?php
                         if($shopping_over) {
                             ?>
-                            <a href="<?php echo get_site_url(1) . '/end-of-shopping-evaluation'?>">
+                            <a href="<?php echo get_site_url(1) . '/end-of-shopping-evaluation?persona_id=' . $consumer_info[0]->id ?>">
                                 <button class="button personaSmall one">FINAL SURVEY</button>
                             </a>
                             <?php
@@ -424,7 +424,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <?php
                         if($shopping_over) {
                             ?>
-                            <a href="<?php echo get_site_url(1) . '/end-of-shopping-evaluation'?>">
+                            <a href="<?php echo get_site_url(1) . '/end-of-shopping-evaluation?persona_id=' . $consumer_info[1]->id ?>">
                                 <button class="button personaSmall two">FINAL SURVEY</button>
                             </a>
                             <?php
