@@ -28,13 +28,15 @@ $business_expense = dcvs_get_business_expenses( $current_user_ID );
 $consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
 if(isset($consumer_info[0])){
   $consumer_1_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[0]->persona_id);
-} else {
-    $consumer_1_expense = 0;
+}
+else{
+  $consumer_1_expense = 0;
 }
 if(isset($consumer_info[1])){
   $consumer_2_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[1]->persona_id);
-} else {
-    $consumer_2_expense = 0;
+}
+else{
+  $consumer_2_expense = 0;
 }
 
 $var = dcvs_get_option('warehouse_end_date', 0);
@@ -114,6 +116,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
           }
           elseif($date_now >= $shopping_start_date && $date_now < $shopping_end_date){
             $shopping_started = true;
+            $ware_house_shopping_over = true;
             ?>
 
             <p>
@@ -270,12 +273,6 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                                 <button class="button btnStore">FINAL SURVEY</button>
                             </a>
                             <?php
-                        } else {
-                            ?>
-                            <a href=" <?php echo get_site_url() . '/personal-store-evaluation'; ?>" class="unavailable">
-                                <button class="button btnStore">FINAL SURVEY</button>
-                            </a>
-                            <?php
                         }
                     ?>
 
@@ -351,12 +348,6 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                                 <button class="button personaSmall one">FINAL SURVEY</button>
                             </a>
                             <?php
-                        } else {
-                            ?>
-                            <a href="<?php echo get_site_url() . '/end-of-shopping-evaluation'?>" class="unavailable">
-                                <button class="button personaSmall one">FINAL SURVEY</button>
-                            </a>
-                            <?php
                         }
                         ?>
                     </div>
@@ -377,6 +368,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <p><?php echo $consumer_info[1]->description ?>
                             <br>
                             <br>
+                            <!-- TODO fix -->
                             <b>persona budget: $<?php echo $consumer_info[1]->money - $consumer_2_expense ?></b>
                         </p>
                         <?php
@@ -419,12 +411,6 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         if($shopping_over) {
                             ?>
                             <a href="<?php echo get_site_url(1) . '/end-of-shopping-evaluation'?>">
-                                <button class="button personaSmall two">FINAL SURVEY</button>
-                            </a>
-                            <?php
-                        } else {
-                            ?>
-                            <a href="<?php echo get_site_url() . '/end-of-shopping-evaluation'?>" class="unavailable">
                                 <button class="button personaSmall two">FINAL SURVEY</button>
                             </a>
                             <?php

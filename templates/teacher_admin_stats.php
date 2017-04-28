@@ -17,13 +17,23 @@ if($ware_house_order_history){
 		$items = unserialize(get_value_from_stdClass($ware_house_order_history[$j])['items']);
 		for ($i=0; $i < sizeof($items) ; $i++) {
 			$id = $items[$i]['item_meta']['_variation_id'][0];
-			if(isset($orderMap[0][$id])){
-				$orderMap[0][$id]["item_meta"]["_qty"][0] += $items[$i]['item_meta']["_qty"][0];
-				$orderMap[0][$id]["item_meta"]["_line_subtotal"][0] += $items[$i]["item_meta"]["_line_subtotal"][0];
+			if(isset($orderMap[0])){
+				$found = false;
+				for ($z=0; $z <sizeof($orderMap);$z++) {
+					if(isset($orderMap[$z][$id])){
+						$found = true;
+						$orderMap[$z][$id]["item_meta"]["_qty"][0] += $items[$i]['item_meta']["_qty"][0];
+						$orderMap[$z][$id]["item_meta"]["_line_subtotal"][0] += $items[$i]["item_meta"]["_line_subtotal"][0];
+					}
+				}
+				if($found == false){
+					$orderMap[] = array($id => $items[$i]);
+				}
 			}
 			else{
 				$orderMap[] = array($id => $items[$i]);
 			}
+
 		}
 	}
 }
