@@ -39,8 +39,7 @@ if( !class_exists('DCVS_Admin_Menu_Simplification') ) {
 			$args = array(
 				'id'    => 'dcvs-dashboard',
 				'title' => 'Virtual Store Dashboard',
-				//TODO add the link to the student dashboard here
-				'href'  => '',
+				'href'  => dcvs_get_landing_page_url(get_current_user_id()),
 				'meta'  => array( 'class' => 'dcvs-dashboard-button' )
 			);
 			$wp_admin_bar->add_node( $args );
