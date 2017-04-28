@@ -85,11 +85,11 @@ $current_budget = $persona_budget - $persona_expense ;
 					<?php
 					if($user_site_icon == "") {
 						?>
-						<div onclick="window.location='<?php echo $business['url']?>'"></div>
+						<div onclick="window.location='<?php echo $business['url'] . 'shop'; ?>'"></div>
 						<?php
 					} else {
 						?>
-						<img src="<?php echo $user_site_icon; ?>" onclick="window.location='<?php echo $business['url']?>'">
+						<img src="<?php echo $user_site_icon; ?>" onclick="window.location='<?php echo $business['url'] . 'shop';?>'">
 						<?php
 					}
 					?>
