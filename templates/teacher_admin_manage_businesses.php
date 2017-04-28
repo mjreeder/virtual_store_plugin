@@ -31,14 +31,16 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 
 $pencil_image = plugins_url( 'assets/images/pencil.svg', dirname(__FILE__));
 
-$user_args = array( 'role' => 'Customer');
-$users = get_users($user_args);
+//$user_args = array( 'role' => 'Customer');
+//$users = get_users($user_args);
+//
+//$user_ids = [];
+//
+//for ($i = 0; $i < count($users); $i++){
+//	$user_ids[] = $users[$i]->data->ID;
+//}
 
-$user_ids = [];
-
-for ($i = 0; $i < count($users); $i++){
-	$user_ids[] = $users[$i]->data->ID;
-}
+$user_ids = DCVS_Store_Management::get_active_users();
 
 $formatted_user_ids = implode(',', $user_ids);
 

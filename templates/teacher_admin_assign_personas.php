@@ -1,7 +1,13 @@
 <?php
-$user_args = array( 'role' => 'Customer');
-$users = get_users($user_args);
+
+$users_unformatted = DCVS_Store_Management::get_active_users();
+$users = [];
+foreach ($users_unformatted as $user) {
+    $users[] = $user;
+}
+
 $toast = null;
+
 if ($_SERVER['REQUEST_METHOD']=="POST") {
     if (isset($_POST['assign_personas'])) {
         dcvs_deal_with_persona_assigning( $users );
@@ -68,9 +74,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
             }
             uksort( $persona_split_by_category, 'strcasecmp' );
             $persona_categories = array_keys( $persona_split_by_category );
-            for($i = 0; $i < sizeof($users); $i++) {
-              $user = get_object_vars($users[$i]);
-              $id = $user["ID"];
+            for($i = 0; $i < count($users); $i++) {
+              $id = $users[$i];
               $usermeta = get_user_meta($id);
               $personas = dcvs_get_user_personas($id);
               $business_category = dcvs_get_user_business_category($id);
@@ -188,10 +193,8 @@ function dcvs_deal_with_persona_assigning( $users ) {
     if (dcvs_all_personas_assigned( $users )) {
         dcvs_reset_and_assign_user_personas($users);
     } else {
-        for ($i = 0; $i < sizeof($users); $i++) {
-            $user = get_object_vars($users[$i]);
-            $id = $user["ID"];
-            dcvs_assign_persona($id);
+        for ($i = 0; $i < count($users); $i++) {
+            dcvs_assign_persona($users[$i]);
         }
     }
 }
@@ -199,7 +202,7 @@ function dcvs_deal_with_persona_assigning( $users ) {
 function dcvs_all_personas_assigned( $users ) {
     global $wpdb;
     $user_personas = $wpdb->get_results("SELECT * FROM dcvs_user_persona");
-    if (sizeof($user_personas) >= 2*sizeof($users)) {
+    if (sizeof($user_personas) >= 2*count($users)) {
         return true;
     } else {
         return false;
@@ -208,11 +211,9 @@ function dcvs_all_personas_assigned( $users ) {
 
 function dcvs_reset_and_assign_user_personas($users) {
     global $wpdb;
-    for($i = 0; $i < sizeof($users); $i++) {
-        $user = get_object_vars($users[$i]);
-        $id = $user["ID"];
-        $wpdb->delete('dcvs_user_persona', array('user_id'=>$id));
-        dcvs_assign_persona($id);
+    for($i = 0; $i < count($users); $i++) {
+        $wpdb->delete('dcvs_user_persona', array('user_id'=>$users[$i]));
+        dcvs_assign_persona($users[$i]);
     }
 }
 
