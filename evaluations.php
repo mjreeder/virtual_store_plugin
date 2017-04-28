@@ -5,22 +5,23 @@ global $current_user;
 add_action('woocommerce_thankyou','dcvs_survey_time');
 function dcvs_survey_time($order_id){
 	if( get_current_blog_id() == 1 ){
-		wp_redirect(network_site_url('/warehouse-evaluation'));
+		wp_safe_redirect(network_site_url('/warehouse-evaluation'));
+		exit;
 	} else {
-		wp_redirect(network_site_url('/shopping-evaluation?store_id='.get_current_blog_id()));
+		wp_safe_redirect(network_site_url('/shopping-evaluation?store_id='.get_current_blog_id()));
+		exit;
 	}
 }
 
 add_action( 'gform_after_submission', 'dcvs_redirect_to_dashboard_after_evaluation' );
 function dcvs_redirect_to_dashboard_after_evaluation($entry){
-	global $wpdb;
-	if( isset( $current_user ) && !empty($current_user->roles) ){
-		if(!in_array('administrator', $current_user->roles)) {
-			wp_redirect( get_site_url() . '/wp-content/plugins/virtual_store_plugin/templates/landing.php' );
+	if (is_user_logged_in()) {
+		if (!is_super_admin(get_current_user_id())) {
+			wp_safe_redirect( dcvs_get_landing_page_url(get_current_user_id()) );
 			exit;
 		}
 	} else {
-		wp_redirect( get_site_url() . '/wp-content/plugins/virtual_store_plugin/templates/landing.php' );
+		wp_safe_redirect( site_url() );
 		exit;
 	}
 }
