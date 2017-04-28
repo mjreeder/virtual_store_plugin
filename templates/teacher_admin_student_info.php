@@ -130,7 +130,7 @@ function display_current_student_info()
 					echo '<a href="/wp-admin/admin.php?page=gf_entries&view=entries&id=4&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
 					?>
 					<form class="" action="index.html" method="post">
-							<select class="" name=""></select>
+							<select class="mainColor" name=""></select>
 					</form>
 					<!-- TODO get remaining budget-->
 					<?php
@@ -247,7 +247,7 @@ function display_current_student_info()
 				echo '<a href="/wp-admin/admin.php?page=gf_entries&view=entries&id=3&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
 				?>
 				<form class="" action="index.html" method="post">
-					<select class="" name=""></select>
+					<select class="one" name=""></select>
 				</form>
 				<section class="facts">
 					<div class="fact">
@@ -327,9 +327,10 @@ function display_current_student_info()
 					}
 					echo '<a href="/wp-admin/admin.php?page=gf_entries&view=entries&id=3&orderby=0&order=ASC&s="' . $currentDisplayStudent . '"&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>'
 				?>
-				
+
 				<form class="" action="index.html" method="post">
-					<select class="" name=""></select>
+					<select class="two" name="">
+					</select>
 				</form>
 				<section class="facts">
 					<div class="fact">
