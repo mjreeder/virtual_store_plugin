@@ -219,6 +219,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 			if( class_exists('WC_Install') ){
 				switch_to_blog( $blog_id );
 				WC_Install::install();
+				WC_Install::create_pages();
 				restore_current_blog();
 			}
 		}
