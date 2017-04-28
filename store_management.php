@@ -218,9 +218,7 @@ if( !class_exists('DCVS_Store_Management') ) {
 			//use the built-in WooCommerce function to install and setup the pages needed to run WooCommerce (ex: cart, checkout, etc.)
 			if( class_exists('WC_Install') ){
 				switch_to_blog( $blog_id );
-				WC_Install::create_pages();
-				WC_Install::remove_roles();
-				WC_Install::create_roles();
+				WC_Install::install();
 				restore_current_blog();
 			}
 		}
