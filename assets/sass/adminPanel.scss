@@ -238,6 +238,9 @@ label {
                 form {
                     select {
                       width: 100%;
+                      color: white;
+                      font-family: 'Open Sans', sans-serif;
+                      font-weight: 600;
                     }
                 }
             }
@@ -298,6 +301,9 @@ label {
               select {
                   width: 100%;
                   margin-bottom: 10px;
+                  color: white;
+                  font-family: 'Open Sans', sans-serif;
+                  font-weight: 600;
               }
             }
         }
@@ -325,6 +331,9 @@ label {
               select {
                   width: 100%;
                   margin-bottom: 10px;
+                  color: white;
+                  font-family: 'Open Sans', sans-serif;
+                  font-weight: 600;
               }
             }
         }
@@ -948,4 +957,7 @@ label {
     align-self: flex-start;
     margin-top: 15px;
     margin-left: 345px;
+}
+.mainColor {
+    background-color: $yellow;
 }
