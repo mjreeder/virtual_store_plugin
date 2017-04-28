@@ -102,9 +102,9 @@ $current_budget = $persona_budget - $persona_expense ;
 
 	</div>
 
-	<footer class="budgetBar">
+	<footer class="budgetBar" id="bar">
 
-		<div class="bar">
+		<div class="bar" onclick="toggleHeight()">
 			<div class="barLeft"><span><h1><?php echo $persona_name ?></h1></span></div>
 			<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 			<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
@@ -115,6 +115,21 @@ $current_budget = $persona_budget - $persona_expense ;
 			<p><?php echo $persona_description ?></p>
 		</div>
 	</footer>
+
+	<script>
+		var bar = document.getElementById('bar');
+
+		var toggleHeight = function() {
+			var style = window.getComputedStyle(bar);
+			var bottom = style.getPropertyValue('bottom');
+			if(bottom == "0px") {
+				bar.style.bottom ="-120px";
+			}
+			else {
+				bar.style.bottom ="0";
+			}
+		};
+	</script>
 
 </body>
 

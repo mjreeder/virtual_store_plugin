@@ -39,9 +39,9 @@ function dcvs_add_money_bar() {
 		<!-- FONTS -->
 		<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
 
-		<footer class="budgetBar">
+		<footer class="budgetBar" id="bar">
 
-			<div class="bar">
+			<div class="bar" onclick="toggleHeight()">
 				<div class="barLeft"><span><h1><?php echo $business_title ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
@@ -51,6 +51,21 @@ function dcvs_add_money_bar() {
 				<p><?php echo $business_description ?></p>
 			</div>
 		</footer>
+		
+		<script>
+			var bar = document.getElementById('bar');
+
+			var toggleHeight = function() {
+				var style = window.getComputedStyle(bar);
+				var bottom = style.getPropertyValue('bottom');
+				if(bottom == "0px") {
+					bar.style.bottom ="-120px";
+				}
+				else {
+					bar.style.bottom ="0";
+				}
+			};
+		</script>
 		<?php
 	} else if (get_user_blog_id( $user_id ) != get_current_blog_id()) {
 
@@ -66,9 +81,9 @@ function dcvs_add_money_bar() {
 		$store_list_url = dcvs_get_store_list_url();
 		
 		?>
-		<footer class="budgetBar">
+		<footer class="budgetBar" id="bar">
 
-			<div class="bar">
+			<div class="bar" onclick="toggleHeight()">
 				<div class="barLeft"><span><h1><?php echo $persona_name ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $store_list_url ?>"><span>Back To Store List</span></a>
@@ -79,6 +94,21 @@ function dcvs_add_money_bar() {
 				<p><?php echo $persona_description ?></p>
 			</div>
 		</footer>
+
+		<script>
+			var bar = document.getElementById('bar');
+
+			var toggleHeight = function() {
+				var style = window.getComputedStyle(bar);
+				var bottom = style.getPropertyValue('bottom');
+				if(bottom == "0px") {
+					bar.style.bottom ="-120px";
+				}
+				else {
+					bar.style.bottom ="0";
+				}
+			};
+		</script>
 		<?php
 	} else {
 		$business = dcvs_get_business_by_user_id( $user_id );
@@ -95,9 +125,9 @@ function dcvs_add_money_bar() {
 		<!-- FONTS -->
 		<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
 
-		<footer class="budgetBar">
+		<footer class="budgetBar" id="bar">
 
-			<div class="bar">
+			<div class="bar" onclick="toggleHeight()">
 				<div class="barLeft"><span><h1>Your Store</h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
@@ -107,6 +137,21 @@ function dcvs_add_money_bar() {
 				<p><?php echo $business_description ?></p>
 			</div>
 		</footer>
+
+		<script>
+			var bar = document.getElementById('bar');
+
+			var toggleHeight = function() {
+				var style = window.getComputedStyle(bar);
+				var bottom = style.getPropertyValue('bottom');
+				if(bottom == "0px") {
+					bar.style.bottom ="-120px";
+				}
+				else {
+					bar.style.bottom ="0";
+				}
+			};
+		</script>
 		<?php
 	}
 }
