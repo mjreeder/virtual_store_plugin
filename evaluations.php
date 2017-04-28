@@ -17,7 +17,7 @@ add_action( 'gform_after_submission', 'dcvs_redirect_to_dashboard_after_evaluati
 function dcvs_redirect_to_dashboard_after_evaluation($entry){
 	if (is_user_logged_in()) {
 		if (!is_super_admin(get_current_user_id())) {
-			wp_safe_redirect( dcvs_get_landing_page_url(get_current_user_id()) );
+			wp_redirect( dcvs_get_landing_page_url(get_current_user_id()) );
 			exit;
 		}
 	} else {
