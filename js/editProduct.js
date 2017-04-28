@@ -76,7 +76,7 @@ jQuery(document).ready(function($) {
             }
 
         }
-        $("select[name*='attribute_']").prop("disabled", true);
+        $("select[name*='attribute_pa']").prop("disabled", true);
         $("select[name*='variable_backorders']").prop("disabled", true);
         $("select[name*='variable_stock_status']").prop("disabled", true);
 
