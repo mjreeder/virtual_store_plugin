@@ -36,6 +36,7 @@ add_filter('woocommerce_is_purchasable', 'dvcs_is_purchasable', 10, 2);
 add_filter('woocommerce_variation_is_purchasable', 'dvcs_is_purchasable', 10, 2);
 add_filter('gettext', 'dvcs_customize_product_variation_message', 10, 3);
 add_filter('woocommerce_product_data_tabs', 'dcvs_remove_product_tabs', 10, 1);
+add_filter("woocommerce_attribute_taxonomies", 'dcvs_woocommerce_taxonomies');
 
 register_activation_hook(__FILE__, 'dcvs_activation_plugin');
 function dcvs_activation_plugin()
@@ -63,6 +64,11 @@ function dcvs_plugin_init()
     // set default options if they are not currently set
     dcvs_set_default_options();
 
+}
+
+function dcvs_woocommerce_taxonomies($array){
+	global $wpdb;
+	return $attribute_taxonomies = $wpdb->get_results( "SELECT * FROM wp_woocommerce_attribute_taxonomies order by attribute_name ASC;" );
 }
 
 function dcvs_new_post_redirect() {
