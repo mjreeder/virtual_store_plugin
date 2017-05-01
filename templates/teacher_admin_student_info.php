@@ -83,6 +83,13 @@ function display_current_student_info()
 
 	}
 
+	$warehouse_evaluation_id = 1;
+	$shopping_evaluation_id = 2;
+	$end_of_shopping_evaluation_id = 3;
+	$personal_store_evaluation_id = 4;
+	$shopping_evaluation_persona_key = 13;
+	$end_of_shopping_evaluation_persona_key = 3;
+
 
 	?>
 		<section class="studentInfo" id='mainView'>
@@ -137,21 +144,21 @@ function display_current_student_info()
 						'key' => 'created_by',
 						'value' => $currentDisplayStudent
 					);
-					$entries = GFAPI::get_entries(4, $search_criteria);
+					$entries = GFAPI::get_entries($personal_store_evaluation_id, $search_criteria);
 
 					if ($entries) {
-						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $personal_store_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
 					} else {
-						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $personal_store_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
 					}
-					$entries = GFAPI::get_entries(1, $search_criteria);
+					$entries = GFAPI::get_entries($warehouse_evaluation_id, $search_criteria);
 					?>
 					<form class="" action="index.html" method="post">
 							<select class="mainColor" name="" onchange="window.location.href = this.value">
 								<option value="">SELECT AN ENTRY</option>
 								<?php
 								foreach ($entries as $entry){
-									echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=1&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
+									echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $warehouse_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
 								}
 								?>
 							</select>
@@ -277,30 +284,30 @@ function display_current_student_info()
 					'value' => $currentDisplayStudent
 				);
 				$search_criteria['field_filters'][] = array(
-					'key' => '3',
+					'key' => $end_of_shopping_evaluation_persona_key,
 					'value' => $persona_info[0]->persona_id
 				);
 
-				$entries = GFAPI::get_entries(3, $search_criteria);
+				$entries = GFAPI::get_entries($end_of_shopping_evaluation_id, $search_criteria);
 
 				if ($entries) {
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
 				} else {
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
 				}
 				$search_criteria['field_filters'][1] = array(
-					'key' => '13',
+					'key' => $shopping_evaluation_persona_key,
 					'value' => $persona_info[0]->persona_id
 				);
 
-				$entries = GFAPI::get_entries(2, $search_criteria);
+				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
 				?>
 				<form class="" action="index.html" method="post">
 					<select class="one" name="" onchange="window.location.href = this.value">
 						<option value="">SELECT AN ENTRY</option>
 						<?php
 						foreach ($entries as $entry){
-							echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=2&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
+							echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
 						}
 						?>
 					</select>
@@ -390,29 +397,29 @@ function display_current_student_info()
 					'value' => $currentDisplayStudent
 				);
 				$search_criteria['field_filters'][] = array(
-					'key' => '3',
+					'key' => $end_of_shopping_evaluation_persona_key,
 					'value' => $persona_info[1]->persona_id
 				);
 
-				$entries = GFAPI::get_entries(3, $search_criteria);
+				$entries = GFAPI::get_entries($end_of_shopping_evaluation_id, $search_criteria);
 				if ($entries) {
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
 				} else {
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
 				}
 				$search_criteria['field_filters'][1] = array(
-					'key' => '13',
+					'key' => $shopping_evaluation_persona_key,
 					'value' => $persona_info[1]->persona_id
 				);
 
-				$entries = GFAPI::get_entries(2, $search_criteria);
+				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
 				?>
 				<form class="" action="index.html" method="post">
 					<select class="two" name="" onchange="window.location.href = this.value">
 						<option value="">SELECT AN ENTRY</option>
 						<?php
 						foreach ($entries as $entry){
-							echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=2&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
+							echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
 						}
 						?>
 					</select>
