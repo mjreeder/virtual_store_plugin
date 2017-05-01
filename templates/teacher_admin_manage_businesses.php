@@ -121,13 +121,13 @@ $categories = dcvs_get_all_categories();
 			<input type="text" name="budget" placeholder="budget" id="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
 			<select id="categorySelect" name="category_id">
-				<option value="-1" disabled selected>Select a category</option>
+				<option value="-1" selected>Select a category</option>
 				<?php
 				foreach ($categories as $category) {
 					$category_id   = $category['id'];
 					$category_name = $category['name'];
 					?>
-					<option value="<?php echo $category_id ?>"><?php echo $category_name ?></option>
+					<option value="<?php echo $category_id ?>"><?php echo stripslashes_deep($category_name); ?></option>
 					<?php
 				}
 				?>
@@ -162,10 +162,10 @@ $categories = dcvs_get_all_categories();
 				?>
 				<tr>
 					<td><?php echo $student_display_name; ?></td>
-					<td><?php echo $business_category_name; ?></td>
-					<td><?php echo $business_title ?></td>
+					<td><?php echo stripslashes_deep($business_category_name); ?></td>
+					<td><?php echo stripslashes_deep($business_title); ?></td>
 					<td>$<?php echo $business_money ?></td>
-					<td class="desc"><?php echo $business_description != "" ? $business_description : '<i>NOT SET</i>'; ?></td>
+					<td class="desc"><?php echo $business_description != "" ? stripslashes_deep($business_description) : '<i>NOT SET</i>'; ?></td>
 					<td><img src="<?php echo $pencil_image; ?>" alt="edit persona button" onclick="editBusiness('<?php echo $business_id ?>', '<?php echo $business_title ?>', '<?php echo $business_money ?>', '<?php echo $business_description ?>', '<?php echo $business_category_id ?>')"></td>
 				</tr>
 			<?php
