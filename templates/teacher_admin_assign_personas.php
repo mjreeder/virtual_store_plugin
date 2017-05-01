@@ -96,11 +96,11 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
               $persona_2_id = isset( $personas['Persona 2 id'] ) ? $personas['Persona 2 id'] : -1;
               ?>
               <tr>
-                <td><?php echo $student_display_name; ?></td>
+                <td><?php echo stripslashes_deep($student_display_name); ?></td>
 
                 <!-- Business -->
                 <td>
-                  <?php echo $business_category_name; ?>
+                  <?php echo stripslashes_deep($business_category_name); ?>
                 </td>
 
                 <!-- Persona 1 -->
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                             for($z = 0; $z < count($persona_split_by_category[$persona_categories[$j]]); $z++) {
                                 $persona = $persona_split_by_category[$persona_categories[$j]][$z];
                                 ?>
-                                <option value="<?php echo $persona["id"]; ?>" <?php echo $persona_1_id == $persona["id"] ? "selected": "";?> ><?php echo $persona["name"]; ?></option>
+                                <option value="<?php echo $persona["id"]; ?>" <?php echo $persona_1_id == $persona["id"] ? "selected": "";?> ><?php echo stripslashes_deep($persona["name"]); ?></option>
                                 <?php
                             }
                             ?>
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                                 for($z = 0; $z < count($persona_split_by_category[$persona_categories[$j]]); $z++) {
                                     $persona = $persona_split_by_category[$persona_categories[$j]][$z];
                                     ?>
-                                    <option value="<?php echo $persona["id"]; ?>" <?php echo $persona_2_id == $persona["id"] ? "selected": "";?> ><?php echo $persona["name"]; ?></option>
+                                    <option value="<?php echo $persona["id"]; ?>" <?php echo $persona_2_id == $persona["id"] ? "selected": "";?> ><?php echo stripslashes_deep($persona["name"]); ?></option>
                                     <?php
                                 }
                                 ?>

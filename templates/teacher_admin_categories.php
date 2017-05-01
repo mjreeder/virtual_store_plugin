@@ -128,8 +128,8 @@ $categories = dcvs_get_all_categories();
 			?>
 
 				<tr>
-					<td><?php echo $category_name; ?></td>
-					<td class="desc"><?php echo ($category_description != "") ? $category_description : '<i>NOT SET</i>'; ?></td>
+					<td><?php echo stripslashes_deep($category_name); ?></td>
+					<td class="desc"><?php echo ($category_description != "") ? stripslashes_deep($category_description) : '<i>NOT SET</i>'; ?></td>
 					<td><img src="<?php echo $pencil_image; ?>" alt="edit category button" onclick="editCategory('<?php echo $category_id ?>', '<?php echo $category_name ?>', '<?php echo $category_description ?>')"></td>
 					<td>
 						<form action="" method="post">

@@ -133,7 +133,7 @@ $categories = dcvs_get_all_categories();
 					$category_id   = $category['id'];
 					$category_name = $category['name'];
 				?>
-					<option value="<?php echo $category_id ?>"><?php echo $category_name ?></option>
+					<option value="<?php echo $category_id ?>"><?php echo stripslashes_deep($category_name); ?></option>
 				<?php
 				}
 				?>
@@ -158,13 +158,13 @@ $categories = dcvs_get_all_categories();
 			<input type="text" name="budget" placeholder="budget" id="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
 			<select id="categorySelect" name="category_id">
-				<option value="-1" disabled selected>Select a category</option>
+				<option value="-1" selected>Select a category</option>
 				<?php
 				foreach ($categories as $category) {
 					$category_id   = $category['id'];
 					$category_name = $category['name'];
 					?>
-					<option value="<?php echo $category_id ?>"><?php echo $category_name ?></option>
+					<option value="<?php echo $category_id ?>"><?php echo stripslashes_deep($category_name); ?></option>
 					<?php
 				}
 				?>
@@ -195,10 +195,10 @@ $categories = dcvs_get_all_categories();
 				$persona_description = $persona['description'];
 			?>
 				<tr>
-					<td><?php echo $persona_name; ?></td>
-					<td><?php echo $persona_category_name; ?></td>
+					<td><?php echo stripslashes_deep($persona_name); ?></td>
+					<td><?php echo stripslashes_deep($persona_category_name); ?></td>
 					<td>$<?php echo $persona_money; ?></td>
-					<td class="desc"><?php echo $persona_description; ?></td>
+					<td class="desc"><?php echo stripslashes_deep($persona_description); ?></td>
 					<td><img src="<?php echo $pencil_image; ?>" alt="edit persona button" onclick="editPersona('<?php echo $persona_id ?>', '<?php echo $persona_name ?>', '<?php echo $persona_money ?>', '<?php echo $persona_description ?>', '<?php echo $persona_category_id ?>')"></td>
 					<td>
 						<form action="" method="post">

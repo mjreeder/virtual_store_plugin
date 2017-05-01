@@ -268,7 +268,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                       if(isset($business_info[0])){
                         ?>
-                        <p><?php echo $business_info[0]->description ?>
+                        <p><?php echo stripslashes_deep($business_info[0]->description); ?>
                             <br>
                             <br><b>budget: $<?php echo $business_info[0]->money - $business_expense ?></b>
                         </p>
@@ -322,20 +322,14 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
 
                 <div>
-
-                    <div class="persona one">
                         <h3>CONSUMER 1</h3>
-
-                        <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaOne.svg' ?> alt="">
-                    </div>
-
                     <?php
                       if(isset($consumer_info[0])){
                         ?>
-                        <p><?php echo $consumer_info[0]->description ?>
+                        <p><?php echo stripslashes_deep($consumer_info[0]->description) ?>
                             <br>
                             <br>
-                            <b>persona budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
+                            <b>consumer budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
                         </p>
                         <?php
                       }
@@ -345,7 +339,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <p><?php echo "Consumer 1 info not set" ?>
                             <br>
                             <br>
-                            <b>persona budget: $<?php ?></b>
+                            <b>consumer budget: $<?php ?></b>
                         </p>
                         <?php
                       }
@@ -397,20 +391,15 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 </div>
 
                 <div>
-
-                    <div class="persona two">
                         <h3>CONSUMER 2</h3>
-                        <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaTwo.svg' ?> alt="">
-                    </div>
-
                     <?php
                       if(isset($consumer_info[1])){
                         ?>
-                        <p><?php echo $consumer_info[1]->description ?>
+                        <p><?php echo stripslashes_deep($consumer_info[1]->description); ?>
                             <br>
                             <br>
                             <!-- TODO fix -->
-                            <b>persona budget: $<?php echo $consumer_info[1]->money - $consumer_2_expense ?></b>
+                            <b>consumer budget: $<?php echo $consumer_info[1]->money - $consumer_2_expense ?></b>
                         </p>
                         <?php
                       }
@@ -420,7 +409,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <p><?php echo "Consumer 1 info not set" ?>
                             <br>
                             <br>
-                            <b>persona budget: $<?php ?></b>
+                            <b>consumer budget: $<?php ?></b>
                         </p>
                         <?php
                       }
