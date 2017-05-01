@@ -149,7 +149,7 @@ function display_current_student_info()
 					if ($entries) {
 						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $personal_store_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
 					} else {
-						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $personal_store_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+						echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
 					}
 					$entries = GFAPI::get_entries($warehouse_evaluation_id, $search_criteria);
 					?>
@@ -293,7 +293,7 @@ function display_current_student_info()
 				if ($entries) {
 					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
 				} else {
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+					echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
 				}
 				$search_criteria['field_filters'][1] = array(
 					'key' => $shopping_evaluation_persona_key,
@@ -405,7 +405,7 @@ function display_current_student_info()
 				if ($entries) {
 					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
 				} else {
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+					echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
 				}
 				$search_criteria['field_filters'][1] = array(
 					'key' => $shopping_evaluation_persona_key,
