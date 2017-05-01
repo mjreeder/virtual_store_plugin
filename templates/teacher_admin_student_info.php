@@ -283,10 +283,17 @@ function display_current_student_info()
 					'key' => 'created_by',
 					'value' => $currentDisplayStudent
 				);
-				$search_criteria['field_filters'][] = array(
-					'key' => $end_of_shopping_evaluation_persona_key,
-					'value' => $persona_info[0]->persona_id
-				);
+				if ($persona_info) {
+					$search_criteria['field_filters'][] = array(
+						'key' => $end_of_shopping_evaluation_persona_key,
+						'value' => $persona_info[0]->persona_id
+					);
+				} else {
+					$search_criteria['field_filters'][] = array(
+						'key' => $end_of_shopping_evaluation_persona_key,
+						'value' => -1
+					);
+				}
 
 				$entries = GFAPI::get_entries($end_of_shopping_evaluation_id, $search_criteria);
 
@@ -295,10 +302,17 @@ function display_current_student_info()
 				} else {
 					echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
 				}
-				$search_criteria['field_filters'][1] = array(
-					'key' => $shopping_evaluation_persona_key,
-					'value' => $persona_info[0]->persona_id
-				);
+				if ($persona_info) {
+					$search_criteria['field_filters'][1] = array(
+						'key' => $shopping_evaluation_persona_key,
+						'value' => $persona_info[0]->persona_id
+					);
+				} else {
+					$search_criteria['field_filters'][1] = array(
+						'key' => $shopping_evaluation_persona_key,
+						'value' => -1
+					);
+				}
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
 				?>
@@ -396,10 +410,17 @@ function display_current_student_info()
 					'key' => 'created_by',
 					'value' => $currentDisplayStudent
 				);
-				$search_criteria['field_filters'][] = array(
-					'key' => $end_of_shopping_evaluation_persona_key,
-					'value' => $persona_info[1]->persona_id
-				);
+				if ($persona_info) {
+					$search_criteria['field_filters'][] = array(
+						'key' => $end_of_shopping_evaluation_persona_key,
+						'value' => $persona_info[1]->persona_id
+					);
+				} else {
+					$search_criteria['field_filters'][] = array(
+						'key' => $end_of_shopping_evaluation_persona_key,
+						'value' => -1
+					);
+				}
 
 				$entries = GFAPI::get_entries($end_of_shopping_evaluation_id, $search_criteria);
 				if ($entries) {
@@ -407,10 +428,17 @@ function display_current_student_info()
 				} else {
 					echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
 				}
-				$search_criteria['field_filters'][1] = array(
-					'key' => $shopping_evaluation_persona_key,
-					'value' => $persona_info[1]->persona_id
-				);
+				if ($persona_info) {
+					$search_criteria['field_filters'][1] = array(
+						'key' => $shopping_evaluation_persona_key,
+						'value' => $persona_info[1]->persona_id
+					);
+				} else {
+					$search_criteria['field_filters'][1] = array(
+						'key' => $shopping_evaluation_persona_key,
+						'value' => -1
+					);
+				}
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
 				?>
