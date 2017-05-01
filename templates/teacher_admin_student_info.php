@@ -101,8 +101,12 @@ function display_current_student_info()
 			<h2 class="subTitle">buyer</h2>
 			<?php
 			if(isset($business_info[0])){
+				$user_blog_id = intval(get_user_blog_id( $business_info[0]->user_id ));
+				switch_to_blog( $user_blog_id );
+				$site_name = get_bloginfo('name');
+				restore_current_blog();
 				?>
-				<h3><?php echo $business_info[0]->title ?></h3>
+				<h3><?php echo stripslashes_deep($site_name); ?></h3>
 				<?php
 			}
 			else{
@@ -226,7 +230,7 @@ function display_current_student_info()
 				<?php
 					if (isset($persona_info[0])) {
 						?>
-						<h3><?php echo $persona_info[0]->name ?></h3>
+						<h3><?php echo stripslashes_deep($persona_info[0]->name); ?></h3>
 						<?php
 					}
 					else{
@@ -337,7 +341,7 @@ function display_current_student_info()
 				<?php
 					if (isset($persona_info[1])) {
 						?>
-						<h3><?php echo $persona_info[1]->name ?></h3>
+						<h3><?php echo stripslashes_deep($persona_info[1]->name); ?></h3>
 						<?php
 					}
 					else{

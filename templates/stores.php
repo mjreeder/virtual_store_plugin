@@ -48,8 +48,9 @@ $persona_one_id = get_object_vars($user_persona_ids[0])["persona_id"];
 $persona = dcvs_get_current_persona($user_id);
 
 $persona_category = dcvs_get_persona_category( $persona['id'] );
-$category = dcvs_get_category_by_id($persona_category[0]['category_id']);
-$category_name = isset($category[0]['name']) ? isset($category[0]['name']) : "Not Set";
+
+$category = isset($persona_category[0]['category_id']) ? dcvs_get_category_by_id($persona_category[0]['category_id']) : null;
+$category_name = isset($category[0]['name']) ? $category[0]['name'] : "Not Set";
 
 $persona_name = $persona['name'];
 $persona_description = $persona['description'];
@@ -87,6 +88,9 @@ $current_budget = $persona_budget - $persona_expense ;
 			foreach ($businesses as $business) {
 				$user_blog_id = intval(get_user_blog_id( $business['user_id'] ));
 				$user_site_icon = get_site_icon_url(512, '', $user_blog_id);
+				switch_to_blog( $user_blog_id );
+				$site_name = get_bloginfo('name');
+				restore_current_blog();
 			?>
 				<li>
 					<?php
@@ -100,7 +104,7 @@ $current_budget = $persona_budget - $persona_expense ;
 						<?php
 					}
 					?>
-					<p><?php echo $business['title'] ?></p>
+					<p><?php echo $site_name; ?></p>
 				</li>
 			<?php
 			}
@@ -116,14 +120,14 @@ $current_budget = $persona_budget - $persona_expense ;
 		<footer class="budgetBar personaOneDark" id="bar">
 
 			<div class="bar personaOne" onclick="toggleHeight()">
-				<div class="barLeft personaOneDark"><span><h1><?php echo $persona_name ?></h1></span></div>
+				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo $category_name;?></h2>
-				<p><?php echo $persona_description ?></p>
+				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
 		<?php
@@ -132,14 +136,14 @@ $current_budget = $persona_budget - $persona_expense ;
 		<footer class="budgetBar personaTwoDark" id="bar">
 
 			<div class="bar personaTwo" onclick="toggleHeight()">
-				<div class="barLeft personaTwoDark"><span><h1><?php echo $persona_name ?></h1></span></div>
+				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo $category_name;?></h2>
-				<p><?php echo $persona_description ?></p>
+				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
 		<?php
