@@ -139,8 +139,11 @@ function display_current_student_info()
 					);
 					$entries = GFAPI::get_entries(4, $search_criteria);
 
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid='. $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
-
+					if ($entries) {
+						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+					} else {
+						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+					}
 					$entries = GFAPI::get_entries(1, $search_criteria);
 					?>
 					<form class="" action="index.html" method="post">
@@ -280,8 +283,11 @@ function display_current_student_info()
 
 				$entries = GFAPI::get_entries(3, $search_criteria);
 
-				echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
-
+				if ($entries) {
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+				} else {
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+				}
 				$search_criteria['field_filters'][1] = array(
 					'key' => '13',
 					'value' => $persona_info[0]->persona_id
@@ -389,9 +395,11 @@ function display_current_student_info()
 				);
 
 				$entries = GFAPI::get_entries(3, $search_criteria);
-
-				echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
-
+				if ($entries) {
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+				} else {
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button unavailable">FINAL SURVEY</a>';
+				}
 				$search_criteria['field_filters'][1] = array(
 					'key' => '13',
 					'value' => $persona_info[1]->persona_id
