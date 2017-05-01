@@ -28,14 +28,21 @@ function dcvs_add_money_bar() {
 	$persona_one_id = get_object_vars($user_persona_ids[0])["persona_id"];
 
 	if (get_current_blog_id() == 1) {
+		global $wpdb;
 
 		$business = dcvs_get_business_by_user_id( $user_id );
 
-		$business_category = dcvs_get_user_business_category( $user_id );
-		$category = dcvs_get_category_by_id($business_category[0]['category_id']);
-		$category_name = isset($category[0]['name']) ? isset($category[0]['name']) : "Not Set";
+		$business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $user_id));
 
-		$business_title = $business['title'];
+		$user_blog_id = intval(get_user_blog_id( $business_info[0]->user_id ));
+		switch_to_blog( $user_blog_id );
+		$site_name = get_bloginfo('name');
+		restore_current_blog();
+
+		$business_category = dcvs_get_user_business_category( $user_id );
+		var_dump( $business_category[0]['name'] );
+		$category_name = isset($business_category[0]['name']) ? $business_category[0]['name'] : "Not Set";
+
 		$business_description = $business['description'];
 		$business_budget = $business['money'];
 		$business_expense = dcvs_get_business_expenses($user_id);
@@ -51,13 +58,13 @@ function dcvs_add_money_bar() {
 		<footer class="budgetBar mainButtonDark" id="bar">
 
 			<div class="bar mainButton" onclick="toggleHeight()">
-				<div class="barLeft mainButtonDark"><span><h1><?php echo $business_title ?></h1></span></div>
+				<div class="barLeft mainButtonDark"><span><h1><?php echo $site_name ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
 			</div>
 			<div class="barSummary">
-				<h2>Category: <?php echo $category_name;?></h2>
-				<p><?php echo $business_description ?></p>
+				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<p><?php echo stripslashes_deep($business_description); ?></p>
 			</div>
 		</footer>
 		
@@ -78,8 +85,8 @@ function dcvs_add_money_bar() {
 		<?php
 	} else if (get_user_blog_id( $user_id ) != get_current_blog_id() && $persona['id'] == $persona_one_id) {
 		$persona_category = dcvs_get_persona_category( $persona['id'] );
-		$category = dcvs_get_category_by_id($persona_category[0]['category_id']);
-		$category_name = isset($category[0]['name']) ? isset($category[0]['name']) : "Not Set";
+		$category = isset($persona_category[0]['category_id']) ? dcvs_get_category_by_id($persona_category[0]['category_id']) : null;
+		$category_name = isset($category[0]['name']) ? $category[0]['name'] : "Not Set";
 
 		$persona_name = $persona['name'];
 		$persona_description = $persona['description'];
@@ -94,14 +101,14 @@ function dcvs_add_money_bar() {
 		<footer class="budgetBar personaOneDark" id="bar">
 
 			<div class="bar personaOne" onclick="toggleHeight()">
-				<div class="barLeft personaOneDark"><span><h1><?php echo $persona_name ?></h1></span></div>
+				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $store_list_url ?>"><span>Back To Store List</span></a>
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo $category_name;?></h2>
-				<p><?php echo $persona_description ?></p>
+				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
 
@@ -122,8 +129,8 @@ function dcvs_add_money_bar() {
 		<?php
 	} else {
 		$persona_category = dcvs_get_persona_category( $persona['id'] );
-		$category = dcvs_get_category_by_id($persona_category[0]['category_id']);
-		$category_name = isset($category[0]['name']) ? isset($category[0]['name']) : "Not Set";
+		$category = isset($persona_category[0]['category_id']) ? dcvs_get_category_by_id($persona_category[0]['category_id']) : null;
+		$category_name = isset($category[0]['name']) ? $category[0]['name'] : "Not Set";
 
 		$persona_name = $persona['name'];
 		$persona_description = $persona['description'];
@@ -138,14 +145,14 @@ function dcvs_add_money_bar() {
 		<footer class="budgetBar personaTwoDark" id="bar">
 
 			<div class="bar personaTwo" onclick="toggleHeight()">
-				<div class="barLeft personaTwoDark"><span><h1><?php echo $persona_name ?></h1></span></div>
+				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $store_list_url ?>"><span>Back To Store List</span></a>
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo $category_name;?></h2>
-				<p><?php echo $persona_description ?></p>
+				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
 
