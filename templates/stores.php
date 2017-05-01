@@ -47,6 +47,10 @@ $persona_one_id = get_object_vars($user_persona_ids[0])["persona_id"];
 
 $persona = dcvs_get_current_persona($user_id);
 
+$persona_category = dcvs_get_persona_category( $persona['id'] );
+$category = dcvs_get_category_by_id($persona_category[0]['category_id']);
+$category_name = isset($category[0]['name']) ? isset($category[0]['name']) : "Not Set";
+
 $persona_name = $persona['name'];
 $persona_description = $persona['description'];
 $persona_budget = $persona['money'];
@@ -118,7 +122,7 @@ $current_budget = $persona_budget - $persona_expense ;
 			</div>
 
 			<div class="barSummary">
-				<h2>you are:</h2>
+				<h2>Category: <?php echo $category_name;?></h2>
 				<p><?php echo $persona_description ?></p>
 			</div>
 		</footer>
@@ -134,7 +138,7 @@ $current_budget = $persona_budget - $persona_expense ;
 			</div>
 
 			<div class="barSummary">
-				<h2>you are:</h2>
+				<h2>Category: <?php echo $category_name;?></h2>
 				<p><?php echo $persona_description ?></p>
 			</div>
 		</footer>

@@ -182,13 +182,6 @@ if ($toast != null) {
     <?php
 }
 
-function dcvs_get_user_business_category($user_id) {
-    global $wpdb;
-    $sql = $wpdb->prepare("SELECT * FROM dcvs_category WHERE id IN (SELECT category_id FROM dcvs_business_category WHERE business_id IN (SELECT business_id FROM dcvs_user_business WHERE user_id ='%d'))", [$user_id]);
-    $response = $wpdb->get_results($sql, ARRAY_A);
-    return $response;
-}
-
 function dcvs_deal_with_persona_assigning( $users ) {
     if (dcvs_all_personas_assigned( $users )) {
         dcvs_reset_and_assign_user_personas($users);
@@ -310,13 +303,6 @@ function dcvs_check_personas_same_category($persona_id_one, $persona_id_two) {
 function dcvs_get_second_persona($persona_id_one, $user_id) {
     global $wpdb;
     $sql = $wpdb->prepare("SELECT * FROM dcvs_user_persona WHERE user_id = '%d' AND persona_id != '%d'", [$user_id, $persona_id_one]);
-    $response = $wpdb->get_results($sql, ARRAY_A);
-    return $response;
-}
-
-function dcvs_get_persona_category($persona_id) {
-    global $wpdb;
-    $sql = $wpdb->prepare("SELECT * FROM dcvs_persona_category WHERE persona_id = '%d'", [$persona_id]);
     $response = $wpdb->get_results($sql, ARRAY_A);
     return $response;
 }

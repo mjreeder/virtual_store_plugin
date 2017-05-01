@@ -31,6 +31,10 @@ function dcvs_add_money_bar() {
 
 		$business = dcvs_get_business_by_user_id( $user_id );
 
+		$business_category = dcvs_get_user_business_category( $user_id );
+		$category = dcvs_get_category_by_id($business_category[0]['category_id']);
+		$category_name = isset($category[0]['name']) ? isset($category[0]['name']) : "Not Set";
+
 		$business_title = $business['title'];
 		$business_description = $business['description'];
 		$business_budget = $business['money'];
@@ -52,7 +56,7 @@ function dcvs_add_money_bar() {
 				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
 			</div>
 			<div class="barSummary">
-				<h2>you are:</h2>
+				<h2>Category: <?php echo $category_name;?></h2>
 				<p><?php echo $business_description ?></p>
 			</div>
 		</footer>
@@ -73,6 +77,9 @@ function dcvs_add_money_bar() {
 		</script>
 		<?php
 	} else if (get_user_blog_id( $user_id ) != get_current_blog_id() && $persona['id'] == $persona_one_id) {
+		$persona_category = dcvs_get_persona_category( $persona['id'] );
+		$category = dcvs_get_category_by_id($persona_category[0]['category_id']);
+		$category_name = isset($category[0]['name']) ? isset($category[0]['name']) : "Not Set";
 
 		$persona_name = $persona['name'];
 		$persona_description = $persona['description'];
@@ -93,7 +100,7 @@ function dcvs_add_money_bar() {
 			</div>
 
 			<div class="barSummary">
-				<h2>you are:</h2>
+				<h2>Category: <?php echo $category_name;?></h2>
 				<p><?php echo $persona_description ?></p>
 			</div>
 		</footer>
@@ -114,6 +121,9 @@ function dcvs_add_money_bar() {
 		</script>
 		<?php
 	} else {
+		$persona_category = dcvs_get_persona_category( $persona['id'] );
+		$category = dcvs_get_category_by_id($persona_category[0]['category_id']);
+		$category_name = isset($category[0]['name']) ? isset($category[0]['name']) : "Not Set";
 
 		$persona_name = $persona['name'];
 		$persona_description = $persona['description'];
@@ -134,7 +144,7 @@ function dcvs_add_money_bar() {
 			</div>
 
 			<div class="barSummary">
-				<h2>you are:</h2>
+				<h2>Category: <?php echo $category_name;?></h2>
 				<p><?php echo $persona_description ?></p>
 			</div>
 		</footer>
@@ -207,5 +217,12 @@ function dcvs_get_persona_expenses($user_id, $persona_id){
 	global $wpdb;
 	$result = $wpdb->get_var("SELECT SUM(cost) FROM dcvs_business_purchase WHERE user_persona_id = (SELECT id FROM dcvs_user_persona WHERE user_id =". esc_sql( $user_id ) ." AND persona_id = ". esc_sql( $persona_id ) .")");
 	return $result;
+}
+
+function dcvs_get_category_by_id($category_id) {
+	global $wpdb;
+	$sql = $wpdb->prepare("SELECT * FROM dcvs_category WHERE id = '%d'", [$category_id]);
+	$response = $wpdb->get_results($sql, ARRAY_A);
+	return $response;
 }
 

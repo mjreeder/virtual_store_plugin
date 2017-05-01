@@ -411,3 +411,17 @@ function dcvs_get_user_persona_ids($user_id) {
     $persona_ids = $wpdb->get_results("SELECT persona_id FROM dcvs_user_persona WHERE user_id = '".esc_sql($user_id)."'");
     return $persona_ids;
 }
+
+function dcvs_get_persona_category($persona_id) {
+    global $wpdb;
+    $sql = $wpdb->prepare("SELECT * FROM dcvs_persona_category WHERE persona_id = '%d'", [$persona_id]);
+    $response = $wpdb->get_results($sql, ARRAY_A);
+    return $response;
+}
+
+function dcvs_get_user_business_category($user_id) {
+    global $wpdb;
+    $sql = $wpdb->prepare("SELECT * FROM dcvs_category WHERE id IN (SELECT category_id FROM dcvs_business_category WHERE business_id IN (SELECT business_id FROM dcvs_user_business WHERE user_id ='%d'))", [$user_id]);
+    $response = $wpdb->get_results($sql, ARRAY_A);
+    return $response;
+}
