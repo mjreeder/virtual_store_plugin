@@ -262,7 +262,6 @@ function display_current_student_info()
 						<?php
 					}
 				?>
-				<a href="<?php echo get_site_url();?>/wp-admin/admin.php?page=gf_entries&view=entries&id=3&orderby=0&order=ASC&s=<?php echo $currentDisplayStudent;?>&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>
 
 				<?php
 				$search_criteria = array('field_filters' => array());
@@ -271,6 +270,15 @@ function display_current_student_info()
 					'value' => $currentDisplayStudent
 				);
 				$search_criteria['field_filters'][] = array(
+					'key' => '3',
+					'value' => $persona_info[0]->persona_id
+				);
+
+				$entries = GFAPI::get_entries(3, $search_criteria);
+
+				echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+
+				$search_criteria['field_filters'][1] = array(
 					'key' => '13',
 					'value' => $persona_info[0]->persona_id
 				);
