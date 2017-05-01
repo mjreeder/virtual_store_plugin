@@ -41,7 +41,7 @@ if( !class_exists('DCVS_Admin_Menu_Simplification') ) {
 		public function toolbar_dashboard_button($wp_admin_bar){
 			$args = array(
 				'id'    => 'dcvs-dashboard',
-				'title' => 'Virtual Store Dashboard',
+				'title' => 'Student Dashboard',
 				'href'  => dcvs_get_landing_page_url(get_current_user_id()),
 				'meta'  => array( 'class' => 'dcvs-dashboard-button' )
 			);
