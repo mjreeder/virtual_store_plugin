@@ -92,36 +92,43 @@ $var = dcvs_get_option('warehouse_end_date', 0);
           if($date_now <= $ware_house_start_date){
             // DISPLAY TIME TO WAREHOUSE SHOPPING BEGINS
             ?>
-            <p>
-              time left until warehouse shopping Begins :
-            <b id="remaining-time"> <script>getTime("<?php echo $ware_house_start_date.''; ?>")</script></b></p>
+            <div>
+              <p>time left until warehouse shopping Begins :</p>
+              <b id="remaining-time"> <script>getTime("<?php echo $ware_house_start_date.''; ?>")</script></b>
+            </div>
+
             <?php
           }
           elseif ($date_now >= $ware_house_start_date && $date_now <= $ware_house_end_date) {
             # code...
             ?>
-            <p>
-              time left until warehouse shopping Ends :
-            <b id="remaining-time"> <script>getTime("<?php echo $ware_house_end_date.''; ?>")</script></b></p>
+            <div>
+              <p>time left until warehouse shopping Ends :</p>
+              <b id="remaining-time"> <script>getTime("<?php echo $ware_house_end_date.''; ?>")</script></b>
+            </div>
+
             <?php
           }
           elseif ($date_now <= $shopping_start_date && $date_now >= $ware_house_end_date) {
             # code...
             $ware_house_shopping_over = true;
             ?>
-            <p>
-              time left until shopping starts :
-            <b id="remaining-time"> <script>getTime("<?php echo $shopping_start_date.''; ?>")</script></b></p>
+            <div>
+              <p>time left until shopping starts :</p>
+              <b id="remaining-time"> <script>getTime("<?php echo $shopping_start_date.''; ?>")</script></b>
+            </div>
+
             <?php
           }
           elseif($date_now >= $shopping_start_date && $date_now < $shopping_end_date){
             $shopping_started = true;
             $ware_house_shopping_over = true;
             ?>
+            <div>
+              <p>time left until shopping ends :</p>
+              <b id="remaining-time"> <script>getTime("<?php echo $shopping_end_date.''; ?>")</script></b>
+            </div>
 
-            <p>
-              time left until shopping ends :
-            <b id="remaining-time"> <script>getTime("<?php echo $shopping_end_date.''; ?>")</script></b></p>
             <?php
           }
           else{
@@ -231,7 +238,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                   $site_name = get_bloginfo('name');
                 ?>
                   <h1><?php echo $site_name ?></h1>
-                  <h2>BUYER</h2>
+                  <h2>BUYER ACTIVITIES</h2>
                 <?php
               }
 
@@ -316,7 +323,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
             </section>
 
-            <h2>CONSUMER</h2>
+            <h2>CONSUMER ACTIVITIES</h2>
             <!-- <hr> -->
             <section class="goShopping">
 

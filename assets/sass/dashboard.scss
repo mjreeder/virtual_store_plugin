@@ -30,16 +30,24 @@ html {
         display: inline;
         align-self: center;
     }
-    p {
-        color: white;
-        font-family: 'Open sans', sans-serif;
-        font-size: 15pt;
-        align-self: center;
-        margin-right: 100px;
-        vertical-align: super;
+    div {
+        margin-top: 10px;
+        p {
+            color: white;
+            font-family: 'Open sans', sans-serif;
+            font-size: 12pt;
+            align-self: center;
+            vertical-align: super;
+            display: inline;
+        }
         b {
-            font-size: 50px;
-            margin-left: 50px;
+            color: white;
+            font-family: 'Open sans', sans-serif;
+            align-self: center;
+            margin-right: 100px;
+            vertical-align: super;
+            font-size: 40px;
+            margin-left: 10px;
         }
     }
     a {
@@ -88,7 +96,13 @@ html {
         }
     }
     ol {
-        padding-right: 10%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 20px;
+        flex: 1 0 auto;
         li {
             font-family: "Lato", sans-serif;
             color: $darkGray;
@@ -98,7 +112,6 @@ html {
             justify-content: space-between;
             line-height: 1;
             width: 80%;
-            margin-left: 18%;
             margin-bottom: 20px;
             p {
                 font-family: "Lato", sans-serif;
@@ -115,7 +128,6 @@ html {
         }
     }
 }
-
 .currentlyPlaying,
 .finished {
     position: relative;
@@ -168,6 +180,7 @@ html {
     h2 {
         font-family: 'Open sans', sans-serif;
         color: $darkGray;
+        margin-top: 20px;
     }
     hr {
         margin-bottom: 10px;
@@ -216,7 +229,7 @@ html {
         h3 {
             font-family: "Open Sans", sans-serif;
             color: $darkGray;
-            font-size: 25px;
+            font-size: 20px;
         }
     }
     p {
@@ -231,10 +244,24 @@ html {
         flex-direction: row;
         a:nth-child(4) {
             button {
-              font-size: 10px;
-              padding-left: 8px;
+                font-size: 10px;
+                padding-left: 8px;
             }
         }
+    }
+}
+#video {
+    position: relative;
+    height: 0;
+    width: 100%;
+    padding-top: 56.35%;
+    margin-bottom: 20px;
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
     }
 }
 @media screen and (max-width:1300px) {}
@@ -367,11 +394,17 @@ html {
         justify-content: flex-start;
         flex: 0 0 400px;
         width: 400px;
-        overflow
-        figure {
+        overflow figure {
             iframe {
                 height: inherit;
                 width: 400px;
+            }
+        }
+    }
+    .header {
+        div {
+            p {
+                display: none;
             }
         }
     }
@@ -401,7 +434,6 @@ html {
 }
 @media screen and (max-width:400px) {
     .mainContent {
-
         flex-direction: column;
     }
 }
@@ -492,12 +524,12 @@ html {
     display: flex;
     flex-direction: column;
     h1 {
-      font-family: "Open Sans", sans-serif;
-      font-weight: 700;
-      color: $darkGray;
-      font-size: 45px;
-      margin-left: 75px;
-      padding: 25px;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 700;
+        color: $darkGray;
+        font-size: 45px;
+        margin-left: 75px;
+        padding: 25px;
     }
 }
 .tableWrapper {
