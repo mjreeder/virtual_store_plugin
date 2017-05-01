@@ -262,8 +262,28 @@ function display_current_student_info()
 				?>
 				<a href="<?php echo get_site_url();?>/wp-admin/admin.php?page=gf_entries&view=entries&id=3&orderby=0&order=ASC&s=<?php echo $currentDisplayStudent;?>&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>
 
+				<?php
+				$search_criteria = array('field_filters' => array());
+				$search_criteria['field_filters'][] = array(
+					'key' => 'created_by',
+					'value' => $currentDisplayStudent
+				);
+				$search_criteria['field_filters'][] = array(
+					'key' => '13',
+					'value' => $persona_info[0]->persona_id
+				);
+
+				$entries = GFAPI::get_entries(2, $search_criteria);
+				?>
 				<form class="" action="index.html" method="post">
-					<select class="one" name=""></select>
+					<select class="one" name="" onchange="window.location.href = this.value">
+						<option value="">SELECT AN ENTRY</option>
+						<?php
+						foreach ($entries as $entry){
+							echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=2&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
+						}
+						?>
+					</select>
 				</form>
 				<section class="facts">
 					<div class="fact">
