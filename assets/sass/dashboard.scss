@@ -42,6 +42,24 @@ html {
             margin-left: 50px;
         }
     }
+    a {
+        align-self: center;
+        height: 35px;
+        width: 85px;
+        margin-right: 85px;
+    }
+    .logout {
+        //font-size: 17px;
+        background-color: transparent;
+        color: white;
+        font-family: 'Open Sans', sans-serif;
+        border-radius: 0.07in;
+        border: none;
+        font-size: 25px;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+    }
 }
 .helpVideoList {
     width: 100%;

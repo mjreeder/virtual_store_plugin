@@ -134,6 +134,8 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <?php
           }
          ?>
+
+        <a href="<?php echo wp_logout_url(); ?>"><button class="logout">LOGOUT</button></a>
     </header>
 
     <div class="mainContent">
