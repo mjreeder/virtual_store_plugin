@@ -168,6 +168,12 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
             </figure>
 
+<!--            TODO: This is only for video purpose, remove if statement afterwards.-->
+            <?php
+            if (false){
+
+            ?>
+
             <ol>
               <li class="currentlyPlaying" id="<?php echo 0; ?>">
                 <?php
@@ -199,6 +205,22 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 }
                  ?>
             </ol>
+            <?php
+            }
+            ?>
+
+            <ol>
+                <li><p>Welcome to Virtual Store</p><span>02:30</span></li>
+                <li><p>Project Vocabulary</p><span>01:30</span></li>
+                <li><p>Changing the Password</p><span>01:05</span></li>
+                <li><p>Warehouse Shopping</p><span>02:12</span></li>
+                <li><p>Editing Your Store</p><span>01:53</span></li>
+                <li><p>Customizing Your Store</p><span>02:13</span></li>
+                <li><p>Categories and Menus</p><span>01:17</span></li>
+                <li><p>Consumer Shopping</p><span>03:10</span></li>
+                <li><p>Reports</p><span>02:19</span></li>
+                <li><p>Completing the Project</p><span>02:01</span></li>
+            </ol>
 
         </aside>
 
@@ -206,7 +228,8 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <?php
               if(isset($business_info[0])){
                 ?>
-                <h1><?php echo $business_info[0]->title ?></h1>
+                  <h1><?php echo $business_info[0]->title ?></h1>
+                  <h2>BUYER</h2>
                 <?php
               }
 
@@ -291,7 +314,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
             </section>
 
-            <h1>go shopping</h1>
+            <h2>CONSUMER</h2>
             <!-- <hr> -->
             <section class="goShopping">
 
@@ -299,7 +322,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 <div>
 
                     <div class="persona one">
-                        <h3>PERSONA #1</h3>
+                        <h3>CONSUMER 1</h3>
 
                         <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaOne.svg' ?> alt="">
                     </div>
@@ -374,7 +397,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 <div>
 
                     <div class="persona two">
-                        <h3>PERSONA #2</h3>
+                        <h3>CONSUMER 2</h3>
                         <img src=<?php echo plugins_url( '/assets/images/', dirname(__FILE__)) .'personaTwo.svg' ?> alt="">
                     </div>
 
