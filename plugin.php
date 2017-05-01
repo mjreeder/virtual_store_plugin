@@ -425,3 +425,34 @@ function dcvs_get_user_business_category($user_id) {
     $response = $wpdb->get_results($sql, ARRAY_A);
     return $response;
 }
+
+add_action('wp_footer', 'dcvs_disable_checkout_button');
+
+function dcvs_disable_checkout_button() {
+    global $post;
+
+    if ( $post->post_name == 'checkout' ) {
+
+
+        $user_id = get_current_user_id();
+
+        $cart_cost = dcvs_get_cart_cost();
+
+        $persona = dcvs_get_current_persona($user_id);
+
+        $user_persona_ids = dcvs_get_user_persona_ids( $user_id );
+
+        if (get_current_blog_id() != 1 && get_user_blog_id( $user_id ) != get_current_blog_id()) {
+            $persona_budget = $persona['money'];
+            $persona_expense = dcvs_get_persona_expenses($user_id, $persona['id']);
+
+            $current_budget = $persona_budget - $persona_expense - $cart_cost;
+            
+            if ($current_budget < 0) {
+                wp_enqueue_style( 'dcvs_checkout_button_style', plugins_url( '/assets/css/checkoutButton.css', __FILE__ ) );
+            }
+            
+        }
+
+    }
+}
