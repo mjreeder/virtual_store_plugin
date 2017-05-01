@@ -127,13 +127,15 @@ function display_current_student_info()
 						<?php
 					}
 					?>
-					<a href="<?php echo get_site_url();?>/wp-admin/admin.php?page=gf_entries&view=entries&id=4&orderby=0&order=ASC&s=<?php echo $currentDisplayStudent;?>&field_id=created_by&operator=is" class="button">FINAL SURVEY</a>
 					<?php
 					$search_criteria = array('field_filters' => array());
 					$search_criteria['field_filters'][] = array(
 						'key' => 'created_by',
 						'value' => $currentDisplayStudent
 					);
+					$entries = GFAPI::get_entries(4, $search_criteria);
+
+					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=3&lid='. $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
 
 					$entries = GFAPI::get_entries(1, $search_criteria);
 					?>
