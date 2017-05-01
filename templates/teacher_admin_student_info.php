@@ -158,7 +158,7 @@ function display_current_student_info()
 								<option value="">SELECT AN ENTRY</option>
 								<?php
 								foreach ($entries as $entry){
-									echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $warehouse_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
+									echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $warehouse_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
 								}
 								?>
 							</select>
@@ -307,7 +307,7 @@ function display_current_student_info()
 						<option value="">SELECT AN ENTRY</option>
 						<?php
 						foreach ($entries as $entry){
-							echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
+							echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
 						}
 						?>
 					</select>
@@ -419,7 +419,7 @@ function display_current_student_info()
 						<option value="">SELECT AN ENTRY</option>
 						<?php
 						foreach ($entries as $entry){
-							echo "<option value='/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
+							echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
 						}
 						?>
 					</select>
