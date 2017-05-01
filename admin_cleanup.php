@@ -17,19 +17,22 @@ if( !class_exists('DCVS_Admin_Menu_Simplification') ) {
 
 		//not so fast. this stuff has to be in here and not __construct to ensure that the WP bootstrapping is complete
 		public function admin_init(){
+			add_action( 'admin_bar_menu', array($this, 'global_toolbar_cleanup'), 999 );
+			add_action( 'admin_init', array($this, 'global_admin_menu_cleanup'), 999 );
 			if( !current_user_can('create_sites') ){
-				add_action( 'admin_bar_menu', array($this, 'toolbar_cleanup'), 999 );
+				add_action( 'admin_bar_menu', array($this, 'student_toolbar_cleanup'), 999 );
 				add_action( 'admin_bar_menu', array($this, 'toolbar_dashboard_button'), 1 );
 				add_action( 'admin_head', array($this, 'toolbar_dashboard_button_styles'), 999 );
-				add_action( 'admin_init', array($this, 'menu_cleanup'), 999 );
+				add_action( 'admin_init', array($this, 'student_admin_menu_cleanup'), 999 );
 				add_action( 'load-index.php', array($this, 'dashboard_redirect'));
 				add_filter( 'contextual_help', array($this, 'remove_help_drawer'), 999, 3 );
 			}
 		}
 
 		public function public_init(){
+			add_action( 'admin_bar_menu', array($this, 'global_toolbar_cleanup'), 999 );
 			if( !current_user_can('create_sites') ){
-				add_action( 'admin_bar_menu', array($this, 'toolbar_cleanup'), 999 );
+				add_action( 'admin_bar_menu', array($this, 'student_toolbar_cleanup'), 999 );
 				add_action( 'admin_bar_menu', array($this, 'toolbar_dashboard_button'), 1 );
 				add_action( 'wp_head', array($this, 'toolbar_dashboard_button_styles'), 999 );
 			}
@@ -70,21 +73,21 @@ if( !class_exists('DCVS_Admin_Menu_Simplification') ) {
 		}
 
 		//note: as of WP v3.3, it's now called the "toolbar" instead of the "admin bar"
-		public function toolbar_cleanup($wp_admin_bar){
-			$wp_admin_bar->remove_node( 'wp-logo' );
+		public function student_toolbar_cleanup($wp_admin_bar){
 			$wp_admin_bar->remove_node( 'my-sites' );
-			$wp_admin_bar->remove_node( 'comments' );
 			$wp_admin_bar->remove_node( 'forms' );
+		}
+
+		public function global_toolbar_cleanup($wp_admin_bar){
+			$wp_admin_bar->remove_node( 'wp-logo' );
+			$wp_admin_bar->remove_node( 'updates' );
+			$wp_admin_bar->remove_node( 'comments' );
 			$wp_admin_bar->remove_node( 'new-content' );
 		}
 
-		public function menu_cleanup(){
+		public function student_admin_menu_cleanup(){
 			//echo '<pre>' . print_r( $GLOBALS[ 'menu' ], TRUE) . '</pre>'; //quick listing of all the menu options
 			$slugs = array(
-				'index.php', //dashboard
-				'separator1', //line under dashboard
-				'edit.php', //posts
-				'edit-comments.php',
 				'gf_edit_forms', //gravity forms
 				'plugins.php',
 				'users.php',
@@ -119,6 +122,18 @@ if( !class_exists('DCVS_Admin_Menu_Simplification') ) {
 				foreach($submenus as $submenu){
 					remove_submenu_page($menu, $submenu);
 				}
+			}
+		}
+
+		public function global_admin_menu_cleanup(){
+			$slugs = array(
+				'index.php', //dashboard
+				'separator1', //line under dashboard
+				'edit.php', //posts
+				'edit-comments.php'
+			);
+			foreach($slugs as $slug){
+				remove_menu_page( $slug );
 			}
 		}
 
