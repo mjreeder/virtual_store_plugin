@@ -19,12 +19,12 @@ if( !class_exists('DCVS_Admin_Menu_Simplification') ) {
 		public function admin_init(){
 			add_action( 'admin_bar_menu', array($this, 'global_toolbar_cleanup'), 999 );
 			add_action( 'admin_init', array($this, 'global_admin_menu_cleanup'), 999 );
+			add_action( 'load-index.php', array($this, 'dashboard_redirect'));
 			if( !current_user_can('create_sites') ){
 				add_action( 'admin_bar_menu', array($this, 'student_toolbar_cleanup'), 999 );
 				add_action( 'admin_bar_menu', array($this, 'toolbar_dashboard_button'), 1 );
 				add_action( 'admin_head', array($this, 'toolbar_dashboard_button_styles'), 999 );
 				add_action( 'admin_init', array($this, 'student_admin_menu_cleanup'), 999 );
-				add_action( 'load-index.php', array($this, 'dashboard_redirect'));
 				add_filter( 'contextual_help', array($this, 'remove_help_drawer'), 999, 3 );
 			}
 		}
@@ -127,18 +127,27 @@ if( !class_exists('DCVS_Admin_Menu_Simplification') ) {
 
 		public function global_admin_menu_cleanup(){
 			$slugs = array(
-				'index.php', //dashboard
-				'separator1', //line under dashboard
 				'edit.php', //posts
 				'edit-comments.php'
 			);
+			if( !is_network_admin() ){
+				$slugs[] = 'index.php'; //dashboard
+				$slugs[] = 'separator1'; //line under dashboard
+
+			}
 			foreach($slugs as $slug){
 				remove_menu_page( $slug );
 			}
 		}
 
 		public function dashboard_redirect(){
-			wp_redirect(admin_url('edit.php?post_type=product'));
+			if( current_user_can('create_sites') ){
+				if( get_current_blog_id() == 1 && !is_network_admin() ){
+					wp_redirect(admin_url('admin.php?page=dcvs_teacher'));
+				}
+			} else {
+				wp_redirect(admin_url('edit.php?post_type=product'));
+			}
 		}
 
 		public function remove_help_drawer($old_help, $screen_id, $screen ){
