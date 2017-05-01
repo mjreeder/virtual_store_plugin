@@ -60,6 +60,10 @@ function dcvs_add_money_bar() {
 			<div class="bar mainButton" onclick="toggleHeight()">
 				<div class="barLeft mainButtonDark"><span><h1><?php echo $site_name ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+					<div class="warningMessage">
+						<img src="<?php echo plugins_url("./assets/images/warning.svg", __FILE__); ?>" alt="">
+						<p>warning! you're over budget!</p>
+					</div>
 				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
 			</div>
 			<div class="barSummary">
@@ -67,7 +71,7 @@ function dcvs_add_money_bar() {
 				<p><?php echo stripslashes_deep($business_description); ?></p>
 			</div>
 		</footer>
-		
+
 		<script>
 			var bar = document.getElementById('bar');
 
@@ -96,7 +100,7 @@ function dcvs_add_money_bar() {
 		$current_budget = $persona_budget - $persona_expense - $cart_cost;
 
 		$store_list_url = dcvs_get_store_list_url();
-		
+
 		?>
 		<footer class="budgetBar personaOneDark" id="bar">
 
@@ -232,4 +236,3 @@ function dcvs_get_category_by_id($category_id) {
 	$response = $wpdb->get_results($sql, ARRAY_A);
 	return $response;
 }
-

@@ -118,6 +118,24 @@ $mainButtonDark: #BF9256;
 .barUp {
     bottom: 0;
 }
+.warningMessage {
+    display: none;
+    // display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    img {
+        height: 50px;
+        margin-right: 25px;
+    }
+    p {
+      font-family: 'Lato', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      align-self: flex-end;
+    }
+}
 @media screen and (max-width:1000px) {
     .budgetBar .bar .barLeft span h1 {
         font-size: 20px;
