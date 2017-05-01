@@ -22,6 +22,11 @@ function dcvs_add_money_bar() {
 
 	$cart_cost = dcvs_get_cart_cost();
 
+	$persona = dcvs_get_current_persona($user_id);
+
+	$user_persona_ids = dcvs_get_user_persona_ids( $user_id );
+	$persona_one_id = get_object_vars($user_persona_ids[0])["persona_id"];
+
 	if (get_current_blog_id() == 1) {
 
 		$business = dcvs_get_business_by_user_id( $user_id );
@@ -39,10 +44,10 @@ function dcvs_add_money_bar() {
 		<!-- FONTS -->
 		<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
 
-		<footer class="budgetBar" id="bar">
+		<footer class="budgetBar mainButtonDark" id="bar">
 
-			<div class="bar" onclick="toggleHeight()">
-				<div class="barLeft"><span><h1><?php echo $business_title ?></h1></span></div>
+			<div class="bar mainButton" onclick="toggleHeight()">
+				<div class="barLeft mainButtonDark"><span><h1><?php echo $business_title ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
 			</div>
@@ -67,9 +72,7 @@ function dcvs_add_money_bar() {
 			};
 		</script>
 		<?php
-	} else if (get_user_blog_id( $user_id ) != get_current_blog_id()) {
-
-		$persona = dcvs_get_current_persona($user_id);
+	} else if (get_user_blog_id( $user_id ) != get_current_blog_id() && $persona['id'] == $persona_one_id) {
 
 		$persona_name = $persona['name'];
 		$persona_description = $persona['description'];
@@ -81,10 +84,10 @@ function dcvs_add_money_bar() {
 		$store_list_url = dcvs_get_store_list_url();
 		
 		?>
-		<footer class="budgetBar" id="bar">
+		<footer class="budgetBar personaOneDark" id="bar">
 
-			<div class="bar" onclick="toggleHeight()">
-				<div class="barLeft"><span><h1><?php echo $persona_name ?></h1></span></div>
+			<div class="bar personaOne" onclick="toggleHeight()">
+				<div class="barLeft personaOneDark"><span><h1><?php echo $persona_name ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 				<a href="<?php echo $store_list_url ?>"><span>Back To Store List</span></a>
 			</div>
@@ -111,30 +114,28 @@ function dcvs_add_money_bar() {
 		</script>
 		<?php
 	} else {
-		$business = dcvs_get_business_by_user_id( $user_id );
 
-		$business_description = $business['description'];
-		$business_budget = $business['money'];
-		$business_expense = dcvs_get_business_expenses($user_id);
+		$persona_name = $persona['name'];
+		$persona_description = $persona['description'];
+		$persona_budget = $persona['money'];
+		$persona_expense = dcvs_get_persona_expenses($user_id, $persona['id']);
 
-		$current_budget = $business_budget - $business_expense - $cart_cost;
+		$current_budget = $persona_budget - $persona_expense - $cart_cost;
 
-		$landing_page_url = dcvs_get_landing_page_url();
+		$store_list_url = dcvs_get_store_list_url();
 
 		?>
-		<!-- FONTS -->
-		<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
+		<footer class="budgetBar personaTwoDark" id="bar">
 
-		<footer class="budgetBar" id="bar">
-
-			<div class="bar" onclick="toggleHeight()">
-				<div class="barLeft"><span><h1>Your Store</h1></span></div>
+			<div class="bar personaTwo" onclick="toggleHeight()">
+				<div class="barLeft personaTwoDark"><span><h1><?php echo $persona_name ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
-				<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
+				<a href="<?php echo $store_list_url ?>"><span>Back To Store List</span></a>
 			</div>
+
 			<div class="barSummary">
 				<h2>you are:</h2>
-				<p><?php echo $business_description ?></p>
+				<p><?php echo $persona_description ?></p>
 			</div>
 		</footer>
 

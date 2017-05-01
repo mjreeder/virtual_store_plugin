@@ -406,3 +406,8 @@ function dcvs_redirect_if_no_current_persona() {
 }
 add_action('init', 'dcvs_redirect_if_no_current_persona');
 
+function dcvs_get_user_persona_ids($user_id) {
+    global $wpdb;
+    $persona_ids = $wpdb->get_results("SELECT persona_id FROM dcvs_user_persona WHERE user_id = '".esc_sql($user_id)."'");
+    return $persona_ids;
+}

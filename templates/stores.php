@@ -42,6 +42,9 @@ function dcvs_get_all_available_businesses()
 
 $user_id = get_current_user_id();
 
+$user_persona_ids = dcvs_get_user_persona_ids( $user_id );
+$persona_one_id = get_object_vars($user_persona_ids[0])["persona_id"];
+
 $persona = dcvs_get_current_persona($user_id);
 
 $persona_name = $persona['name'];
@@ -102,19 +105,43 @@ $current_budget = $persona_budget - $persona_expense ;
 
 	</div>
 
-	<footer class="budgetBar" id="bar">
+	<?php
 
-		<div class="bar" onclick="toggleHeight()">
-			<div class="barLeft"><span><h1><?php echo $persona_name ?></h1></span></div>
-			<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
-			<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
-		</div>
+	if ($persona_one_id == $persona['id']) {
+		?>
+		<footer class="budgetBar personaOneDark" id="bar">
 
-		<div class="barSummary">
-			<h2>you are:</h2>
-			<p><?php echo $persona_description ?></p>
-		</div>
-	</footer>
+			<div class="bar personaOne" onclick="toggleHeight()">
+				<div class="barLeft personaOneDark"><span><h1><?php echo $persona_name ?></h1></span></div>
+				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+				<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
+			</div>
+
+			<div class="barSummary">
+				<h2>you are:</h2>
+				<p><?php echo $persona_description ?></p>
+			</div>
+		</footer>
+		<?php
+	} else {
+		?>
+		<footer class="budgetBar personaTwoDark" id="bar">
+
+			<div class="bar personaTwo" onclick="toggleHeight()">
+				<div class="barLeft personaTwoDark"><span><h1><?php echo $persona_name ?></h1></span></div>
+				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+				<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
+			</div>
+
+			<div class="barSummary">
+				<h2>you are:</h2>
+				<p><?php echo $persona_description ?></p>
+			</div>
+		</footer>
+		<?php
+	}
+
+	?>
 
 	<script>
 		var bar = document.getElementById('bar');

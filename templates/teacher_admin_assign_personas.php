@@ -262,12 +262,6 @@ function dcvs_assign_persona($userId) {
     }
 }
 
-function dcvs_get_user_persona_ids($user_id) {
-    global $wpdb;
-    $persona_ids = $wpdb->get_results("SELECT persona_id FROM dcvs_user_persona WHERE user_id = '".esc_sql($user_id)."'");
-    return $persona_ids;
-}
-
 function dcvs_remove_user_persona($user_id, $persona_id) {
     global $wpdb;
     $wpdb->delete('dcvs_user_persona', array('user_id'=>$user_id,'persona_id'=>$persona_id));

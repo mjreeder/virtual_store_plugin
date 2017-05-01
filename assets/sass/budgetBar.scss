@@ -5,13 +5,31 @@ $personaTwo: #ABBD78;
 $personaTwoDark: #889360;
 $mainButton: #E9B364;
 $mainButtonDark: #BF9256;
+.mainButton {
+    background-color: $mainButton;
+}
+.mainButtonDark {
+    background-color: $mainButtonDark;
+}
+.personaOne {
+    background-color: $personaOne;
+}
+.personaOneDark {
+    background-color: $personaOneDark;
+}
+.personaTwo {
+    background-color: $personaTwo;
+}
+.personaTwoDark {
+    background-color: $personaTwoDark;
+}
 .budgetBar {
     height: 185px;
     position: fixed;
     display: flex;
     bottom: -120px;
     width: 100%;
-    background-color: $personaTwoDark;
+    //background-color: $personaTwoDark;
     transition: bottom 0.5s;
     .barSummary {
         h2 {
@@ -42,7 +60,7 @@ $mainButtonDark: #BF9256;
     .bar {
         width: 100%;
         height: 65px;
-        background-color: $personaTwo;
+        //background-color: $personaTwo;
         display: flex;
         position: absolute;
         justify-content: space-between;
@@ -79,7 +97,7 @@ $mainButtonDark: #BF9256;
             height: 100%;
             width: 15%;
             position: absolute;
-            background-color: $personaTwoDark;
+            //background-color: $personaTwoDark;
             display: flex;
             justify-content: center;
             align-items: center;
