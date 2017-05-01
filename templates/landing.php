@@ -268,7 +268,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                       if(isset($business_info[0])){
                         ?>
-                        <p><?php echo $business_info[0]->description ?>
+                        <p><?php echo stripslashes_deep($business_info[0]->description); ?>
                             <br>
                             <br><b>budget: $<?php echo $business_info[0]->money - $business_expense ?></b>
                         </p>
@@ -326,7 +326,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                       if(isset($consumer_info[0])){
                         ?>
-                        <p><?php echo $consumer_info[0]->description ?>
+                        <p><?php echo stripslashes_deep($consumer_info[0]->description) ?>
                             <br>
                             <br>
                             <b>consumer budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
@@ -395,7 +395,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                       if(isset($consumer_info[1])){
                         ?>
-                        <p><?php echo $consumer_info[1]->description ?>
+                        <p><?php echo stripslashes_deep($consumer_info[1]->description); ?>
                             <br>
                             <br>
                             <!-- TODO fix -->
