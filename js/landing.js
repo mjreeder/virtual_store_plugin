@@ -20,7 +20,7 @@ function getTime(value) {
         minutes = minutes - (days * 24 * 60) - (hours * 60);
         seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
 
-        $("#remaining-time").text(days + ":" + hours + ":" + minutes + ":" + seconds);
+        $("#remaining-time").text(days + "d:" + hours + "h:" + minutes + "m");
       }, 1000);
     }
   } else {

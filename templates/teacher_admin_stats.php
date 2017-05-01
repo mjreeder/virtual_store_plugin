@@ -10,6 +10,10 @@ function get_value_from_stdClass($obj){
 	$first_key = key($array);
   return $array;
 }
+// echo "<pre>";
+// var_dump(get_blogs_of_user( $user_id, $all = false ));
+// echo "</pre>";
+// die();
 $orderMap = array();
 if($ware_house_order_history){
 
@@ -64,6 +68,11 @@ if($ware_house_order_history){
 																		$itemInformation = reset($orderMap[$i]);
 																		$id = $itemInformation["item_meta"]['_variation_id'][0];
 																		$productInfo = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
+																		//GETTING PRODUCT DESCRIPTION
+																		// get blog id
+																		// get business product id from warehouse prodct id = wp_blogID_posts id
+																		// get post content from wp_blogID_posts = description
+																		$userProductDescription = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
 																		$productDescription = '';
 																		for ($j=0; $j <sizeof($terms) ; $j++) {
 																			if(isset($itemInformation[$terms[$j]["taxonomy"]])){
