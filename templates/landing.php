@@ -227,8 +227,10 @@ $var = dcvs_get_option('warehouse_end_date', 0);
         <main class="dashboard">
             <?php
               if(isset($business_info[0])){
+                  $user_blog_id = intval(get_user_blog_id( $business_info[0]->user_id ));
+                  $site_name = get_bloginfo('name');
                 ?>
-                  <h1><?php echo $business_info[0]->title ?></h1>
+                  <h1><?php echo $site_name ?></h1>
                   <h2>BUYER</h2>
                 <?php
               }

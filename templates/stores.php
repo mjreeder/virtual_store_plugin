@@ -87,6 +87,9 @@ $current_budget = $persona_budget - $persona_expense ;
 			foreach ($businesses as $business) {
 				$user_blog_id = intval(get_user_blog_id( $business['user_id'] ));
 				$user_site_icon = get_site_icon_url(512, '', $user_blog_id);
+				switch_to_blog( $user_blog_id );
+				$site_name = get_bloginfo('name');
+				restore_current_blog();
 			?>
 				<li>
 					<?php
@@ -100,7 +103,7 @@ $current_budget = $persona_budget - $persona_expense ;
 						<?php
 					}
 					?>
-					<p><?php echo $business['title'] ?></p>
+					<p><?php echo $site_name; ?></p>
 				</li>
 			<?php
 			}
