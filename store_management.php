@@ -189,6 +189,9 @@ if( !class_exists('DCVS_Store_Management') ) {
 
 			self::add_user_business_relationship_on_business_creation( $user_id, $business_id );
 
+			$widgets = get_option( 'sidebars_widgets' );
+			update_blog_option($blogID, 'sidebars_widgets', $widgets);
+
 			return $blogID;
 		}
 
