@@ -183,30 +183,6 @@ function fields_are_blank($array) {
   return false;
 }
 
-//TODO: Style widget and hide when viewed by non students
-
-function register_landing_page_widget() {
-    global $wp_meta_boxes;
-
-    wp_add_dashboard_widget(
-        'landing_page_widget',
-        'Store Dashboard',
-        'landing_page_widget_display'
-    );
-
-    $dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
-
-    $my_widget = array( 'landing_page_widget' => $dashboard['landing_page_widget'] );
-    unset( $dashboard['landing_page_widget'] );
-
-    $sorted_dashboard = array_merge( $my_widget, $dashboard );
-    $wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
-}
-if (get_current_blog_id() != 1) {
-    add_action( 'wp_dashboard_setup', 'register_landing_page_widget' );
-}
-
-
 function landing_page_widget_display() {
     $landing_page_url = dcvs_get_landing_page_url();
     ?>
