@@ -375,7 +375,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
 
                       <br>
-                      <a href=""><button class="button personaSmall one">STATS</button></a>
+                      <a href="<?php echo plugins_url( 'templates/consumer_stats.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>"><button class="button personaSmall one">STATS</button></a>
                         <?php
                         if($shopping_over) {
                             ?>
@@ -443,7 +443,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                            ?>
 
                       <br>
-                      <a href=""><button class="button personaSmall two">STATS</button></a>
+                      <a href="<?php echo plugins_url( 'templates/consumer_stats.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>"><button class="button personaSmall two">STATS</button></a>
                       <?php
                         if($shopping_over) {
                             ?>
