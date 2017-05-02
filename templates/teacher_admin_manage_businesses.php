@@ -117,7 +117,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="business_id" value="" id="business_id">
 			<input type="hidden" name="current_business_category_id" value="" id="current_business_category_id">
 
-			<input type="text" name="title" placeholder="title" id="title" required oninvalid="this.setCustomValidity('Title cannot be empty.')" oninput="setCustomValidity('')">
+			<input readonly type="text" name="title" placeholder="title" id="title" required oninvalid="this.setCustomValidity('Title cannot be empty.')" oninput="setCustomValidity('')">
 			<input type="text" name="budget" placeholder="budget" id="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
 			<select id="categorySelect" name="category_id">
@@ -210,7 +210,7 @@ function dcvs_update_business($id, $title, $description, $money) {
 	} else if (!is_numeric($money)) {
 		return DCVS_Toast::create_new_toast( "Budget must be a number", true );
 	} else {
-		$wpdb->update("dcvs_business", array("title"=>$title, "description"=>$description,"money" =>$money), array("id"=>$id));
+		$wpdb->update("dcvs_business", array("description"=>$description,"money" =>$money), array("id"=>$id));
 		return DCVS_Toast::create_new_toast( "Business Updated" );
 	}
 }
