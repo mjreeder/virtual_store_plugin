@@ -94,6 +94,16 @@ if($ware_house_order_history){
 																				$productDescription = $productDescription.' '.$itemInformation[$terms[$j]["taxonomy"]];
 																			}
 																		}
+																		$item_meta = $itemInformation["item_meta"];
+																		$non_custom_attributes = array('_qty', '_tax_class', '_product_id', '_variation_id', '_line_subtotal', '_line_total', '_line_subtotal_tax', '_line_tax', '_line_tax_data');
+																		$custom_description = "";
+																		foreach ($item_meta as $key => $value) {
+																			if (!in_array( $key, $non_custom_attributes )) {
+																				$custom_description = $custom_description .' '. $value[0];
+																			}
+																		}
+																		$productDescription = $productDescription . ' ' . $custom_description;
+
 
 																			for ($w=0; $w < sizeof($productInfo) ; $w++) {
 

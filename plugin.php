@@ -327,7 +327,7 @@ function dcvs_remove_product_tabs($tabs)
     if (get_current_blog_id() != 1) {
         unset($tabs['inventory']);
         unset($tabs['shipping']);
-        // unset($tabs['attribute']);
+         unset($tabs['attribute']);
         unset($tabs['advanced']);
     }
 
