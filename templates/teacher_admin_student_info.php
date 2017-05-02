@@ -283,7 +283,7 @@ function display_current_student_info()
 					'key' => 'created_by',
 					'value' => $currentDisplayStudent
 				);
-				if ($persona_info) {
+				if (isset($persona_info[0])) {
 					$search_criteria['field_filters'][] = array(
 						'key' => $end_of_shopping_evaluation_persona_key,
 						'value' => $persona_info[0]->persona_id
@@ -302,7 +302,7 @@ function display_current_student_info()
 				} else {
 					echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
 				}
-				if ($persona_info) {
+				if (isset($persona_info[0])) {
 					$search_criteria['field_filters'][1] = array(
 						'key' => $shopping_evaluation_persona_key,
 						'value' => $persona_info[0]->persona_id
@@ -410,7 +410,7 @@ function display_current_student_info()
 					'key' => 'created_by',
 					'value' => $currentDisplayStudent
 				);
-				if ($persona_info) {
+				if (isset($persona_info[1])) {
 					$search_criteria['field_filters'][] = array(
 						'key' => $end_of_shopping_evaluation_persona_key,
 						'value' => $persona_info[1]->persona_id
@@ -428,7 +428,7 @@ function display_current_student_info()
 				} else {
 					echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
 				}
-				if ($persona_info) {
+				if (isset($persona_info[1])) {
 					$search_criteria['field_filters'][1] = array(
 						'key' => $shopping_evaluation_persona_key,
 						'value' => $persona_info[1]->persona_id
