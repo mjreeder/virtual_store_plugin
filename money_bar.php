@@ -17,6 +17,23 @@ function dcvs_enqueue_money_bar_style() {
 }
 
 function dcvs_add_money_bar() {
+	global $pagename;
+
+	$forms = RGFormsModel::get_forms( null, 'title' );
+	$form_slugs = array();
+
+	foreach( $forms as $form ) {
+		$title = $form->title;
+		$lowercase_title = strtolower( $title );
+		$formatted_title = preg_replace('#[ -]+#', '-', $lowercase_title);
+		$form_slugs[] = $formatted_title;
+	}
+
+
+
+	if (in_array( $pagename, $form_slugs )) {
+		return;
+	}
 
 	$user_id = get_current_user_id();
 
