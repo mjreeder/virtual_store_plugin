@@ -115,7 +115,7 @@ $categories = dcvs_get_all_categories();
 	<div class="tableWrapper">
 		<table class="virtualTable orderTable">
 			<tr>
-				<th>TITLE</th>
+				<th>CATEGORY NAME</th>
 				<th>DESCRIPTION</th>
 				<th></th>
 				<th></th>
@@ -155,11 +155,11 @@ $categories = dcvs_get_all_categories();
 
 if ($toast != null) {
 	echo $toast;
-	
+
 	?>
 
 	<script src="<?php echo plugins_url( 'js/toast.js', dirname(__FILE__)); ?>"></script>
-	
+
 	<?php
 }
 

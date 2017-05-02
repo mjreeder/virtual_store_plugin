@@ -111,7 +111,7 @@ $categories = dcvs_get_all_categories();
 <section class="manage">
 
 	<div>
-		<h1 class="title">Manage Personas</h1>
+		<h1 class="title">Manage Consumers</h1>
 		<button class="headerButton createNew" id="createNew">CREATE NEW</button>
 	</div>
 
@@ -178,7 +178,7 @@ $categories = dcvs_get_all_categories();
 	<div class="tableWrapper">
 		<table class="virtualTable orderTable">
 			<tr>
-				<th>TITLE</th>
+				<th>CONSUMER</th>
 				<th>CATEGORY</th>
 				<th>BUDGET</th>
 				<th>DESCRIPTION</th>

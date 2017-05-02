@@ -3,7 +3,7 @@
 ?>
 
 <section class="users">
-	<h1 class="title">Create Users</h1>
+	<h1 class="title">Create Students</h1>
 
 	<div class="messages">
 		<?php foreach(DCVS_Store_Management::$messages as $message): ?>
@@ -12,8 +12,8 @@
 	</div>
 
 	<div class="addUsers">
-		<h2 class="subTitle">add users</h2>
-		<p>paste a list of student email addresses here, separated by a comma or a new line.</p>
+		<h2 class="subTitle">ADD STUDENTS</h2>
+		<p>Paste a list of student email addresses here, separated by a comma or a new line.</p>
 		<form action="" method="post">
 			<?php wp_nonce_field( DCVS_Store_Management::ADD_USERS_BY_EMAIL_POST_KEY ); ?>
 			<textarea name="<?php echo DCVS_Store_Management::ADD_USERS_BY_EMAIL_POST_KEY; ?>" rows="8" cols="80"></textarea>
@@ -23,7 +23,7 @@
 	</div>
 	<div class="userLists">
 		<section class="userLeft">
-			<h2 class="subTitle">active users</h2>
+			<h2 class="subTitle">ACTIVE STUDENTS</h2>
 			<form action="" class="warning" method="post" onsubmit="return confirm('Archive All Stores?');">
 				<?php wp_nonce_field( DCVS_Store_Management::ARCHIVE_ALL_STORES_POST_KEY ); ?>
 				<button type="submit" name="<?php echo DCVS_Store_Management::ARCHIVE_ALL_STORES_POST_KEY; ?>">ARCHIVE ALL</button>
@@ -46,7 +46,7 @@
 			</ul>
 		</section>
 		<section class="userRight">
-			<h2 class="subTitle">archived users</h2>
+			<h2 class="subTitle">ARCHIVED STUDENTS</h2>
 			<ul>
 				<?php foreach(DCVS_Store_Management::get_archived_stores() as $site):
 					$store = get_blog_details($site->blog_id);

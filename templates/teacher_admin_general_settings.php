@@ -78,7 +78,7 @@ function dcvs_validate_Date($date)
 
 		<h1 class="title">General Settings</h1>
 
-		<h2 class="subTitle">budgets</h2>
+		<h2 class="subTitle">BUDGETS</h2>
 
 		<section class="settingsSub">
 
@@ -102,7 +102,7 @@ function dcvs_validate_Date($date)
 
 		</section>
 
-		<h2 class="subTitle">shopping time</h2>
+		<h2 class="subTitle">SHOPPING TIME</h2>
 
 		<section class="settingsSub">
 

@@ -143,7 +143,7 @@ $categories = dcvs_get_all_categories();
 			<tr>
 				<th>STUDENT</th>
 				<th>CATEGORY</th>
-				<th>TITLE</th>
+				<th>STORE NAME</th>
 				<th>BUDGET</th>
 				<th>DESCRIPTION</th>
 				<th></th>

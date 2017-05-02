@@ -54,12 +54,12 @@ function display_admin_panel()
           <nav class="sidebar">
               <ul>
 				  <li <?php echo !isset($_REQUEST['section']) ? "class='selected-tab'" : ''?>><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'] ?>">STUDENT INFO</a></li>
-				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'users') ? "class='selected-tab'" : ''?> ><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=users' ?>">1. USERS</a></li>
+				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'users') ? "class='selected-tab'" : ''?> ><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=users' ?>">1. STUDENTS</a></li>
 				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'settings') ? "class='selected-tab'" : ''?>><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=settings' ?>">2. GENERAL SETTINGS</a></li>
 				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'categories') ? "class='selected-tab'" : ''?>><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=categories' ?>">3. CATEGORIES</a></li>
 				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'business') ? "class='selected-tab'" : ''?>><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=business' ?>">4. MANAGE BUSINESSES</a></li>
-				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'manage') ? "class='selected-tab'" : ''?>><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=manage' ?>">5. MANAGE PERSONAS</a></li>
-				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'assign') ? "class='selected-tab'" : ''?>><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=assign' ?>">6. ASSIGN PERSONAS</a></li>
+				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'manage') ? "class='selected-tab'" : ''?>><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=manage' ?>">5. MANAGE CONSUMERS</a></li>
+				  <li <?php echo (isset($_REQUEST['section']) && $_REQUEST['section'] == 'assign') ? "class='selected-tab'" : ''?>><a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=assign' ?>">6. ASSIGN CONSUMERS</a></li>
 			  </ul>
           </nav>
           <?php
