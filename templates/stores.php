@@ -122,10 +122,12 @@ $current_budget = $persona_budget - $persona_expense ;
 			<div class="bar personaOne" onclick="toggleHeight()">
 				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
-				<div class="warningMessage">
-					<img src="<?php echo plugins_url("../assets/images/stop.svg", __FILE__); ?>" alt="">
-					<p>stop! you're over budget!</p>
-				</div>
+				<?php if ($current_budget < 0) { ?>
+					<div class="warningMessage">
+						<img src="<?php echo plugins_url("../assets/images/stop.svg", __FILE__); ?>" alt="">
+						<p>stop! you're over budget!</p>
+					</div>
+				<?php } ?>
 				<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
 			</div>
 
@@ -142,10 +144,12 @@ $current_budget = $persona_budget - $persona_expense ;
 			<div class="bar personaTwo" onclick="toggleHeight()">
 				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
 				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+				<?php if ($current_budget < 0) { ?>
 					<div class="warningMessage">
 						<img src="<?php echo plugins_url("../assets/images/stop.svg", __FILE__); ?>" alt="">
 						<p>stop! you're over budget!</p>
 					</div>
+				<?php } ?>
 				<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
 			</div>
 
