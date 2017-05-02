@@ -226,6 +226,7 @@ html {
     margin-bottom: 30px;
     justify-content: space-between;
     div {
+        flex: 0 0 50%;
         h3 {
             font-family: "Open Sans", sans-serif;
             color: $darkGray;
