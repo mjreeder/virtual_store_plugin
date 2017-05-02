@@ -55,6 +55,7 @@ label {
     justify-content: space-between;
     align-items: flex-start;
     flex-direction: row;
+    border-bottom:1px solid $darkYellow;
     h1 {
         font-family: 'Open sans', sans-serif;
         color: white;
@@ -84,40 +85,47 @@ label {
 .sidebar {
     width: 230px;
     background-color: #E0E0E0;
+    border-right:1px solid lighten($darkGray, 40%);
     a {
         text-decoration: none;
+        display: block;
+        padding:20px 10px;
+        cursor: pointer;
+        color: $darkGray;
     }
     ul {
         height: 100%;
         li {
-            padding-top: 20px;
             height: 60px;
-            color: $darkGray;
             font-size: 17px;
             font-family: "Open Sans", sans-serif;
             font-weight: 700;
             text-align: left;
-            padding-left: 20px;
-            cursor: pointer;
             list-style: none;
             margin-bottom: 0;
+            &:first-child {
+                border-bottom:4px solid $yellow;
+            }
+            &.selected-tab {
+                background-color: #828282;
+                a {
+                    color:white;
+                }
+            }
         }
     }
 }
-#selectedTab {
-    background-color: #828282;
-    color: white;
-}
+
 .studentList {
     height: 100%;
     background-color: white;
-    width: 45%;
-    flex: 0 0 200px;
+    width: 200px;
+    border-right:1px solid lighten($darkGray, 50%);
     .searchBar {
         height: 40px;
         width: 100%;
         position: relative;
-        border-right: 2px solid #F2F2F2;
+        border-bottom:1px solid #e0e0e0;
         img {
             position: absolute;
             top: 7px;
@@ -134,6 +142,8 @@ label {
             font-weight: 700;
             font-style: italic;
             color: $darkGray;
+            box-sizing:border-box;
+            margin:0;
         }
         input:placeholder {
             color: #E0E0E0;
@@ -146,29 +156,34 @@ label {
         height: calc(100% - 40px);
         overflow: scroll;
         background-color: #F2F2F2;
-        .selectedStudent {
-            a {
-                color: white;
-            }
-            background-color: #828282;
-        }
         li {
             width: 100%;
-            padding-left: 20px;
             background-color: #F2F2F2;
             color: $darkGray;
             list-style: none;
-            height: 35px;
-            padding-top: 7px;
             text-transform: uppercase;
             font-size: 17px;
             font-family: "Open Sans", sans-serif;
             font-weight: 700;
             cursor: pointer;
             margin-bottom: 0;
+            &.selectedStudent {
+                a, a:hover {
+                    background-color: #828282;
+                    color: white;
+                }
+            }
             a {
                 color: $darkGray;
                 text-decoration: none;
+                display: block;
+                padding:8px 12px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow:ellipsis;
+                &:hover {
+                    background-color: #e0e0e0;
+                }
             }
         }
     }
