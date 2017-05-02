@@ -317,6 +317,7 @@ function dcvs_enqueue_admin_script()
         wp_register_script( 'dcvs_product_edit_script', plugins_url( '/js/editProduct.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
         wp_enqueue_script( 'dcvs_product_edit_script' );
     }
+    wp_enqueue_style( 'dcvs_wordpress_dashboard_style', plugins_url( '/assets/css/dcvsWordpressDashboard.css', __FILE__ ) );
 }
 
 function dcvs_enqueue_product_edit_styles() {
