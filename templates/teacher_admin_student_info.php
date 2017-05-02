@@ -1,8 +1,4 @@
 <?php
-// require_once('store_management.php');
-
-// var_dump(sizeof($users));
-// die('de');
 ?>
 	<aside class="studentList">
 		<div class="searchBar">
@@ -57,10 +53,23 @@ function display_student_list()
 function display_current_student_info()
 {
 	global $wpdb;
-	$currentDisplayStudent = $_REQUEST['student_id'];
-	$display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_users WHERE id = %d', $currentDisplayStudent));
-	$business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $currentDisplayStudent));
-	$warehouse_purchase_sum = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_warehouse_purchase WHERE user_id = %d', $currentDisplayStudent));
+	if (isset($_REQUEST['student_id'])) {
+		$users = DCVS_Store_Management::get_active_users();
+		if (!in_array($_REQUEST['student_id'], $users)) {
+			$currentDisplayStudent = NULL;
+			$display_name = NULL;
+			$warehouse_purchase_sum = NULL;
+			echo "<h1>No Users In Sytem, Go to Students Tab to Create Students</h1>";
+			return;
+		}
+		else{
+			$currentDisplayStudent = $_REQUEST['student_id'];
+			$display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_users WHERE id = %d', $currentDisplayStudent));
+			$business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $currentDisplayStudent));
+			$warehouse_purchase_sum = $wpdb->get_results($wpdb->prepare('SELECT sum(cost) FROM dcvs_warehouse_purchase WHERE user_id = %d', $currentDisplayStudent));
+		}
+	}
+
 	if(isset($warehouse_purchase_sum[0]) && isset($business_info[0])){
 		$budget_remaining = $business_info[0]->money - get_value_from_stdClass($warehouse_purchase_sum[0]);
 	}
