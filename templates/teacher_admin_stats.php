@@ -2,18 +2,17 @@
 global $wpdb;
 $currentDisplayStudentID = $_REQUEST['student_id'];
 $display_name = $wpdb->get_results($wpdb->prepare('SELECT display_name FROM wp_users WHERE id = %d', $currentDisplayStudentID));
-$user_id = $_REQUEST['user_id'];
-$ware_house_order_history = $wpdb->get_results($wpdb->prepare('SELECT items, cost FROM dcvs_warehouse_purchase WHERE user_id = %d', $user_id));
+$ware_house_order_history = $wpdb->get_results($wpdb->prepare('SELECT items, cost FROM dcvs_warehouse_purchase WHERE user_id = %d', $currentDisplayStudentID));
 function get_value_from_stdClass($obj){
 	$array = get_object_vars($obj);
 	reset($array);
 	$first_key = key($array);
   return $array;
 }
-// echo "<pre>";
-// var_dump(get_blogs_of_user( $user_id, $all = false ));
-// echo "</pre>";
-// die();
+
+$second = array_slice(get_blogs_of_user( $currentDisplayStudentID), 1, 1);
+
+$blog_id = get_value_from_stdClass($second[0])["userblog_id"];
 $orderMap = array();
 if($ware_house_order_history){
 
@@ -41,7 +40,6 @@ if($ware_house_order_history){
 		}
 	}
 }
-
  ?>
         <main class="admin">
 
@@ -68,51 +66,72 @@ if($ware_house_order_history){
 																		$itemInformation = reset($orderMap[$i]);
 																		$id = $itemInformation["item_meta"]['_variation_id'][0];
 																		$productInfo = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
-																		//GETTING PRODUCT DESCRIPTION
-																		// get blog id
-																		// get business product id from warehouse prodct id = wp_blogID_posts id
-																		// get post content from wp_blogID_posts = description
-																		$userProductDescription = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
-																		$productDescription = '';
-																		for ($j=0; $j <sizeof($terms) ; $j++) {
-																			if(isset($itemInformation[$terms[$j]["taxonomy"]])){
-																				$productDescription = $productDescription.' '.$itemInformation[$terms[$j]["taxonomy"]];
-																			}
 
-																		}
+																		$wp_blogID = 'wp_'.$blog_id.'_posts';
+																		$studentProductDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID JOIN dcvs_warehouse_business_product ON dcvs_warehouse_business_product.business_product_id=wp_5_posts.id WHERE warehouse_product_id = %d", $id));
+																		$studentProductDescriptionArray = get_value_from_stdClass($studentProductDescriptionSql[0]);
 
-																		if(isset($productInfo[0])){
-																			$saleInfo = get_value_from_stdClass($productInfo[0]);
-
-
+																		if(isset($studentProductDescriptionArray["post_parent"])){
+																			$postParentDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT post_content FROM $wp_blogID WHERE id = %d", $studentProductDescriptionArray["post_parent"]));
+																			$studentProductDescriptionText = get_value_from_stdClass($postParentDescriptionSql[0])["post_content"];
 																		}
 																		else{
-																			$saleInfo = NUll;
+																			$studentProductDescriptionText = $studentProductDescriptionArray['post_content'];
 																		}
-																		?>
-																		 <td><?php echo $productDescription.' '.$itemInformation['name'] ;?></td>
-																		 <td><?php echo $itemInformation["item_meta"]["_qty"][0]; ?></td>
-																		 <td><?php
-																		 if($saleInfo != NULL){
-																			 echo $saleInfo['number_bought'];
-																		 }
-																		 else{
-																			 echo '';
-																		 }
-																		 ?></td>
-																		 <td><?php echo $itemInformation["item_meta"]['_line_subtotal'][0]; ?></td>
-																		 <td><?php
-																		 if($saleInfo != NULL){
-																			 echo $saleInfo['price'];
-																		 }
-																		 else{
-																			 echo '';
-																		 }
-																		 ?></td>
 
-																		 <td class="desc"><?php echo "derp"; ?></td>
-																	</tr>
-																		<?php
+																		$userProductDescription = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
+																		// echo "<pre>";
+																		// var_dump($productInfo);
+																		// echo
+
+																		for ($w=0; $w < sizeof($productInfo) ; $w++) {
+																			$productDescription = '';
+																			for ($j=0; $j <sizeof($terms) ; $j++) {
+
+																				if(isset($itemInformation[$terms[$j]["taxonomy"]])){
+																					$productDescription = $productDescription.' '.$itemInformation[$terms[$j]["taxonomy"]];
+																				}
+
+																			}
+
+																			if(isset($productInfo[0])){
+																				$saleInfo = get_value_from_stdClass($productInfo[$w]);
+
+																			}
+																			else{
+																				$saleInfo = NUll;
+
+																			}
+																			?>
+
+																			 <td><?php echo $productDescription.' '.$itemInformation['name'] ;?></td>
+																			 <td><?php echo $itemInformation["item_meta"]["_qty"][0]; ?></td>
+																			 <td><?php
+																			 if($saleInfo != NULL){
+																				 echo $saleInfo['number_bought'];
+																			 }
+																			 else{
+																				 echo '';
+																			 }
+																			 ?></td>
+																			 <td><?php echo $itemInformation["item_meta"]['_line_subtotal'][0] /  $itemInformation["item_meta"]["_qty"][0]; ?></td>
+																			 <td><?php
+																			 if($saleInfo != NULL){
+																				 echo $saleInfo['price'];
+																			 }
+																			 else{
+																				 echo '';
+																			 }
+																			 ?></td>
+
+																			 <td class="desc"><?php echo $studentProductDescriptionText; ?></td>
+																		</tr>
+
+																				<?php
+
+																		}
+
+
 															}
 														}
 														else{
