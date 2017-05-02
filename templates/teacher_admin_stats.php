@@ -70,14 +70,19 @@ if($ware_house_order_history){
 
 																		$wp_blogID = 'wp_'.$blog_id.'_posts';
 																		$studentProductDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID JOIN dcvs_warehouse_business_product ON dcvs_warehouse_business_product.business_product_id=wp_5_posts.id WHERE warehouse_product_id = %d", $id));
-																		$studentProductDescriptionArray = get_value_from_stdClass($studentProductDescriptionSql[0]);
 
-																		if(isset($studentProductDescriptionArray["post_parent"])){
-																			$postParentDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT post_content FROM $wp_blogID WHERE id = %d", $studentProductDescriptionArray["post_parent"]));
-																			$studentProductDescriptionText = get_value_from_stdClass($postParentDescriptionSql[0])["post_content"];
+																		if (isset($studentProductDescriptionSql[0])) {
+																			$studentProductDescriptionArray = get_value_from_stdClass($studentProductDescriptionSql[0]);
+																			if(isset($studentProductDescriptionArray["post_parent"])){
+																				$postParentDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT post_content FROM $wp_blogID WHERE id = %d", $studentProductDescriptionArray["post_parent"]));
+																				$studentProductDescriptionText = get_value_from_stdClass($postParentDescriptionSql[0])["post_content"];
+																			}
+																			else{
+																				$studentProductDescriptionText = $studentProductDescriptionArray['post_content'];
+																			}
 																		}
 																		else{
-																			$studentProductDescriptionText = $studentProductDescriptionArray['post_content'];
+																			$studentProductDescriptionText = "";
 																		}
 
 																		$userProductDescription = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
@@ -89,7 +94,7 @@ if($ware_house_order_history){
 																			}
 																		}
 
-																		if(sizeof($productInfo) > 1){
+
 
 																			for ($w=0; $w < sizeof($productInfo) ; $w++) {
 
@@ -132,8 +137,6 @@ if($ware_house_order_history){
 																					<?php
 
 																		}
-
-															}
 														}
 														else{
 															?>
