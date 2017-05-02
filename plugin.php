@@ -229,7 +229,7 @@ function dcvs_get_landing_page_url($user_id = NULL) {
     $site_url = $user_business['url'];
     $landing_page_url = $site_url . 'wp-content/plugins/' . $plugin_name . '/templates/landing.php';
 
-    
+
     return $landing_page_url;
 }
 
@@ -327,7 +327,7 @@ function dcvs_remove_product_tabs($tabs)
     if (get_current_blog_id() != 1) {
         unset($tabs['inventory']);
         unset($tabs['shipping']);
-        unset($tabs['attribute']);
+        // unset($tabs['attribute']);
         unset($tabs['advanced']);
     }
 

@@ -36,7 +36,6 @@ if($ware_house_order_history){
 			else{
 				$orderMap[] = array($id => $items[$i]);
 			}
-
 		}
 	}
 }
@@ -59,8 +58,7 @@ if($ware_house_order_history){
                         </tr>
                         <tr>
 													<?php
-													$terms = $wpdb->get_results("SELECT DISTINCT wp_term_taxonomy.taxonomy FROM wp_terms JOIN wp_term_taxonomy ON wp_terms.term_id = wp_term_taxonomy.term_id JOIN wp_termmeta ON wp_terms.term_id = wp_termmeta.term_id
-														WHERE wp_terms.term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy IN (SELECT CONCAT('pa_',attribute_name) FROM wp_woocommerce_attribute_taxonomies))", ARRAY_A);
+
 														if(sizeof($orderMap) >=1){
 
 															for ($i=0; $i <sizeof($orderMap) ; $i++) {
@@ -86,15 +84,16 @@ if($ware_house_order_history){
 																		}
 
 																		$userProductDescription = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
+
 																		$productDescription = '';
+																		$terms = $wpdb->get_results("SELECT DISTINCT wp_term_taxonomy.taxonomy FROM wp_terms JOIN wp_term_taxonomy ON wp_terms.term_id = wp_term_taxonomy.term_id JOIN wp_termmeta ON wp_terms.term_id = wp_termmeta.term_id
+																		WHERE wp_terms.term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy IN (SELECT CONCAT('pa_',attribute_name) FROM wp_woocommerce_attribute_taxonomies))", ARRAY_A);
 																		for ($j=0; $j <sizeof($terms) ; $j++) {
 
 																			if(isset($itemInformation[$terms[$j]["taxonomy"]])){
 																				$productDescription = $productDescription.' '.$itemInformation[$terms[$j]["taxonomy"]];
 																			}
 																		}
-
-
 
 																			for ($w=0; $w < sizeof($productInfo) ; $w++) {
 
@@ -115,16 +114,34 @@ if($ware_house_order_history){
 																				 <td><?php
 
 																				 if($saleInfo != NULL){
-																					 echo $saleInfo['number_bought'];
+																					 $numberBought = 0;
+																					 for ($s=0; $s < sizeof($saleInfo) ; $s++) {
+																						 $numberBought += $saleInfo[$s]["number_bought"];
+																					 }
+																						?>
+																						<span><?php echo $numberBought; ?></span>
+																						<?php
 																				 }
 																				 else{
 																					 echo '';
 																				 }
 																				 ?></td>
 																				 <td><?php echo $itemInformation["item_meta"]['_line_subtotal'][0] /  $itemInformation["item_meta"]["_qty"][0]; ?></td>
-																				 <td><?php
+																				 <td class="own"><?php
 																				 if($saleInfo != NULL){
-																					 echo $saleInfo['price'];
+																						?>
+																						<span><?php echo $saleInfo[sizeof($saleInfo) -1]["price"]; ?></span>
+																						<?php
+																					 if (sizeof($saleInfo) > 1) {
+																					 	?>
+																						<span>*</span>
+																						<?php
+																						for ($r=0; $r <sizeof($saleInfo) ; $r++) {
+																							?>
+																							<span class="price_change"><?php echo $saleInfo[$r]["number_bought"]." bought at "; echo "$".$saleInfo[$r]["price"]; ?></span>
+																							<?php
+																						}
+																					 }
 																				 }
 																				 else{
 																					 echo '';
