@@ -88,17 +88,19 @@ if($ware_house_order_history){
 																		$productDescription = '';
 																		$terms = $wpdb->get_results("SELECT DISTINCT wp_term_taxonomy.taxonomy FROM wp_terms JOIN wp_term_taxonomy ON wp_terms.term_id = wp_term_taxonomy.term_id JOIN wp_termmeta ON wp_terms.term_id = wp_termmeta.term_id
 																		WHERE wp_terms.term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy IN (SELECT CONCAT('pa_',attribute_name) FROM wp_woocommerce_attribute_taxonomies))", ARRAY_A);
+																		$global_attributes = array();
 																		for ($j=0; $j <sizeof($terms) ; $j++) {
 
 																			if(isset($itemInformation[$terms[$j]["taxonomy"]])){
 																				$productDescription = $productDescription.' '.$itemInformation[$terms[$j]["taxonomy"]];
+																				$global_attributes[] = $terms[$j]['taxonomy'];
 																			}
 																		}
 																		$item_meta = $itemInformation["item_meta"];
 																		$non_custom_attributes = array('_qty', '_tax_class', '_product_id', '_variation_id', '_line_subtotal', '_line_total', '_line_subtotal_tax', '_line_tax', '_line_tax_data');
 																		$custom_description = "";
 																		foreach ($item_meta as $key => $value) {
-																			if (!in_array( $key, $non_custom_attributes )) {
+																			if (!in_array( $key, $non_custom_attributes ) && !in_array( $key, $global_attributes )) {
 																				$custom_description = $custom_description .' '. $value[0];
 																			}
 																		}
@@ -124,6 +126,7 @@ if($ware_house_order_history){
 																				 <td><?php
 
 																				 if($saleInfo != NULL){
+
 																					 $numberBought = 0;
 																					 for ($s=0; $s < sizeof($saleInfo) ; $s++) {
 																						 $numberBought += $saleInfo[$s]["number_bought"];
@@ -145,12 +148,16 @@ if($ware_house_order_history){
 																					 if (sizeof($saleInfo) > 1) {
 																					 	?>
 																						<span>*</span>
+																						<span class="price_change">
 																						<?php
 																						for ($r=0; $r <sizeof($saleInfo) ; $r++) {
 																							?>
-																							<span class="price_change"><?php echo $saleInfo[$r]["number_bought"]." bought at "; echo "$".$saleInfo[$r]["price"]; ?></span>
+																							<?php echo $saleInfo[$r]["number_bought"]." bought at "; echo "$".$saleInfo[$r]["price"]."<br>"; ?>
 																							<?php
 																						}
+																						?>
+																						</span>
+																						<?php
 																					 }
 																				 }
 																				 else{
