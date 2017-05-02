@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
   <input type="hidden" name="dcvs_admin_changes" value="1">
     <div>
         <h1 class="title">Assign Consumers</h1>
-        <button class="headerButton randomize" name="assign_personas" type="submit" <?php echo dcvs_enough_distinct_persona_categories() ? "": "disabled"?> >RANDOMIZE CONSUMERS</button>
+        <button class="headerButton randomize" name="assign_personas" type="submit" <?php echo dcvs_enough_distinct_persona_categories() ? "": "disabled"?>  onclick="return confirm('Randomize All Consumers?');">RANDOMIZE CONSUMERS</button>
     </div>
 
     <div class="tableWrapper">
