@@ -29,6 +29,7 @@ $mainButtonDark: #BF9256;
     display: flex;
     bottom: -120px;
     width: 100%;
+    line-height: 1;
     //background-color: $personaTwoDark;
     transition: bottom 0.5s;
     .barSummary {
@@ -44,6 +45,7 @@ $mainButtonDark: #BF9256;
             color: white;
             padding: 0 0;
             font-weight: bold;
+            line-height: 1;
         }
         p {
             top: 110px;
@@ -55,6 +57,7 @@ $mainButtonDark: #BF9256;
             margin-left: 40px;
             margin-top: 10px;
             color: white;
+            line-height: 1;
         }
     }
     .bar {
@@ -73,6 +76,7 @@ $mainButtonDark: #BF9256;
             align-self: center;
             padding: 0 0;
             margin: 0 0;
+            line-height: 1;
             span {
                 font-weight: 400;
             }
@@ -110,6 +114,8 @@ $mainButtonDark: #BF9256;
                     font-size: 25px;
                     margin: 0 0;
                     font-weight: bold;
+                    padding: 0;
+                    line-height: 1;
                 }
             }
         }
@@ -119,8 +125,8 @@ $mainButtonDark: #BF9256;
     bottom: 0;
 }
 .warningMessage {
-    display: none;
-    // display: flex;
+    //display: none;
+     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -133,7 +139,8 @@ $mainButtonDark: #BF9256;
       font-size: 20px;
       font-weight: 700;
       color: white;
-      align-self: flex-end;
+        line-height: 1;
+        margin: 0;
     }
 }
 @media screen and (max-width:1000px) {
