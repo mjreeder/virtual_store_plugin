@@ -25,7 +25,7 @@ function dcvs_add_money_bar() {
 	$persona = dcvs_get_current_persona($user_id);
 
 	$user_persona_ids = dcvs_get_user_persona_ids( $user_id );
-	$persona_one_id = get_object_vars($user_persona_ids[0])["persona_id"];
+	$persona_one_id = isset(get_object_vars($user_persona_ids[0])["persona_id"]) ? get_object_vars($user_persona_ids[0])["persona_id"] : -1;
 
 	if (get_current_blog_id() == 1) {
 		global $wpdb;
