@@ -77,6 +77,7 @@ if($persona == null){
     <h1><?php echo stripslashes($persona->name); ?> Stats</h1>
 
     <?php foreach($purchaseResults as $purchase): ?>
+    <h2><?php echo $purchase->business_title ?></h2>
     <div class="tableWrapper">
         <table class="virtualTable">
             <tr>

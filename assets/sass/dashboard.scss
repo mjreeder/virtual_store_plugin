@@ -532,10 +532,19 @@ html {
         margin-left: 75px;
         padding: 25px;
     }
+    h2 {
+        font-family: "Open Sans", sans-serif;
+        font-weight: 600;
+        color: $darkGray;
+        font-size: 35px;
+        margin-left: 75px;
+        padding: 20px;
+    }
 }
 .tableWrapper {
     height: auto;
     overflow: scroll;
+    margin-bottom: 25px;
 }
 .virtualTable {
     color: $darkGray;
@@ -574,4 +583,9 @@ html {
     input[type=image] {
         height: 25px;
     }
-}
+}.tableWrapper {
+     height: auto;
+     overflow: scroll;
+ }
+
+
