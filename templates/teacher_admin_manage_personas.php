@@ -145,7 +145,7 @@ $categories = dcvs_get_all_categories();
 	</section>
 
 	<section class="createModal" id="editModal">
-		<h1>Edit Persona</h1>
+		<h1>Edit Consumer</h1>
 		<form action="" method="post">
 
 			<input type="hidden" name="page" value="dcvs_teacher">

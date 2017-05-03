@@ -40,3 +40,13 @@ function timeIsLaterThan($date) {
 	}
 	return false;
 }
+
+function dcvs_get_answers_based_on_question_id($entry, $questionID){
+	$answers = [];
+	foreach($entry as $key=>$value){
+		if( strpos($key,$questionID) === 0 && !empty($value) ){
+			$answers[] = $value;
+		}
+	}
+	return '<ul><li>'.implode('</li><li>', $answers).'</li></ul>';
+}

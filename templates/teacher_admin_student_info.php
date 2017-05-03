@@ -162,15 +162,20 @@ function display_current_student_info()
 					}
 					$entries = GFAPI::get_entries($warehouse_evaluation_id, $search_criteria);
 					?>
-					<form class="" action="index.html" method="post">
-							<select class="mainColor" name="" onchange="window.location.href = this.value">
-								<option value="">SELECT AN ENTRY</option>
-								<?php
-								foreach ($entries as $entry){
-									echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $warehouse_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
-								}
-								?>
-							</select>
+					<form class="select-with-button" action="index.html" method="post">
+						<select class="mainColor" name="" onchange="window.location.href = this.value">
+							<?php if( count($entries) ): ?>
+							<option value="">SELECT A WAREHOUSE EVALUATION</option>
+							<?php
+							foreach ($entries as $entry){
+								echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $warehouse_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
+							}
+							else:
+								echo '<option value="">NO WAREHOUSE EVAL ENTRIES YET</option>';
+							endif;
+							?>
+						</select>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id; ?>" class="button">All</a>
 					</form>
 					<!-- TODO get remaining budget-->
 					<?php
@@ -325,15 +330,20 @@ function display_current_student_info()
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
 				?>
-				<form class="" action="index.html" method="post">
+				<form class="select-with-button" action="index.html" method="post">
 					<select class="one" name="" onchange="window.location.href = this.value">
+						<?php if(count($entries)): ?>
 						<option value="">SELECT AN ENTRY</option>
 						<?php
 						foreach ($entries as $entry){
 							echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
 						}
+						else:
+							echo '<option value="">NO STORE EVALS YET</option>';
+						endif;
 						?>
 					</select>
+					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$shopping_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">All</a>
 				</form>
 				<section class="facts">
 					<div class="fact">
@@ -451,15 +461,20 @@ function display_current_student_info()
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
 				?>
-				<form class="" action="index.html" method="post">
+				<form class="select-with-button" action="index.html" method="post">
 					<select class="two" name="" onchange="window.location.href = this.value">
+						<?php if(count($entries)): ?>
 						<option value="">SELECT AN ENTRY</option>
 						<?php
 						foreach ($entries as $entry){
 							echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
 						}
+						else:
+						echo '<option value="">NO STORE EVALS YET</option>';
+						endif;
 						?>
 					</select>
+					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[1]->persona_id; ?>" class="button">All</a>
 				</form>
 				<section class="facts">
 					<div class="fact">
