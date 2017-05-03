@@ -42,9 +42,8 @@ function dcvs_add_money_bar() {
 	$persona = dcvs_get_current_persona($user_id);
 
 	$user_persona_ids = dcvs_get_user_persona_ids( $user_id );
-
-	if (isset($user_persona_ids[0]["persona_id"])) {
-		$persona_one_id = get_object_vars($user_persona_ids[0])["persona_id"];
+	if (isset($user_persona_ids[0]->persona_id)) {
+		$persona_one_id = $user_persona_ids[0]->persona_id;//get_object_vars($user_persona_ids[0])["persona_id"];
 	} else {
 		$persona_one_id = -1;
 	}
@@ -167,7 +166,7 @@ function dcvs_add_money_bar() {
 			};
 		</script>
 		<?php
-	} else {
+	} else if(get_user_blog_id( $user_id ) != get_current_blog_id()) {
 		$persona_category = dcvs_get_persona_category( $persona['id'] );
 		$category = isset($persona_category[0]['category_id']) ? dcvs_get_category_by_id($persona_category[0]['category_id']) : null;
 		$category_name = isset($category[0]['name']) ? $category[0]['name'] : "Not Set";
