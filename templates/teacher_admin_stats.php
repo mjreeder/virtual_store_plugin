@@ -63,25 +63,41 @@ if($ware_house_order_history){
 
 															for ($i=0; $i <sizeof($orderMap) ; $i++) {
 																		$itemInformation = reset($orderMap[$i]);
-																		$id = $itemInformation["item_meta"]['_variation_id'][0];
+
 																		$productInfo = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
-
 																		$wp_blogID = 'wp_'.$blog_id.'_posts';
-																		$studentProductDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID JOIN dcvs_warehouse_business_product ON dcvs_warehouse_business_product.business_product_id=wp_5_posts.id WHERE warehouse_product_id = %d", $id));
+													          $id = $itemInformation["item_meta"]['_variation_id'][0];
 
-																		if (isset($studentProductDescriptionSql[0])) {
-																			$studentProductDescriptionArray = get_value_from_stdClass($studentProductDescriptionSql[0]);
-																			if(isset($studentProductDescriptionArray["post_parent"])){
-																				$postParentDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT post_content FROM $wp_blogID WHERE id = %d", $studentProductDescriptionArray["post_parent"]));
-																				$studentProductDescriptionText = get_value_from_stdClass($postParentDescriptionSql[0])["post_content"];
-																			}
-																			else{
-																				$studentProductDescriptionText = $studentProductDescriptionArray['post_content'];
-																			}
-																		}
-																		else{
-																			$studentProductDescriptionText = "";
-																		}
+													          $post = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID WHERE ID = %d", $id[0]));
+
+													          $post = get_value_from_stdClass($post[0]);
+
+													          if(isset($post['post_parent'])){
+
+													             $postParentDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT post_content FROM $wp_blogID WHERE id = %d", $post["post_parent"]));
+													             if (isset($postParentDescriptionSql[0])) {
+
+													               $studentProductDescriptionText = get_value_from_stdClass($postParentDescriptionSql[0])["post_content"];
+													             }
+													             else{
+
+													               $studentProductDescriptionText = $post['post_content'];
+																				 $studentProductDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID JOIN dcvs_warehouse_business_product ON dcvs_warehouse_business_product.business_product_id=$wp_blogID.id WHERE warehouse_product_id = %d", $id));
+																				if (isset($studentProductDescriptionSql[0])) {
+																					$studentProductDescriptionArray = get_value_from_stdClass($studentProductDescriptionSql[0]);
+
+																					if(isset($studentProductDescriptionArray["post_parent"])){
+																						$postParentDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT post_content FROM $wp_blogID WHERE id = %d", $studentProductDescriptionArray["post_parent"]));
+																						$studentProductDescriptionText = get_value_from_stdClass($postParentDescriptionSql[0])["post_content"];
+																					}
+																					else{
+
+																						$studentProductDescriptionText = $studentProductDescriptionArray['post_content'];
+																					}
+													             }
+													          }
+
+													          }
 
 																		$userProductDescription = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
 
@@ -108,7 +124,7 @@ if($ware_house_order_history){
 
 
 																			for ($w=0; $w < sizeof($productInfo) ; $w++) {
-
+																				$saleInfo = [];
 																				if(isset($productInfo[0])){
 																					$saleInfo[] = get_value_from_stdClass($productInfo[$w]);
 																				}
@@ -125,7 +141,7 @@ if($ware_house_order_history){
 																				 <td><?php echo $itemInformation["item_meta"]["_qty"][0]; ?></td>
 																				 <td><?php
 
-																				 if($saleInfo != NULL){
+																				 if(isset($saleInfo)){
 
 																					 $numberBought = 0;
 																					 for ($s=0; $s < sizeof($saleInfo) ; $s++) {
@@ -136,12 +152,12 @@ if($ware_house_order_history){
 																						<?php
 																				 }
 																				 else{
-																					 echo '';
+																					 echo 0;
 																				 }
 																				 ?></td>
 																				 <td><?php echo $itemInformation["item_meta"]['_line_subtotal'][0] /  $itemInformation["item_meta"]["_qty"][0]; ?></td>
 																				 <td class="own"><?php
-																				 if($saleInfo != NULL){
+																				 if(isset($saleInfo)){
 																						?>
 																						<span><?php echo $saleInfo[sizeof($saleInfo) -1]["price"]; ?></span>
 																						<?php
@@ -161,7 +177,7 @@ if($ware_house_order_history){
 																					 }
 																				 }
 																				 else{
-																					 echo '';
+																					 echo "not yet sold";
 																				 }
 																				 ?></td>
 
