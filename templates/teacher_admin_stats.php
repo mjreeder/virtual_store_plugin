@@ -45,7 +45,7 @@ if($ware_house_order_history){
             <section class="comparison">
 
                 <h1 class="title"><?php echo get_value_from_stdClass($display_name[0])['display_name'] ?></h1>
-								<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id']?>"><p>Back to Student Info</p></a>
+								<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id']?>" class="backButton"><p>BACK TO STUDENT INFO</p></a>
                 <div class="tableWrapper">
                     <table class="virtualTable stats">
                         <tr>

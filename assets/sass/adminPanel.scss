@@ -6,18 +6,15 @@ $personaTwoDark: #889360;
 $yellow: #EDB867;
 $darkYellow: #C19457;
 $red: #E85D5D;
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body,
 html {
     height: 100%;
 }
-
 h3 {
     color: $darkGray;
     font-size: 20px;
@@ -25,19 +22,16 @@ h3 {
     font-family: "Open Sans", sans-serif;
     margin-bottom: 20px;
 }
-
 #wpbody,
 #wpbody-content,
 #wpwrap {
     background-color: white;
     height: 100%;
 }
-
 .wrapper {
     margin-left: -20px;
     height: 100%;
 }
-
 #backdrop {
     position: fixed;
     width: 100%;
@@ -45,7 +39,6 @@ h3 {
     background: rgba(0,0,0,0.7);
     display: none;
 }
-
 label {
     height: 40px;
     font-size: 14px;
@@ -55,7 +48,6 @@ label {
     color: green;
     cursor: default;
 }
-
 .header {
     background-color: $yellow;
     height: 75px;
@@ -64,7 +56,6 @@ label {
     align-items: flex-start;
     flex-direction: row;
     border-bottom: 1px solid $darkYellow;
-
     h1 {
         font-family: 'Open sans', sans-serif;
         color: white;
@@ -73,7 +64,6 @@ label {
         display: inline;
         align-self: center;
     }
-
     p {
         color: white;
         font-family: 'Open sans', sans-serif;
@@ -81,25 +71,23 @@ label {
         align-self: center;
         margin-right: 100px;
         vertical-align: super;
-
         b {
             font-size: 50px;
             margin-left: 50px;
         }
     }
 }
-
 .admin {
     height: calc(100% - 75px);
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
-
 .sidebar {
     width: 230px;
     background-color: #E0E0E0;
     border-right: 1px solid lighten($darkGray, 40%);
-
+    flex: 0 0 auto;
     a {
         text-decoration: none;
         display: block;
@@ -107,10 +95,8 @@ label {
         cursor: pointer;
         color: $darkGray;
     }
-
     ul {
         height: 100%;
-
         li {
             height: 60px;
             font-size: 17px;
@@ -119,14 +105,11 @@ label {
             text-align: left;
             list-style: none;
             margin-bottom: 0;
-
             &:first-child {
                 border-bottom: 4px solid $yellow;
             }
-
             &.selected-tab {
                 background-color: #828282;
-
                 a {
                     color: white;
                 }
@@ -134,25 +117,21 @@ label {
         }
     }
 }
-
 .studentList {
     height: 100%;
     background-color: white;
     width: 200px;
     border-right: 1px solid lighten($darkGray, 50%);
-
     .searchBar {
         height: 40px;
         width: 100%;
         position: relative;
         border-bottom: 1px solid #e0e0e0;
-
         img {
             position: absolute;
             top: 7px;
             left: 7px;
         }
-
         input {
             padding-left: 40px;
             padding-right: 10px;
@@ -167,21 +146,17 @@ label {
             box-sizing: border-box;
             margin: 0;
         }
-
         input:placeholder {
             color: #E0E0E0;
         }
-
         input:focus {
             outline-width: 0;
         }
     }
-
     ul {
         height: calc(100% - 40px);
         overflow: scroll;
         background-color: #F2F2F2;
-
         li {
             width: 100%;
             background-color: #F2F2F2;
@@ -193,7 +168,6 @@ label {
             font-weight: 700;
             cursor: pointer;
             margin-bottom: 0;
-
             &.selectedStudent {
                 a,
                 a:hover {
@@ -201,7 +175,6 @@ label {
                     color: white;
                 }
             }
-
             a {
                 color: $darkGray;
                 text-decoration: none;
@@ -210,7 +183,6 @@ label {
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-
                 &:hover {
                     background-color: #e0e0e0;
                 }
@@ -218,13 +190,11 @@ label {
         }
     }
 }
-
 .facts {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
-
     .fact {
         height: 100px;
         width: 150px;
@@ -233,12 +203,10 @@ label {
         display: flex;
         flex-direction: column;
         align-items: center;
-
         img {
             margin-top: 15px;
             height: 25px;
         }
-
         p {
             font-size: 12px;
             font-weight: 700;
@@ -249,30 +217,25 @@ label {
         }
     }
 }
-
 .studentInfo {
     height: 100%;
     padding-left: 50px;
     display: flex;
     flex-direction: column;
     flex: 1 1;
-
     .merchandiserInfo {
         height: 38%;
         width: 90%;
         display: flex;
         flex-direction: column;
-
         section {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-
             .merchandiserLeft {
                 display: flex;
                 flex-direction: column;
                 width: 45%;
-
                 a {
                     background-color: $yellow;
                     color: white;
@@ -289,7 +252,6 @@ label {
                     margin-bottom: 10px;
                     padding-top: 2px;
                 }
-
                 form {
                     select {
                         width: 100%;
@@ -299,12 +261,10 @@ label {
                     }
                 }
             }
-
             .merchandiserRight {
                 display: flex;
                 flex-direction: column;
                 width: 45%;
-
                 a {
                     background-color: $yellow;
                     color: white;
@@ -324,7 +284,6 @@ label {
                 }
             }
         }
-
         span {
             text-align: center;
             margin-top: 20px;
@@ -332,15 +291,12 @@ label {
             color: $darkGray;
         }
     }
-
     .shopperInfo {
         height: 35%;
         width: 90%;
-
         .shopperOne {
             width: 45%;
             display: inline-block;
-
             a {
                 background-color: $personaOne;
                 color: white;
@@ -358,7 +314,6 @@ label {
                 text-decoration: none;
                 padding-top: 2px;
             }
-
             form {
                 select {
                     width: 100%;
@@ -369,12 +324,10 @@ label {
                 }
             }
         }
-
         .shopperTwo {
             width: 45%;
             display: inline-block;
             float: right;
-
             a {
                 background-color: $personaTwo;
                 color: white;
@@ -391,7 +344,6 @@ label {
                 margin-bottom: 10px;
                 padding-top: 2px;
             }
-
             form {
                 select {
                     width: 100%;
@@ -404,42 +356,35 @@ label {
         }
     }
 }
-
 .one {
     background-color: $personaOne;
 }
-
 .two {
     background-color: $personaTwo;
 }
-
 .buttonSmall {
     height: 40px;
     width: 110px;
     font-size: 12px;
     margin-right: 10px;
 }
-
 .title {
     font-size: 45px;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     color: $darkGray;
 }
-
 .settings {
     display: flex;
     flex-direction: column;
     flex: 1 1;
     padding-left: 50px;
-
     form {
         .title {
             margin-bottom: 60px;
             margin-top: 40px;
         }
     }
-
     .settingsSub {
         display: flex;
         flex-direction: column;
@@ -448,12 +393,10 @@ label {
         margin-left: -50px;
         margin-top: 20px;
         height: 150px;
-
         div {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-
             h3 {
                 font-family: "Lato", sans-serif;
                 color: $darkGray;
@@ -462,7 +405,6 @@ label {
                 align-self: center;
                 margin: 40px 40px 40px 50px;
             }
-
             .budgetInput {
                 background-color: $yellow;
                 height: 40px;
@@ -471,7 +413,6 @@ label {
                 margin-right: 40px;
                 display: flex;
                 justify-content: space-between;
-
                 p {
                     font-family: "Open Sans", sans-serif;
                     font-size: 25px;
@@ -480,7 +421,6 @@ label {
                     align-self: center;
                     font-weight: 600;
                 }
-
                 input {
                     width: 250px;
                     padding-left: 20px;
@@ -493,7 +433,6 @@ label {
                     color: $darkGray;
                 }
             }
-
             .dateInput {
                 background-color: $personaTwo;
                 height: 40px;
@@ -503,7 +442,6 @@ label {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-
                 input {
                     height: 100%;
                     width: 75%;
@@ -517,7 +455,6 @@ label {
                     font-size: 20px;
                     color: $darkGray;
                 }
-
                 p {
                     color: white;
                     font-family: "Open Sans", sans-serif;
@@ -525,10 +462,8 @@ label {
                     margin-left: 18px;
                 }
             }
-
             .dateInput:nth-child(2) {
                 background-color: $personaOne;
-
                 p {
                     margin-left: 25px;
                 }
@@ -536,7 +471,6 @@ label {
         }
     }
 }
-
 .subTitle {
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
@@ -544,22 +478,30 @@ label {
     font-size: 25px;
     margin-bottom: -5px;
 }
-
 .comparison {
     display: flex;
     flex-direction: column;
     flex: 1 1;
-
     h1 {
         margin-left: 50px;
     }
+    .backButton {
+        background-color: $red;
+        font-weight: "Open Sans", sans-serif;
+        font-weight: 700;
+        color: white;
+        width: 15%;
+        text-align: center;
+        position: absolute;
+        right: 50px;
+        top: 90px;
+        text-decoration: none;
+    }
 }
-
 .tableWrapper {
     height: auto;
     overflow: scroll;
 }
-
 .stats {
     tr {
         th {
@@ -567,40 +509,32 @@ label {
         }
     }
 }
-
 .virtualTable {
     color: $darkGray;
     border-collapse: collapse;
     font-family: "Open Sans", sans-serif;
     font-weight: 600;
     width: 100%;
-
     .desc {
         font-weight: 400;
     }
-
     th {
         padding: 18px 0;
     }
-
     tr {
         background-color: #F2F2F2;
         font-size: 15px;
     }
-
     td {
         padding: 15px 30px;
         text-align: center;
-
         img {
             height: 25px;
         }
     }
-
     tr:nth-child(2n+1) {
         background-color: #E0E0E0;
     }
-
     tr:first-child {
         background-color: $darkGray;
         width: calc(100% - 223px);
@@ -609,29 +543,24 @@ label {
         font-weight: 700;
         font-size: 17px;
     }
-
     input[type=image] {
         height: 25px;
     }
 }
-
 .orderHistory {
     display: flex;
     flex-direction: column;
     flex: 1 1;
-
     h1 {
         margin-left: 50px;
         margin-right: 100px;
     }
-
     .orderTable {
         td {
             padding: 15px 50px;
         }
     }
 }
-
 .headerButton {
     background-color: $darkGray;
     color: white;
@@ -644,63 +573,52 @@ label {
     font-weight: 700;
     cursor: pointer;
 }
-
 .randomize {
     width: 160px;
     margin-right: 10px;
     font-size: 10px;
 }
-
 .selectedFilter {
     background-color: #E0E0E0;
     color: $darkGray;
 }
-
 .createNew {
     background-color: $yellow;
     margin-left: 50px;
 }
-
 .assign {
     display: flex;
     flex-direction: column;
     flex: 1 1;
     overflow: scroll;
-
     div {
         display: flex;
         flex-direction: row;
         flex: 0 0 auto;
-
         h1 {
             margin-left: 50px;
             margin-right: 100px;
         }
     }
-
     .virtualTable {
         td {
             text-align: center;
         }
     }
 }
-
 .manage {
     display: flex;
     flex-direction: column;
     flex: 1 1;
     overflow: scroll;
-
     div {
         display: flex;
         flex-direction: row;
         flex: 0 0 auto;
-
         h1 {
             margin: 40px 50px;
         }
     }
-
     .virtualTable {
         td {
             img {
@@ -709,7 +627,6 @@ label {
         }
     }
 }
-
 .dropdown {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -727,17 +644,14 @@ label {
     background-size: 40px;
     text-align: center;
 }
-
 #assignOne {
     background: url("../images/dropdownarrow2.svg") no-repeat right center;
     background-color: $personaOne;
 }
-
 #assignTwo {
     background: url("../images/dropdownarrow3.svg") no-repeat right center;
     background-color: $personaTwo;
 }
-
 .saveButton {
     background-color: $darkGray;
     color: white;
@@ -755,7 +669,6 @@ label {
     margin-right: 100px;
     float: right;
 }
-
 .createModal {
     left: 50%;
     -webkit-transform: translateX(-50%);
@@ -776,7 +689,6 @@ label {
         font-size: 25px;
         margin-bottom: 25px;
     }
-
     form {
         input[type="text"] {
             border: none;
@@ -791,17 +703,14 @@ label {
             padding-right: 20px;
             font-style: italic;
         }
-
         input[type="text"]:placeholder {
             font-family: "Lato", sans-serif;
             color: #E0E0E0;
         }
-
         input[type="text"]:focus {
             outline-width: 0;
             font-style: normal;
         }
-
         input[type="submit"] {
             height: 40px;
             width: 100px;
@@ -815,7 +724,6 @@ label {
             font-size: 15px;
             margin-bottom: 20px;
         }
-
         textarea {
             font-family: "Lato", sans-serif;
             font-weight: 700;
@@ -829,11 +737,9 @@ label {
             height: 100px;
             max-height: 100px;
         }
-
         textarea:placeholder {
             color: #E0E0E0;
         }
-
         select {
             border: none;
             width: 100%;
@@ -850,18 +756,15 @@ label {
         }
     }
 }
-
 .users {
     display: flex;
     flex-direction: column;
     flex: 1 1;
     overflow: scroll;
-
     h1 {
         margin-left: 50px;
         margin-right: 50px;
     }
-
     .addUsers {
         display: flex;
         flex-direction: column;
@@ -869,15 +772,12 @@ label {
         height: 35%;
         width: 100%;
         margin-bottom: 25px;
-
         h2 {
             margin-left: 50px;
         }
-
         form {
             display: flex;
             flex-direction: column;
-
             textarea {
                 font-family: "Lato", sans-serif;
                 font-weight: 700;
@@ -890,7 +790,6 @@ label {
                 padding-left: 10px;
             }
         }
-
         p {
             margin-left: 50px;
             margin-top: 10px;
@@ -900,18 +799,15 @@ label {
             color: $darkGray;
         }
     }
-
     .userLists {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-
         .userLeft {
             display: flex;
             flex-direction: column;
             width: 40%;
             position: relative;
-
             form {
                 button {
                     position: absolute;
@@ -926,13 +822,11 @@ label {
                     left: 250px;
                 }
             }
-
             ul {
                 max-height: 225px;
                 margin-top: 25px;
                 overflow: scroll;
                 margin-bottom: 25px;
-
                 li {
                     display: flex;
                     flex-direction: row;
@@ -942,7 +836,6 @@ label {
                     position: relative;
                     justify-content: space-between;
                     margin: 0;
-
                     form {
                         button {
                             margin-top: 20px;
@@ -957,14 +850,12 @@ label {
                             position: inherit;
                         }
                     }
-
                     p {
                         font-family: "Lato", sans-serif;
                         color: $darkGray;
                         font-size: 15px;
                         margin: 0 0 0 10px;
                     }
-
                     p:nth-child(2) {
                         position: absolute;
                         top: 20px;
@@ -972,15 +863,12 @@ label {
                         font-size: 12px;
                         font-weight: 400;
                     }
-
                     p:nth-child(3) {
                         margin-right: 15px;
                         padding-top: 10px;
                     }
-
                     form {
                         margin-right: 20px;
-
                         button {
                             background-color: $darkGray;
                             border: none;
@@ -991,18 +879,15 @@ label {
                         }
                     }
                 }
-
                 li:nth-child(2n) {
                     background-color: #E0E0E0;
                 }
             }
         }
-
         .userRight {
             display: flex;
             flex-direction: column;
             width: 40%;
-
             button {
                 margin-top: 20px;
                 margin-bottom: 20px;
@@ -1014,13 +899,11 @@ label {
                 height: 25px;
                 width: 50%;
             }
-
             ul {
                 max-height: 225px;
                 margin-top: 25px;
                 overflow: scroll;
                 margin-bottom: 20px;
-
                 li {
                     display: flex;
                     flex-direction: row;
@@ -1030,7 +913,6 @@ label {
                     position: relative;
                     justify-content: space-between;
                     margin: 0;
-
                     p {
                         font-family: "Lato", sans-serif;
                         color: $darkGray;
@@ -1038,7 +920,6 @@ label {
                         font-weight: 400;
                         margin: 0 0 0 10px;
                     }
-
                     p:nth-child(2) {
                         position: absolute;
                         top: 20px;
@@ -1046,14 +927,11 @@ label {
                         font-size: 12px;
                         font-weight: 400;
                     }
-
                     p:nth-child(3) {
                         padding-top: 10px;
                     }
-
                     form {
                         margin-left: 0;
-
                         button {
                             background-color: $darkGray;
                             border: none;
@@ -1066,10 +944,8 @@ label {
                             margin-left: 10px;
                             margin-right: 10px;
                         }
-
                         button[name="dcvs_delete_store"] {
                             background: none;
-
                             img {
                                 height: 20px;
                                 margin-right: 15px;
@@ -1077,12 +953,10 @@ label {
                             }
                         }
                     }
-
                     form:nth-child(3) {
                         margin-left: auto;
                     }
                 }
-
                 li:nth-child(2n) {
                     background-color: #E0E0E0;
                 }
@@ -1090,40 +964,32 @@ label {
         }
     }
 }
-
 .messages {
     margin-left: 50px;
-
     p {
         font-family: "Lato", sans-serif;
         color: green;
     }
 }
-
 #wpbody-content {
     padding: 0;
 }
-
 .unavailable {
     opacity: 0.5;
     pointer-events: none;
     cursor: default;
 }
-
 .wp-admin select {
     padding: 0 0 0 10px;
 }
-
 .add {
     align-self: flex-start;
     margin-top: 15px;
     margin-left: 345px;
 }
-
 .mainColor {
     background-color: $yellow;
 }
-
 .price_change {
     background: #F8F8F8;
     border: 5px solid #DFDFDF;
@@ -1141,86 +1007,82 @@ label {
     display: none;
     padding: 0;
 }
-
 td.own {
     margin: 0;
     float: left;
     position: relative;
     cursor: pointer;
 }
-
 td.own:hover span {
     display: block;
     z-index: 9;
 }
-
 .select-with-button {
-    display:flex;
-    align-items:center;
-    margin-bottom:1em;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
     select {
-        margin:0 !important;
+        margin: 0 !important;
     }
     .button {
-        flex:0 0;
-        margin-left:5px;
-        margin-bottom:0 !important;
+        flex: 0 0;
+        margin-left: 5px !important;
+        margin-bottom: 0 !important;
     }
 }
-
 .survey-multiview {
-    font-family:"Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
     overflow: auto;
-    height:100%;
-    flex:1 1;
-    display:flex;
-    flex-direction:column;
+    height: 100%;
+    flex: 1 1;
+    display: flex;
+    flex-direction: column;
     h1 {
-        padding:.5em 1em;
+        padding: 0.5em 1em;
         text-transform: uppercase;
     }
     .entry-wrapper {
         display: flex;
-        width:100%;
-        flex:1 1;
+        width: 100%;
+        flex: 1 1;
     }
     .menu {
-        background:#EFEFEF;
-        padding:20px 10px;
-        width:150px;
+        background: #EFEFEF;
+        padding: 20px 10px;
+        width: 150px;
         li {
-            margin-bottom:.5em;
+            margin-bottom: 0.5em;
             &:first-child {
-                font-size:16px;
+                font-size: 16px;
             }
         }
     }
     .entries {
-        flex:1 1;
-        margin:0 20px;
+        flex: 1 1;
+        margin: 0 20px;
         & > ul > li {
-            border-bottom:1px solid silver;
-            padding:20px 0 0;
-            margin-bottom:0;
+            border-bottom: 1px solid silver;
+            padding: 20px 0 0;
+            margin-bottom: 0;
         }
         h2 {
-            margin:0 0 .25em;
+            margin: 0 0 0.25em;
         }
         dl {
-            padding-left:1em;
+            padding-left: 1em;
         }
         dt {
             font-style: italic;
             font-weight: 500;
         }
         dd {
-            font-size:12px;
-            margin-bottom:1em;
+            font-size: 12px;
+            margin-bottom: 1em;
             ul {
-                padding-left:2em;
+                padding-left: 2em;
             }
             li {
-                list-style:disc;
+                list-style: disc;
             }
         }
     }
