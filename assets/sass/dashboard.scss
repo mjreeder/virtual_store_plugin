@@ -232,6 +232,13 @@ html {
             color: $darkGray;
             font-size: 20px;
         }
+        h4 {
+            font-family: "Open Sans", sans-serif;
+            color: $darkGray;
+            font-size: 15px;
+            font-weight: 600;
+            font-style: italic;
+        }
     }
     p {
         margin-top: 20px;
@@ -330,6 +337,15 @@ html {
 }
 .two {
     background-color: $personaTwo;
+}
+.storeButtons {
+    display: flex;
+    flex-direction: row;
+    button {
+        width: 140px;
+        margin-right: 20px;
+        font-size: 15px;
+    }
 }
 @media screen and (max-width:1300px) {
     .myStore {
@@ -587,5 +603,3 @@ html {
      height: auto;
      overflow: scroll;
  }
-
-

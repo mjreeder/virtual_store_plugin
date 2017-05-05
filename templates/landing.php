@@ -5,7 +5,7 @@
  * Date: 1/22/17
  * Time: 10:57 PM.
  */
-require_once __DIR__.'/../../../../wp-blog-header.php';
+require_once '/Users/coreyh/virtual_store/wp-blog-header.php';
 date_default_timezone_set('UTC');
 
 global $current_user;
@@ -297,9 +297,13 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 </div>
                 <div class="myStoreRight">
 
-                    <a href="<?php echo get_home_url().'/wp-admin/edit.php?post_type=product'; ?>"><button class="button btnStore">EDIT STORE</button></a>
-                    <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
+
+                    <div class="storeButtons">
+                      <a href="<?php echo get_home_url().'/wp-admin/edit.php?post_type=product'; ?>"><button class="button btnStore">EDIT STORE</button></a>
+                      <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
+                    </div>
                     <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
+                    <a href="#"><button class="button btnStore">SURVEY THINGS</button></a>
                     <?php
                         if($shopping_over) {
                             ?>
@@ -330,6 +334,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                 <div>
                         <h3>CONSUMER 1</h3>
+                        <h4>persona title</h4>
                     <?php
                       if(isset($consumer_info[0])){
                         ?>
@@ -399,6 +404,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                 <div>
                         <h3>CONSUMER 2</h3>
+                        <h4>persona title</h4>
                     <?php
                       if(isset($consumer_info[1])){
                         ?>
