@@ -206,7 +206,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 }
                  ?>
             </ol>
-            
+
         </aside>
 
         <main class="dashboard">
@@ -281,7 +281,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
                     </div>
                     <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
-                    <a href="#"><button class="button btnStore">STORE FEEDBACK</button></a>
+                    <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>"><button class="button btnStore">STORE FEEDBACK</button></a>
                     <?php
                         if($shopping_over) {
                             ?>

@@ -75,6 +75,7 @@ if($persona == null){
 <div class="stats">
 
     <h1><?php echo stripslashes($persona->name); ?> Stats</h1>
+    <a href="<?php echo dcvs_get_landing_page_url(); ?>" class="backButton"><p>Back to Dashboard</p></a>
 
     <?php foreach($purchaseResults as $purchase): ?>
     <h2><?php echo $purchase->business_title ?></h2>
