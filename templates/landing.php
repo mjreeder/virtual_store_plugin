@@ -175,12 +175,6 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
             </figure>
 
-<!--            TODO: This is only for video purpose, remove if statement afterwards.-->
-            <?php
-            if (false){
-
-            ?>
-
             <ol>
               <li class="currentlyPlaying" id="<?php echo 0; ?>">
                 <?php
@@ -212,22 +206,19 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                 }
                  ?>
             </ol>
-            <?php
-            }
-            ?>
 
-            <ol>
-                <li><p>Welcome to Virtual Store</p><span>02:30</span></li>
-                <li><p>Project Vocabulary</p><span>01:30</span></li>
-                <li><p>Changing the Password</p><span>01:05</span></li>
-                <li><p>Warehouse Shopping</p><span>02:12</span></li>
-                <li><p>Editing Your Store</p><span>01:53</span></li>
-                <li><p>Customizing Your Store</p><span>02:13</span></li>
-                <li><p>Categories and Menus</p><span>01:17</span></li>
-                <li><p>Consumer Shopping</p><span>03:10</span></li>
-                <li><p>Reports</p><span>02:19</span></li>
-                <li><p>Completing the Project</p><span>02:01</span></li>
-            </ol>
+<!--            <ol>-->
+<!--                <li><p>Welcome to Virtual Store</p><span>02:30</span></li>-->
+<!--                <li><p>Project Vocabulary</p><span>01:30</span></li>-->
+<!--                <li><p>Changing the Password</p><span>01:05</span></li>-->
+<!--                <li><p>Warehouse Shopping</p><span>02:12</span></li>-->
+<!--                <li><p>Editing Your Store</p><span>01:53</span></li>-->
+<!--                <li><p>Customizing Your Store</p><span>02:13</span></li>-->
+<!--                <li><p>Categories and Menus</p><span>01:17</span></li>-->
+<!--                <li><p>Consumer Shopping</p><span>03:10</span></li>-->
+<!--                <li><p>Reports</p><span>02:19</span></li>-->
+<!--                <li><p>Completing the Project</p><span>02:01</span></li>-->
+<!--            </ol>-->
 
         </aside>
 
