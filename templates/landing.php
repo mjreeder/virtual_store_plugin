@@ -312,10 +312,11 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                 <div>
                         <h3>CONSUMER 1</h3>
-                        <h4>persona title</h4>
                     <?php
-                      if(isset($consumer_info[0])){
+                    if(isset($consumer_info[0])){
                         ?>
+                        <h4><?php echo $consumer_info[0]->name ?></h4>
+
                         <p><?php echo stripslashes_deep($consumer_info[0]->description) ?>
                             <br>
                             <br>
@@ -382,10 +383,11 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                 <div>
                         <h3>CONSUMER 2</h3>
-                        <h4>persona title</h4>
                     <?php
-                      if(isset($consumer_info[1])){
+                    if(isset($consumer_info[1])){
                         ?>
+                        <h4><?php echo $consumer_info[1]->name ?></h4>
+
                         <p><?php echo stripslashes_deep($consumer_info[1]->description); ?>
                             <br>
                             <br>
