@@ -3,7 +3,7 @@
 ?>
 
 <section class="users">
-	<h1 class="title">Create Students</h1>
+	<h1 class="title">Manage Students</h1>
 
 	<div class="messages">
 		<?php foreach(DCVS_Store_Management::$messages as $message): ?>
