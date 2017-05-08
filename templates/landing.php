@@ -255,7 +255,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         ?>
                         <p><?php echo stripslashes_deep($business_info[0]->description); ?>
                             <br>
-                            <br><b>budget: $<?php echo $business_info[0]->money - $business_expense ?></b>
+                            <br><b>warehouse budget: $<?php echo $business_info[0]->money - $business_expense ?></b>
                         </p>
                         <?php
                       }
