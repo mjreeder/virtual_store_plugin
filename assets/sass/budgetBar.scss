@@ -34,7 +34,7 @@ $mainButtonDark: #BF9256;
     transition: bottom 0.5s;
     .barSummary {
         h2 {
-            top: 65px;
+            top: 75px;
             left: 0;
             width: 100%;
             position: absolute;
@@ -46,9 +46,15 @@ $mainButtonDark: #BF9256;
             padding: 0 0;
             font-weight: bold;
             line-height: 1;
+            span {
+                font-weight: 400;
+                text-transform: lowercase;
+            }
+        }
+        h2:hover {
         }
         p {
-            top: 110px;
+            top: 120px;
             left: 0;
             width: 80%;
             position: absolute;
@@ -82,7 +88,7 @@ $mainButtonDark: #BF9256;
             }
         }
         h3:first-of-type {
-            margin-left: 17%;
+            margin-left: 20%;
         }
         a {
             text-decoration: none;
@@ -95,13 +101,16 @@ $mainButtonDark: #BF9256;
                 font-weight: 600;
                 text-decoration: none;
                 margin-right: 25px;
+                transition: all .2s;
+            }
+            span:hover {
+                transform: scale(1.03);
             }
         }
         .barLeft {
             height: 100%;
-            width: 15%;
+            padding: 0 20px 0 20px;
             position: absolute;
-            //background-color: $personaTwoDark;
             display: flex;
             justify-content: center;
             align-items: center;
