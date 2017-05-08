@@ -117,10 +117,10 @@ $current_budget = $persona_budget - $persona_expense ;
 
 	if ($persona_one_id == $persona['id']) {
 		?>
-		<footer class="budgetBar personaOneDark" id="bar">
+		<footer class="budgetBar personaTwoDark" id="bar">
 
-			<div class="bar personaOne" onclick="toggleHeight()">
-				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
+			<div class="bar personaTwo" onclick="toggleHeight()">
+				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
@@ -142,10 +142,10 @@ $current_budget = $persona_budget - $persona_expense ;
 		<?php
 	} else {
 		?>
-		<footer class="budgetBar personaTwoDark" id="bar">
+		<footer class="budgetBar personaOneDark" id="bar">
 
-			<div class="bar personaTwo" onclick="toggleHeight()">
-				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
+			<div class="bar personaOne" onclick="toggleHeight()">
+				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
