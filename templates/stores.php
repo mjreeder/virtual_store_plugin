@@ -117,31 +117,6 @@ $current_budget = $persona_budget - $persona_expense ;
 
 	if ($persona_one_id == $persona['id']) {
 		?>
-		<footer class="budgetBar personaTwoDark" id="bar">
-
-			<div class="bar personaTwo" onclick="toggleHeight()">
-				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
-				<div class="barRight">
-					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
-					<?php if ($current_budget < 0) { ?>
-						<div class="warningMessage">
-							<img src="<?php echo plugins_url("../assets/images/stop.svg", __FILE__); ?>" alt="">
-							<p>stop! you're over budget!</p>
-						</div>
-					<?php } ?>
-					<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
-				</div>
-
-			</div>
-
-			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
-				<p><?php echo stripslashes_deep($persona_description); ?></p>
-			</div>
-		</footer>
-		<?php
-	} else {
-		?>
 		<footer class="budgetBar personaOneDark" id="bar">
 
 			<div class="bar personaOne" onclick="toggleHeight()">
@@ -154,7 +129,32 @@ $current_budget = $persona_budget - $persona_expense ;
 							<p>stop! you're over budget!</p>
 						</div>
 					<?php } ?>
-					<a href="<?php echo dcvs_get_landing_page_url(); ?>"><span>Back to Dashboard</span></a>
+					<a href="<?php echo dcvs_get_landing_page_url(); ?>" onclick="preventToggleHeight(event)"><span>Back to Dashboard</span></a>
+				</div>
+
+			</div>
+
+			<div class="barSummary">
+				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<p><?php echo stripslashes_deep($persona_description); ?></p>
+			</div>
+		</footer>
+		<?php
+	} else {
+		?>
+		<footer class="budgetBar personaTwoDark" id="bar">
+
+			<div class="bar personaTwo" onclick="toggleHeight()">
+				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
+				<div class="barRight">
+					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+					<?php if ($current_budget < 0) { ?>
+						<div class="warningMessage">
+							<img src="<?php echo plugins_url("../assets/images/stop.svg", __FILE__); ?>" alt="">
+							<p>stop! you're over budget!</p>
+						</div>
+					<?php } ?>
+					<a href="<?php echo dcvs_get_landing_page_url(); ?>" onclick="preventToggleHeight(event)"><span>Back to Dashboard</span></a>
 				</div>
 			</div>
 
@@ -180,6 +180,10 @@ $current_budget = $persona_budget - $persona_expense ;
 			else {
 				bar.style.bottom ="0";
 			}
+		};
+
+		var preventToggleHeight = function(event) {
+				event.stopPropagation();
 		};
 	</script>
 

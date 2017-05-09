@@ -73,8 +73,11 @@ function dcvs_add_money_bar() {
 		$landing_page_url = dcvs_get_landing_page_url();
 
 		?>
-		<!-- FONTS -->
 		<head>
+			<title>Virtual Store</title>
+			<!-- CSS -->
+			<link href="../assets/css/budgetBar.css" rel="stylesheet" type="text/css">
+			<!-- FONTS -->
 			<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
 		</head>
 
@@ -90,7 +93,7 @@ function dcvs_add_money_bar() {
 							<p>warning! you're over budget!</p>
 						</div>
 					<?php } ?>
-					<a href="<?php echo $landing_page_url ?>"><span>Back to Dashboard</span></a>
+					<a href="<?php echo $landing_page_url ?>" onclick="preventToggleHeight(event)"><span>Back to Dashboard</span></a>
 				</div>
 
 			</div>
@@ -146,7 +149,7 @@ function dcvs_add_money_bar() {
 							<p>warning! you're over budget!</p>
 						</div>
 					<?php } ?>
-					<a href="<?php echo $store_list_url ?>"><span>Back To Store List</span></a>
+					<a href="<?php echo $store_list_url ?>" onclick="preventToggleHeight(event)"><span>Back To Store List</span></a>
 				</div>
 
 			</div>
@@ -169,6 +172,10 @@ function dcvs_add_money_bar() {
 				else {
 					bar.style.bottom ="0";
 				}
+			};
+
+			var preventToggleHeight = function(event) {
+					event.stopPropagation();
 			};
 		</script>
 		<?php
@@ -203,7 +210,7 @@ function dcvs_add_money_bar() {
 						<p>warning! you're over budget!</p>
 					</div>
 				<?php } ?>
-				<a href="<?php echo $store_list_url ?>"><span>Back To Store List</span></a>
+				<a href="<?php echo $store_list_url ?>" onclick="preventToggleHeight(event)"><span>Back To Store List</span></a>
 			</div>
 
 			<div class="barSummary">
@@ -225,8 +232,12 @@ function dcvs_add_money_bar() {
 					bar.style.bottom ="0";
 				}
 			};
+			var preventToggleHeight = function(event) {
+					event.stopPropogation();
+			}
 		</script>
 		<?php
+
 	}
 }
 
