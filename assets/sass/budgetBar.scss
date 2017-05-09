@@ -119,9 +119,11 @@ $mainButtonDark: #BF9256;
                     font-family: "Open Sans", sans-serif;
                     font-size: 25px;
                     margin: 0 0;
-                    font-weight: bold;
+                    font-weight: 700;
                     padding: 0;
                     line-height: 1;
+                    letter-spacing: 0;
+                    -webkit-font-smoothing: auto;
                 }
             }
         }
