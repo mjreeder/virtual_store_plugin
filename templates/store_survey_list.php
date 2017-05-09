@@ -11,6 +11,8 @@ if(!filter_var($current_user_id, FILTER_VALIDATE_INT) || $current_user_id == 0){
     wp_die("invalid logged in user");
 }
 
+switch_to_blog(1);
+
 $shopping_evaluation_id = 2;
 $storeFieldIdentifier = 12;
 
