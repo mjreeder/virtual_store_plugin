@@ -203,14 +203,17 @@ function dcvs_add_money_bar() {
 
 			<div class="bar personaTwo" onclick="toggleHeight()">
 				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
-				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
-				<?php if ($current_budget < 0) { ?>
-					<div class="warningMessage">
-						<img src="<?php echo plugins_url("./assets/images/stop.svg", __FILE__); ?>" alt="">
-						<p>warning! you're over budget!</p>
-					</div>
-				<?php } ?>
-				<a href="<?php echo $store_list_url ?>" onclick="preventToggleHeight(event)"><span>Back To Store List</span></a>
+				<div class="barRight">
+					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+					<?php if ($current_budget < 0) { ?>
+						<div class="warningMessage">
+							<img src="<?php echo plugins_url("./assets/images/stop.svg", __FILE__); ?>" alt="">
+							<p>warning! you're over budget!</p>
+						</div>
+					<?php } ?>
+					<a href="<?php echo $store_list_url ?>" onclick="preventToggleHeight(event)"><span>Back To Store List</span></a>
+				</div>
+
 			</div>
 
 			<div class="barSummary">
