@@ -132,6 +132,9 @@ $mainButtonDark: #BF9256;
             flex-direction: row;
             justify-content: space-between;
             width: 100%;
+            h3 {
+              -webkit-font-smoothing: auto;
+            }
         }
     }
 }
