@@ -21,10 +21,6 @@ $form = GFAPI::get_form($shopping_evaluation_id);
 $args = array(
 	'field_filters' => array(
 		array(
-			'key' => 'created_by',
-			'value' => $current_user_id
-		),
-		array(
 			'key' => $storeFieldIdentifier,
 			'value' => DCVS_Store_Management::get_store_by_user($current_user_id)
 		)
