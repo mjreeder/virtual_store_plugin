@@ -116,6 +116,10 @@ function dcvs_add_money_bar() {
 					bar.style.bottom ="0";
 				}
 			};
+
+			var preventToggleHeight = function(event) {
+					event.stopPropagation();
+			};
 		</script>
 		<?php
 	} else if (get_user_blog_id( $user_id ) != get_current_blog_id() && $persona['id'] == $persona_one_id) {
@@ -236,7 +240,7 @@ function dcvs_add_money_bar() {
 				}
 			};
 			var preventToggleHeight = function(event) {
-					event.stopPropogation();
+					event.stopPropagation();
 			}
 		</script>
 		<?php
