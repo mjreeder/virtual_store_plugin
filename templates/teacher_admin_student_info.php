@@ -114,7 +114,7 @@ function display_current_student_info()
 			}
 		 ?>
 		<section class="merchandiserInfo">
-			<h2 class="subTitle">buyer</h2>
+			<h2 class="subTitle">Buyer</h2>
 			<?php
 			if(isset($business_info[0])){
 				$user_blog_id = intval(get_user_blog_id( $business_info[0]->user_id ));
@@ -250,7 +250,7 @@ function display_current_student_info()
 		<section class="shopperInfo">
 
 			<aside class="shopperOne">
-				<h2 class="subTitle">consumer #1</h2>
+				<h2 class="subTitle">Consumer #1</h2>
 				<?php
 					if (isset($persona_info[0])) {
 						?>
@@ -383,7 +383,7 @@ function display_current_student_info()
 			</aside>
 
 			<aside class="shopperTwo">
-				<h2 class="subTitle">consumer #2</h2>
+				<h2 class="subTitle">Consumer #2</h2>
 				<?php
 					if (isset($persona_info[1])) {
 						?>

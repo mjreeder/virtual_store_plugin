@@ -434,6 +434,7 @@ label {
                     font-family: "Lato", sans-serif;
                     font-weight: 700;
                     color: $darkGray;
+                    margin: 0;
                 }
             }
             .dateInput {
@@ -446,7 +447,6 @@ label {
                 justify-content: space-between;
                 align-items: center;
                 input {
-                    height: 100%;
                     width: 75%;
                     background-color: white;
                     padding-left: 20px;
@@ -457,6 +457,7 @@ label {
                     font-weight: 700;
                     font-size: 20px;
                     color: $darkGray;
+                    margin: 0;
                 }
                 p {
                     color: white;
