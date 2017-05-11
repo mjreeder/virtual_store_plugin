@@ -3,7 +3,7 @@
 	<aside class="studentList">
 		<div class="searchBar">
 			<img src="<?php echo plugins_url( 'assets/images/search.svg', dirname(__FILE__)); ?>" rel="stylesheet" alt="">
-			<input type="search" id='search' placeholder="search" oninput="studentSearch()">
+			<input type="search" id='search' placeholder="search" oninput="studentSearch()" autocomplete="off">
 		</div>
 		<ul id="students">
 			<?php display_student_list(); ?>
@@ -59,7 +59,7 @@ function display_current_student_info()
 			$currentDisplayStudent = NULL;
 			$display_name = NULL;
 			$warehouse_purchase_sum = NULL;
-			echo "<h1>No Users In Sytem, Go to Students Tab to Create Students</h1>";
+			echo '<div class="noUsers"><h1>No Users In Sytem, Go to Manage Students Tab to Create Students</h1></div>';
 			return;
 		}
 		else{
@@ -190,9 +190,15 @@ function display_current_student_info()
 							?> alt="">
 							<?php
 							if(isset($profit)){
-								?>
-								<p>$<?php echo $profit ?> PROFIT<br></p>
-								<?php
+								if ($profit >= 0) {
+									?>
+										<p>$<?php echo $profit ?> <br>PROFIT</p>
+									<?php
+								} else {
+										?>
+										<p class="negativeProfit">$<?php echo $profit ?> <br>PROFIT</p>
+										<?php
+								}
 							}
 							else{
 								?>
