@@ -207,7 +207,7 @@ $categories = dcvs_get_all_categories();
 				$persona_name = $persona['name'];
 				$persona_category_name = isset($persona['category_name']) ? $persona['category_name'] : "NOT SET";
 				$persona_category_id = isset($persona['category_id']) ? $persona['category_id'] : -1;
-				$persona_money = $persona['money'];
+				$persona_money = number_format($persona['money'], 2);
 				$persona_description = $persona['description'];
 			?>
 				<tr>
