@@ -21,6 +21,7 @@
 		);
 	}
 	$entries = GFAPI::get_entries($formID, $args);
+var_dump($entries)
 ?>
 <main class="admin survey-multiview">
 	<h1 class="title"><?= $form['title']; ?></h1>
