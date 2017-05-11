@@ -91,8 +91,8 @@ if($persona == null){
 
             <?php foreach($purchase->items as $item):
                 $item_name = $item['name'];
-                $color = "";
-                $size = "";
+                $color = "N/A";
+                $size = "N/A";
                 if(isset($item['item_meta']['pa_size'][0])){
                     $size=$item['item_meta']['pa_size'][0];
                 }
