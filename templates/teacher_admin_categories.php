@@ -198,7 +198,7 @@ function dcvs_delete_category($id) {
 	$business_categories = $wpdb->get_results("SELECT * FROM dcvs_business_category WHERE category_id='".esc_sql($id)."'");
 	$persona_categories = $wpdb->get_results("SELECT * FROM dcvs_persona_category WHERE category_id='".esc_sql($id)."'");
 	if(sizeof($business_categories) != 0 || sizeof($persona_categories) != 0) {
-		return DCVS_Toast::create_new_toast( "At least one business or persona is using this category, so it cannot be deleted", true );
+		return DCVS_Toast::create_new_toast( "At least one business or consumer is using this category, so it cannot be deleted", true );
 	} else {
 		$wpdb->delete("dcvs_category", array("id"=>$id));
 		return DCVS_Toast::create_new_toast( "Deleted!" );

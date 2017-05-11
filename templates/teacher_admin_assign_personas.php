@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="old_persona_id" value="<?php echo $persona_1_id; ?>">
                     <select onchange="this.form.submit()" name="persona_id" class="dropdown" id="assignOne">
-                        <option value="-1" disabled <?php echo $persona_1_id == -1 ? "selected" : ""  ?>>Select A Persona</option>
+                        <option value="-1" disabled <?php echo $persona_1_id == -1 ? "selected" : ""  ?>>- Select A Persona -</option>
                         <?php
                         for($j = 0; $j < count($persona_categories); $j++) {
                             ?>
@@ -133,6 +133,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                             <?php
                         }
                         ?>
+                      <option value="" disabled>──────────</option>
                       <option value="-1">Unset Persona 1</option>
                     </select>
                   </form>
@@ -145,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="old_persona_id" value="<?php echo $persona_2_id; ?>">
                     <select onchange="this.form.submit()" name="persona_id" class="dropdown" id="assignTwo">
-                        <option value="-1" disabled <?php echo $persona_2_id == -1 ? "selected" : ""  ?>>Select A Persona</option>
+                        <option value="-1" disabled <?php echo $persona_2_id == -1 ? "selected" : ""  ?>>- Select A Persona -</option>
                         <?php
                         for($j = 0; $j < count($persona_categories); $j++) {
                             ?>
@@ -162,6 +163,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                             <?php
                         }
                         ?>
+                        <option value="-2" disabled>──────────</option>
                         <option value="-1">Unset Persona 2</option>
                     </select>
                   </form>
@@ -312,4 +314,3 @@ function dcvs_get_second_persona($persona_id_one, $user_id) {
     $response = $wpdb->get_results($sql, ARRAY_A);
     return $response;
 }
-
