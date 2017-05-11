@@ -9,6 +9,7 @@ if ( !is_user_logged_in() ) {
 
 $current_persona_id = $_REQUEST['persona_id'];
 
+
 if(!filter_var($current_persona_id, FILTER_VALIDATE_INT)){
     wp_die("persona_id must be an integer");
 }
@@ -22,6 +23,17 @@ $result = $wpdb->get_row("SELECT * FROM dcvs_user_persona WHERE user_id = ".$cur
 
 if($result == null){
     wp_die("persona_id does not match logged in user");
+}
+
+//find if this is the first or second consumer
+$current_user_ID = wp_get_current_user()->ID;
+$consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
+
+$is_first_consumer;
+if($consumer_info[0]->id == $current_persona_id){
+    $is_first_consumer = true;
+}else{
+    $is_first_consumer = false;
 }
 
 
@@ -75,6 +87,7 @@ if($persona == null){
 <div class="stats">
 
     <h1><?php echo stripslashes($persona->name); ?> Stats</h1>
+    <p><sup><?php echo $is_first_consumer ? "Consumer 1": "Consumer 2" ?></sup></p>
     <a href="<?php echo dcvs_get_landing_page_url(); ?>" class="backButton"><p>Back to Dashboard</p></a>
 
     <?php foreach($purchaseResults as $purchase): ?>
