@@ -1,8 +1,8 @@
 <?php
 	$formID = filter_var($_GET['form_id'], FILTER_SANITIZE_NUMBER_INT);
 	$studentID = filter_var($_GET['student_id'], FILTER_SANITIZE_NUMBER_INT);
-	$personaID = ( isset($_GET['persona_id']) ) ? filter_var($_GET['student_id'], FILTER_SANITIZE_NUMBER_INT) : null;
-	$personaKey = ( isset($_GET['persona_field_key']) ) ? filter_var($_GET['student_id'], FILTER_SANITIZE_NUMBER_INT) : null;
+	$personaID = ( isset($_GET['persona_id']) ) ? filter_var($_GET['persona_id'], FILTER_SANITIZE_NUMBER_INT) : null;
+	$personaKey = ( isset($_GET['persona_field_key']) ) ? filter_var($_GET['persona_field_key'], FILTER_SANITIZE_NUMBER_INT) : null;
 
 	$form = GFAPI::get_form($formID);
 
