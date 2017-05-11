@@ -119,8 +119,8 @@ if($persona == null){
                     <td><?php echo $item_name; ?></td>
                     <td><?php echo $size; ?></td>
                     <td><?php echo $color; ?></td>
-                    <td><?php echo $quantity; ?></td>
-                    <td>$<?php echo $total; ?></td>
+                    <td><?php echo number_format($quantity); ?></td>
+                    <td>$<?php echo number_format($total, 2); ?></td>
                 </tr>
 
             <?php endforeach; ?>
