@@ -171,7 +171,7 @@ function display_current_student_info()
 					<?php
 					if (isset($budget_remaining)) {
 						?>
-						<span><b>BUDGET REMAINING:</b> $<?php echo $budget_remaining ?></span>
+						<span><b>BUDGET REMAINING:</b> $<?php echo number_format($budget_remaining, 2) ?></span>
 						<?php
 					}
 					else{
@@ -192,11 +192,11 @@ function display_current_student_info()
 							if(isset($profit)){
 								if ($profit >= 0) {
 									?>
-										<p>$<?php echo $profit ?> <br>PROFIT</p>
+										<p>$<?php echo number_format($profit, 2) ?> <br>PROFIT</p>
 									<?php
 								} else {
 										?>
-										<p class="negativeProfit">$<?php echo $profit ?> <br>PROFIT</p>
+										<p class="negativeProfit">$<?php echo number_format($profit, 2) ?> <br>PROFIT</p>
 										<?php
 								}
 							}
@@ -339,7 +339,7 @@ function display_current_student_info()
 						<p><?php
 							if(isset($persona_one_total_money[0])){
 								$difference = get_value_from_stdClass($persona_one_total_money[0]) - get_value_from_stdClass($persona_one_money_spent[0]);
-	 						 echo '$'.$difference;
+	 						 echo '$' . number_format($difference, 2);
 							}
 							else{
 								echo "N/A";
@@ -460,7 +460,7 @@ function display_current_student_info()
 						<p><?php
 							if(isset($persona_two_total_money[0])){
 								$difference = get_value_from_stdClass($persona_two_total_money[0]) - get_value_from_stdClass($persona_two_money_spent[0]);
-							 echo '$'.$difference;
+							 echo '$' . number_format($difference, 2);
 							}
 							else{
 								echo "N/A";
