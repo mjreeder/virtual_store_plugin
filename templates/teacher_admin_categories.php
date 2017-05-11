@@ -90,7 +90,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="section" value="categories">
 
 			<input type="text" name="name" placeholder="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
-			<textarea rows="5" cols="36" name="description" placeholder="description"></textarea>
+			<!-- <textarea rows="5" cols="36" name="description" placeholder="description"></textarea> -->
 			<input type="submit" name="submit" value="SAVE">
 
 		</form>
@@ -106,7 +106,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="category_id" value="" id="category_id">
 
 			<input type="text" name="name" placeholder="name" id="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
-			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
+			<!-- <textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea> -->
 			<input type="submit" name="submit" value="UPDATE">
 
 		</form>
@@ -116,7 +116,7 @@ $categories = dcvs_get_all_categories();
 		<table class="virtualTable orderTable">
 			<tr>
 				<th>CATEGORY NAME</th>
-				<th>DESCRIPTION</th>
+				<!-- <th>DESCRIPTION</th> -->
 				<th></th>
 				<th></th>
 			</tr>
@@ -129,7 +129,7 @@ $categories = dcvs_get_all_categories();
 
 				<tr>
 					<td><?php echo stripslashes_deep($category_name); ?></td>
-					<td class="desc"><?php echo ($category_description != "") ? stripslashes_deep($category_description) : '<i>NOT SET</i>'; ?></td>
+					<!-- <td class="desc"><?php echo ($category_description != "") ? stripslashes_deep($category_description) : '<i>NOT SET</i>'; ?></td> -->
 					<td><img src="<?php echo $pencil_image; ?>" alt="edit category button" onclick="editCategory('<?php echo $category_id ?>', '<?php echo $category_name ?>', '<?php echo $category_description ?>')"></td>
 					<td>
 						<form action="" method="post">
