@@ -25,6 +25,11 @@ h3 {
 button {
     border-radius: 0.07in;
 }
+i {
+    color: $red;
+    font-weight: 700;
+    font-style: normal;
+}
 #wpbody,
 #wpbody-content,
 #wpwrap {
@@ -1108,4 +1113,8 @@ td.own:hover span {
             }
         }
     }
+}
+.notSet {
+    font-weight: 700;
+    color: $red;
 }
