@@ -31,6 +31,8 @@ $mainButtonDark: #BF9256;
     width: 100%;
     line-height: 1;
     transition: bottom 0.5s;
+    text-decoration: none !important;
+    font-style: normal !important;
     .barSummary {
         h2 {
             top: 75px;
