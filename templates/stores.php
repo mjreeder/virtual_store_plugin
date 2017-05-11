@@ -135,7 +135,7 @@ $current_budget = $persona_budget - $persona_expense ;
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+<!--				<h2>Category: --><?php //echo stripslashes_deep($category_name);?><!--</h2>-->
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
@@ -159,7 +159,7 @@ $current_budget = $persona_budget - $persona_expense ;
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <span><?php echo stripslashes_deep($category_name);?></span></h2>
+<!--				<h2>Category: <span>--><?php //echo stripslashes_deep($category_name);?><!--</span></h2>-->
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>

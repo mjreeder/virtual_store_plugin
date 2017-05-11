@@ -98,7 +98,7 @@ function dcvs_add_money_bar() {
 
 			</div>
 			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+<!--				<h2>Category: --><?php //echo stripslashes_deep($category_name);?><!--</h2>-->
 				<p><?php echo stripslashes_deep($business_description); ?></p>
 			</div>
 		</footer>
@@ -159,7 +159,7 @@ function dcvs_add_money_bar() {
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+<!--				<h2>Category: --><?php //echo stripslashes_deep($category_name);?><!--</h2>-->
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
@@ -221,7 +221,7 @@ function dcvs_add_money_bar() {
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+<!--				<h2>Category: --><?php //echo stripslashes_deep($category_name);?><!--</h2>-->
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
