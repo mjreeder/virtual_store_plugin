@@ -85,6 +85,20 @@ label {
     display: flex;
     flex-direction: row;
     width: 100%;
+    .noUsers {
+        display: flex;
+        justify-content: center;
+        h1 {
+            font-family: "Open Sans", sans-serif;
+            font-weight: 700;
+            color: $darkGray;
+            font-size: 35px;
+            width: 70%;
+            align-self: flex-start;
+            line-height: 50px;
+            text-align: center;
+        }
+    }
 }
 .sidebar {
     width: 230px;
@@ -217,6 +231,9 @@ label {
             text-align: center;
             color: $darkGray;
             margin-top: 10px;
+        }
+        .negativeProfit {
+            color: $red;
         }
     }
 }
