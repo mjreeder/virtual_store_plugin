@@ -290,7 +290,7 @@ function display_current_student_info()
 				if (isset($persona_info[0])) {
 					$search_criteria['field_filters'][] = array(
 						'key' => $end_of_shopping_evaluation_persona_key,
-						'value' => $persona_info[0]->id
+						'value' => $persona_info[0]->persona_id
 					);
 				} else {
 					$search_criteria['field_filters'][] = array(
@@ -309,7 +309,7 @@ function display_current_student_info()
 				if (isset($persona_info[0])) {
 					$search_criteria['field_filters'][1] = array(
 						'key' => $shopping_evaluation_persona_key,
-						'value' => $persona_info[0]->id
+						'value' => $persona_info[0]->persona_id
 					);
 				} else {
 					$search_criteria['field_filters'][1] = array(
@@ -413,7 +413,7 @@ function display_current_student_info()
 				if (isset($persona_info[1])) {
 					$search_criteria['field_filters'][] = array(
 						'key' => $end_of_shopping_evaluation_persona_key,
-						'value' => $persona_info[1]->id
+						'value' => $persona_info[1]->persona_id
 					);
 				} else {
 					$search_criteria['field_filters'][] = array(
@@ -431,7 +431,7 @@ function display_current_student_info()
 				if (isset($persona_info[1])) {
 					$search_criteria['field_filters'][1] = array(
 						'key' => $shopping_evaluation_persona_key,
-						'value' => $persona_info[1]->id
+						'value' => $persona_info[1]->persona_id
 					);
 				} else {
 					$search_criteria['field_filters'][1] = array(
