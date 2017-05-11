@@ -4,12 +4,14 @@ global $current_user;
 
 add_action('woocommerce_thankyou','dcvs_survey_time');
 function dcvs_survey_time($order_id){
+	global $wpdb;
 	$current_persona = dcvs_get_current_persona(get_current_user_id());
+	$current_user_persona = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_user_persona WHERE persona_id=' . $current_persona->id . ' AND user_id=' . get_current_user_id()));
 	if( get_current_blog_id() == 1 ){
 		wp_safe_redirect(network_site_url('/warehouse-evaluation'));
 		exit;
 	} else {
-		wp_safe_redirect(network_site_url('/shopping-evaluation?store_id='.get_current_blog_id().'&persona_id='.$current_persona));
+		wp_safe_redirect(network_site_url('/shopping-evaluation?store_id='.get_current_blog_id().'&persona_id='.$current_user_persona->id));
 		exit;
 	}
 }
