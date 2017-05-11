@@ -45,7 +45,23 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 		}
 	} else if($_REQUEST['submit'] == "DELETE") {
 		$persona_id = $_REQUEST['persona_id'];
-		$toast = dcvs_delete_persona( $persona_id );
+		//make sure this consumer is not assigned to any user
+        global $wpdb;
+        $sql = $wpdb->prepare("SELECT wp_users.* FROM dcvs_user_persona JOIN wp_users ON wp_users.ID = dcvs_user_persona.user_id WHERE persona_id = %d", array($persona_id));
+        $results = $wpdb->get_results($sql, OBJECT);
+        if(count($results)>0){
+            $message = "<ul>";
+            foreach($results as $user){
+                $message.="<li>";
+                $message.=$user->user_email."</li>";
+            }
+            $message.="</ul>";
+            $toast=DCVS_Toast::create_new_toast( "<div class='dcvs-cannot-delete'>you cannot delete this consumer because the following current/archived users are associated with this consumer $message",true );
+//            echo("<div class='dcvs-cannot-delete'>you cannot delete this consumer because the following current/archived users are associated with this consumer $message");
+        }else{
+            $toast = dcvs_delete_persona( $persona_id );
+        }
+
 	}
 }
 
@@ -298,6 +314,13 @@ function dcvs_update_persona($id, $name, $description, $money) {
 
 function dcvs_delete_persona($id) {
 	global $wpdb;
+	//check to see if the persona is assigned to anyone
+    $sql = $wpdb->prepare("SELECT wp_users.* FROM dcvs_user_persona JOIN wp_users ON wp_users.ID = dcvs_user_persona.user_id WHERE persona_id = %d", array($id));
+    $results = $wpdb->get_results($sql, OBJECT);
+    if(count($results)>0){
+        return false;
+    }
+
 	$wpdb->delete("dcvs_persona", array("id"=>$id));
 	return DCVS_Toast::create_new_toast( "Persona Deleted!" );
 }
