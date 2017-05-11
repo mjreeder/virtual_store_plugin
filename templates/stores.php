@@ -108,10 +108,6 @@ $current_budget = $persona_budget - $persona_expense ;
 				</li>
 			<?php
 			}
-			$test_persona = dcvs_get_current_persona(get_current_user_id());
-			foreach ($test_persona as $p){
-				echo "<h1>" . $p . "</h1>";
-			}
 			?>
 		</ul>
 
