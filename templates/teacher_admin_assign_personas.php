@@ -7,6 +7,10 @@ foreach ($users_unformatted as $user) {
 }
 
 $toast = null;
+$date_now = date("Y-m-d H:i:s");
+$shopping_start_date = date_create(dcvs_get_option('shopping_start_date', 0));
+$shopping_start_date = $shopping_start_date->format("Y-m-d H:i:s");
+$shopping_has_started = $date_now >= $shopping_start_date;
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
     if (isset($_POST['assign_personas'])) {
@@ -54,7 +58,9 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
   <input type="hidden" name="dcvs_admin_changes" value="1">
     <div>
         <h1 class="title">Assign Consumers</h1>
-        <button class="headerButton randomize" name="assign_personas" type="submit" <?php echo dcvs_enough_distinct_persona_categories() ? "": "disabled"?>  onclick="return confirm('Randomize All Consumers?');">RANDOMIZE CONSUMERS</button>
+        <?php if(!$shopping_has_started): ?>
+            <button class="headerButton randomize" name="assign_personas" type="submit" <?php echo dcvs_enough_distinct_persona_categories() ? "": "disabled"?>  onclick="return confirm('Randomize All Consumers?');">RANDOMIZE CONSUMERS</button>
+        <?php endif; ?>
     </div>
 
     <div class="tableWrapper">
