@@ -10,7 +10,7 @@ function dcvs_survey_time($order_id){
 		wp_safe_redirect(network_site_url('/warehouse-evaluation'));
 		exit;
 	} else {
-		wp_safe_redirect(network_site_url('/shopping-evaluation?store_id='.get_current_blog_id().'&persona_id='.$current_persona->id));
+		wp_safe_redirect(network_site_url('/shopping-evaluation?store_id='.get_current_blog_id().'&persona_id='.$current_persona[0]->id));
 		exit;
 	}
 }
