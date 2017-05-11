@@ -439,6 +439,7 @@ function display_current_student_info()
 						'value' => -1
 					);
 				}
+				echo "<h1>" . $persona_info[1]->id . "</h1>";
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
 				if (count($entries)) {
