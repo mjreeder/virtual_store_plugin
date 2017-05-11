@@ -3,7 +3,7 @@
 	<aside class="studentList">
 		<div class="searchBar">
 			<img src="<?php echo plugins_url( 'assets/images/search.svg', dirname(__FILE__)); ?>" rel="stylesheet" alt="">
-			<input type="search" id='search' placeholder="search" oninput="studentSearch()">
+			<input type="search" id='search' placeholder="search" oninput="studentSearch()" autocomplete="off">
 		</div>
 		<ul id="students">
 			<?php display_student_list(); ?>
