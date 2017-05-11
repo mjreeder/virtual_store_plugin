@@ -319,8 +319,13 @@ function display_current_student_info()
 				}
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
+
+				if (count($entries)) {
+					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $warehouse_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[0]->id . "' class='button' > SHOPPING SURVEYS </a >";
+				} else {
+					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $warehouse_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[0]->id . "' class='button unavailable' > SHOPPING SURVEYS </a >";
+				}
 				?>
-				<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$shopping_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">SHOPPING SURVEYS</a>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
@@ -436,8 +441,12 @@ function display_current_student_info()
 				}
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
+				if (count($entries)) {
+					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $warehouse_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[1]->id . "' class='button' > SHOPPING SURVEYS </a >";
+				} else {
+					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $warehouse_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[1]->id . "' class='button unavailable' > SHOPPING SURVEYS </a >";
+				}
 				?>
-				<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[1]->persona_id; ?>" class="button">SHOPPING SURVEYS</a>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
