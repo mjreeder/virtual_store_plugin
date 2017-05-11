@@ -175,7 +175,11 @@ function display_current_student_info()
 							endif;
 							?>
 						</select>
-						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id; ?>" class="button">All</a>
+						<?php if (count($entries)){ ?>
+							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id; ?>" class="button">All</a>
+						<?php } else { ?>
+							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id; ?>" class="button unavailable">All</a>
+						<?php } ?>
 					</form>
 					<!-- TODO get remaining budget-->
 					<?php
@@ -343,7 +347,11 @@ function display_current_student_info()
 						endif;
 						?>
 					</select>
-					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$shopping_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">All</a>
+					<?php if (count($entries)){ ?>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$shopping_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">All</a>
+					<?php } else { ?>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$shopping_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button unavailable">All</a>
+					<?php } ?>
 				</form>
 				<section class="facts">
 					<div class="fact">
@@ -474,7 +482,11 @@ function display_current_student_info()
 						endif;
 						?>
 					</select>
-					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[1]->persona_id; ?>" class="button">All</a>
+					<?php if (count($entries)){ ?>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$shopping_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[1]->persona_id; ?>" class="button">All</a>
+					<?php } else { ?>
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$shopping_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[1]->persona_id; ?>" class="button unavailable">All</a>
+					<?php } ?>
 				</form>
 				<section class="facts">
 					<div class="fact">
