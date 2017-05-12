@@ -26,6 +26,7 @@ $current_user_ID = wp_get_current_user()->ID;
 $business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $current_user_ID));
 $business_expense = dcvs_get_business_expenses( $current_user_ID );
 $consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
+$business_category = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_category WHERE id = (SELECT category_id FROM dcvs_business_category WHERE business_id = %d)', $business_info->id));
 if(isset($consumer_info[0])){
   $consumer_1_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[0]->persona_id);
 }
@@ -253,7 +254,9 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                       if(isset($business_info[0])){
                         ?>
-                        <p><?php echo "Your business should target " . stripslashes_deep($business_info[0]->description); ?>
+                        <p><?php echo "Your business should target: " . stripslashes_deep($business_category[0]->name); ?>
+                            <br>
+                            <?php echo stripslashes_deep($business_info[0]->description); ?>
                             <br>
                             <br><b>warehouse budget: $<?php echo number_format($business_info[0]->money - $business_expense, 2) ?></b>
                         </p>
