@@ -51,9 +51,6 @@ $entries = GFAPI::get_entries($shopping_evaluation_id, $args);
   <div class="entries">
 		<ul>
 			<?php
-			echo "<pre>";
-			var_dump($form['fields']);
-			echo "</pre>";
 			foreach($entries as $entry): ksort($entry); ?>
 				<li id="#entry<?= $entry['id']; ?>">
 					<h2><?= $entry['date_created']; ?></h2>
