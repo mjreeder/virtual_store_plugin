@@ -50,7 +50,9 @@ $entries = GFAPI::get_entries($shopping_evaluation_id, $args);
   <a href="<?php echo dcvs_get_landing_page_url(); ?>" class="backButton"><p>Back to Dashboard</p></a>
   <div class="entries">
 		<ul>
-			<?php foreach($entries as $entry): ksort($entry); ?>
+			<?php
+			var_dump($entries);
+			foreach($entries as $entry): ksort($entry); ?>
 				<li id="#entry<?= $entry['id']; ?>">
 					<h2><?= $entry['date_created']; ?></h2>
 					<dl>
