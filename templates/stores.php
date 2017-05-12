@@ -59,6 +59,8 @@ $persona_expense = dcvs_get_persona_expenses($user_id, $persona['id']);
 
 $current_budget = $persona_budget - $persona_expense ;
 
+$placeholder_image = "../assets/images/dollar-sign.jpg";
+
 ?>
 <!doctype HTML>
 <html>
@@ -96,7 +98,7 @@ $current_budget = $persona_budget - $persona_expense ;
 					<?php
 					if($user_site_icon == "") {
 						?>
-						<div onclick="window.location='<?php echo $business['url'] . 'shop'; ?>'"></div>
+						<img src="<?php echo $placeholder_image; ?>" onclick="window.location='<?php echo $business['url'] . 'shop'; ?>'"/>
 						<?php
 					} else {
 						?>
