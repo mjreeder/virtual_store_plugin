@@ -299,8 +299,8 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                     if ($ware_house_shopping_over == false) {
                       ?>
-                        <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore unavailable">STORE STATS</button></a>
-                        <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>"><button class="button btnStore unavailable">STORE FEEDBACK</button></a>
+                        <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>" class="unavailable"><button class="button btnStore">STORE STATS</button></a>
+                        <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>" class="unavailable"><button class="button btnStore">STORE FEEDBACK</button></a>
                       <?php
                     } else {
                       ?>
