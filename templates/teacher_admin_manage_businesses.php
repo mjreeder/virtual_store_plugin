@@ -118,7 +118,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="current_business_category_id" value="" id="current_business_category_id">
 
 			<input readonly type="text" name="title" placeholder="title" id="title" required oninvalid="this.setCustomValidity('Title cannot be empty.')" oninput="setCustomValidity('')">
-			<input type="text" name="budget" placeholder="budget" id="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
+			<input type="number" name="budget" placeholder="budget" id="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
 			<select id="categorySelect" name="category_id">
 				<option value="-1" selected>Select a category</option>

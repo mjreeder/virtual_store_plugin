@@ -90,7 +90,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="section" value="categories">
 
 			<input type="text" name="name" placeholder="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
-			<!-- <textarea rows="5" cols="36" name="description" placeholder="description"></textarea> -->
+			<textarea rows="5" cols="36" name="description" placeholder="description"></textarea>
 			<input type="submit" name="submit" value="SAVE">
 
 		</form>

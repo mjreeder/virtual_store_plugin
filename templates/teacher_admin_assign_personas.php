@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="old_persona_id" value="<?php echo $persona_1_id; ?>">
                     <select onchange="this.form.submit()" name="persona_id" class="dropdown" id="assignOne">
-                        <option value="-1" disabled <?php echo $persona_1_id == -1 ? "selected" : ""  ?>>- Select A Persona -</option>
+                        <option value="-1" disabled <?php echo $persona_1_id == -1 ? "selected" : ""  ?>>- Select A Consumer -</option>
                         <?php
                         for($j = 0; $j < count($persona_categories); $j++) {
                             ?>
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         }
                         ?>
                       <option value="" disabled>──────────</option>
-                      <option value="-1">Unset Persona 1</option>
+                      <option value="-1">Unset Consumer 1</option>
                     </select>
                   </form>
                 </td>
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="old_persona_id" value="<?php echo $persona_2_id; ?>">
                     <select onchange="this.form.submit()" name="persona_id" class="dropdown" id="assignTwo">
-                        <option value="-1" disabled <?php echo $persona_2_id == -1 ? "selected" : ""  ?>>- Select A Persona -</option>
+                        <option value="-1" disabled <?php echo $persona_2_id == -1 ? "selected" : ""  ?>>- Select A Consumer -</option>
                         <?php
                         for($j = 0; $j < count($persona_categories); $j++) {
                             ?>
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         }
                         ?>
                         <option value="-2" disabled>──────────</option>
-                        <option value="-1">Unset Persona 2</option>
+                        <option value="-1">Unset Consumer 2</option>
                     </select>
                   </form>
                 </td>
