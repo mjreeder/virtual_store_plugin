@@ -254,12 +254,25 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                     <?php
                       if(isset($business_info[0])){
                         ?>
-                        <p><?php echo "Your business should target: " . stripslashes_deep($business_category[0]->name); ?>
+                            <b><?php echo "Your business should target: " . stripslashes_deep($business_category[0]->name); ?></b>
                             <br>
-                            <?php echo stripslashes_deep($business_info[0]->description); ?>
+                            <p><?php echo stripslashes_deep($business_info[0]->description); ?></p>
                             <br>
-                            <br><b>warehouse budget: $<?php echo number_format($business_info[0]->money - $business_expense, 2) ?></b>
-                        </p>
+                            <br>
+                            <?php
+                            if (($business_info[0]->money - $business_expense) < 0) {
+                              ?>
+                              <b class="negative">warehouse budget: $<?php echo number_format($business_info[0]->money - $business_expense, 2) ?></b>
+                              <p class="negative">Warning! You're Over Budget!</p>
+                              <?php
+                            } else {
+                              ?>
+                              <b>warehouse budget: $<?php echo number_format($business_info[0]->money - $business_expense, 2) ?></b>
+                              <?php
+                            }
+                            ?>
+
+
                         <?php
                       }
 
@@ -283,8 +296,20 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <a href="<?php echo get_home_url().'/wp-admin/edit.php?post_type=product'; ?>"><button class="button btnStore">EDIT STORE</button></a>
                       <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
                     </div>
-                    <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
-                    <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>"><button class="button btnStore">STORE FEEDBACK</button></a>
+                    <?php
+                    if ($ware_house_shopping_over == false) {
+                      ?>
+                        <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore unavailable">STORE STATS</button></a>
+                        <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>"><button class="button btnStore unavailable">STORE FEEDBACK</button></a>
+                      <?php
+                    } else {
+                      ?>
+                        <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
+                        <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>"><button class="button btnStore">STORE FEEDBACK</button></a>
+                      <?php
+                    }
+                    ?>
+
                     <?php
                         $search_criteria = array('field_filters' => array());
                         $search_criteria['field_filters'][] = array(
