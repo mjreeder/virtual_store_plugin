@@ -17,11 +17,17 @@ $mainButtonDark: #BF9256;
 .personaOneDark {
     background-color: $personaOneDark;
 }
+.barLeft.personaOneDark:hover {
+    background-color: lighten($personaOneDark, 5%);
+}
 .personaTwo {
     background-color: $personaTwo;
 }
 .personaTwoDark {
     background-color: $personaTwoDark;
+}
+.barLeft.personaTwoDark:hover {
+    background-color: lighten($personaTwoDark, 5%);
 }
 .budgetBar {
     height: 185px;
@@ -114,7 +120,11 @@ $mainButtonDark: #BF9256;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            transition: all .2s;
             span {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
                 h1 {
                     color: white;
                     text-align: center;
@@ -127,6 +137,10 @@ $mainButtonDark: #BF9256;
                     letter-spacing: 0;
                     -webkit-font-smoothing: auto;
                 }
+                img {
+                    height: 15px;
+                    margin-left: 20px;
+                }
             }
         }
         .barRight {
@@ -136,6 +150,16 @@ $mainButtonDark: #BF9256;
             width: 100%;
             h3 {
               -webkit-font-smoothing: auto;
+            }
+            a {
+                transition: all .2s;
+                img {
+                    height: 45px;
+                    margin-right: 25px;
+                }
+            }
+            a:hover {
+                transform: scale(1.02);
             }
         }
     }

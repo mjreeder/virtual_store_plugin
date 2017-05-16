@@ -86,7 +86,7 @@ function dcvs_add_money_bar() {
 
 		<footer class="budgetBar mainButtonDark" id="bar">
 			<div class="bar mainButton" onclick="toggleHeight()">
-				<div class="barLeft mainButtonDark"><span><h1><?php echo $site_name ?></h1></span></div>
+				<div class="barLeft mainButtonDark"><span><h1><?php echo $site_name ?></h1><img src="<?php echo plugins_url("./assets/images/arrowDown.svg", __FILE__); ?>" alt=""></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
@@ -100,7 +100,7 @@ function dcvs_add_money_bar() {
 
 			</div>
 			<div class="barSummary">
-<!--				<h2>Category: --><?php //echo stripslashes_deep($category_name);?><!--</h2>-->
+				<h2>Consumer Description:</h2>
 				<p><?php echo stripslashes_deep($business_description); ?></p>
 			</div>
 		</footer>
@@ -146,7 +146,7 @@ function dcvs_add_money_bar() {
 		<footer class="budgetBar personaOneDark" id="bar">
 
 			<div class="bar personaOne" onclick="toggleHeight()">
-				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
+				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1><img src="<?php echo plugins_url("./assets/images/arrowDown.svg", __FILE__); ?>" alt=""></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
@@ -161,7 +161,7 @@ function dcvs_add_money_bar() {
 			</div>
 
 			<div class="barSummary">
-<!--				<h2>Category: --><?php //echo stripslashes_deep($category_name);?><!--</h2>-->
+				<h2>Consumer Description:</h2>
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
@@ -208,7 +208,7 @@ function dcvs_add_money_bar() {
 		<footer class="budgetBar personaTwoDark" id="bar">
 
 			<div class="bar personaTwo" onclick="toggleHeight()">
-				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
+				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1><img src="<?php echo plugins_url("./assets/images/arrowDown.svg", __FILE__); ?>" alt=""></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
@@ -223,7 +223,7 @@ function dcvs_add_money_bar() {
 			</div>
 
 			<div class="barSummary">
-<!--				<h2>Category: --><?php //echo stripslashes_deep($category_name);?><!--</h2>-->
+				<h2>Consumer Description:</h2>
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
