@@ -92,6 +92,7 @@ $placeholder_image = "../assets/images/dollar-sign.jpg";
 				$user_site_icon = get_site_icon_url(512, '', $user_blog_id);
 				switch_to_blog( $user_blog_id );
 				$site_name = get_bloginfo('name');
+				$site_tagline = get_bloginfo('description');
 				restore_current_blog();
 			?>
 				<li>
@@ -107,6 +108,7 @@ $placeholder_image = "../assets/images/dollar-sign.jpg";
 					}
 					?>
 					<p><?php echo $site_name; ?></p>
+					<p><?php echo $site_tagline; ?></p>
 				</li>
 			<?php
 			}
