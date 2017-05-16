@@ -30,6 +30,9 @@ function dcvs_add_money_bar() {
 	}
 
 	$page_url = $_SERVER['REQUEST_URI'];
+	if (strpos($page_url, 'evaluation')){
+		return;
+	}
 
 	if (in_array( $pagename, $form_slugs )) {
 		return;
@@ -82,8 +85,6 @@ function dcvs_add_money_bar() {
 		</head>
 
 		<footer class="budgetBar mainButtonDark" id="bar">
-			<?php var_dump($page_url); ?>
-
 			<div class="bar mainButton" onclick="toggleHeight()">
 				<div class="barLeft mainButtonDark"><span><h1><?php echo $site_name ?></h1></span></div>
 				<div class="barRight">
