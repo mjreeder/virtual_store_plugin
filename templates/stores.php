@@ -108,7 +108,10 @@ $placeholder_image = "../assets/images/dollar-sign.jpg";
 					}
 					?>
 					<p><?php echo $site_name; ?></p>
-					<p><?php echo $site_tagline; ?></p>
+					<?php if ($site_tagline !== 'Store tagline goes here') {
+						echo '<p>' . $site_tagline . '</p>';
+					}
+					?>
 				</li>
 			<?php
 			}
