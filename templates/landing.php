@@ -253,8 +253,10 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                     <?php
                       if(isset($business_info[0])){
+                          if(isset($business_category[0])){
                         ?>
                             <b><?php echo "Your business should target: " . stripslashes_deep($business_category[0]->name); ?></b>
+                          <?php } ?>
                             <br>
                             <p><?php echo stripslashes_deep($business_info[0]->description); ?></p>
                             <br>
