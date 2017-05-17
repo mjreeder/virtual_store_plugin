@@ -28,7 +28,7 @@ add_action('admin_enqueue_scripts', 'dcvs_enqueue_admin_script' );
 add_action('init', 'dcvs_plugin_init');
 add_action('current_screen', 'dcvs_new_post_redirect');
 add_action('current_screen', 'dcvs_enqueue_product_edit_styles');
-add_action('wp_enqueue_script', 'dcvs_hide_toolbar_on_survey');
+add_action('wp_enqueue_scripts', 'dcvs_hide_toolbar_on_survey');
 
 add_filter('woocommerce_checkout_fields' , 'dcvs_override_checkout_fields');
 add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_cart');
