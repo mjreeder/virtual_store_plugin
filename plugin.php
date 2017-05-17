@@ -428,6 +428,7 @@ function dcvs_disable_checkout_button() {
 
                 if ($current_budget < 0) {
                     wp_enqueue_style( 'dcvs_checkout_button_style', plugins_url( '/assets/css/checkoutButton.css', __FILE__ ) );
+                    wp_enqueue_style( 'dcvs_evaluation_style', plugins_url( '/assets/css/evaluations.css', __FILE__));
                 }
 
             }
