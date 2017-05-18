@@ -517,4 +517,4 @@ function display_current_student_info()
 
 	<?php
 
-}
+
