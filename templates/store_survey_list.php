@@ -8,8 +8,10 @@ if ( !is_user_logged_in() ) {
 
 if (!is_network_admin()) {
     $current_user_id = get_current_user_id();
+    die("here");
 } else {
     $current_user_id = $_GET['student_id'];
+    die($current_user_id);
 }
 if(!filter_var($current_user_id, FILTER_VALIDATE_INT) || $current_user_id == 0){
     wp_die("invalid logged in user");
