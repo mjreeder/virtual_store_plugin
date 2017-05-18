@@ -18,7 +18,7 @@ function dcvs_enqueue_money_bar_style() {
 
 add_action('woocommerce_cart_updated', 'reload_page');
 function reload_page() {
-	header("Refresh:0");
+	die("<script>window.location.reload()</script>");
 }
 
 function dcvs_add_money_bar() {
