@@ -162,7 +162,7 @@ function display_current_student_info()
 				<div class="">
 					<a href="<?php echo get_site_url() . '/wp-admin/admin.php?page=dcvs_teacher&student_id=' . $currentDisplayStudent . '&section=surveys&form_id=' . $warehouse_evaluation_id; ?>"
 					   class="button">WAREHOUSE SURVEYS</a>
-					<a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>" class="button">STORE FEEDBACK</a>
+					<a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>?student_id=<?php echo $_GET['student_id'] ?>" class="button">STORE FEEDBACK</a>
 				</div>
 
 				<!-- TODO get remaining budget-->
