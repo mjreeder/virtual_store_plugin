@@ -18,7 +18,7 @@ function dcvs_enqueue_money_bar_style() {
 
 add_action('woocommerce_after_cart_item_quantity_update', 'reload_page');
 function reload_page() {
-	die("<script>window.location.reload()</script>");
+	echo("<script>window.location.reload()</script>");
 }
 
 function dcvs_add_money_bar() {
