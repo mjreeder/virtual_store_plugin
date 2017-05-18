@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 ?>
 
 <section class="assign">
+<div class="scrollable">
 <form action="" method="post">
   <input type="hidden" name="dcvs_admin_changes" value="1">
     <div>
@@ -176,6 +177,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         </table>
     </div>
 </form>
+</div>
+<!-- END OF SCROLLABLE DIV -->
 </section>
 
 <?php

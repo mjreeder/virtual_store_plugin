@@ -3,6 +3,7 @@
 ?>
 
 <section class="users">
+	<div class="scrollable">
 	<h1 class="title">Manage Students</h1>
 
 	<div class="messages">
@@ -70,5 +71,6 @@
 			</ul>
 		</section>
 	</div>
-
+	<!-- END OF SCROLLABLE DIV -->
+	</div>
 </section>

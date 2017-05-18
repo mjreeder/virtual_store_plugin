@@ -126,10 +126,12 @@ $categories = dcvs_get_all_categories();
 
 <section class="manage">
 
-	<div>
+	<div class="scrollable">
+
+	<header>
 		<h1 class="title">Manage Consumers</h1>
 		<button class="headerButton createNew" id="createNew">CREATE NEW</button>
-	</div>
+	</header>
 
 	<section class="createModal" id="createModal">
 		<h1>CREATE NEW</h1>
@@ -232,6 +234,8 @@ $categories = dcvs_get_all_categories();
 			?>
 		</table>
 	</div>
+<!-- END OF SCROLLABLE DIV -->
+</div>
 
 </section>
 

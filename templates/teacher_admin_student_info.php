@@ -102,396 +102,398 @@ function display_current_student_info()
 
 	?>
 		<section class="studentInfo" id='mainView'>
-		<?php if(isset($display_name[0])){
-			?>
-			<h1 class="title"><?php echo $display_name[0]->display_name ?></h1>
-			<?php
-				}
-			else{
+			<div class="scrollable">
+			<?php if(isset($display_name[0])){
 				?>
-				<h1 class="title"><?php echo "User not set" ?></h1>
+				<h1 class="title"><?php echo $display_name[0]->display_name ?></h1>
 				<?php
-			}
-		 ?>
-		<section class="merchandiserInfo">
-			<h2 class="subTitle">Buyer</h2>
-			<?php
-			if(isset($business_info[0])){
-				$user_blog_id = intval(get_user_blog_id( $business_info[0]->user_id ));
-				switch_to_blog( $user_blog_id );
-				$site_name = get_bloginfo('name');
-				restore_current_blog();
-				?>
-				<h3><?php echo stripslashes_deep($site_name); ?></h3>
-				<?php
-			}
-			else{
-				?>
-				<h3><?php echo "Business not set for user" ?></h3>
-				<?php
-			}
-
-			 ?>
-
-			<section>
-				<aside class="merchandiserLeft">
-					<?php
-					if(isset($business_info[0])){
-						?>
-						<a href="<?php echo $business_info[0]->url ?>" class="button">PERSONAL SITE</a>
-						<?php
 					}
-					else{
-						?>
-						<a href="#" class="button unavailable">PERSONAL SITE</a>
-						<?php
-					}
+				else{
 					?>
+					<h1 class="title"><?php echo "User not set" ?></h1>
+					<?php
+				}
+			 ?>
+			<section class="merchandiserInfo">
+				<h2 class="subTitle">Buyer</h2>
+				<?php
+				if(isset($business_info[0])){
+					$user_blog_id = intval(get_user_blog_id( $business_info[0]->user_id ));
+					switch_to_blog( $user_blog_id );
+					$site_name = get_bloginfo('name');
+					restore_current_blog();
+					?>
+					<h3><?php echo stripslashes_deep($site_name); ?></h3>
+					<?php
+				}
+				else{
+					?>
+					<h3><?php echo "Business not set for user" ?></h3>
+					<?php
+				}
+
+				 ?>
+
+				<section>
+					<aside class="merchandiserLeft">
+						<?php
+						if(isset($business_info[0])){
+							?>
+							<a href="<?php echo $business_info[0]->url ?>" class="button">PERSONAL SITE</a>
+							<?php
+						}
+						else{
+							?>
+							<a href="#" class="button unavailable">PERSONAL SITE</a>
+							<?php
+						}
+						?>
+						<?php
+						$search_criteria = array('field_filters' => array());
+						$search_criteria['field_filters'][] = array(
+							'key' => 'created_by',
+							'value' => $currentDisplayStudent
+						);
+						$entries = GFAPI::get_entries($personal_store_evaluation_id, $search_criteria);
+
+						if ($entries) {
+							echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $personal_store_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+						} else {
+							echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
+						}
+						$entries = GFAPI::get_entries($warehouse_evaluation_id, $search_criteria);
+						?>
+						<div class="">
+							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id; ?>" class="button">WAREHOUSE SURVEYS</a>
+							<a href="#" class="button">STORE FEEDBACK</a>
+						</div>
+
+						<!-- TODO get remaining budget-->
+						<?php
+						if (isset($budget_remaining)) {
+							?>
+							<span><b>BUDGET REMAINING:</b> $<?php echo number_format($budget_remaining, 2) ?></span>
+							<?php
+						}
+						else{
+							?>
+							<span>No Budget</span>
+							<?php
+						}
+
+						 ?>
+
+					</aside>
+					<aside class="merchandiserRight">
+						<section class="facts">
+							<div class="fact">
+								<img src=<?php echo plugins_url( "assets/images/dollarSign.svg", dirname(__FILE__));
+								?> alt="">
+								<?php
+								if(isset($profit)){
+									if ($profit >= 0) {
+										?>
+											<p>$<?php echo number_format($profit, 2) ?> <br>PROFIT</p>
+										<?php
+									} else {
+											?>
+											<p class="negativeProfit">$<?php echo number_format($profit, 2) ?> <br>PROFIT</p>
+											<?php
+									}
+								}
+								else{
+									?>
+									<p>$0 <br>PROFIT</p>
+									<?php
+								}
+
+								 ?>
+
+							</div>
+							<div class="fact">
+								<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
+								?>  alt="">
+								<p><?php
+								if(isset($number_of_shoppers[0])){
+									echo get_value_from_stdClass($number_of_shoppers[0]);
+								}
+								else{
+									echo "0";
+								}
+
+								?> <br>SHOPPERS</p>
+							</div>
+						</section>
+						<!-- TODO comparison page -->
+						<?php
+							if(isset($currentDisplayStudent) && $currentDisplayStudent != ''){
+								?>
+								<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="button">
+									STATISTICS
+								</a>
+								<?php
+							}
+							else{
+								?>
+								<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="unavailable">
+									STATISTICS
+								</a>
+								<?php
+							}
+						 ?>
+					</aside>
+				</section>
+			</section>
+			<section class="shopperInfo">
+
+				<aside class="shopperOne">
+					<h2 class="subTitle">Consumer #1</h2>
+					<?php
+						if (isset($persona_info[0])) {
+							?>
+							<h3><?php echo stripslashes_deep($persona_info[0]->name); ?></h3>
+							<?php
+						}
+						else{
+							?>
+							<h3><?php echo "Persona One not set"; ?></h3>
+							<?php
+						}
+
+						if(isset($persona_info[0])){
+							?>
+							<?php
+								if(isset($currentDisplayStudent)){
+									?>
+		 						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">
+		 							ORDER HISTORY
+		 						</a>
+		 						<?php
+								}
+								else{
+									?>
+								<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>" class="unavailable">
+									ORDER HISTORY
+								</a>
+								<?php
+								}
+
+						}
+						else{
+							?>
+							<a href="#" class="button unavailable">
+								NO CONSUMER
+							</a>
+							<?php
+						}
+					?>
+
 					<?php
 					$search_criteria = array('field_filters' => array());
 					$search_criteria['field_filters'][] = array(
 						'key' => 'created_by',
 						'value' => $currentDisplayStudent
 					);
-					$entries = GFAPI::get_entries($personal_store_evaluation_id, $search_criteria);
+					if (isset($persona_info[0])) {
+						$search_criteria['field_filters'][] = array(
+							'key' => $end_of_shopping_evaluation_persona_key,
+							'value' => $persona_info[0]->id
+						);
+					} else {
+						$search_criteria['field_filters'][] = array(
+							'key' => $end_of_shopping_evaluation_persona_key,
+							'value' => -1
+						);
+					}
+
+					$entries = GFAPI::get_entries($end_of_shopping_evaluation_id, $search_criteria);
 
 					if ($entries) {
-						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $personal_store_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
 					} else {
 						echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
 					}
-					$entries = GFAPI::get_entries($warehouse_evaluation_id, $search_criteria);
+					if (isset($persona_info[0])) {
+						$search_criteria['field_filters'][1] = array(
+							'key' => $shopping_evaluation_persona_key,
+							'value' => $persona_info[0]->persona_id
+						);
+					} else {
+						$search_criteria['field_filters'][1] = array(
+							'key' => $shopping_evaluation_persona_key,
+							'value' => -1
+						);
+					}
+
+					$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
+
+					if (count($entries)) {
+						echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[0]->persona_id . "' class='button' > SHOPPING SURVEYS </a >";
+					} else {
+						echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[0]->persona_id . "' class='button unavailable' > SHOPPING SURVEYS </a >";
+					}
 					?>
-					<div class="">
-						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id; ?>" class="button">WAREHOUSE SURVEYS</a>
-						<a href="#" class="button">STORE FEEDBACK</a>
-					</div>
-
-					<!-- TODO get remaining budget-->
-					<?php
-					if (isset($budget_remaining)) {
-						?>
-						<span><b>BUDGET REMAINING:</b> $<?php echo number_format($budget_remaining, 2) ?></span>
-						<?php
-					}
-					else{
-						?>
-						<span>No Budget</span>
-						<?php
-					}
-
-					 ?>
-
-				</aside>
-				<aside class="merchandiserRight">
 					<section class="facts">
 						<div class="fact">
-							<img src=<?php echo plugins_url( "assets/images/dollarSign.svg", dirname(__FILE__));
+							<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
 							?> alt="">
-							<?php
-							if(isset($profit)){
-								if ($profit >= 0) {
-									?>
-										<p>$<?php echo number_format($profit, 2) ?> <br>PROFIT</p>
-									<?php
-								} else {
-										?>
-										<p class="negativeProfit">$<?php echo number_format($profit, 2) ?> <br>PROFIT</p>
-										<?php
+							<p><?php
+								if(isset($persona_one_total_money[0])){
+									$difference = get_value_from_stdClass($persona_one_total_money[0]) - get_value_from_stdClass($persona_one_money_spent[0]);
+		 						 echo '$' . number_format($difference, 2);
 								}
-							}
-							else{
-								?>
-								<p>$0 <br>PROFIT</p>
-								<?php
-							}
-
+								else{
+									echo "N/A";
+								}
 							 ?>
-
+							 <br>Remaining</p>
 						</div>
 						<div class="fact">
 							<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
-							?>  alt="">
+							?> alt="">
 							<p><?php
-							if(isset($number_of_shoppers[0])){
-								echo get_value_from_stdClass($number_of_shoppers[0]);
+							if(isset($persona_info[0])){
+								$persona_one_purchase_count_sql = $wpdb->get_results($wpdb->prepare('SELECT COUNT(user_persona_id) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE user_id=%d AND persona_id=%d ', $currentDisplayStudent, $persona_info[0]->id));
+								$persona_one_purchase_count = get_value_from_stdClass($persona_one_purchase_count_sql[0]);
+								if($persona_one_purchase_count >=1){
+									echo get_value_from_stdClass($persona_one_purchase_count_sql[0]);
+								}
+								else{
+									echo "0";
+								}
 							}
 							else{
 								echo "0";
 							}
-
-							?> <br>SHOPPERS</p>
+							?> <br>PURCHASES</p>
 						</div>
 					</section>
-					<!-- TODO comparison page -->
+				</aside>
+
+				<aside class="shopperTwo">
+					<h2 class="subTitle">Consumer #2</h2>
 					<?php
-						if(isset($currentDisplayStudent) && $currentDisplayStudent != ''){
+						if (isset($persona_info[1])) {
 							?>
-							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="button">
-								STATISTICS
-							</a>
+							<h3><?php echo stripslashes_deep($persona_info[1]->name); ?></h3>
 							<?php
 						}
 						else{
 							?>
-							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=stats&user_id='.$currentDisplayStudent?>" class="unavailable">
-								STATISTICS
-							</a>
+							<h3><?php echo "Persona One not set" ?></h3>
 							<?php
 						}
-					 ?>
-				</aside>
-			</section>
-		</section>
-		<section class="shopperInfo">
 
-			<aside class="shopperOne">
-				<h2 class="subTitle">Consumer #1</h2>
-				<?php
-					if (isset($persona_info[0])) {
-						?>
-						<h3><?php echo stripslashes_deep($persona_info[0]->name); ?></h3>
-						<?php
-					}
-					else{
-						?>
-						<h3><?php echo "Persona One not set"; ?></h3>
-						<?php
-					}
-
-					if(isset($persona_info[0])){
-						?>
-						<?php
+						if(isset($persona_info[1])){
+							?>
+							<?php
 							if(isset($currentDisplayStudent)){
 								?>
-	 						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">
-	 							ORDER HISTORY
-	 						</a>
-	 						<?php
+								<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id ?>" class="button">
+									ORDER HISTORY
+								</a>
+							<?php
 							}
 							else{
 								?>
-							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[0]->persona_id; ?>" class="unavailable">
+							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id; ?>" class="unavailable">
 								ORDER HISTORY
 							</a>
 							<?php
 							}
-
-					}
-					else{
-						?>
-						<a href="#" class="button unavailable">
-							NO CONSUMER
-						</a>
-						<?php
-					}
-				?>
-
-				<?php
-				$search_criteria = array('field_filters' => array());
-				$search_criteria['field_filters'][] = array(
-					'key' => 'created_by',
-					'value' => $currentDisplayStudent
-				);
-				if (isset($persona_info[0])) {
-					$search_criteria['field_filters'][] = array(
-						'key' => $end_of_shopping_evaluation_persona_key,
-						'value' => $persona_info[0]->id
-					);
-				} else {
-					$search_criteria['field_filters'][] = array(
-						'key' => $end_of_shopping_evaluation_persona_key,
-						'value' => -1
-					);
-				}
-
-				$entries = GFAPI::get_entries($end_of_shopping_evaluation_id, $search_criteria);
-
-				if ($entries) {
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
-				} else {
-					echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
-				}
-				if (isset($persona_info[0])) {
-					$search_criteria['field_filters'][1] = array(
-						'key' => $shopping_evaluation_persona_key,
-						'value' => $persona_info[0]->persona_id
-					);
-				} else {
-					$search_criteria['field_filters'][1] = array(
-						'key' => $shopping_evaluation_persona_key,
-						'value' => -1
-					);
-				}
-
-				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
-
-				if (count($entries)) {
-					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[0]->persona_id . "' class='button' > SHOPPING SURVEYS </a >";
-				} else {
-					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[0]->persona_id . "' class='button unavailable' > SHOPPING SURVEYS </a >";
-				}
-				?>
-				<section class="facts">
-					<div class="fact">
-						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
-						?> alt="">
-						<p><?php
-							if(isset($persona_one_total_money[0])){
-								$difference = get_value_from_stdClass($persona_one_total_money[0]) - get_value_from_stdClass($persona_one_money_spent[0]);
-	 						 echo '$' . number_format($difference, 2);
-							}
-							else{
-								echo "N/A";
-							}
-						 ?>
-						 <br>Remaining</p>
-					</div>
-					<div class="fact">
-						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
-						?> alt="">
-						<p><?php
-						if(isset($persona_info[0])){
-							$persona_one_purchase_count_sql = $wpdb->get_results($wpdb->prepare('SELECT COUNT(user_persona_id) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE user_id=%d AND persona_id=%d ', $currentDisplayStudent, $persona_info[0]->id));
-							$persona_one_purchase_count = get_value_from_stdClass($persona_one_purchase_count_sql[0]);
-							if($persona_one_purchase_count >=1){
-								echo get_value_from_stdClass($persona_one_purchase_count_sql[0]);
-							}
-							else{
-								echo "0";
-							}
 						}
 						else{
-							echo "0";
-						}
-						?> <br>PURCHASES</p>
-					</div>
-				</section>
-			</aside>
-
-			<aside class="shopperTwo">
-				<h2 class="subTitle">Consumer #2</h2>
-				<?php
-					if (isset($persona_info[1])) {
-						?>
-						<h3><?php echo stripslashes_deep($persona_info[1]->name); ?></h3>
-						<?php
-					}
-					else{
-						?>
-						<h3><?php echo "Persona One not set" ?></h3>
-						<?php
-					}
-
-					if(isset($persona_info[1])){
-						?>
-						<?php
-						if(isset($currentDisplayStudent)){
 							?>
-							<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id'] .'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id ?>" class="button">
-								ORDER HISTORY
+							<a href="#" class="button unavailable">
+								NO CONSUMER
 							</a>
-						<?php
+							<?php
 						}
-						else{
-							?>
-						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$_REQUEST['student_id'].'&section=order_history&user_id='.$currentDisplayStudent.'&persona_id='.$persona_info[1]->persona_id; ?>" class="unavailable">
-							ORDER HISTORY
-						</a>
-						<?php
-						}
-					}
-					else{
-						?>
-						<a href="#" class="button unavailable">
-							NO CONSUMER
-						</a>
-						<?php
-					}
-				?>
+					?>
 
-				<?php
-				$search_criteria = array('field_filters' => array());
-				$search_criteria['field_filters'][] = array(
-					'key' => 'created_by',
-					'value' => $currentDisplayStudent
-				);
-				if (isset($persona_info[1])) {
+					<?php
+					$search_criteria = array('field_filters' => array());
 					$search_criteria['field_filters'][] = array(
-						'key' => $end_of_shopping_evaluation_persona_key,
-						'value' => $persona_info[1]->id
+						'key' => 'created_by',
+						'value' => $currentDisplayStudent
 					);
-				} else {
-					$search_criteria['field_filters'][] = array(
-						'key' => $end_of_shopping_evaluation_persona_key,
-						'value' => -1
-					);
-				}
+					if (isset($persona_info[1])) {
+						$search_criteria['field_filters'][] = array(
+							'key' => $end_of_shopping_evaluation_persona_key,
+							'value' => $persona_info[1]->id
+						);
+					} else {
+						$search_criteria['field_filters'][] = array(
+							'key' => $end_of_shopping_evaluation_persona_key,
+							'value' => -1
+						);
+					}
 
-				$entries = GFAPI::get_entries($end_of_shopping_evaluation_id, $search_criteria);
-				if ($entries) {
-					echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
-				} else {
-					echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
-				}
-				if (isset($persona_info[1])) {
-					$search_criteria['field_filters'][1] = array(
-						'key' => $shopping_evaluation_persona_key,
-						'value' => $persona_info[1]->persona_id
-					);
-				} else {
-					$search_criteria['field_filters'][1] = array(
-						'key' => $shopping_evaluation_persona_key,
-						'value' => -1
-					);
-				}
+					$entries = GFAPI::get_entries($end_of_shopping_evaluation_id, $search_criteria);
+					if ($entries) {
+						echo '<a href="' . get_site_url() . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . $end_of_shopping_evaluation_id . '&lid=' . $entries[0]["id"] . '" class="button">FINAL SURVEY</a>';
+					} else {
+						echo '<a href="" class="button unavailable">FINAL SURVEY</a>';
+					}
+					if (isset($persona_info[1])) {
+						$search_criteria['field_filters'][1] = array(
+							'key' => $shopping_evaluation_persona_key,
+							'value' => $persona_info[1]->persona_id
+						);
+					} else {
+						$search_criteria['field_filters'][1] = array(
+							'key' => $shopping_evaluation_persona_key,
+							'value' => -1
+						);
+					}
 
-				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
-				if (count($entries)) {
-					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[1]->persona_id . "' class='button' > SHOPPING SURVEYS </a >";
-				} else {
-					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[1]->persona_id . "' class='button unavailable' > SHOPPING SURVEYS </a >";
-				}
-				?>
-				<section class="facts">
-					<div class="fact">
-						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
-						?> alt="">
-						<p><?php
-							if(isset($persona_two_total_money[0])){
-								$difference = get_value_from_stdClass($persona_two_total_money[0]) - get_value_from_stdClass($persona_two_money_spent[0]);
-							 echo '$' . number_format($difference, 2);
-							}
-							else{
-								echo "N/A";
-							}
-						 ?>
-						 <br>Remaining</p>
-					</div>
-					<div class="fact">
-						<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
-						?> alt="">
-						<p><?php
-						if(isset($persona_info[1])){
-							$persona_two_purchase_count_sql = $wpdb->get_results($wpdb->prepare('SELECT COUNT(user_persona_id) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE user_id=%d AND persona_id=%d ', $currentDisplayStudent, $persona_info[1]->id));
-							$persona_one_purchase_count = get_value_from_stdClass($persona_two_purchase_count_sql[0]);
-							if($persona_one_purchase_count >=1){
-								echo get_value_from_stdClass($persona_two_purchase_count_sql[0]);
+					$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
+					if (count($entries)) {
+						echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[1]->persona_id . "' class='button' > SHOPPING SURVEYS </a >";
+					} else {
+						echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[1]->persona_id . "' class='button unavailable' > SHOPPING SURVEYS </a >";
+					}
+					?>
+					<section class="facts">
+						<div class="fact">
+							<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
+							?> alt="">
+							<p><?php
+								if(isset($persona_two_total_money[0])){
+									$difference = get_value_from_stdClass($persona_two_total_money[0]) - get_value_from_stdClass($persona_two_money_spent[0]);
+								 echo '$' . number_format($difference, 2);
+								}
+								else{
+									echo "N/A";
+								}
+							 ?>
+							 <br>Remaining</p>
+						</div>
+						<div class="fact">
+							<img src=<?php echo plugins_url("assets/images/shoppingBag.svg", dirname(__FILE__));
+							?> alt="">
+							<p><?php
+							if(isset($persona_info[1])){
+								$persona_two_purchase_count_sql = $wpdb->get_results($wpdb->prepare('SELECT COUNT(user_persona_id) FROM dcvs_business_purchase JOIN dcvs_user_persona ON dcvs_business_purchase.user_persona_id=dcvs_user_persona.id WHERE user_id=%d AND persona_id=%d ', $currentDisplayStudent, $persona_info[1]->id));
+								$persona_one_purchase_count = get_value_from_stdClass($persona_two_purchase_count_sql[0]);
+								if($persona_one_purchase_count >=1){
+									echo get_value_from_stdClass($persona_two_purchase_count_sql[0]);
+								}
+								else{
+									echo "0";
+								}
 							}
 							else{
 								echo "0";
 							}
-						}
-						else{
-							echo "0";
-						}
-						?> <br>PURCHASES</p>
-					</div>
-				</section>
-			</aside>
+							?> <br>PURCHASES</p>
+						</div>
+					</section>
+				</aside>
 
-		</section>
-
+			</section>
+	</div>
+	<!-- END OF SCROLLABLE DIV  -->
 	</section>
 
 

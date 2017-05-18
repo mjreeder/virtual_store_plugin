@@ -103,9 +103,9 @@ $categories = dcvs_get_all_categories();
 
 <section class="manage">
 
-	<div>
+	<header>
 		<h1 class="title">Manage Businesses</h1>
-	</div>
+	</header>
 
 	<section class="createModal" id="editModal">
 		<h1>EDIT BUSINESS</h1>

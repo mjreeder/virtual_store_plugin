@@ -23,6 +23,7 @@
 	$entries = GFAPI::get_entries($formID, $args);
 ?>
 <main class="admin survey-multiview">
+	<div class="scrollable">
 	<h1 class="title"><?= $form['title']; ?></h1>
 	<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='. $_REQUEST['student_id']?>" class="backButton"><p>BACK TO STUDENT INFO</p></a>
 	<div class="entry-wrapper">
@@ -42,4 +43,6 @@
 			</ul>
 		</div>
 	</div>
+</div>
+	<!-- END OF SCROLLABLE DIV -->
 </main>

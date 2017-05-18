@@ -86,9 +86,16 @@ if($persona == null){
 
 <div class="stats">
 
-    <h1><?php echo stripslashes($persona->name); ?> Stats</h1>
-    <p><sup><?php echo $is_first_consumer ? "Consumer 1": "Consumer 2" ?></sup></p>
+    <div class="">
+      <h1><?php echo stripslashes($persona->name); ?> Stats</h1>
+      <p><?php echo $is_first_consumer ? "Consumer 1": "Consumer 2" ?></p>
+    </div>
+
     <a href="<?php echo dcvs_get_landing_page_url(); ?>" class="backButton"><p>Back to Dashboard</p></a>
+
+    <?php if (count($purchaseResults) == 0) { ?>
+        <h2>Nothing to show here! Start Shopping!</h2>
+    <?php } ?>
 
     <?php foreach($purchaseResults as $purchase): ?>
     <h2><?php echo $purchase->business_title ?></h2>

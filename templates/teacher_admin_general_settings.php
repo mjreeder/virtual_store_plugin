@@ -69,6 +69,8 @@ function dcvs_validate_Date($date)
 ?>
 
 <section class="settings">
+	<div class="scrollable">
+
 	<form>
 
 		<input type="hidden" name="page" value="dcvs_teacher">
@@ -140,7 +142,8 @@ function dcvs_validate_Date($date)
 		<button class="saveButton" type="submit" name="submit">SAVE</button>
 
 	</form>
-
+	<!-- END OF SCROLLABLE DIV -->
+</div>
 </section>
 
 <?php
