@@ -29,6 +29,7 @@ add_action('init', 'dcvs_plugin_init');
 add_action('current_screen', 'dcvs_new_post_redirect');
 add_action('current_screen', 'dcvs_enqueue_product_edit_styles');
 add_action('wp_enqueue_scripts', 'dcvs_hide_toolbar_on_survey');
+add_action("wp_enqueue_scripts", "dcvs_update_cart_page");
 
 add_filter('woocommerce_checkout_fields' , 'dcvs_override_checkout_fields');
 add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_cart');
@@ -41,6 +42,11 @@ add_filter("woocommerce_attribute_taxonomies", 'dcvs_woocommerce_taxonomies');
 
 function dcvs_hide_toolbar_on_survey() {
     wp_enqueue_style( 'dcvs_evaluation_style', plugins_url( '/assets/css/evaluations.css', __FILE__));
+}
+
+function dcvs_update_cart_page(){
+    wp_enqueue_script("dcvs_update_woocommerce_cart", plugins_url("/js/update_cart_totals.js", __FILE__), [], false, true);
+
 }
 
 register_activation_hook(__FILE__, 'dcvs_activation_plugin');
