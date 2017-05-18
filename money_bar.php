@@ -16,7 +16,7 @@ function dcvs_enqueue_money_bar_style() {
 	wp_enqueue_style( 'budgetBar_css', plugins_url('assets/css/budgetBar.css', __FILE__) );
 }
 
-add_action('woocommerce_cart_updated', 'reload_page');
+add_action('woocommerce_after_cart_item_quantity_update', 'reload_page');
 function reload_page() {
 	die("<script>window.location.reload()</script>");
 }
