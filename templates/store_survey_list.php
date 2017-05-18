@@ -6,7 +6,7 @@ if ( !is_user_logged_in() ) {
     exit;
 }
 
-if (!is_network_admin()) {
+if (!isset($_GET['student_id'])) {
     $current_user_id = get_current_user_id();
     die("here");
 } else {
