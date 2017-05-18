@@ -25,6 +25,7 @@ add_action('woocommerce_review_order_after_payment', 'dcvs_after_cart_contents')
 add_action('woocommerce_checkout_before_customer_details', 'dcvs_before_billing_form');
 add_action('woocommerce_checkout_after_customer_details', 'dcvs_after_billing_form');
 add_action('admin_enqueue_scripts', 'dcvs_enqueue_admin_script' );
+add_action('wp_enqueue_scripts', 'dcvs_enqueue_scripts' );
 add_action('init', 'dcvs_plugin_init');
 add_action('current_screen', 'dcvs_new_post_redirect');
 add_action('current_screen', 'dcvs_enqueue_product_edit_styles');
@@ -318,6 +319,11 @@ function dcvs_enqueue_admin_script()
         wp_enqueue_script( 'dcvs_product_edit_script' );
     }
     wp_enqueue_style( 'dcvs_wordpress_dashboard_style', plugins_url( '/assets/css/dcvsWordpressDashboard.css', __FILE__ ) );
+}
+
+function dcvs_enqueue_scripts(){
+	wp_register_script( 'dcvs_color_picker_stopgap', plugins_url( '/js/color-picker-stopgap.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
+	wp_enqueue_script( 'dcvs_color_picker_stopgap' );
 }
 
 function dcvs_enqueue_product_edit_styles() {
