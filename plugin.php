@@ -68,8 +68,10 @@ function dcvs_plugin_init()
     include __DIR__.'/database_setup.php';
     //create the landing page if it doesn't exist already
     $landingPage = get_page_by_path('virtual-store-landing');
-    if ($landingPage == null) {
-        wp_insert_post(array('post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Virtual Store Landing Page', 'post_name' => 'virtual-store-landing'));
+    if ($landingPage == null ) {
+        if(get_current_blog_id()==1){
+            wp_insert_post(array('post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Virtual Store Landing Page', 'post_name' => 'virtual-store-landing'));
+        }
     } elseif ($landingPage->post_status == 'trash') {
         wp_update_post(array('ID' => $landingPage->ID, 'status' => 'publish'));
     }
