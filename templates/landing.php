@@ -26,6 +26,7 @@ $current_user_ID = wp_get_current_user()->ID;
 $business_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_business LEFT JOIN dcvs_user_business ON dcvs_business.id=dcvs_user_business.business_id WHERE user_id = %d', $current_user_ID));
 $business_expense = dcvs_get_business_expenses( $current_user_ID );
 $consumer_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona LEFT JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
+$business_category = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_category WHERE id = (SELECT category_id FROM dcvs_business_category WHERE business_id = %d)', $business_info[0]->id));
 if(isset($consumer_info[0])){
   $consumer_1_expense = dcvs_get_persona_expenses($current_user_ID, $consumer_info[0]->persona_id);
 }
@@ -252,11 +253,28 @@ $var = dcvs_get_option('warehouse_end_date', 0);
 
                     <?php
                       if(isset($business_info[0])){
+                          if(isset($business_category[0])){
                         ?>
-                        <p><?php echo stripslashes_deep($business_info[0]->description); ?>
+                            <b><?php echo "Your business should target: " . stripslashes_deep($business_category[0]->name); ?></b>
+                          <?php } ?>
                             <br>
-                            <br><b>warehouse budget: $<?php echo $business_info[0]->money - $business_expense ?></b>
-                        </p>
+                            <p><?php echo stripslashes_deep($business_info[0]->description); ?></p>
+                            <br>
+                            <br>
+                            <?php
+                            if (($business_info[0]->money - $business_expense) < 0) {
+                              ?>
+                              <b class="negative">warehouse budget: $<?php echo number_format($business_info[0]->money - $business_expense, 2) ?></b>
+                              <p class="negative">Warning! You're Over Budget!</p>
+                              <?php
+                            } else {
+                              ?>
+                              <b>warehouse budget: $<?php echo number_format($business_info[0]->money - $business_expense, 2) ?></b>
+                              <?php
+                            }
+                            ?>
+
+
                         <?php
                       }
 
@@ -280,10 +298,29 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <a href="<?php echo get_home_url().'/wp-admin/edit.php?post_type=product'; ?>"><button class="button btnStore">EDIT STORE</button></a>
                       <a href="<?php echo $business_info[0]->url ?>"><button class="button btnStore">VIEW STORE</button></a>
                     </div>
-                    <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
-                    <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>"><button class="button btnStore">STORE FEEDBACK</button></a>
                     <?php
-                        if($shopping_over) {
+                    if ($ware_house_shopping_over == false) {
+                      ?>
+                        <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>" class="unavailable"><button class="button btnStore">STORE STATS</button></a>
+                        <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>" class="unavailable"><button class="button btnStore">STORE FEEDBACK</button></a>
+                      <?php
+                    } else {
+                      ?>
+                        <a href="<?php echo get_home_url().'/wp-admin/admin.php?page=wc-reports'; ?>"><button class="button btnStore">STORE STATS</button></a>
+                        <a href="<?php echo plugins_url( 'templates/store_survey_list.php', dirname(__FILE__)) ?>"><button class="button btnStore">STORE FEEDBACK</button></a>
+                      <?php
+                    }
+                    ?>
+
+                    <?php
+                        $search_criteria = array('field_filters' => array());
+                        $search_criteria['field_filters'][] = array(
+                            'key' => 'created_by',
+                            'value' => $current_user_ID
+                        );
+                        $entries = GFAPI::get_entries(4, $search_criteria);
+
+                        if($shopping_over && !count($entries)) {
                             ?>
                             <a href=" <?php echo get_site_url(1) . '/personal-store-evaluation'; ?>">
                                 <button class="button btnStore">FINAL SURVEY</button>
@@ -320,7 +357,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                         <p><?php echo stripslashes_deep($consumer_info[0]->description) ?>
                             <br>
                             <br>
-                            <b>consumer budget: $<?php echo $consumer_info[0]->money - $consumer_1_expense ?></b>
+                            <b>consumer budget: $<?php echo number_format($consumer_info[0]->money - $consumer_1_expense, 2) ?></b>
                         </p>
                         <?php
                       }
@@ -361,7 +398,27 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <br>
                       <a href="<?php echo plugins_url( 'templates/consumer_stats.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[0]->id ?>"><button class="button personaSmall one">STATS</button></a>
                         <?php
-                        if($shopping_over) {
+                        $persona_info = $wpdb->get_results($wpdb->prepare('SELECT * FROM dcvs_persona JOIN dcvs_user_persona ON dcvs_persona.id=dcvs_user_persona.persona_id WHERE user_id = %d', $current_user_ID));
+
+                        $search_criteria = array('field_filters' => array());
+                        $search_criteria['field_filters'][] = array(
+                            'key' => 'created_by',
+                            'value' => $current_user_ID
+                        );
+                        if (isset($persona_info[0])) {
+                            $search_criteria['field_filters'][] = array(
+                                'key' => 3,
+                                'value' => $persona_info[0]->id
+                            );
+                        } else {
+                            $search_criteria['field_filters'][] = array(
+                                'key' => 3,
+                                'value' => -1
+                            );
+                        }
+                        $entries = GFAPI::get_entries(3, $search_criteria);
+
+                        if($shopping_over && !count($entries)) {
                             ?>
                             <a href="<?php echo get_site_url(1) . '/end-of-shopping-evaluation?persona_id=' . $consumer_info[0]->id ?>">
                                 <button class="button personaSmall one">FINAL SURVEY</button>
@@ -392,7 +449,7 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                             <br>
                             <br>
                             <!-- TODO fix -->
-                            <b>consumer budget: $<?php echo $consumer_info[1]->money - $consumer_2_expense ?></b>
+                            <b>consumer budget: $<?php echo number_format($consumer_info[1]->money - $consumer_2_expense, 2) ?></b>
                         </p>
                         <?php
                       }
@@ -431,7 +488,25 @@ $var = dcvs_get_option('warehouse_end_date', 0);
                       <br>
                       <a href="<?php echo plugins_url( 'templates/consumer_stats.php', dirname(__FILE__)) . '?persona_id=' . $consumer_info[1]->id ?>"><button class="button personaSmall two">STATS</button></a>
                       <?php
-                        if($shopping_over) {
+                      $search_criteria = array('field_filters' => array());
+                      $search_criteria['field_filters'][] = array(
+                          'key' => 'created_by',
+                          'value' => $current_user_ID
+                      );
+                      if (isset($persona_info[1])) {
+                          $search_criteria['field_filters'][] = array(
+                              'key' => 3,
+                              'value' => $persona_info[1]->id
+                          );
+                      } else {
+                          $search_criteria['field_filters'][] = array(
+                              'key' => 3,
+                              'value' => -1
+                          );
+                      }
+                      $entries = GFAPI::get_entries(3, $search_criteria);
+
+                      if($shopping_over && !count($entries)) {
                             ?>
                             <a href="<?php echo get_site_url(1) . '/end-of-shopping-evaluation?persona_id=' . $consumer_info[1]->id ?>">
                                 <button class="button personaSmall two">FINAL SURVEY</button>

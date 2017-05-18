@@ -29,6 +29,7 @@ add_action('wp_enqueue_scripts', 'dcvs_enqueue_scripts' );
 add_action('init', 'dcvs_plugin_init');
 add_action('current_screen', 'dcvs_new_post_redirect');
 add_action('current_screen', 'dcvs_enqueue_product_edit_styles');
+add_action('wp_enqueue_scripts', 'dcvs_hide_toolbar_on_survey');
 
 add_filter('woocommerce_checkout_fields' , 'dcvs_override_checkout_fields');
 add_filter('woocommerce_coupons_enabled', 'dcvs_hide_coupon_field_on_cart');
@@ -38,6 +39,10 @@ add_filter('woocommerce_variation_is_purchasable', 'dvcs_is_purchasable', 10, 2)
 add_filter('gettext', 'dvcs_customize_product_variation_message', 10, 3);
 add_filter('woocommerce_product_data_tabs', 'dcvs_remove_product_tabs', 10, 1);
 add_filter("woocommerce_attribute_taxonomies", 'dcvs_woocommerce_taxonomies');
+
+function dcvs_hide_toolbar_on_survey() {
+    wp_enqueue_style( 'dcvs_evaluation_style', plugins_url( '/assets/css/evaluations.css', __FILE__));
+}
 
 register_activation_hook(__FILE__, 'dcvs_activation_plugin');
 function dcvs_activation_plugin()

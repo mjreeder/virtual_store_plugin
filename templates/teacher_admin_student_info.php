@@ -3,7 +3,7 @@
 	<aside class="studentList">
 		<div class="searchBar">
 			<img src="<?php echo plugins_url( 'assets/images/search.svg', dirname(__FILE__)); ?>" rel="stylesheet" alt="">
-			<input type="search" id='search' placeholder="search" oninput="studentSearch()">
+			<input type="search" id='search' placeholder="search" oninput="studentSearch()" autocomplete="off">
 		</div>
 		<ul id="students">
 			<?php display_student_list(); ?>
@@ -59,7 +59,7 @@ function display_current_student_info()
 			$currentDisplayStudent = NULL;
 			$display_name = NULL;
 			$warehouse_purchase_sum = NULL;
-			echo "<h1>No Users In Sytem, Go to Students Tab to Create Students</h1>";
+			echo '<div class="noUsers"><h1>No Users In Sytem, Go to Manage Students Tab to Create Students</h1></div>';
 			return;
 		}
 		else{
@@ -114,7 +114,7 @@ function display_current_student_info()
 			}
 		 ?>
 		<section class="merchandiserInfo">
-			<h2 class="subTitle">buyer</h2>
+			<h2 class="subTitle">Buyer</h2>
 			<?php
 			if(isset($business_info[0])){
 				$user_blog_id = intval(get_user_blog_id( $business_info[0]->user_id ));
@@ -162,26 +162,16 @@ function display_current_student_info()
 					}
 					$entries = GFAPI::get_entries($warehouse_evaluation_id, $search_criteria);
 					?>
-					<form class="select-with-button" action="index.html" method="post">
-						<select class="mainColor" name="" onchange="window.location.href = this.value">
-							<?php if( count($entries) ): ?>
-							<option value="">SELECT A WAREHOUSE EVALUATION</option>
-							<?php
-							foreach ($entries as $entry){
-								echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $warehouse_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
-							}
-							else:
-								echo '<option value="">NO WAREHOUSE EVAL ENTRIES YET</option>';
-							endif;
-							?>
-						</select>
-						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id; ?>" class="button">All</a>
-					</form>
+					<div class="">
+						<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id; ?>" class="button">WAREHOUSE SURVEYS</a>
+						<a href="#" class="button">STORE FEEDBACK</a>
+					</div>
+
 					<!-- TODO get remaining budget-->
 					<?php
 					if (isset($budget_remaining)) {
 						?>
-						<span><b>BUDGET REMAINING:</b> $<?php echo $budget_remaining ?></span>
+						<span><b>BUDGET REMAINING:</b> $<?php echo number_format($budget_remaining, 2) ?></span>
 						<?php
 					}
 					else{
@@ -200,9 +190,15 @@ function display_current_student_info()
 							?> alt="">
 							<?php
 							if(isset($profit)){
-								?>
-								<p>$<?php echo $profit ?> PROFIT<br></p>
-								<?php
+								if ($profit >= 0) {
+									?>
+										<p>$<?php echo number_format($profit, 2) ?> <br>PROFIT</p>
+									<?php
+								} else {
+										?>
+										<p class="negativeProfit">$<?php echo number_format($profit, 2) ?> <br>PROFIT</p>
+										<?php
+								}
 							}
 							else{
 								?>
@@ -250,7 +246,7 @@ function display_current_student_info()
 		<section class="shopperInfo">
 
 			<aside class="shopperOne">
-				<h2 class="subTitle">consumer #1</h2>
+				<h2 class="subTitle">Consumer #1</h2>
 				<?php
 					if (isset($persona_info[0])) {
 						?>
@@ -300,7 +296,7 @@ function display_current_student_info()
 				if (isset($persona_info[0])) {
 					$search_criteria['field_filters'][] = array(
 						'key' => $end_of_shopping_evaluation_persona_key,
-						'value' => $persona_info[0]->persona_id
+						'value' => $persona_info[0]->id
 					);
 				} else {
 					$search_criteria['field_filters'][] = array(
@@ -329,22 +325,13 @@ function display_current_student_info()
 				}
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
+
+				if (count($entries)) {
+					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[0]->persona_id . "' class='button' > SHOPPING SURVEYS </a >";
+				} else {
+					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[0]->persona_id . "' class='button unavailable' > SHOPPING SURVEYS </a >";
+				}
 				?>
-				<form class="select-with-button" action="index.html" method="post">
-					<select class="one" name="" onchange="window.location.href = this.value">
-						<?php if(count($entries)): ?>
-						<option value="">SELECT AN ENTRY</option>
-						<?php
-						foreach ($entries as $entry){
-							echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
-						}
-						else:
-							echo '<option value="">NO STORE EVALS YET</option>';
-						endif;
-						?>
-					</select>
-					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$shopping_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[0]->persona_id; ?>" class="button">All</a>
-				</form>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
@@ -352,7 +339,7 @@ function display_current_student_info()
 						<p><?php
 							if(isset($persona_one_total_money[0])){
 								$difference = get_value_from_stdClass($persona_one_total_money[0]) - get_value_from_stdClass($persona_one_money_spent[0]);
-	 						 echo '$'.$difference;
+	 						 echo '$' . number_format($difference, 2);
 							}
 							else{
 								echo "N/A";
@@ -383,7 +370,7 @@ function display_current_student_info()
 			</aside>
 
 			<aside class="shopperTwo">
-				<h2 class="subTitle">consumer #2</h2>
+				<h2 class="subTitle">Consumer #2</h2>
 				<?php
 					if (isset($persona_info[1])) {
 						?>
@@ -432,7 +419,7 @@ function display_current_student_info()
 				if (isset($persona_info[1])) {
 					$search_criteria['field_filters'][] = array(
 						'key' => $end_of_shopping_evaluation_persona_key,
-						'value' => $persona_info[1]->persona_id
+						'value' => $persona_info[1]->id
 					);
 				} else {
 					$search_criteria['field_filters'][] = array(
@@ -460,22 +447,12 @@ function display_current_student_info()
 				}
 
 				$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
+				if (count($entries)) {
+					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[1]->persona_id . "' class='button' > SHOPPING SURVEYS </a >";
+				} else {
+					echo "<a href='". get_site_url() . "/wp-admin/admin.php?page=dcvs_teacher&student_id=" . $currentDisplayStudent . "&section=surveys&form_id=" . $shopping_evaluation_id . "&persona_field_key=" . $shopping_evaluation_persona_key . "&persona_id=" . $persona_info[1]->persona_id . "' class='button unavailable' > SHOPPING SURVEYS </a >";
+				}
 				?>
-				<form class="select-with-button" action="index.html" method="post">
-					<select class="two" name="" onchange="window.location.href = this.value">
-						<?php if(count($entries)): ?>
-						<option value="">SELECT AN ENTRY</option>
-						<?php
-						foreach ($entries as $entry){
-							echo "<option value='" . get_site_url() . "/wp-admin/admin.php?page=gf_entries&view=entry&id=" . $shopping_evaluation_id . "&lid=" . $entry["id"] . "'>" . $entry["date_created"] . "</option>";
-						}
-						else:
-						echo '<option value="">NO STORE EVALS YET</option>';
-						endif;
-						?>
-					</select>
-					<a href="<?php echo get_site_url().'/wp-admin/admin.php?page=dcvs_teacher&student_id='.$currentDisplayStudent.'&section=surveys&form_id='.$warehouse_evaluation_id.'&persona_field_key='.$shopping_evaluation_persona_key.'&persona_id='.$persona_info[1]->persona_id; ?>" class="button">All</a>
-				</form>
 				<section class="facts">
 					<div class="fact">
 						<img src=<?php echo plugins_url("assets/images/dollarSign.svg", dirname(__FILE__));
@@ -483,7 +460,7 @@ function display_current_student_info()
 						<p><?php
 							if(isset($persona_two_total_money[0])){
 								$difference = get_value_from_stdClass($persona_two_total_money[0]) - get_value_from_stdClass($persona_two_money_spent[0]);
-							 echo '$'.$difference;
+							 echo '$' . number_format($difference, 2);
 							}
 							else{
 								echo "N/A";

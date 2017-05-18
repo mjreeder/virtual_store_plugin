@@ -45,7 +45,23 @@ if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['submit'])) {
 		}
 	} else if($_REQUEST['submit'] == "DELETE") {
 		$persona_id = $_REQUEST['persona_id'];
-		$toast = dcvs_delete_persona( $persona_id );
+		//make sure this consumer is not assigned to any user
+        global $wpdb;
+        $sql = $wpdb->prepare("SELECT wp_users.* FROM dcvs_user_persona JOIN wp_users ON wp_users.ID = dcvs_user_persona.user_id WHERE persona_id = %d", array($persona_id));
+        $results = $wpdb->get_results($sql, OBJECT);
+        if(count($results)>0){
+            $message = "<ul>";
+            foreach($results as $user){
+                $message.="<li>";
+                $message.=$user->user_email."</li>";
+            }
+            $message.="</ul>";
+            $toast=DCVS_Toast::create_new_toast( "<div class='dcvs-cannot-delete'>you cannot delete this consumer because the following current/archived users are associated with this consumer $message",true );
+//            echo("<div class='dcvs-cannot-delete'>you cannot delete this consumer because the following current/archived users are associated with this consumer $message");
+        }else{
+            $toast = dcvs_delete_persona( $persona_id );
+        }
+
 	}
 }
 
@@ -124,7 +140,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="section" value="manage">
 
 			<input type="text" name="name" placeholder="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
-			<input type="text" name="budget" placeholder="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
+			<input type="number" min="0" name="budget" placeholder="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description"></textarea>
 			<select name="category_id">
 				<option value="-1" disabled selected>Select a category</option>
@@ -155,7 +171,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="current_persona_category_id" value="" id="current_persona_category_id">
 
 			<input type="text" name="name" placeholder="name" id="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
-			<input type="text" name="budget" placeholder="budget" id="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
+			<input type="number" min="0" name="budget" placeholder="budget" id="budget" required oninvalid="this.setCustomValidity('Budget cannot be empty.')" oninput="setCustomValidity('')">
 			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
 			<select id="categorySelect" name="category_id">
 				<option value="-1" selected>Select a category</option>
@@ -191,7 +207,7 @@ $categories = dcvs_get_all_categories();
 				$persona_name = $persona['name'];
 				$persona_category_name = isset($persona['category_name']) ? $persona['category_name'] : "NOT SET";
 				$persona_category_id = isset($persona['category_id']) ? $persona['category_id'] : -1;
-				$persona_money = $persona['money'];
+				$persona_money = number_format($persona['money'], 2);
 				$persona_description = $persona['description'];
 			?>
 				<tr>
@@ -298,6 +314,13 @@ function dcvs_update_persona($id, $name, $description, $money) {
 
 function dcvs_delete_persona($id) {
 	global $wpdb;
+	//check to see if the persona is assigned to anyone
+    $sql = $wpdb->prepare("SELECT wp_users.* FROM dcvs_user_persona JOIN wp_users ON wp_users.ID = dcvs_user_persona.user_id WHERE persona_id = %d", array($id));
+    $results = $wpdb->get_results($sql, OBJECT);
+    if(count($results)>0){
+        return false;
+    }
+
 	$wpdb->delete("dcvs_persona", array("id"=>$id));
 	return DCVS_Toast::create_new_toast( "Persona Deleted!" );
 }

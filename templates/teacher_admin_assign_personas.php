@@ -7,6 +7,10 @@ foreach ($users_unformatted as $user) {
 }
 
 $toast = null;
+$date_now = date("Y-m-d H:i:s");
+$shopping_start_date = date_create(dcvs_get_option('shopping_start_date', 0));
+$shopping_start_date = $shopping_start_date->format("Y-m-d H:i:s");
+$shopping_has_started = $date_now >= $shopping_start_date;
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
     if (isset($_POST['assign_personas'])) {
@@ -54,7 +58,9 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
   <input type="hidden" name="dcvs_admin_changes" value="1">
     <div>
         <h1 class="title">Assign Consumers</h1>
-        <button class="headerButton randomize" name="assign_personas" type="submit" <?php echo dcvs_enough_distinct_persona_categories() ? "": "disabled"?>  onclick="return confirm('Randomize All Consumers?');">RANDOMIZE CONSUMERS</button>
+        <?php if(!$shopping_has_started): ?>
+            <button class="headerButton randomize" name="assign_personas" type="submit" <?php echo dcvs_enough_distinct_persona_categories() ? "": "disabled"?>  onclick="return confirm('Randomize All Consumers?');">RANDOMIZE CONSUMERS</button>
+        <?php endif; ?>
     </div>
 
     <div class="tableWrapper">
@@ -110,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="old_persona_id" value="<?php echo $persona_1_id; ?>">
                     <select onchange="this.form.submit()" name="persona_id" class="dropdown" id="assignOne">
-                        <option value="-1" disabled <?php echo $persona_1_id == -1 ? "selected" : ""  ?>>Select A Persona</option>
+                        <option value="-1" disabled <?php echo $persona_1_id == -1 ? "selected" : ""  ?>>- Select A Consumer -</option>
                         <?php
                         for($j = 0; $j < count($persona_categories); $j++) {
                             ?>
@@ -127,7 +133,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                             <?php
                         }
                         ?>
-                      <option value="-1">Unset Persona 1</option>
+                      <option value="" disabled>──────────</option>
+                      <option value="-1">Unset Consumer 1</option>
                     </select>
                   </form>
                 </td>
@@ -139,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="old_persona_id" value="<?php echo $persona_2_id; ?>">
                     <select onchange="this.form.submit()" name="persona_id" class="dropdown" id="assignTwo">
-                        <option value="-1" disabled <?php echo $persona_2_id == -1 ? "selected" : ""  ?>>Select A Persona</option>
+                        <option value="-1" disabled <?php echo $persona_2_id == -1 ? "selected" : ""  ?>>- Select A Consumer -</option>
                         <?php
                         for($j = 0; $j < count($persona_categories); $j++) {
                             ?>
@@ -156,7 +163,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                             <?php
                         }
                         ?>
-                        <option value="-1">Unset Persona 2</option>
+                        <option value="-2" disabled>──────────</option>
+                        <option value="-1">Unset Consumer 2</option>
                     </select>
                   </form>
                 </td>
@@ -306,4 +314,3 @@ function dcvs_get_second_persona($persona_id_one, $user_id) {
     $response = $wpdb->get_results($sql, ARRAY_A);
     return $response;
 }
-

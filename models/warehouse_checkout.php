@@ -142,7 +142,11 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 				$temp_quantity = $order_item['item_meta']['_qty'][0];
 
 				if (!in_array( $temp_product_id, $post_ids )) {
-					$sql = $wpdb->prepare("SELECT * FROM wp_posts WHERE post_type = 'attachment' and post_parent = '%d'", [$temp_product_id]);
+//					$sql = $wpdb->prepare("SELECT * FROM wp_posts WHERE post_type = 'attachment' and post_parent = '%d'", [$temp_product_id]);
+					$sql = $wpdb->prepare("SELECT * FROM wp_posts WHERE ID IN 
+	                    (SELECT meta_value FROM wp_postmeta WHERE meta_key = '_thumbnail_id' AND post_id IN 
+     	                  (SELECT ID FROM wp_posts WHERE post_parent = '%d')
+                        )", [$temp_product_id]);
 					$attachments = $wpdb->get_results($sql, ARRAY_A);
 
 					$default_thumbnail_id = get_post_thumbnail_id($temp_product_id);

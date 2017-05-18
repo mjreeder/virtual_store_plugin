@@ -59,6 +59,8 @@ $persona_expense = dcvs_get_persona_expenses($user_id, $persona['id']);
 
 $current_budget = $persona_budget - $persona_expense ;
 
+$placeholder_image = "../assets/images/dollar-sign.jpg";
+
 ?>
 <!doctype HTML>
 <html>
@@ -90,13 +92,14 @@ $current_budget = $persona_budget - $persona_expense ;
 				$user_site_icon = get_site_icon_url(512, '', $user_blog_id);
 				switch_to_blog( $user_blog_id );
 				$site_name = get_bloginfo('name');
+				$site_tagline = get_bloginfo('description');
 				restore_current_blog();
 			?>
 				<li>
 					<?php
 					if($user_site_icon == "") {
 						?>
-						<div onclick="window.location='<?php echo $business['url'] . 'shop'; ?>'"></div>
+						<img src="<?php echo $placeholder_image; ?>" onclick="window.location='<?php echo $business['url'] . 'shop'; ?>'"/>
 						<?php
 					} else {
 						?>
@@ -105,6 +108,10 @@ $current_budget = $persona_budget - $persona_expense ;
 					}
 					?>
 					<p><?php echo $site_name; ?></p>
+					<?php if ($site_tagline !== 'Store tagline goes here') {
+						echo '<p>' . $site_tagline . '</p>';
+					}
+					?>
 				</li>
 			<?php
 			}
@@ -120,7 +127,7 @@ $current_budget = $persona_budget - $persona_expense ;
 		<footer class="budgetBar personaOneDark" id="bar">
 
 			<div class="bar personaOne" onclick="toggleHeight()">
-				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
+				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1><img src="<?php echo plugins_url("../assets/images/arrowDown.svg", __FILE__); ?>" alt=""></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
@@ -129,13 +136,13 @@ $current_budget = $persona_budget - $persona_expense ;
 							<p>stop! you're over budget!</p>
 						</div>
 					<?php } ?>
-					<a href="<?php echo dcvs_get_landing_page_url(); ?>" onclick="preventToggleHeight(event)"><span>Back to Dashboard</span></a>
+					<a href="<?php echo dcvs_get_landing_page_url(); ?>" onclick="preventToggleHeight(event)"><img src="<?php echo plugins_url("../assets/images/homeIcon.svg", __FILE__); ?>" alt=""></a>
 				</div>
 
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<h2>Consumer Description:</h2>
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
@@ -145,7 +152,7 @@ $current_budget = $persona_budget - $persona_expense ;
 		<footer class="budgetBar personaTwoDark" id="bar">
 
 			<div class="bar personaTwo" onclick="toggleHeight()">
-				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
+				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1><img src="<?php echo plugins_url("../assets/images/arrowDown.svg", __FILE__); ?>" alt=""></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
@@ -154,12 +161,12 @@ $current_budget = $persona_budget - $persona_expense ;
 							<p>stop! you're over budget!</p>
 						</div>
 					<?php } ?>
-					<a href="<?php echo dcvs_get_landing_page_url(); ?>" onclick="preventToggleHeight(event)"><span>Back to Dashboard</span></a>
+					<a href="<?php echo dcvs_get_landing_page_url(); ?>" onclick="preventToggleHeight(event)"><img src="<?php echo plugins_url("../assets/images/homeIcon.svg", __FILE__); ?>" alt=""></a>
 				</div>
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <span><?php echo stripslashes_deep($category_name);?></span></h2>
+				<h2>Consumer Description:</h2>
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>

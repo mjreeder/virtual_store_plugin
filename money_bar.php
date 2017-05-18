@@ -16,6 +16,11 @@ function dcvs_enqueue_money_bar_style() {
 	wp_enqueue_style( 'budgetBar_css', plugins_url('assets/css/budgetBar.css', __FILE__) );
 }
 
+add_action('woocommerce_after_cart_item_quantity_update', 'reload_page');
+function reload_page() {
+	echo("<script>window.location.reload()</script>");
+}
+
 function dcvs_add_money_bar() {
 	global $pagename;
 
@@ -29,7 +34,10 @@ function dcvs_add_money_bar() {
 		$form_slugs[] = $formatted_title;
 	}
 
-
+	$page_url = $_SERVER['REQUEST_URI'];
+	if (strpos($page_url, 'evaluation')){
+		return;
+	}
 
 	if (in_array( $pagename, $form_slugs )) {
 		return;
@@ -82,9 +90,8 @@ function dcvs_add_money_bar() {
 		</head>
 
 		<footer class="budgetBar mainButtonDark" id="bar">
-
 			<div class="bar mainButton" onclick="toggleHeight()">
-				<div class="barLeft mainButtonDark"><span><h1><?php echo $site_name ?></h1></span></div>
+				<div class="barLeft mainButtonDark"><span><h1><?php echo $site_name ?></h1><img src="<?php echo plugins_url("./assets/images/arrowDown.svg", __FILE__); ?>" alt=""></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
@@ -98,7 +105,7 @@ function dcvs_add_money_bar() {
 
 			</div>
 			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<h2>Consumer Description:</h2>
 				<p><?php echo stripslashes_deep($business_description); ?></p>
 			</div>
 		</footer>
@@ -115,6 +122,10 @@ function dcvs_add_money_bar() {
 				else {
 					bar.style.bottom ="0";
 				}
+			};
+
+			var preventToggleHeight = function(event) {
+					event.stopPropagation();
 			};
 		</script>
 		<?php
@@ -140,7 +151,7 @@ function dcvs_add_money_bar() {
 		<footer class="budgetBar personaOneDark" id="bar">
 
 			<div class="bar personaOne" onclick="toggleHeight()">
-				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
+				<div class="barLeft personaOneDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1><img src="<?php echo plugins_url("./assets/images/arrowDown.svg", __FILE__); ?>" alt=""></span></div>
 				<div class="barRight">
 					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
 					<?php if ($current_budget < 0) { ?>
@@ -155,7 +166,7 @@ function dcvs_add_money_bar() {
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<h2>Consumer Description:</h2>
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
@@ -202,19 +213,22 @@ function dcvs_add_money_bar() {
 		<footer class="budgetBar personaTwoDark" id="bar">
 
 			<div class="bar personaTwo" onclick="toggleHeight()">
-				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1></span></div>
-				<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
-				<?php if ($current_budget < 0) { ?>
-					<div class="warningMessage">
-						<img src="<?php echo plugins_url("./assets/images/stop.svg", __FILE__); ?>" alt="">
-						<p>warning! you're over budget!</p>
-					</div>
-				<?php } ?>
-				<a href="<?php echo $store_list_url ?>" onclick="preventToggleHeight(event)"><span>Back To Store List</span></a>
+				<div class="barLeft personaTwoDark"><span><h1><?php echo stripslashes_deep($persona_name); ?></h1><img src="<?php echo plugins_url("./assets/images/arrowDown.svg", __FILE__); ?>" alt=""></span></div>
+				<div class="barRight">
+					<h3>current budget: <span>$<?php echo number_format( $current_budget, 2 ); ?><span></h3>
+					<?php if ($current_budget < 0) { ?>
+						<div class="warningMessage">
+							<img src="<?php echo plugins_url("./assets/images/stop.svg", __FILE__); ?>" alt="">
+							<p>warning! you're over budget!</p>
+						</div>
+					<?php } ?>
+					<a href="<?php echo $store_list_url ?>" onclick="preventToggleHeight(event)"><span>Back To Store List</span></a>
+				</div>
+
 			</div>
 
 			<div class="barSummary">
-				<h2>Category: <?php echo stripslashes_deep($category_name);?></h2>
+				<h2>Consumer Description:</h2>
 				<p><?php echo stripslashes_deep($persona_description); ?></p>
 			</div>
 		</footer>
@@ -233,7 +247,7 @@ function dcvs_add_money_bar() {
 				}
 			};
 			var preventToggleHeight = function(event) {
-					event.stopPropogation();
+					event.stopPropagation();
 			}
 		</script>
 		<?php

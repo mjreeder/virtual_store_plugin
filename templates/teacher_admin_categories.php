@@ -106,7 +106,7 @@ $categories = dcvs_get_all_categories();
 			<input type="hidden" name="category_id" value="" id="category_id">
 
 			<input type="text" name="name" placeholder="name" id="name" required oninvalid="this.setCustomValidity('Name cannot be empty.')" oninput="setCustomValidity('')">
-			<textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea>
+			<!-- <textarea rows="5" cols="36" name="description" placeholder="description" id="description"></textarea> -->
 			<input type="submit" name="submit" value="UPDATE">
 
 		</form>
@@ -116,7 +116,7 @@ $categories = dcvs_get_all_categories();
 		<table class="virtualTable orderTable">
 			<tr>
 				<th>CATEGORY NAME</th>
-				<th>DESCRIPTION</th>
+				<!-- <th>DESCRIPTION</th> -->
 				<th></th>
 				<th></th>
 			</tr>
@@ -129,7 +129,7 @@ $categories = dcvs_get_all_categories();
 
 				<tr>
 					<td><?php echo stripslashes_deep($category_name); ?></td>
-					<td class="desc"><?php echo ($category_description != "") ? stripslashes_deep($category_description) : '<i>NOT SET</i>'; ?></td>
+					<!-- <td class="desc"><?php echo ($category_description != "") ? stripslashes_deep($category_description) : '<i>NOT SET</i>'; ?></td> -->
 					<td><img src="<?php echo $pencil_image; ?>" alt="edit category button" onclick="editCategory('<?php echo $category_id ?>', '<?php echo $category_name ?>', '<?php echo $category_description ?>')"></td>
 					<td>
 						<form action="" method="post">
@@ -198,7 +198,7 @@ function dcvs_delete_category($id) {
 	$business_categories = $wpdb->get_results("SELECT * FROM dcvs_business_category WHERE category_id='".esc_sql($id)."'");
 	$persona_categories = $wpdb->get_results("SELECT * FROM dcvs_persona_category WHERE category_id='".esc_sql($id)."'");
 	if(sizeof($business_categories) != 0 || sizeof($persona_categories) != 0) {
-		return DCVS_Toast::create_new_toast( "At least one business or persona is using this category, so it cannot be deleted", true );
+		return DCVS_Toast::create_new_toast( "At least one business or consumer is using this category, so it cannot be deleted", true );
 	} else {
 		$wpdb->delete("dcvs_category", array("id"=>$id));
 		return DCVS_Toast::create_new_toast( "Deleted!" );

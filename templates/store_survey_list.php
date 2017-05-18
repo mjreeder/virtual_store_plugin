@@ -50,13 +50,16 @@ $entries = GFAPI::get_entries($shopping_evaluation_id, $args);
   <a href="<?php echo dcvs_get_landing_page_url(); ?>" class="backButton"><p>Back to Dashboard</p></a>
   <div class="entries">
 		<ul>
-			<?php foreach($entries as $entry): ksort($entry); ?>
+			<?php
+			foreach($entries as $entry): ksort($entry); ?>
 				<li id="#entry<?= $entry['id']; ?>">
 					<h2><?= $entry['date_created']; ?></h2>
 					<dl>
 						<?php foreach($form['fields'] as $question): ?>
-							<dt><?= $question->label; ?></dt>
-							<dd><?= dcvs_get_answers_based_on_question_id($entry, (string) $question->id); ?></dd>
+							<?php if ($question->visibility != "administrative"){ ?>
+								<dt><?= $question->label; ?></dt>
+								<dd><?= dcvs_get_answers_based_on_question_id($entry, (string) $question->id); ?></dd>
+							<?php } ?>
 						<?php endforeach; ?>
 					</dl>
 				</li>
