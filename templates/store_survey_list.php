@@ -54,7 +54,7 @@ $entries = GFAPI::get_entries($shopping_evaluation_id, $args);
   <?php if (!isset($_GET['student_id'])) { ?>
       <a href="<?php echo dcvs_get_landing_page_url(); ?>" class="backButton"><p>Back to Dashboard</p></a>
   <?php } else { ?>
-      <a href="http://apso.bsu.edu/2017/virtual_store/wp-admin/admin.php?page=dcvs_teacher&student_id=<?php echo $_GET['student_id']; ?>" class="backButton"><p>Back to Dashboard</p></a>
+      <a href="http://apso.bsu.edu/2017/virtual_store/wp-admin/admin.php?page=dcvs_teacher&student_id=<?php echo $_GET['student_id']; ?>" class="backButton"><p>Back to Student Info</p></a>
   <?php } ?>
   <div class="entries">
 		<ul>
