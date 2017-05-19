@@ -63,6 +63,7 @@ if ($ware_house_order_history) {
                         <?php
 
                         if (sizeof($orderMap) >= 1){
+                        echo "<pre>" . var_dump($orderMap) . "</pre>";
 
                         for ($i = 0;
                         $i < sizeof($orderMap);
