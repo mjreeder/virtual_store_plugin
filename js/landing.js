@@ -28,6 +28,58 @@ function getTime(value) {
   }
 }
 
+var changeVideo = function(){
+  var id = $(this).attr('data-video-id');
+  var video = getVideoByID(id);
+  $('#video').empty().html(video.embed);
+  $('#caption').html(video.description);
+  $('#videos').find('li').removeClass('currentlyPlaying');
+  $(this).addClass('currentlyPlaying');
+  $.post(
+	  ajax_url,
+      {
+          'action': 'video_progress',
+          'data':   {videoID:id}
+      },
+      function(response){
+          return;
+      }
+  );
+  $('.helpVideoList').animate({scrollTop:0}, 300);
+};
+
+var getVideoByID = function(id){
+  for( var i = 0; i < videos.length; i++){
+  	if( videos[i].id == id ){
+  	  return videos[i];
+    }
+  }
+};
+
+var populateVideoList = function(){
+  console.log(videos);
+  var $videos = $('#videos');
+  for( var i = 0; i < videos.length; i++){
+    $video = '<li data-video-id="'+videos[i].id+'">'+videos[i].title+'<span>'+videos[i].duration+'</span></li>';
+    $videos.append($video);
+  }
+  setTimeout(function(){ //cause why not?
+      if( lastVideo ){
+		  $videos.find('li[data-video-id='+lastVideo+']').trigger('click');
+      } else {
+		  $videos.find('li').eq(0).trigger('click');
+      }
+  }, 100);
+};
+
+(function($){
+	$(function(){
+		populateVideoList();
+		$('#videos').on('click','li',changeVideo);
+	});
+})(jQuery);
+
+
 var currentlyPlayingID = null;
 
 function setDisplayVideo(video, caption, id) {

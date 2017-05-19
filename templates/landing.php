@@ -5,7 +5,7 @@
  * Date: 1/22/17
  * Time: 10:57 PM.
  */
-require_once __DIR__.'/../../../../wp-blog-header.php';
+require_once '/Users/riley/WWW/virtual_store/wp-blog-header.php';
 date_default_timezone_set('UTC');
 
 global $current_user;
@@ -41,7 +41,6 @@ else{
 }
 
 $var = dcvs_get_option('warehouse_end_date', 0);
-
 ?>
 
 <!doctype HTML>
@@ -53,12 +52,14 @@ $var = dcvs_get_option('warehouse_end_date', 0);
     <link href="../assets/css/dashboard.css" rel="stylesheet" type="text/css">
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"></script>
-    <script src="<?php echo '../js/landing.js';
-  ?>" rel="stylesheet"></script>
 
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		var videos = <?php echo json_encode(dcvs_get_video_js()); ?>;
+		var ajax_url = '<?php echo admin_url('admin-ajax.php'); ?>';
+		var lastVideo = '<?php echo get_user_meta(get_current_user_id(), 'video_progress', true); ?>';
+	</script>
+	<script src="<?php echo '../js/landing.js'; ?>" rel="stylesheet"></script>
 </head>
 
 <body>
@@ -152,60 +153,13 @@ $var = dcvs_get_option('warehouse_end_date', 0);
         <aside class="helpVideoList">
 
             <figure>
-                <?php
-
-                $opts = array(
-                  'http'=>array(
-                    'method'=>"GET",
-                    'header'=>"Authorization: Bearer 2f31f4053bb21a971bad92c108b253bf"
-                  )
-                );
-
-                $context = stream_context_create($opts);
-
-                // Open the file using the HTTP headers set above
-                $file = json_decode(file_get_contents('https://api.vimeo.com/users/10466342/albums/4481462/videos', false, $context), $assoc_array = false );
-                $currently_playing_video = $file->data[0]->embed->html;
-                $current_playing_caption = $file->data[0]->description;
-                ?>
-                <!-- ORIGINAL DESIGN IMAGE BELOW -->
-                <!-- <img src="../assets/images/bg.jpg"> -->
                 <div id="video"></div>
                 <figcaption id="caption"></figcaption>
-                <script>setDisplayVideo('<?php echo $currently_playing_video?>', '<?php echo $current_playing_caption?>')</script>
-
             </figure>
 
-            <ol>
-              <li class="currentlyPlaying" id="<?php echo 0; ?>">
-                <?php
-                $framestring = $file->data[0]->embed->html;
-                $descriptionString = $file->data[0]->description;
-                $descriptionString = str_replace("\n", "\\n",$file->data[0]->description);
-
-                echo "<script>frameString".'0'." = '$framestring'</script>";
-                echo "<script>descriptionString".'0'." = '$descriptionString'</script>";
-                ?>
-                  <p onclick="setDisplayVideo(frameString<?php echo 0 ?>, descriptionString<?php echo 0 ?>, <?php echo 0; ?>)"><?php echo $file->data[0]->description;?></p><span><?php echo gmdate("i:s", $file->data[0]->duration); ?></span>
-              </li>
-                <?php
-
-                for ($i=1; $i < sizeof($file->data); $i++) {
-                  ?>
-                  <li id="<?php echo $i ?>">
-                    <?php
-                    $framestring = $file->data[$i]->embed->html;
-                    $descriptionString = $file->data[$i]->description;
-                    $descriptionString = str_replace("\n", "\\n",$file->data[$i]->description);
-
-                    echo "<script>frameString".$i." = '$framestring'</script>";
-                    echo "<script>descriptionString".$i." = '$descriptionString'</script>";
-                    ?>
-                      <p onclick="setDisplayVideo(frameString<?php echo $i ?>, descriptionString<?php echo $i ?>, <?php echo $i ?>)"><?php echo $file->data[$i]->description;?></p><span><?php echo gmdate("i:s", $file->data[$i]->duration); ?></span>
-                  </li>
-                  <?php
-                }
-                 ?>
+			<h2>Video Tutorials</h2>
+			<p>Refer to these videos when you need help setting up your store and shopping for your consumer roles.</p>
+            <ol id="videos">
             </ol>
 
         </aside>
