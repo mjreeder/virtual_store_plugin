@@ -318,20 +318,6 @@ function display_current_student_info()
 			'value' => -1
 		);
 	}
-		$entries = GFAPI::get_entries($warehouse_evaluation_id, $search_criteria);
-		?>
-
-		<!-- TODO get remaining budget-->
-		<?php
-		if (isset($budget_remaining)) {
-			?>
-			<span><b>BUDGET REMAINING:</b> $<?php echo number_format($budget_remaining, 2) ?></span>
-			<?php
-		} else {
-			?>
-			<span>No Budget</span>
-			<?php
-		}
 
 		$entries = GFAPI::get_entries($shopping_evaluation_id, $search_criteria);
 
