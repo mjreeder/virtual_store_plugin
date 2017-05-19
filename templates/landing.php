@@ -162,6 +162,8 @@ $var = dcvs_get_option('warehouse_end_date', 0);
             <ol id="videos">
             </ol>
 
+            <img src="<?php echo plugins_url( 'assets/images/arrowDownBlack.svg', dirname(__FILE__)) ?>" alt="">
+
         </aside>
 
         <main class="dashboard">
