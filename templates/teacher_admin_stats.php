@@ -69,9 +69,9 @@ if ($ware_house_order_history) {
                         $i++) {
                         $itemInformation = reset($orderMap[$i]);
 
+                        $id = $itemInformation["item_meta"]['_variation_id'][0];
                         $productInfo = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
                         $wp_blogID = 'wp_' . $blog_id . '_posts';
-                        $id = $itemInformation["item_meta"]['_variation_id'][0];
 
                         $post = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID WHERE ID = %d", $id[0]));
 
