@@ -317,6 +317,7 @@ function display_current_student_info()
 			'key' => $shopping_evaluation_persona_key,
 			'value' => -1
 		);
+	}
 		$entries = GFAPI::get_entries($warehouse_evaluation_id, $search_criteria);
 		?>
 		<div class="">
@@ -505,7 +506,6 @@ function display_current_student_info()
 
 
 		<?php
-
-	}
+	
 }
 ?>
