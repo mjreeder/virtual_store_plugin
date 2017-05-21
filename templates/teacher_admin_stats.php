@@ -125,7 +125,7 @@ if ($ware_house_order_history) {
                         }
                         $productDescription = $productDescription . ' ' . $custom_description;
 
-
+                        $saleInfo = null;
                         for ($w = 0; $w < sizeof($productInfo); $w++) {
                             $saleInfo = [];
                             if (isset($productInfo[0])) {
