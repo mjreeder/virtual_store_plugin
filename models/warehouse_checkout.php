@@ -143,10 +143,7 @@ if ( ! class_exists( 'WarehouseCheckout' ) ) {
 
 				if (!in_array( $temp_product_id, $post_ids )) {
 //					$sql = $wpdb->prepare("SELECT * FROM wp_posts WHERE post_type = 'attachment' and post_parent = '%d'", [$temp_product_id]);
-					$sql = $wpdb->prepare("SELECT * FROM wp_posts WHERE ID IN 
-	                    (SELECT meta_value FROM wp_postmeta WHERE meta_key = '_thumbnail_id' AND post_id IN 
-     	                  (SELECT ID FROM wp_posts WHERE post_parent = '%d')
-                        )", [$temp_product_id]);
+					$sql = $wpdb->prepare("SELECT * from wp_posts JOIN (SELECT meta_value FROM wp_postmeta JOIN (SELECT ID FROM wp_posts WHERE post_parent = '%d' OR ID = '%d') AS a ON a.ID = wp_postmeta.post_id WHERE meta_key = '_thumbnail_id' ) AS b ON b.meta_value = wp_posts.ID", [$temp_product_id, $temp_product_id]);
 					$attachments = $wpdb->get_results($sql, ARRAY_A);
 
 					$default_thumbnail_id = get_post_thumbnail_id($temp_product_id);
