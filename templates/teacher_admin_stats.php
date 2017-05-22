@@ -88,7 +88,7 @@ if ($ware_house_order_history) {
                             } else {
 
                                 $studentProductDescriptionText = $post['post_content'];
-                                $studentProductDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID JOIN dcvs_warehouse_business_product ON dcvs_warehouse_business_product.business_product_id=$wp_blogID.id WHERE warehouse_product_id = %d", $id));
+                                $studentProductDescriptionSql = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID JOIN dcvs_warehouse_business_product ON dcvs_warehouse_business_product.business_product_id=$wp_blogID.id WHERE warehouse_product_id = %d AND dcvs_warehouse_business_product.business_id = %d", [$id, $businessID]));
                                 if (isset($studentProductDescriptionSql[0])) {
                                     $studentProductDescriptionArray = get_value_from_stdClass($studentProductDescriptionSql[0]);
 
