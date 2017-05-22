@@ -14,6 +14,7 @@ function get_value_from_stdClass($obj)
 $second = array_slice(get_blogs_of_user($currentDisplayStudentID), 1, 1);
 
 $blog_id = get_value_from_stdClass($second[0])["userblog_id"];
+
 $orderMap = array();
 if ($ware_house_order_history) {
 
@@ -61,7 +62,8 @@ if ($ware_house_order_history) {
                     </tr>
                     <tr>
                         <?php
-
+                        //get user business ID
+                        $businessID = $wpdb->get_var($wpdb->prepare("SELECT business_id FROM dcvs_user_business WHERE user_id = %d",[$currentDisplayStudentID]));
                         if (sizeof($orderMap) >= 1){
 
                         for ($i = 0;
@@ -70,7 +72,7 @@ if ($ware_house_order_history) {
                         $itemInformation = reset($orderMap[$i]);
 
                         $id = $itemInformation["item_meta"]['_variation_id'][0];
-                        $productInfo = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
+                        $productInfo = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d AND dcvs_business_product_price.business_id = %d", [$id, $businessID]));
                         $wp_blogID = 'wp_' . $blog_id . '_posts';
 
                         $post = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wp_blogID WHERE ID = %d", $id[0]));
@@ -102,7 +104,7 @@ if ($ware_house_order_history) {
 
                         }
 
-                        $userProductDescription = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d", $id));
+                        $userProductDescription = $wpdb->get_results($wpdb->prepare("SELECT price, number_bought FROM dcvs_business_product_price JOIN dcvs_warehouse_business_product ON dcvs_business_product_price.business_product_id=dcvs_warehouse_business_product.business_product_id WHERE warehouse_product_id = %d AND dcvs_business_product_price.business_id = %d", [$id, $businessID]));
 
                         $productDescription = '';
                         $terms = $wpdb->get_results("SELECT DISTINCT wp_term_taxonomy.taxonomy FROM wp_terms JOIN wp_term_taxonomy ON wp_terms.term_id = wp_term_taxonomy.term_id JOIN wp_termmeta ON wp_terms.term_id = wp_termmeta.term_id
